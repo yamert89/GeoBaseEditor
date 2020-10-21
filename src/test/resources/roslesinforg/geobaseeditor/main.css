@@ -1,0 +1,9 @@
+.field{
+    -fx-background-color: rgba(198, 248, 255, 0.39);
+    -fx-font-size: 7pt;
+    -fx-padding: -3;
+    -fx-text-alignment: center;
+    -fx-font-weight: bold;
+    -fx-alignment: center;
+    -fx-pref-height: 15;
+}
