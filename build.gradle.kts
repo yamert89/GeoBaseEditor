@@ -7,11 +7,15 @@ version = "0.1"
 
 repositories {
     mavenCentral()
+    flatDir {
+        dirs("C:/localrepo/")
+    }
 }
 
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
     implementation("no.tornado:tornadofx:1.7.20")
+    implementation("roslesinforg:areatypes:1.6.0")
 }
 
 tasks {
