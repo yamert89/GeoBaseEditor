@@ -7,7 +7,14 @@ import javafx.event.EventHandler
 import javafx.scene.control.TextField
 import javafx.scene.layout.AnchorPane
 import javafx.scene.layout.FlowPane
+import roslesinforg.porokhin.areatypes.Area
 import tornadofx.*
+
+fun main() {
+    launch<GeoBaseEditorApp>()
+}
+
+class GeoBaseEditorApp: App(MainView::class)
 
 class MainView : View("My View") {
     override val root: AnchorPane by fxml("/gui/MainView.fxml")
@@ -39,6 +46,7 @@ class MainView : View("My View") {
     val field_31_element1: TextField by fxid()
     val field_31_proportion2: TextField by fxid()
     val field_31_element2: TextField by fxid()
+    val model = AreaModel(Area().apply { kv = 777 })
 /*    val field_hRang1: TextField by fxid()
     val field_hRang2: TextField by fxid()
     val field_hRang3: TextField by fxid()
@@ -102,7 +110,9 @@ class MainView : View("My View") {
 
     val text: StringProperty = SimpleStringProperty("dd")
     init {
+        field_kvNumber.bind(model.kvProperty)
         field_gir.bind(text)
+        field_kvNumber.onMouseClicked = EventHandler { println(model.kv) }
     }
 
 }
