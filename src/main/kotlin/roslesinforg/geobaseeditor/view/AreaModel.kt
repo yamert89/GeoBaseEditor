@@ -5,4 +5,6 @@ import tornadofx.ItemViewModel
 
 class AreaModel(area: Area) : ItemViewModel<Area>() {
 
+    val kvProp: Int by area.kv
+
 }
