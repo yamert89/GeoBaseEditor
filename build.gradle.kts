@@ -13,8 +13,8 @@ repositories {
     }
 }
 java{
-    sourceCompatibility = org.gradle.api.JavaVersion.VERSION_1_8
-    targetCompatibility = org.gradle.api.JavaVersion.VERSION_1_8
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
 }
 
 configure<JavaPluginConvention> {
@@ -23,7 +23,7 @@ configure<JavaPluginConvention> {
 
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
-    implementation("no.tornado:tornadofx:1.7.19")
+    implementation("no.tornado:tornadofx:1.7.20")
     implementation("roslesinforg:areatypes:1.6.0")
     implementation("roslesinforg:nab-parser:1.0")
 }

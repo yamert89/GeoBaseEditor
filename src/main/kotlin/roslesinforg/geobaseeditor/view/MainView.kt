@@ -8,6 +8,7 @@ import javafx.scene.control.TextField
 import javafx.scene.layout.AnchorPane
 import javafx.scene.layout.FlowPane
 import roslesinforg.porokhin.areatypes.Area
+import roslesinforg.porokhin.areatypes.fields.Field1
 import tornadofx.*
 
 fun main() {
@@ -20,6 +21,7 @@ class MainView : View("My View") {
     override val root: AnchorPane by fxml("/gui/MainView.fxml")
     val field_gir: TextField by fxid()
     val field_kvNumber: TextField by fxid()
+    val field_areaNumber: TextField by fxid()
     val field_species: TextField by fxid()
     val field_bon: TextField by fxid()
     val field_type: TextField by fxid()
@@ -46,7 +48,10 @@ class MainView : View("My View") {
     val field_31_element1: TextField by fxid()
     val field_31_proportion2: TextField by fxid()
     val field_31_element2: TextField by fxid()
-    val model = AreaModel(Area().apply { kv = 777 })
+    val model = AreaModel(Area().apply {
+        kv = 888
+        field1 = Field1(1, 1.0f, 110100, 7, 445)
+    })
 /*    val field_hRang1: TextField by fxid()
     val field_hRang2: TextField by fxid()
     val field_hRang3: TextField by fxid()
@@ -111,7 +116,8 @@ class MainView : View("My View") {
     val text: StringProperty = SimpleStringProperty("dd")
     init {
         field_kvNumber.bind(model.kvProperty)
-        field_gir.bind(text)
+        field_areaNumber
+        //field_gir.bind(text)
         field_kvNumber.onMouseClicked = EventHandler { println(model.kv) }
     }
 
