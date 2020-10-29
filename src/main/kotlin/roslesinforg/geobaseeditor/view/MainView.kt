@@ -1,6 +1,7 @@
 package roslesinforg.geobaseeditor.view
 
 import com.sun.deploy.panel.TextFieldProperty
+import javafx.beans.property.IntegerProperty
 import javafx.beans.property.SimpleStringProperty
 import javafx.beans.property.StringProperty
 import javafx.event.EventHandler
@@ -116,9 +117,9 @@ class MainView : View("My View") {
     val text: StringProperty = SimpleStringProperty("dd")
     init {
         field_kvNumber.bind(model.kvProperty)
-        field_areaNumber
+        field_areaNumber.bind(model.numProperty)
         //field_gir.bind(text)
-        field_kvNumber.onMouseClicked = EventHandler { println(model.kv) }
+        field_kvNumber.onMouseClicked = EventHandler { println("kv = ${model.kv} , num = ${model.item.field1.number}, kvProp = ${model.kvProperty.value}, nubProp = ${model.numProperty.value}") }
     }
 
 }

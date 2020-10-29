@@ -24,7 +24,7 @@ configure<JavaPluginConvention> {
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
     implementation("no.tornado:tornadofx:1.7.20")
-    implementation("roslesinforg:areatypes:1.6.0")
+    implementation("roslesinforg:areatypes:1.6.1.DEV")
     implementation("roslesinforg:nab-parser:1.0")
 }
 
