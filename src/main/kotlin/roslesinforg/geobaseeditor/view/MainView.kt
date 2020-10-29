@@ -1,15 +1,15 @@
 package roslesinforg.geobaseeditor.view
 
-import com.sun.deploy.panel.TextFieldProperty
-import javafx.beans.property.IntegerProperty
 import javafx.beans.property.SimpleStringProperty
 import javafx.beans.property.StringProperty
 import javafx.event.EventHandler
 import javafx.scene.control.TextField
 import javafx.scene.layout.AnchorPane
 import javafx.scene.layout.FlowPane
+import roslesinforg.geobaseeditor.view.viewmodels.AreaModel
 import roslesinforg.porokhin.areatypes.Area
 import roslesinforg.porokhin.areatypes.fields.Field1
+import roslesinforg.porokhin.areatypes.fields.Field2
 import tornadofx.*
 
 fun main() {
@@ -23,6 +23,7 @@ class MainView : View("My View") {
     val field_gir: TextField by fxid()
     val field_kvNumber: TextField by fxid()
     val field_areaNumber: TextField by fxid()
+    val field_area: TextField by fxid()
     val field_species: TextField by fxid()
     val field_bon: TextField by fxid()
     val field_type: TextField by fxid()
@@ -51,7 +52,8 @@ class MainView : View("My View") {
     val field_31_element2: TextField by fxid()
     val model = AreaModel(Area().apply {
         kv = 888
-        field1 = Field1(1, 1.0f, 110100, 7, 445)
+        field1 = Field1(77, 1.0f, 110100, 7, 445)
+        field2 = Field2(33, 0, 0)
     })
 /*    val field_hRang1: TextField by fxid()
     val field_hRang2: TextField by fxid()
@@ -117,9 +119,15 @@ class MainView : View("My View") {
     val text: StringProperty = SimpleStringProperty("dd")
     init {
         field_kvNumber.bind(model.kvProperty)
-        field_areaNumber.bind(model.numProperty)
+        //field_areaNumber.bind(model.numProperty)
+        field_areaNumber.bind(model.field1Model.numberProperty)
+        field_area.bind(model.field1Model.areaProperty)
+        field_action1.bind(model.field2ViewModel.firstActionProperty)
         //field_gir.bind(text)
-        field_kvNumber.onMouseClicked = EventHandler { println("kv = ${model.kv} , num = ${model.item.field1.number}, kvProp = ${model.kvProperty.value}, nubProp = ${model.numProperty.value}") }
+        field_kvNumber.onMouseClicked = EventHandler {
+            model.commit()
+            println("kv = ${model.area.kv} , num = ${model.area.field1.number}," +
+                    "area = ${model.area.field1.area}, action1 = ${model.area.field2.firstAction}") }
     }
 
 }
