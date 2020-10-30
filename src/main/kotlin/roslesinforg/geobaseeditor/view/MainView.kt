@@ -8,7 +8,9 @@ import javafx.scene.layout.AnchorPane
 import javafx.scene.layout.FlowPane
 import roslesinforg.geobaseeditor.view.viewmodels.AreaModel
 import roslesinforg.porokhin.areatypes.Area
+import roslesinforg.porokhin.areatypes.fields.ElementOfForest
 import roslesinforg.porokhin.areatypes.fields.Field1
+import roslesinforg.porokhin.areatypes.fields.Field10
 import roslesinforg.porokhin.areatypes.fields.Field2
 import tornadofx.*
 
@@ -39,8 +41,6 @@ class MainView : View("My View") {
     val field_action1: TextField by fxid()
     val field_action2: TextField by fxid()
     val field_action3: TextField by fxid()
-    val container10: FlowPane by fxid()
-    val container10_2: FlowPane by fxid()
     val container23: FlowPane by fxid()
     val container23_2: FlowPane by fxid()
     val field_31_count: TextField by fxid()
@@ -50,10 +50,15 @@ class MainView : View("My View") {
     val field_31_element1: TextField by fxid()
     val field_31_proportion2: TextField by fxid()
     val field_31_element2: TextField by fxid()
+    val container_10: FlowPane by fxid()
     val model = AreaModel(Area().apply {
         kv = 888
         field1 = Field1(77, 1.0f, 110100, 7, 445)
         field2 = Field2(33, 0, 0)
+        field10 = Field10(mutableListOf(
+            ElementOfForest(1, 8, "E", 180, 19f, 20, 1, 0, 0.7f, 120),
+            ElementOfForest(1, 2, "B", 0, 22f, 22, 3, 0, 0f, 0)
+        ))
     })
 /*    val field_hRang1: TextField by fxid()
     val field_hRang2: TextField by fxid()
@@ -123,6 +128,40 @@ class MainView : View("My View") {
         field_areaNumber.bind(model.field1Model.numberProperty)
         field_area.bind(model.field1Model.areaProperty)
         field_action1.bind(model.field2ViewModel.firstActionProperty)
+        var idxOfTextField = 0
+        for (i in 0 until model.f10Elements.size){
+            val element = model.f10Elements[i]
+            val field1 = container_10.children[idxOfTextField] as TextField
+            val field2 = container_10.children[idxOfTextField + 1] as TextField
+            val field3 = container_10.children[idxOfTextField + 2] as TextField
+            val field4 = container_10.children[idxOfTextField + 3] as TextField
+            val field5 = container_10.children[idxOfTextField + 4] as TextField
+            val field6 = container_10.children[idxOfTextField + 5] as TextField
+            val field7 = container_10.children[idxOfTextField + 6] as TextField
+            val field8 = container_10.children[idxOfTextField + 7] as TextField
+            val field9 = container_10.children[idxOfTextField + 8] as TextField
+            val field10 = container_10.children[idxOfTextField + 9] as TextField
+            with(element){
+                field1.bind(hRangProperty)
+                field2.bind(proportionProperty)
+                field3.bind(speciesProperty)
+                field4.bind(ageProperty)
+                field5.bind(hProperty)
+                field6.bind(dProperty)
+                field7.bind(tradeClassProperty)
+                field8.bind(generationProperty)
+                field9.bind(weightProperty)
+                field10.bind(sumOfTimberProperty)
+            }
+            idxOfTextField += 8
+        }
+        /*for (i in 0 until model.f10.size){
+            when(i){
+                0 ->{
+                    field_
+                }
+            }
+        }*/
         //field_gir.bind(text)
         field_kvNumber.onMouseClicked = EventHandler {
             model.commit()
