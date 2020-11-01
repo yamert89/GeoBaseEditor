@@ -1,5 +1,6 @@
 package roslesinforg.geobaseeditor.view.viewmodels
 
+import javafx.beans.property.IntegerProperty
 import roslesinforg.porokhin.areatypes.fields.Field3
 import tornadofx.ItemViewModel
 
