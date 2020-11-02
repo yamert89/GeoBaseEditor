@@ -3,6 +3,7 @@ package roslesinforg.geobaseeditor.view.viewmodels
 import javafx.beans.property.*
 import roslesinforg.porokhin.areatypes.Area
 import roslesinforg.porokhin.areatypes.fields.ElementOfForest
+import roslesinforg.porokhin.areatypes.fields.Field31
 import tornadofx.*
 
 class AreaModel(var area: Area) : ItemViewModel<Area>(area) {
@@ -12,6 +13,7 @@ class AreaModel(var area: Area) : ItemViewModel<Area>(area) {
     val field3ViewModel = Field3ViewModel(area.field3)
     val field4ViewModel = Field4ViewModel(area.field4)
     val f10Elements = ArrayList<ElementOfForestViewModel>(8)
+    val field31ViewModel = Field31ViewModel(area.field31)
 
 
     init {

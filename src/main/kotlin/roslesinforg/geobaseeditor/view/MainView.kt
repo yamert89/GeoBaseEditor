@@ -212,6 +212,16 @@ class MainView : View("My View") {
                 field_tradeClass9, field_origin9, field_weight9, field_sumOfTimber9)
             f10Elements[9].bind10(field_hRang10, field_proportion10, field_species10, field_age10, field_h10, field_d10,
                 field_tradeClass10, field_origin10, field_weight10, field_sumOfTimber10)
+
+            field31ViewModel.apply {
+                field_31_count byfloat countProperty
+                field_31_age byint ageProperty
+                field_31_h byfloat hProperty
+                field_31_proportion1 byint proportion1Property
+                field_31_element1 bystr element1Property
+                field_31_proportion2 byint proportion2Property
+                field_31_element2 bystr element2Property
+            }
         }
 
         field_kvNumber.onMouseClicked = EventHandler {
