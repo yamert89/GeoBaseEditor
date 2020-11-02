@@ -14,6 +14,7 @@ class AreaModel(var area: Area) : ItemViewModel<Area>(area) {
     val field4ViewModel = Field4ViewModel(area.field4)
     val f10Elements = ArrayList<ElementOfForestViewModel>(8)
     val field31ViewModel = Field31ViewModel(area.field31)
+    val dopV
 
 
     init {
