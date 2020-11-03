@@ -153,8 +153,8 @@
                   <TextField fx:id="field_d4" layoutX="204.0" layoutY="1.0" prefHeight="13.0" prefWidth="21.0" styleClass="field" stylesheets="@main.css" />
                   <TextField fx:id="field_tradeClass4" layoutX="163.0" layoutY="14.0" prefHeight="13.0" prefWidth="32.0" styleClass="field" stylesheets="@main.css" />
                   <TextField fx:id="field_origin4" layoutX="164.0" layoutY="29.0" prefHeight="13.0" prefWidth="29.0" styleClass="field" stylesheets="@main.css" />
-                  <TextField fx:id="field_generation4" layoutX="164.0" layoutY="42.0" prefHeight="13.0" prefWidth="26.0" styleClass="field" stylesheets="@main.css" />
-                  <TextField fx:id="field_weight4" layoutX="163.0" layoutY="55.0" prefHeight="13.0" prefWidth="33.0" styleClass="field" stylesheets="@main.css">
+                  <TextField fx:id="field_weight4" layoutX="164.0" layoutY="42.0" prefHeight="13.0" prefWidth="26.0" styleClass="field" stylesheets="@main.css" />
+                  <TextField fx:id="field_sumOfTimber4" layoutX="163.0" layoutY="55.0" prefHeight="13.0" prefWidth="33.0" styleClass="field" stylesheets="@main.css">
                      <FlowPane.margin>
                         <Insets left="17.0" />
                      </FlowPane.margin></TextField>
@@ -166,7 +166,7 @@
                   <TextField fx:id="field_d5" layoutX="268.0" pickOnBounds="false" prefHeight="16.0" prefWidth="21.0" styleClass="field" stylesheets="@main.css" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                   <TextField fx:id="field_tradeClass5" layoutX="276.0" layoutY="17.0" prefHeight="13.0" prefWidth="32.0" styleClass="field" stylesheets="@main.css" AnchorPane.rightAnchor="0.0" />
                   <TextField fx:id="field_origin5" layoutX="278.0" layoutY="34.0" prefHeight="13.0" prefWidth="29.0" styleClass="field" stylesheets="@main.css" AnchorPane.rightAnchor="0.0" />
-                  <TextField fx:id="field_sumOfTimber4" layoutX="276.0" layoutY="51.0" prefHeight="13.0" prefWidth="26.0" styleClass="field" stylesheets="@main.css" AnchorPane.rightAnchor="0.0" />
+                  <TextField fx:id="field_weight5" layoutX="276.0" layoutY="51.0" prefHeight="13.0" prefWidth="26.0" styleClass="field" stylesheets="@main.css" AnchorPane.rightAnchor="0.0" />
                   <TextField fx:id="field_sumOfTimber5" layoutX="271.0" layoutY="69.0" prefHeight="13.0" prefWidth="33.0" styleClass="field" stylesheets="@main.css" AnchorPane.rightAnchor="0.0">
                      <FlowPane.margin>
                         <Insets left="17.0" />

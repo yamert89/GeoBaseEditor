@@ -8,10 +8,7 @@ import javafx.scene.layout.FlowPane
 import roslesinforg.geobaseeditor.view.viewmodels.AreaModel
 import roslesinforg.geobaseeditor.view.viewmodels.ElementOfForestViewModel
 import roslesinforg.porokhin.areatypes.Area
-import roslesinforg.porokhin.areatypes.fields.ElementOfForest
-import roslesinforg.porokhin.areatypes.fields.Field1
-import roslesinforg.porokhin.areatypes.fields.Field10
-import roslesinforg.porokhin.areatypes.fields.Field2
+import roslesinforg.porokhin.areatypes.fields.*
 import tornadofx.*
 
 fun main() {
@@ -30,7 +27,7 @@ class MainView : View("My View") {
     val field_bon: TextField by fxid()
     val field_type: TextField by fxid()
     val field_subType: TextField by fxid()
-    val field_yearDeforest: TextField by fxid()
+    val field_yearOfDeforest: TextField by fxid()
     val field_countOfStump: TextField by fxid()
     val field_countOfPinusStump: TextField by fxid()
     val field_stumpDiameter: TextField by fxid()
@@ -44,16 +41,16 @@ class MainView : View("My View") {
     val container23: FlowPane by fxid()
     val container23_2: FlowPane by fxid()
     val container_10: FlowPane by fxid()
-    val field_hRang1: TextField by fxid()
-    val field_hRang2: TextField by fxid()
-    val field_hRang3: TextField by fxid()
-    val field_hRang4: TextField by fxid()
-    val field_hRang5: TextField by fxid()
-    val field_hRang6: TextField by fxid()
-    val field_hRang7: TextField by fxid()
-    val field_hRang8: TextField by fxid()
-    val field_hRang9: TextField by fxid()
-    val field_hRang10: TextField by fxid()
+    val field_hrang1: TextField by fxid()
+    val field_hrang2: TextField by fxid()
+    val field_hrang3: TextField by fxid()
+    val field_hrang4: TextField by fxid()
+    val field_hrang5: TextField by fxid()
+    val field_hrang6: TextField by fxid()
+    val field_hrang7: TextField by fxid()
+    val field_hrang8: TextField by fxid()
+    val field_hrang9: TextField by fxid()
+    val field_hrang10: TextField by fxid()
     val field_proportion1: TextField by fxid()
     val field_proportion2: TextField by fxid()
     val field_proportion3: TextField by fxid()
@@ -214,6 +211,7 @@ class MainView : View("My View") {
             ElementOfForest(1, 8, "E", 180, 19f, 20, 1, 0, 0.7f, 120),
             ElementOfForest(1, 2, "B", 0, 22f, 22, 3, 0, 0f, 0)
         ))
+        field23 = Field23(mutableListOf(1, 2, 9))
     })
 
     val text: StringProperty = SimpleStringProperty("dd")
@@ -233,7 +231,7 @@ class MainView : View("My View") {
                 field_bon bystr bonProperty
                 field_type bystr typeProperty
                 field_subType bystr subTypeProperty
-                field_yearDeforest byint yearOfDeforestationProperty
+                field_yearOfDeforest byint yearOfDeforestationProperty
                 field_countOfStump byint countOfStumpProperty
                 field_countOfPinusStump byint countOfPinusStumpProperty
                 field_stumpDiameter byint stumpDiameterProperty
@@ -244,25 +242,25 @@ class MainView : View("My View") {
                 field_validDisorder byint validDisorderProperty
                 field_dryTimber byint dryTimberProperty
             }
-            f10Elements[0].bind10(field_hRang1, field_proportion1, field_species1, field_age1, field_h1, field_d1,
+            f10Elements[0].bind10(field_hrang1, field_proportion1, field_species1, field_age1, field_h1, field_d1,
                 field_tradeClass1, field_origin1, field_weight1, field_sumOfTimber1)
-            f10Elements[1].bind10(field_hRang2, field_proportion2, field_species2, field_age2, field_h2, field_d2,
+            f10Elements[1].bind10(field_hrang2, field_proportion2, field_species2, field_age2, field_h2, field_d2,
                 field_tradeClass2, field_origin2, field_weight2, field_sumOfTimber2)
-            f10Elements[2].bind10(field_hRang3, field_proportion3, field_species3, field_age3, field_h3, field_d3,
+            f10Elements[2].bind10(field_hrang3, field_proportion3, field_species3, field_age3, field_h3, field_d3,
                 field_tradeClass3, field_origin3, field_weight3, field_sumOfTimber3)
-            f10Elements[3].bind10(field_hRang4, field_proportion4, field_species4, field_age4, field_h4, field_d4,
+            f10Elements[3].bind10(field_hrang4, field_proportion4, field_species4, field_age4, field_h4, field_d4,
                 field_tradeClass4, field_origin4, field_weight4, field_sumOfTimber4)
-            f10Elements[4].bind10(field_hRang5, field_proportion5, field_species5, field_age5, field_h5, field_d5,
+            f10Elements[4].bind10(field_hrang5, field_proportion5, field_species5, field_age5, field_h5, field_d5,
                 field_tradeClass5, field_origin5, field_weight5, field_sumOfTimber5)
-            f10Elements[5].bind10(field_hRang6, field_proportion6, field_species6, field_age6, field_h6, field_d6,
+            f10Elements[5].bind10(field_hrang6, field_proportion6, field_species6, field_age6, field_h6, field_d6,
                 field_tradeClass6, field_origin6, field_weight6, field_sumOfTimber6)
-            f10Elements[6].bind10(field_hRang7, field_proportion7, field_species7, field_age7, field_h7, field_d7,
+            f10Elements[6].bind10(field_hrang7, field_proportion7, field_species7, field_age7, field_h7, field_d7,
                 field_tradeClass7, field_origin7, field_weight7, field_sumOfTimber7)
-            f10Elements[7].bind10(field_hRang8, field_proportion8, field_species8, field_age8, field_h8, field_d8,
+            f10Elements[7].bind10(field_hrang8, field_proportion8, field_species8, field_age8, field_h8, field_d8,
                 field_tradeClass8, field_origin8, field_weight8, field_sumOfTimber8)
-            f10Elements[8].bind10(field_hRang9, field_proportion9, field_species9, field_age9, field_h9, field_d9,
+            f10Elements[8].bind10(field_hrang9, field_proportion9, field_species9, field_age9, field_h9, field_d9,
                 field_tradeClass9, field_origin9, field_weight9, field_sumOfTimber9)
-            f10Elements[9].bind10(field_hRang10, field_proportion10, field_species10, field_age10, field_h10, field_d10,
+            f10Elements[9].bind10(field_hrang10, field_proportion10, field_species10, field_age10, field_h10, field_d10,
                 field_tradeClass10, field_origin10, field_weight10, field_sumOfTimber10)
 
             field31ViewModel.apply {
@@ -274,12 +272,31 @@ class MainView : View("My View") {
                 field_31_proportion2 byint proportion2Property
                 field_31_element2 bystr element2Property
             }
+
+            bindDop()
+
+
         }
+
 
         field_kvNumber.onMouseClicked = EventHandler {
             model.commit()
             println("kv = ${model.area.kv} , num = ${model.area.field1.number}," +
-                    "area = ${model.area.field1.area}, action1 = ${model.area.field2.firstAction}") }
+                    "area = ${model.area.field1.area}, action1 = ${model.area.field2.firstAction}," +
+                    "dop1 = ${model.area.field23.info.joinToString()}") }
+    }
+
+    private fun bindDop(){
+        field_dop1_n.text = "23"
+        field_dop1_1.bind(model.dopViewModel.field23ViewModel!!.val1Property)
+        field_dop1_2.bind(model.dopViewModel.field23ViewModel!!.val2Property)
+        field_dop1_3.bind(model.dopViewModel.field23ViewModel!!.val3Property)
+        field_dop1_4.bind(model.dopViewModel.field23ViewModel!!.val4Property)
+
+    }
+
+    private fun unbindDop(){
+
     }
 
     private infix fun TextField.bystr(other: Property<String>) = this.bind(other)
