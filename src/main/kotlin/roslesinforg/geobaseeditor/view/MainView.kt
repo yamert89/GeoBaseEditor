@@ -6,6 +6,7 @@ import javafx.scene.control.TextField
 import javafx.scene.layout.AnchorPane
 import javafx.scene.layout.FlowPane
 import roslesinforg.geobaseeditor.view.viewmodels.AreaModel
+import roslesinforg.geobaseeditor.view.viewmodels.DopViewModel
 import roslesinforg.geobaseeditor.view.viewmodels.ElementOfForestViewModel
 import roslesinforg.porokhin.areatypes.Area
 import roslesinforg.porokhin.areatypes.fields.*
@@ -273,7 +274,8 @@ class MainView : View("My View") {
                 field_31_element2 bystr element2Property
             }
 
-            bindDop()
+            bind1DopLine(model.dopViewModel.field23ViewModel!!.val1Property as ObjectProperty<Any>,
+                model.dopViewModel.field23ViewModel!!.val2Property)
 
 
         }
@@ -286,17 +288,26 @@ class MainView : View("My View") {
                     "dop1 = ${model.area.field23.info.joinToString()}") }
     }
 
-    private fun bindDop(){
+    private fun bindDopLine(
+        numberOfLine: Int
+    ){
         field_dop1_n.text = "23"
-        field_dop1_1.bind(model.dopViewModel.field23ViewModel!!.val1Property)
+        field_dop1_1.bind(col1 as ObjectProperty)
         field_dop1_2.bind(model.dopViewModel.field23ViewModel!!.val2Property)
         field_dop1_3.bind(model.dopViewModel.field23ViewModel!!.val3Property)
         field_dop1_4.bind(model.dopViewModel.field23ViewModel!!.val4Property)
 
     }
+    private fun binDopLine(dopFieldViewModel: )
 
     private fun unbindDop(){
 
+    }
+
+    private fun TextField.bindSome(other: Property<Any>){
+        when(other){
+            is Property<>
+        }
     }
 
     private infix fun TextField.bystr(other: Property<String>) = this.bind(other)

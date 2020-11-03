@@ -16,16 +16,6 @@ class DopViewModel(area: Area): ItemViewModel<Area>(area) {
     var field19ViewModel: Field19ViewModel? = if (area.field19 == Field19.Empty19) null else Field19ViewModel(area.field19)
     var field29ViewModel: Field29ViewModel? = if (area.field29 == Field29.Empty29) null else Field29ViewModel(area.field29)
     var field23ViewModel: Field23ViewModel? = Field23ViewModel(area.field23)
-    var f23 = area.field23.info
-
-
-
-    //todo 23
-
-
-    fun getLine(): Array<Property<Any>>{
-        TODO()
-    }
 
     override fun onCommit() {
         super.onCommit()
