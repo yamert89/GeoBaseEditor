@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.FlowPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="492.0" prefWidth="800.0" stylesheets="main.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="492.0" prefWidth="800.0" stylesheets="main.css" xmlns="http://javafx.com/javafx/8.0.102" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <AnchorPane layoutX="130.0" prefHeight="492.0" prefWidth="670.0" styleClass="back" stylesheets="@main.css">
          <children>
@@ -507,11 +507,11 @@
             </FlowPane>
             <FlowPane layoutX="32.0" layoutY="77.0" prefHeight="14.0" prefWidth="281.0">
                <children>
-                  <TextField fx:id="field_areaNumber" prefHeight="19.0" prefWidth="46.0" styleClass="field" stylesheets="@main.css" text="12" />
+                  <TextField fx:id="field_areaNumber" prefHeight="19.0" prefWidth="46.0" styleClass="field" stylesheets="@main.css" />
                   <TextField fx:id="field_area" prefHeight="19.0" prefWidth="57.0" styleClass="field" stylesheets="@main.css" />
-                  <TextField fx:id="field_categoryArea" prefHeight="15.0" prefWidth="117.0" styleClass="field" stylesheets="@main.css" text="3" />
-                  <TextField fx:id="field_dp" prefWidth="26.0" styleClass="field" stylesheets="@main.css" text="3.6" />
-                  <TextField fx:id="field_ozu" prefWidth="34.0" styleClass="field" stylesheets="@main.css" text="25" />
+                  <TextField fx:id="field_categoryArea" prefHeight="15.0" prefWidth="117.0" styleClass="field" stylesheets="@main.css" />
+                  <TextField fx:id="field_dp" prefWidth="26.0" styleClass="field" stylesheets="@main.css" />
+                  <TextField fx:id="field_ozu" prefWidth="34.0" styleClass="field" stylesheets="@main.css" />
                </children>
             </FlowPane>
             <FlowPane layoutX="65.0" layoutY="321.0" prefHeight="18.0" prefWidth="299.0">

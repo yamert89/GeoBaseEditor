@@ -30,7 +30,18 @@ class AreaModel(var area: Area) : ItemViewModel<Area>(area) {
         super.onCommit()
         field1Model.commit()
         field2ViewModel.commit()
+        field3ViewModel.commit()
+        field4ViewModel.commit()
+        field31ViewModel.commit()
         dopViewModel.commit()
+        area.field10.forestElements.clear()
+        f10Elements.forEach {
+            area.field10.forestElements.add(
+                    ElementOfForest(it.hRangProperty.value, it.proportionProperty.value, it.speciesProperty.value,
+                    it.ageProperty.value, it.hProperty.value, it.dProperty.value, it.tradeClassProperty.value, it.generationProperty.value,
+                    it.weightProperty.value, it.sumOfTimberProperty.value)
+            )
+        }
     }
 
 

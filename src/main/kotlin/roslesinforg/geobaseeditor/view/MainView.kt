@@ -31,6 +31,9 @@ class MainView : View("My View") {
     val field_kvNumber: TextField by fxid()
     val field_areaNumber: TextField by fxid()
     val field_area: TextField by fxid()
+    val field_categoryArea: TextField by fxid()
+    val field_ozu: TextField by fxid()
+    val field_dp: TextField by fxid()
     val field_species: TextField by fxid()
     val field_bon: TextField by fxid()
     val field_type: TextField by fxid()
@@ -213,35 +216,44 @@ class MainView : View("My View") {
 
 
     
-    val model = AreaModel(Area().apply {
-        kv = 0
-        field1 = Field1(0, 0f, 0, 0, 0)
-        field2 = Field2(0, 0, 0)
-        field3 = Field3("0", "0", "0", "0", 0, 0 , 0, 0, "0")
-        field4 = Field4(0, 0, 0)
-        field10 = Field10(mutableListOf(
-            ElementOfForest(0, 0, "0", 0, 0f, 0, 0, 0, 0f, 0),
-            ElementOfForest(0, 0, "0", 0, 0f, 0, 0, 0, 0f, 0)
-        ))
-        field11 = Field11(0, 0, 0, 0f, 0f, 0f, 0, 0)
-        field12 = Field12(0, 0, "0", 0, 0, 0, 0)
-        field19 = Field19(0, 0, 0f)
-        field29 = Field29(0, 0, 0, "0", 0f, 0f, "0")
-        field23 = Field23(mutableListOf(0, 0, 0))
-    })
+    var model: AreaModel
 
     val text: StringProperty = SimpleStringProperty("dd")
     init {
         val path = Paths.get("D:/my/json")
 
-        if(Files.exists(path)) {
-            model.area = Json.decodeFromString<Area>(Files.readAllLines(path, UTF_8).toString())
-        }
+        model = if(Files.exists(path)) {
+            val str = Files.readAllLines(path, UTF_8).joinToString()
+            println("json loaded: $str")
+            AreaModel(Json.decodeFromString<Area>(str))
+           // model.area = Json.decodeFromString<Area>(str)
+        } else
+            AreaModel(Area().apply {
+                kv = 0
+                field1 = Field1(0, 0f, 0, 0, 0)
+                field2 = Field2(0, 0, 0)
+                field3 = Field3("0", "0", "0", "0", 0, 0 , 0, 0, "0")
+                field4 = Field4(0, 0, 0)
+                field10 = Field10(mutableListOf(
+                        ElementOfForest(0, 0, "0", 0, 0f, 0, 0, 0, 0f, 0),
+                        ElementOfForest(0, 0, "0", 0, 0f, 0, 0, 0, 0f, 0)
+                ))
+                field11 = Field11(0, 0, 0, 0f, 0f, 0f, 0, 0)
+                field12 = Field12(0, 0, "0", 0, 0, 0, 0)
+                field19 = Field19(0, 0, 0f)
+                field29 = Field29(0, 0, 0, "0", 0f, 0f, "0")
+                field23 = Field23(mutableListOf(0, 0, 0))
+            })
         with(model){
             field_kvNumber byint kvProperty
             //field_areaNumber.bind(model.numProperty)
-            field_areaNumber byint field1Model.numberProperty
-            field_area byfloat field1Model.areaProperty
+            field1Model.apply {
+                field_areaNumber byint numberProperty
+                field_area byfloat areaProperty
+                field_categoryArea byint categoryProperty
+                field_dp byint dpProperty
+                field_ozu byint typeOfProtectionProperty
+            }
             field2ViewModel.apply {
                 field_action1 byint firstActionProperty
                 field_action2 byint secondActionProperty
