@@ -1,6 +1,7 @@
 plugins {
     java
     kotlin("jvm") version "1.4.10"
+    kotlin("plugin.serialization") version "1.4.10"
 }
 
 group = "roslesinforg"
@@ -24,8 +25,9 @@ configure<JavaPluginConvention> {
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
     implementation("no.tornado:tornadofx:1.7.20")
-    implementation("roslesinforg:areatypes:1.7")
+    implementation("roslesinforg:areatypes:1.8")
     implementation("roslesinforg:nab-parser:1.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.1")
 }
 
 tasks {

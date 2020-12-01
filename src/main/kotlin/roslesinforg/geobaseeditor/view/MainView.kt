@@ -5,6 +5,9 @@ import javafx.event.EventHandler
 import javafx.scene.control.TextField
 import javafx.scene.layout.AnchorPane
 import javafx.scene.layout.FlowPane
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import roslesinforg.geobaseeditor.view.viewmodels.AreaModel
 import roslesinforg.geobaseeditor.view.viewmodels.DopViewModel
 import roslesinforg.geobaseeditor.view.viewmodels.ElementOfForestViewModel
@@ -12,6 +15,9 @@ import roslesinforg.porokhin.areatypes.Area
 import roslesinforg.porokhin.areatypes.fields.*
 import roslesinforg.porokhin.areatypes.fields.Field
 import tornadofx.*
+import java.nio.charset.StandardCharsets.UTF_8
+import java.nio.file.Files
+import java.nio.file.Paths
 
 fun main() {
     launch<GeoBaseEditorApp>()
@@ -204,20 +210,33 @@ class MainView : View("My View") {
     val field_dop4_8: TextField by fxid()
     val field_dop5_8: TextField by fxid()
     val field_dop6_8: TextField by fxid()
+
+
     
     val model = AreaModel(Area().apply {
-        kv = 888
-        field1 = Field1(77, 1.0f, 110100, 7, 445)
-        field2 = Field2(33, 0, 0)
+        kv = 0
+        field1 = Field1(0, 0f, 0, 0, 0)
+        field2 = Field2(0, 0, 0)
+        field3 = Field3("0", "0", "0", "0", 0, 0 , 0, 0, "0")
+        field4 = Field4(0, 0, 0)
         field10 = Field10(mutableListOf(
-            ElementOfForest(1, 8, "E", 180, 19f, 20, 1, 0, 0.7f, 120),
-            ElementOfForest(1, 2, "B", 0, 22f, 22, 3, 0, 0f, 0)
+            ElementOfForest(0, 0, "0", 0, 0f, 0, 0, 0, 0f, 0),
+            ElementOfForest(0, 0, "0", 0, 0f, 0, 0, 0, 0f, 0)
         ))
-        field23 = Field23(mutableListOf(1, 2, 9))
+        field11 = Field11(0, 0, 0, 0f, 0f, 0f, 0, 0)
+        field12 = Field12(0, 0, "0", 0, 0, 0, 0)
+        field19 = Field19(0, 0, 0f)
+        field29 = Field29(0, 0, 0, "0", 0f, 0f, "0")
+        field23 = Field23(mutableListOf(0, 0, 0))
     })
 
     val text: StringProperty = SimpleStringProperty("dd")
     init {
+        val path = Paths.get("D:/my/json")
+
+        if(Files.exists(path)) {
+            model.area = Json.decodeFromString<Area>(Files.readAllLines(path, UTF_8).toString())
+        }
         with(model){
             field_kvNumber byint kvProperty
             //field_areaNumber.bind(model.numProperty)
@@ -280,12 +299,12 @@ class MainView : View("My View") {
 
         }
 
-
-        field_kvNumber.onMouseClicked = EventHandler {
+        primaryStage.setOnCloseRequest {
             model.commit()
-            println("kv = ${model.area.kv} , num = ${model.area.field1.number}," +
-                    "area = ${model.area.field1.area}, action1 = ${model.area.field2.firstAction}," +
-                    "dop1 = ${model.area.field23.info.joinToString()}") }
+            val out = Json.encodeToString(model.area)
+            println(out)
+            Files.write(Paths.get("D:/my/json"), out.toByteArray(UTF_8))
+        }
     }
 
     private fun bindDop(){
