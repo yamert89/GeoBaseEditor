@@ -33,6 +33,10 @@ class DopViewModel(area: Area): ItemViewModel<Area>(area) {
     override fun onCommit() {
         super.onCommit()
         field23ViewModel?.commit()
+        field11ViewModel?.commit()
+        field13ViewModel?.commit()
+        field19ViewModel?.commit()
+        field29ViewModel?.commit()
     }
 
     abstract class DopFieldViewModel <T>(field: T) : ItemViewModel<T>(field){

@@ -17,6 +17,7 @@ import roslesinforg.porokhin.areatypes.fields.Field
 import tornadofx.*
 import java.nio.charset.StandardCharsets.UTF_8
 import java.nio.file.Files
+import java.nio.file.Path
 import java.nio.file.Paths
 
 fun main() {
@@ -214,13 +215,16 @@ class MainView : View("My View") {
     val field_dop5_8: TextField by fxid()
     val field_dop6_8: TextField by fxid()
 
+    lateinit var path: Path
+
 
     
     var model: AreaModel
 
     val text: StringProperty = SimpleStringProperty("dd")
     init {
-        val path = Paths.get("D:/my/json")
+        path = Paths.get("D:/my/json")
+        if (Files.notExists(path)) path = Paths.get("J:/json")
 
         model = if(Files.exists(path)) {
             val str = Files.readAllLines(path, UTF_8).joinToString()
@@ -315,7 +319,7 @@ class MainView : View("My View") {
             model.commit()
             val out = Json.encodeToString(model.area)
             println(out)
-            Files.write(Paths.get("D:/my/json"), out.toByteArray(UTF_8))
+            Files.write(path, out.toByteArray(UTF_8))
         }
     }
 
