@@ -2,9 +2,12 @@ package roslesinforg.geobaseeditor.view
 
 import javafx.beans.property.*
 import javafx.event.EventHandler
+import javafx.geometry.Insets
 import javafx.scene.control.TextField
-import javafx.scene.layout.AnchorPane
-import javafx.scene.layout.FlowPane
+import javafx.scene.control.TreeItem
+import javafx.scene.control.TreeView
+import javafx.scene.layout.*
+import javafx.scene.paint.Paint
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -214,6 +217,7 @@ class MainView : View("My View") {
     val field_dop4_8: TextField by fxid()
     val field_dop5_8: TextField by fxid()
     val field_dop6_8: TextField by fxid()
+    lateinit var kv_list: TreeView<Int>
 
     var path: Path
 
@@ -225,7 +229,13 @@ class MainView : View("My View") {
     init {
         path = Paths.get("D:/my/json")
         if (Files.notExists(Paths.get("D:/my"))) path = Paths.get("J:/json")
+        kv_list = TreeView(TreeItem(1)).apply {
+            prefHeight = 600.0
+            prefWidth = 100.0
+            background = Background(BackgroundFill(Paint.valueOf("#000000"), CornerRadii.EMPTY, Insets.EMPTY))
 
+        }
+        kv_list.addTo(root)
         model = if(Files.exists(path)) {
             val str = Files.readAllLines(path, UTF_8).joinToString()
             println("json loaded: $str")
