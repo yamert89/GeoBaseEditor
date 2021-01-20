@@ -215,7 +215,7 @@ class MainView : View("My View") {
     val field_dop5_8: TextField by fxid()
     val field_dop6_8: TextField by fxid()
 
-    lateinit var path: Path
+    var path: Path
 
 
     
@@ -224,7 +224,7 @@ class MainView : View("My View") {
     val text: StringProperty = SimpleStringProperty("dd")
     init {
         path = Paths.get("D:/my/json")
-        if (Files.notExists(path)) path = Paths.get("J:/json")
+        if (Files.notExists(Paths.get("D:/my"))) path = Paths.get("J:/json")
 
         model = if(Files.exists(path)) {
             val str = Files.readAllLines(path, UTF_8).joinToString()
@@ -247,6 +247,7 @@ class MainView : View("My View") {
                 field19 = Field19(0, 0, 0f)
                 field29 = Field29(0, 0, 0, "0", 0f, 0f, "0")
                 field23 = Field23(mutableListOf(0, 0, 0))
+                field31 = Field31(1.5f, 2f, 30, 10, "E")
             })
         with(model){
             field_kvNumber byint kvProperty
