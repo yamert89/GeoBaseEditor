@@ -3,11 +3,12 @@ package roslesinforg.geobaseeditor.view
 import javafx.beans.property.*
 import javafx.event.EventHandler
 import javafx.geometry.Insets
-import javafx.scene.control.TextField
-import javafx.scene.control.TreeItem
-import javafx.scene.control.TreeView
+import javafx.scene.control.*
+import javafx.scene.control.cell.TextFieldTreeCell
+import javafx.scene.control.cell.TextFieldTreeTableCell
 import javafx.scene.layout.*
 import javafx.scene.paint.Paint
+import javafx.util.converter.IntegerStringConverter
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -22,6 +23,7 @@ import java.nio.charset.StandardCharsets.UTF_8
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
+import javax.swing.text.TableView
 
 fun main() {
     launch<GeoBaseEditorApp>()
@@ -217,7 +219,7 @@ class MainView : View("My View") {
     val field_dop4_8: TextField by fxid()
     val field_dop5_8: TextField by fxid()
     val field_dop6_8: TextField by fxid()
-    lateinit var kv_list: TreeView<Int>
+    lateinit var kv_list: TreeTableView<Field1>
 
     var path: Path
 
@@ -229,13 +231,8 @@ class MainView : View("My View") {
     init {
         path = Paths.get("D:/my/json")
         if (Files.notExists(Paths.get("D:/my"))) path = Paths.get("J:/json")
-        kv_list = TreeView(TreeItem(1)).apply {
-            prefHeight = 600.0
-            prefWidth = 100.0
-            background = Background(BackgroundFill(Paint.valueOf("#000000"), CornerRadii.EMPTY, Insets.EMPTY))
+        buildKvList() //todo load list
 
-        }
-        kv_list.addTo(root)
         model = if(Files.exists(path)) {
             val str = Files.readAllLines(path, UTF_8).joinToString()
             println("json loaded: $str")
@@ -433,6 +430,60 @@ class MainView : View("My View") {
 
 
     private fun unbindDop(){
+
+    }
+
+    private fun buildKvList(){
+        root.apply { //todo test, replace with table view with row expander
+            val treeItem = TreeItem(1).apply {
+
+            }
+                treeItem.apply {
+
+                treeitem(2) {  }
+                treeitem(3) {  }
+                treeitem(4) { valueProperty().onChange {
+
+
+
+                } }
+            }
+            /*kv_list = treeview<Int>(treeItem) {
+                //cellFactory = TextFieldTreeCell.forTreeView(IntegerStringConverter())
+                anchorpaneConstraints {
+                    topAnchor = 0
+                    leftAnchor = 0
+                    bottomAnchor = 0
+                }
+                prefWidth = 130.0
+                isEditable = true
+            }*/
+            kv_list = treetableview(TreeItem(Field1(1, 0.0f, 0, 0, 0)).apply {
+                treeitem(Field1(1, 2f, 2, 2, 2))
+                treeitem(Field1(2, 2f, 2, 2, 2))
+            }){
+                isEditable = true
+
+                column("kv", Field1::typeOfProtection){
+                    cellFactory = TextFieldTreeTableCell.forTreeTableColumn(IntegerStringConverter())
+                    isEditable = true
+                }
+                column("выдел", Field1::number){
+                    isEditable = true
+                }
+
+
+
+            }
+            kv_list.selectionModel.selectedItemProperty().onChange {
+                //println(it?.value)
+
+
+            }
+            //kv_list = treeview<Area>()
+        }
+
+        kv_list.addTo(root)
 
     }
 
