@@ -15,6 +15,7 @@ import kotlinx.serialization.json.Json
 import roslesinforg.geobaseeditor.view.viewmodels.AreaModel
 import roslesinforg.geobaseeditor.view.viewmodels.DopViewModel
 import roslesinforg.geobaseeditor.view.viewmodels.ElementOfForestViewModel
+import roslesinforg.geobaseeditor.view.viewmodels.Field1ViewModel
 import roslesinforg.porokhin.areatypes.Area
 import roslesinforg.porokhin.areatypes.fields.*
 import roslesinforg.porokhin.areatypes.fields.Field
@@ -24,6 +25,7 @@ import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
 import javax.swing.text.TableView
+import kotlin.reflect.jvm.javaField
 
 fun main() {
     launch<GeoBaseEditorApp>()
@@ -435,7 +437,8 @@ class MainView : View("My View") {
 
     private fun buildKvList(){
         root.apply { //todo test, replace with table view with row expander
-            val treeItem = TreeItem(1).apply {
+
+           /* val treeItem = TreeItem(1).apply {
 
             }
                 treeItem.apply {
@@ -448,7 +451,7 @@ class MainView : View("My View") {
 
                 } }
             }
-            /*kv_list = treeview<Int>(treeItem) {
+            kv_list = treeview<Int>(treeItem) {
                 //cellFactory = TextFieldTreeCell.forTreeView(IntegerStringConverter())
                 anchorpaneConstraints {
                     topAnchor = 0
@@ -457,7 +460,7 @@ class MainView : View("My View") {
                 }
                 prefWidth = 130.0
                 isEditable = true
-            }*/
+            }
             kv_list = treetableview(TreeItem(Field1(1, 0.0f, 0, 0, 0)).apply {
                 treeitem(Field1(1, 2f, 2, 2, 2))
                 treeitem(Field1(2, 2f, 2, 2, 2))
@@ -474,7 +477,17 @@ class MainView : View("My View") {
 
 
 
+            }*/
+
+            tableview(mutableListOf<Area>(
+                Area(),
+                Area()
+            ).toObservable()){
+                column("Kv", Area::kv)
+                column("vid", AreaModel::field1Model)
             }
+
+
             kv_list.selectionModel.selectedItemProperty().onChange {
                 //println(it?.value)
 
