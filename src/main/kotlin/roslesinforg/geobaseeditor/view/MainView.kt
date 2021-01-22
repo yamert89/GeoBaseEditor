@@ -4,10 +4,12 @@ import javafx.beans.property.*
 import javafx.event.EventHandler
 import javafx.geometry.Insets
 import javafx.scene.control.*
+import javafx.scene.control.cell.TextFieldTableCell
 import javafx.scene.control.cell.TextFieldTreeCell
 import javafx.scene.control.cell.TextFieldTreeTableCell
 import javafx.scene.layout.*
 import javafx.scene.paint.Paint
+import javafx.util.StringConverter
 import javafx.util.converter.IntegerStringConverter
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
@@ -25,6 +27,7 @@ import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
 import javax.swing.text.TableView
+import kotlin.reflect.full.instanceParameter
 import kotlin.reflect.jvm.javaField
 
 fun main() {
@@ -221,7 +224,7 @@ class MainView : View("My View") {
     val field_dop4_8: TextField by fxid()
     val field_dop5_8: TextField by fxid()
     val field_dop6_8: TextField by fxid()
-    lateinit var kv_list: TreeTableView<Field1>
+    lateinit var kv_list: javafx.scene.control.TableView<Area>
 
     var path: Path
 
@@ -233,7 +236,7 @@ class MainView : View("My View") {
     init {
         path = Paths.get("D:/my/json")
         if (Files.notExists(Paths.get("D:/my"))) path = Paths.get("J:/json")
-        buildKvList() //todo load list
+
 
         model = if(Files.exists(path)) {
             val str = Files.readAllLines(path, UTF_8).joinToString()
@@ -242,8 +245,8 @@ class MainView : View("My View") {
            // model.area = Json.decodeFromString<Area>(str)
         } else
             AreaModel(Area().apply {
-                kv = 0
-                field1 = Field1(0, 0f, 0, 0, 0)
+                kv = 1
+                field1 = Field1(1, 0f, 0, 0, 0)
                 field2 = Field2(0, 0, 0)
                 field3 = Field3("0", "0", "0", "0", 0, 0 , 0, 0, "0")
                 field4 = Field4(0, 0, 0)
@@ -258,6 +261,7 @@ class MainView : View("My View") {
                 field23 = Field23(mutableListOf(0, 0, 0))
                 field31 = Field31(1.5f, 2f, 30, 10, "E")
             })
+
         with(model){
             field_kvNumber byint kvProperty
             //field_areaNumber.bind(model.numProperty)
@@ -321,9 +325,12 @@ class MainView : View("My View") {
             }
 
             bindDop()
+            buildKvList() //todo load list
 
 
         }
+
+        //root.onMouseClicked = EventHandler { model.commit() }
 
         primaryStage.setOnCloseRequest {
             model.commit()
@@ -438,54 +445,33 @@ class MainView : View("My View") {
     private fun buildKvList(){
         root.apply { //todo test, replace with table view with row expander
 
-           /* val treeItem = TreeItem(1).apply {
 
-            }
-                treeItem.apply {
-
-                treeitem(2) {  }
-                treeitem(3) {  }
-                treeitem(4) { valueProperty().onChange {
-
-
-
-                } }
-            }
-            kv_list = treeview<Int>(treeItem) {
-                //cellFactory = TextFieldTreeCell.forTreeView(IntegerStringConverter())
+            kv_list = tableview(mutableListOf<Area>(
+                model.area
+            ).toObservable()){
+                isEditable = true
                 anchorpaneConstraints {
                     topAnchor = 0
                     leftAnchor = 0
                     bottomAnchor = 0
                 }
                 prefWidth = 130.0
-                isEditable = true
-            }
-            kv_list = treetableview(TreeItem(Field1(1, 0.0f, 0, 0, 0)).apply {
-                treeitem(Field1(1, 2f, 2, 2, 2))
-                treeitem(Field1(2, 2f, 2, 2, 2))
-            }){
-                isEditable = true
-
-                column("kv", Field1::typeOfProtection){
-                    cellFactory = TextFieldTreeTableCell.forTreeTableColumn(IntegerStringConverter())
-                    isEditable = true
+                column("Kv", Area::kv).makeEditable()
+                val list = mutableListOf(
+                    Field1::number,
+                    Field1::category
+                )
+                column<Area, String>("vid"){
+                    SimpleStringProperty(it.value.field1.number.toString()) as Property<String>
+                }.apply {
+                    cellFactory = TextFieldTableCell.forTableColumn()
+                    onEditCommit{
+                        model.commit()
+                    }
                 }
-                column("выдел", Field1::number){
-                    isEditable = true
-                }
-
-
-
-            }*/
-
-            tableview(mutableListOf<Area>(
-                Area(),
-                Area()
-            ).toObservable()){
-                column("Kv", Area::kv)
-                column("vid", AreaModel::field1Model)
             }
+
+
 
 
             kv_list.selectionModel.selectedItemProperty().onChange {
@@ -496,10 +482,12 @@ class MainView : View("My View") {
             //kv_list = treeview<Area>()
         }
 
-        kv_list.addTo(root)
+
+
+
+        //kv_list.addTo(root)
 
     }
-
 
 
     private infix fun TextField.bystr(other: Property<String>) = this.bind(other)

@@ -22,12 +22,9 @@ class AreaModel(var area: Area) : ItemViewModel<Area>(area) {
         while (f10Elements.size < 10) f10Elements.add(ElementOfForestViewModel(ElementOfForest()))
     }
 
-
-
-
-
     override fun onCommit() {
         super.onCommit()
+        println("commit ${area.kv}")
         field1Model.commit()
         field2ViewModel.commit()
         field3ViewModel.commit()
