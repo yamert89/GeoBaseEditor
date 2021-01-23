@@ -7,6 +7,7 @@ import javafx.scene.control.*
 import javafx.scene.control.cell.TextFieldTableCell
 import javafx.scene.control.cell.TextFieldTreeCell
 import javafx.scene.control.cell.TextFieldTreeTableCell
+import javafx.scene.input.TransferMode
 import javafx.scene.layout.*
 import javafx.scene.paint.Paint
 import javafx.util.StringConverter
@@ -26,9 +27,11 @@ import java.nio.charset.StandardCharsets.UTF_8
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
-import javax.swing.text.TableView
 import kotlin.reflect.full.instanceParameter
 import kotlin.reflect.jvm.javaField
+import javafx.scene.input.ClipboardContent
+import javafx.scene.input.DataFormat
+
 
 fun main() {
     launch<GeoBaseEditorApp>()
@@ -444,11 +447,12 @@ class MainView : View("My View") {
 
     private fun buildKvList(){
         root.apply { //todo test, replace with table view with row expander
+            val format = DataFormat("application/x-java-serialized-object")
 
-
-            kv_list = tableview(mutableListOf<Area>(
-                model.area
-            ).toObservable()){
+            val data = mutableListOf<Area>(
+                model.area,
+                Area()).toObservable()
+                kv_list = tableview(data){
                 isEditable = true
                 anchorpaneConstraints {
                     topAnchor = 0
@@ -458,8 +462,51 @@ class MainView : View("My View") {
                 prefWidth = 130.0
                 readonlyColumn("Kv", Area::kv)
                 column<Area, Int>("Выд"){
+                    setOnDragEntered { println("entered") }
+                    setOnDragDetected { println("detected")
+                    startDragAndDrop(TransferMode.MOVE)
+                    }
+                    setOnDragDone { println("done") }
+                    setOnDragDropped { println("dropped") }
                     model.field1Model.numberProperty
                 }.makeEditable()
+                setRowFactory {
+
+                    val row = TableRow<Area>()
+                    row.setOnDragDetected {
+                        val index = row.index
+                        if(row.isEmpty) return@setOnDragDetected
+                        val dragboard = row.startDragAndDrop(TransferMode.MOVE)
+                        dragboard.dragView = row.snapshot(null, null)
+                        val cc = ClipboardContent()
+                        cc[format] = index
+                        dragboard.setContent(cc)
+                        it.consume()
+                        println("drag detected")
+                    }
+
+                    row.setOnDragOver {
+                        val db = it.dragboard
+                        if (!db.hasContent(format)) return@setOnDragOver
+                        if (row.index != db.getContent(format) as Int){
+                            it.acceptTransferModes(TransferMode.COPY, TransferMode.MOVE)
+                            it.consume()
+                        }
+                    }
+                    row.setOnDragDropped {
+                        val db = it.dragboard
+                        if(!db.hasContent(format)) return@setOnDragDropped
+                        val dragIndex: Int = db.getContent(format) as Int
+                        val area = kv_list.items.removeAt(dragIndex)
+                        val dropIndex = if (row.isEmpty) kv_list.items.size else row.index
+                        data.add(dropIndex, area)
+                        it.isDropCompleted = true
+                        selectionModel.select(dropIndex)
+                        it.consume()
+
+                    }
+                    row
+                }
             }
 
 
