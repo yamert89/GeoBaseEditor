@@ -456,22 +456,11 @@ class MainView : View("My View") {
                     bottomAnchor = 0
                 }
                 prefWidth = 130.0
-                column("Kv", Area::kv).makeEditable()
-                val list = mutableListOf(
-                    Field1::number,
-                    Field1::category
-                )
-                column<Area, String>("vid"){
-                    SimpleStringProperty(it.value.field1.number.toString()) as Property<String>
-                }.apply {
-                    cellFactory = TextFieldTableCell.forTableColumn()
-                    onEditCommit{
-                        model.commit()
-                    }
-                }
+                readonlyColumn("Kv", Area::kv)
+                column<Area, Int>("Выд"){
+                    model.field1Model.numberProperty
+                }.makeEditable()
             }
-
-
 
 
             kv_list.selectionModel.selectedItemProperty().onChange {
