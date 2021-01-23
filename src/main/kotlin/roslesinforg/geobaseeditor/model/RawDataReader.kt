@@ -5,8 +5,8 @@ import roslesinforg.porokhin.nabparser.Parser
 import java.io.File
 
 class RawDataReader: DataReader {
-    override fun read(): List<Area> {
-        val parser = Parser(File(""))
+    override fun read(file: File): List<Area> {
+        val parser = Parser(file)
         parser.parse()
         return parser.areas
     }

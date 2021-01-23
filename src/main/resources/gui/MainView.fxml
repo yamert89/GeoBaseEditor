@@ -13,7 +13,7 @@
       <ButtonBar buttonMinWidth="50.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="18.0" prefWidth="800.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <buttons>
           <Button mnemonicParsing="false" text="Button" />
-            <Button mnemonicParsing="false" text="Открыть" />
+            <Button fx:id="btn_open" mnemonicParsing="false" text="Открыть" />
         </buttons>
          <padding>
             <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />

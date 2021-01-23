@@ -31,6 +31,7 @@ import kotlin.reflect.full.instanceParameter
 import kotlin.reflect.jvm.javaField
 import javafx.scene.input.ClipboardContent
 import javafx.scene.input.DataFormat
+import roslesinforg.geobaseeditor.GeoBaseEditorController
 
 
 fun main() {
@@ -228,12 +229,14 @@ class MainView : View("My View") {
     val field_dop5_8: TextField by fxid()
     val field_dop6_8: TextField by fxid()
     lateinit var kv_list: javafx.scene.control.TableView<Area>
+    val btn_open: Button by fxid()
 
     var path: Path
 
 
     
     var model: AreaModel
+    val controller = find(GeoBaseEditorController::class)
 
     val text: StringProperty = SimpleStringProperty("dd")
     init {
@@ -462,12 +465,6 @@ class MainView : View("My View") {
                 prefWidth = 130.0
                 readonlyColumn("Kv", Area::kv)
                 column<Area, Int>("Выд"){
-                    setOnDragEntered { println("entered") }
-                    setOnDragDetected { println("detected")
-                    startDragAndDrop(TransferMode.MOVE)
-                    }
-                    setOnDragDone { println("done") }
-                    setOnDragDropped { println("dropped") }
                     model.field1Model.numberProperty
                 }.makeEditable()
                 setRowFactory {
@@ -518,11 +515,27 @@ class MainView : View("My View") {
             //kv_list = treeview<Area>()
         }
 
-
-
-
         //kv_list.addTo(root)
 
+    }
+
+    private fun applyButtons(){
+        btn_open.apply {
+            action {
+                val files = chooseFile(
+                    "Выберите файл",
+                    owner = primaryStage,
+                    mode = FileChooserMode.Single,
+                    filters = arrayOf()
+                )
+
+                if (files.isEmpty()) return@action
+                controller.read(files[0])
+            }
+            tooltip {
+
+            }
+        }
     }
 
 
