@@ -7,7 +7,7 @@ import javafx.scene.control.*
 import javafx.scene.control.cell.TextFieldTableCell
 import javafx.scene.control.cell.TextFieldTreeCell
 import javafx.scene.control.cell.TextFieldTreeTableCell
-import javafx.scene.input.TransferMode
+import javafx.scene.input.*
 import javafx.scene.layout.*
 import javafx.scene.paint.Paint
 import javafx.util.StringConverter
@@ -29,8 +29,6 @@ import java.nio.file.Path
 import java.nio.file.Paths
 import kotlin.reflect.full.instanceParameter
 import kotlin.reflect.jvm.javaField
-import javafx.scene.input.ClipboardContent
-import javafx.scene.input.DataFormat
 import roslesinforg.geobaseeditor.GeoBaseEditorController
 
 
@@ -268,6 +266,24 @@ class MainView : View("My View") {
                 field31 = Field31(1.5f, 2f, 30, 10, "E")
             })
 
+
+        bindModel()
+        buildKvList() //todo load list
+        applyButtons()
+
+
+
+        //root.onMouseClicked = EventHandler { model.commit() }
+
+        primaryStage.setOnCloseRequest {
+            model.commit()
+            val out = Json.encodeToString(model.area)
+            println(out)
+            Files.write(path, out.toByteArray(UTF_8))
+        }
+    }
+
+    private fun bindModel(){
         with(model){
             field_kvNumber byint kvProperty
             //field_areaNumber.bind(model.numProperty)
@@ -331,18 +347,6 @@ class MainView : View("My View") {
             }
 
             bindDop()
-            buildKvList() //todo load list
-
-
-        }
-
-        //root.onMouseClicked = EventHandler { model.commit() }
-
-        primaryStage.setOnCloseRequest {
-            model.commit()
-            val out = Json.encodeToString(model.area)
-            println(out)
-            Files.write(path, out.toByteArray(UTF_8))
         }
     }
 
@@ -458,11 +462,14 @@ class MainView : View("My View") {
                 kv_list = tableview(data){
                 isEditable = true
                 anchorpaneConstraints {
-                    topAnchor = 0
+                    topAnchor = 32
                     leftAnchor = 0
                     bottomAnchor = 0
                 }
                 prefWidth = 130.0
+                    shortcut(KeyCombination.keyCombination(KeyCode.DELETE.name)){
+                        println("hi") //todo
+                    }
                 readonlyColumn("Kv", Area::kv)
                 column<Area, Int>("Выд"){
                     model.field1Model.numberProperty
@@ -532,7 +539,7 @@ class MainView : View("My View") {
                 if (files.isEmpty()) return@action
                 controller.read(files[0])
             }
-            tooltip {
+            tooltip("Открыть") {
 
             }
         }
