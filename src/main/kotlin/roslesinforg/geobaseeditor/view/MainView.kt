@@ -456,73 +456,77 @@ class MainView : View("My View") {
         root.apply { //todo test, replace with table view with row expander
             val format = DataFormat("application/x-java-serialized-object")
 
-            val data = mutableListOf<Area>(
-                model.area,
-                Area()).toObservable()
-                kv_list = tableview(data){
-                isEditable = true
-                anchorpaneConstraints {
-                    topAnchor = 32
-                    leftAnchor = 0
-                    bottomAnchor = 0
+            kv_list = tableview(controller.areas.toObservable()){
+            model.rebindOnChange(this){
+                item = it
+            }
+            isEditable = true
+            anchorpaneConstraints {
+                topAnchor = 32
+                leftAnchor = 0
+                bottomAnchor = 0
+            }
+            prefWidth = 130.0
+                shortcut(KeyCombination.keyCombination(KeyCode.DELETE.name)){
+                    println("hi") //todo
                 }
-                prefWidth = 130.0
-                    shortcut(KeyCombination.keyCombination(KeyCode.DELETE.name)){
-                        println("hi") //todo
-                    }
-                readonlyColumn("Kv", Area::kv)
-                column<Area, Int>("Выд"){
-                    model.field1Model.numberProperty
-                }.makeEditable()
-                setRowFactory {
-
-                    val row = TableRow<Area>()
-                    row.setOnDragDetected {
-                        val index = row.index
-                        if(row.isEmpty) return@setOnDragDetected
-                        val dragboard = row.startDragAndDrop(TransferMode.MOVE)
-                        dragboard.dragView = row.snapshot(null, null)
-                        val cc = ClipboardContent()
-                        cc[format] = index
-                        dragboard.setContent(cc)
-                        it.consume()
-                        println("drag detected")
-                    }
-
-                    row.setOnDragOver {
-                        val db = it.dragboard
-                        if (!db.hasContent(format)) return@setOnDragOver
-                        if (row.index != db.getContent(format) as Int){
-                            it.acceptTransferModes(TransferMode.COPY, TransferMode.MOVE)
-                            it.consume()
-                        }
-                    }
-                    row.setOnDragDropped {
-                        val db = it.dragboard
-                        if(!db.hasContent(format)) return@setOnDragDropped
-                        val dragIndex: Int = db.getContent(format) as Int
-                        val area = kv_list.items.removeAt(dragIndex)
-                        val dropIndex = if (row.isEmpty) kv_list.items.size else row.index
-                        data.add(dropIndex, area)
-                        it.isDropCompleted = true
-                        selectionModel.select(dropIndex)
-                        it.consume()
-
-                    }
-                    row
+            readonlyColumn("Kv", Area::kv)
+            column<Area, Int>("Выд"){
+                SimpleIntegerProperty(it.value.field1.number) as Property<Int>
+            }.makeEditable()
+            setRowFactory {
+                val row = TableRow<Area>()
+                row.setOnDragDetected {
+                    val index = row.index
+                    if(row.isEmpty) return@setOnDragDetected
+                    val dragboard = row.startDragAndDrop(TransferMode.MOVE)
+                    dragboard.dragView = row.snapshot(null, null)
+                    val cc = ClipboardContent()
+                    cc[format] = index
+                    dragboard.setContent(cc)
+                    it.consume()
+                    println("drag detected")
                 }
+
+                row.setOnDragOver {
+                    val db = it.dragboard
+                    if (!db.hasContent(format)) return@setOnDragOver
+                    if (row.index != db.getContent(format) as Int){
+                        it.acceptTransferModes(TransferMode.COPY, TransferMode.MOVE)
+                        it.consume()
+                    }
+                }
+                row.setOnDragDropped {
+                    val db = it.dragboard
+                    if(!db.hasContent(format)) return@setOnDragDropped
+                    val dragIndex: Int = db.getContent(format) as Int
+                    val area = kv_list.items.removeAt(dragIndex)
+                    val dropIndex = if (row.isEmpty) kv_list.items.size else row.index
+                    controller.areas.add(dropIndex, area)
+                    it.isDropCompleted = true
+                    selectionModel.select(dropIndex)
+                    it.consume()
+
+                }
+                row
+            }
             }
 
-
-            kv_list.selectionModel.selectedItemProperty().onChange {
-                //println(it?.value)
+            controller.updateCounter.onChange { reloadKvList() }
 
 
-            }
+
+
             //kv_list = treeview<Area>()
         }
 
         //kv_list.addTo(root)
+
+    }
+
+    fun reloadKvList(){
+        kv_list.items.clear()
+        kv_list.items.addAll(controller.areas)
 
     }
 
