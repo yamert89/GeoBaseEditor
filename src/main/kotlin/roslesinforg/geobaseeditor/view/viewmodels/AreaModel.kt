@@ -43,6 +43,9 @@ class AreaModel(var area: Area) : ItemViewModel<Area>(area) {
 
 
 
+
+
+
 }
 
 

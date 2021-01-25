@@ -456,9 +456,15 @@ class MainView : View("My View") {
         root.apply { //todo test, replace with table view with row expander
             val format = DataFormat("application/x-java-serialized-object")
 
-            kv_list = tableview(controller.areas.toObservable()){
+            kv_list = tableview(controller.areas){
             model.rebindOnChange(this){
                 item = it
+                if (it == null) return@rebindOnChange
+                field1Model.item = it.field1
+                field2ViewModel.item = it.field2
+                field3ViewModel.item = it.field3
+                field4ViewModel.item = it.field4
+                field31ViewModel.item = it.field31
             }
             isEditable = true
             anchorpaneConstraints {
@@ -500,10 +506,12 @@ class MainView : View("My View") {
                     val db = it.dragboard
                     if(!db.hasContent(format)) return@setOnDragDropped
                     val dragIndex: Int = db.getContent(format) as Int
-                    val area = kv_list.items.removeAt(dragIndex)
+                    //val area = kv_list.items.removeAt(dragIndex)
+                    val area = controller.areas.removeAt(dragIndex)
                     val dropIndex = if (row.isEmpty) kv_list.items.size else row.index
                     controller.areas.add(dropIndex, area)
                     it.isDropCompleted = true
+
                     selectionModel.select(dropIndex)
                     it.consume()
 
@@ -525,8 +533,8 @@ class MainView : View("My View") {
     }
 
     fun reloadKvList(){
-        kv_list.items.clear()
-        kv_list.items.addAll(controller.areas)
+        //kv_list.items.clear()
+        //kv_list.items.addAll(controller.areas)
 
     }
 
@@ -540,7 +548,11 @@ class MainView : View("My View") {
                     filters = arrayOf()
                 )
 
-                if (files.isEmpty()) return@action
+                if (files.isEmpty()) {
+                    controller.read() //todo for test
+                    println(controller.areas.size)
+                    return@action
+                }
                 controller.read(files[0])
             }
             tooltip("Открыть") {
