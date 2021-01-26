@@ -30,6 +30,8 @@ import java.nio.file.Paths
 import kotlin.reflect.full.instanceParameter
 import kotlin.reflect.jvm.javaField
 import roslesinforg.geobaseeditor.GeoBaseEditorController
+import roslesinforg.geobaseeditor.model.FieldFloatConverter
+import roslesinforg.geobaseeditor.model.FieldIntConverter
 
 
 fun main() {
@@ -231,49 +233,28 @@ class MainView : View("My View") {
 
     var path: Path
 
-
     
     var model: AreaModel
     val controller = find(GeoBaseEditorController::class)
 
     val text: StringProperty = SimpleStringProperty("dd")
     init {
+        model = AreaModel(Area())
         path = Paths.get("D:/my/json")
         if (Files.notExists(Paths.get("D:/my"))) path = Paths.get("J:/json")
 
-
+        /*
         model = if(Files.exists(path)) {
             val str = Files.readAllLines(path, UTF_8).joinToString()
             println("json loaded: $str")
             AreaModel(Json.decodeFromString<Area>(str))
            // model.area = Json.decodeFromString<Area>(str)
         } else
-            AreaModel(Area().apply {
-                kv = 1
-                field1 = Field1(1, 0f, 0, 0, 0)
-                field2 = Field2(0, 0, 0)
-                field3 = Field3("0", "0", "0", "0", 0, 0 , 0, 0, "0")
-                field4 = Field4(0, 0, 0)
-                field10 = Field10(mutableListOf(
-                        ElementOfForest(0, 0, "0", 0, 0f, 0, 0, 0, 0f, 0),
-                        ElementOfForest(0, 0, "0", 0, 0f, 0, 0, 0, 0f, 0)
-                ))
-                field11 = Field11(0, 0, 0, 0f, 0f, 0f, 0, 0)
-                field12 = Field12(0, 0, "0", 0, 0, 0, 0)
-                field19 = Field19(0, 0, 0f)
-                field29 = Field29(0, 0, 0, "0", 0f, 0f, "0")
-                field23 = Field23(mutableListOf(0, 0, 0))
-                field31 = Field31(1.5f, 2f, 30, 10, "E")
-            })
-
-
+            AreaModel(Area())*/
         bindModel()
         buildKvList() //todo load list
         applyButtons()
 
-
-
-        //root.onMouseClicked = EventHandler { model.commit() }
 
         primaryStage.setOnCloseRequest {
             model.commit()
@@ -468,6 +449,14 @@ class MainView : View("My View") {
                 for (i in it.field10.forestElements.indices){
                     f10Elements[i].item = it.field10.forestElements[i]
                 }
+                with(dopViewModel){
+                    field12ViewModel?.item = it.field12
+                    field11ViewModel?.item = it.field11
+                    field13ViewModel?.item = it.field13
+                    field19ViewModel?.item = it.field19
+                    field23ViewModel?.item = it.field23
+                    field29ViewModel?.item = it.field29
+                }
             }
             isEditable = true
             anchorpaneConstraints {
@@ -566,8 +555,8 @@ class MainView : View("My View") {
 
 
     private infix fun TextField.bystr(other: Property<String>) = this.bind(other)
-    private infix fun TextField.byint(other: Property<Int>) = this.bind(other as IntegerProperty)
-    private infix fun TextField.byfloat(other: Property<Float>) = this.bind(other as FloatProperty)
+    private infix fun TextField.byint(other: Property<Int>) = this.bind(property = other, readonly = false, converter = FieldIntConverter())
+    private infix fun TextField.byfloat(other: Property<Float>) = this.bind(property = other, converter = FieldFloatConverter())
 
     private fun ElementOfForestViewModel.bind10(
         hRang: TextField,
@@ -594,3 +583,5 @@ class MainView : View("My View") {
     }
 
 }
+
+
