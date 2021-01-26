@@ -465,6 +465,9 @@ class MainView : View("My View") {
                 field3ViewModel.item = it.field3
                 field4ViewModel.item = it.field4
                 field31ViewModel.item = it.field31
+                for (i in it.field10.forestElements.indices){
+                    f10Elements[i].item = it.field10.forestElements[i]
+                }
             }
             isEditable = true
             anchorpaneConstraints {

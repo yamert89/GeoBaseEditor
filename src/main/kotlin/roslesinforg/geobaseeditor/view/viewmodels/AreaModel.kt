@@ -12,7 +12,7 @@ class AreaModel(var area: Area) : ItemViewModel<Area>(area) {
     val field2ViewModel = Field2ViewModel(area.field2)
     val field3ViewModel = Field3ViewModel(area.field3)
     val field4ViewModel = Field4ViewModel(area.field4)
-    val f10Elements = ArrayList<ElementOfForestViewModel>(10)
+    val f10Elements = ArrayList<ElementOfForestViewModel>(10) //fixme sorting by hrang
     val field31ViewModel = Field31ViewModel(area.field31)
     val dopViewModel = DopViewModel(area)
 
