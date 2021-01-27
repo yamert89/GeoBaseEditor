@@ -8,11 +8,11 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.FlowPane?>
 
-<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="523.0" prefWidth="800.0" stylesheets="main.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="523.0" prefWidth="800.0" stylesheets="main.css" xmlns="http://javafx.com/javafx/8.0.102" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <ButtonBar buttonMinWidth="50.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="18.0" prefWidth="800.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <buttons>
-          <Button mnemonicParsing="false" text="Button" />
+          <Button fx:id="btn_save" mnemonicParsing="false" text="Сохранить" />
             <Button fx:id="btn_open" mnemonicParsing="false" text="Открыть" />
         </buttons>
          <padding>

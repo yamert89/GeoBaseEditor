@@ -230,6 +230,7 @@ class MainView : View("My View") {
     val field_dop6_8: TextField by fxid()
     lateinit var kv_list: javafx.scene.control.TableView<Area>
     val btn_open: Button by fxid()
+    val btn_save: Button by fxid()
 
     var path: Path
 
@@ -547,9 +548,18 @@ class MainView : View("My View") {
                 }
                 controller.read(files[0])
             }
-            tooltip("Открыть") {
+            tooltip("Открыть")
+        }
 
+        btn_save.apply {
+            action {
+                val dir = chooseDirectory(
+                    "Сохранить",
+                    owner = primaryStage
+                ) ?: return@action
+                controller.writeToRawFile(dir)
             }
+            tooltip("Сохранить")
         }
     }
 

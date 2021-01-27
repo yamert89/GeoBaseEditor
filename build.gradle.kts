@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "roslesinforg"
-version = "0.2"
+version = "0.3"
 
 java{
     sourceCompatibility = JavaVersion.VERSION_1_8
@@ -19,11 +19,10 @@ configure<JavaPluginConvention> {
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
     implementation("no.tornado:tornadofx:1.7.20")
-    //implementation("roslesinforg:areatypes:1.8")
-    //implementation("roslesinforg:nab-parser:1.0")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.1")
     implementation(project(":areatypes2"))
     implementation(project(":nab_parser"))
+    implementation(project(":area-writer"))
 }
 
 tasks {
