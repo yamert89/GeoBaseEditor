@@ -20,7 +20,20 @@ class AreaModel(var area: Area) : ItemViewModel<Area>(area) {
     init {
         area.field10.forestElements.forEach { f10Elements.add(ElementOfForestViewModel(it)) }
         while (f10Elements.size < 10) f10Elements.add(ElementOfForestViewModel(ElementOfForest()))
+        itemProperty.onChange {
+            if (it == null) return@onChange
+            field1Model.item = it.field1
+            field2ViewModel.item = it.field2
+            field3ViewModel.item = it.field3
+            field4ViewModel.item = it.field4
+            field31ViewModel.item = it.field31
+            for (i in it.field10.forestElements.indices){
+                f10Elements[i].item = it.field10.forestElements[i]
+            }
+            dopViewModel.item = it
+        }
     }
+
 
     override fun onCommit() {
         super.onCommit()

@@ -20,6 +20,20 @@ class DopViewModel(area: Area): ItemViewModel<Area>(area) {
     val dopFields = mutableListOf<DopFieldViewModel<out Field>>()
 
     init {
+       updateDopFields()
+        itemProperty.onChange {
+            it!!
+            field12ViewModel?.item = it.field12
+            field11ViewModel?.item = it.field11
+            field13ViewModel?.item = it.field13
+            field19ViewModel?.item = it.field19
+            field23ViewModel?.item = it.field23
+            field29ViewModel?.item = it.field29
+            updateDopFields() }
+    }
+
+    private fun updateDopFields(){
+        dopFields.clear()
         dopFields.apply {
             field11ViewModel?.let { add(it) }
             field12ViewModel?.let { add(it) }
@@ -112,10 +126,26 @@ class DopViewModel(area: Area): ItemViewModel<Area>(area) {
         val val7Property: Property<Int> = SimpleIntegerProperty(if (field23.info.size >= 7) field23.info[6] else 0)  as  Property<Int>
         val val8Property: Property<Int> = SimpleIntegerProperty(if (field23.info.size == 8) field23.info[7] else 0)  as  Property<Int>
 
+        init {
+            itemProperty.onChange {
+                it!!
+                if (it.info.isEmpty()) return@onChange
+                val1Property.value = if (it.info.isNotEmpty()) it.info[0] else 0
+                val2Property.value = if (it.info.size >= 2) it.info[1] else 0
+                val3Property.value = if (it.info.size >= 3) it.info[2] else 0
+                val4Property.value = if (it.info.size >= 4) it.info[3] else 0
+                val5Property.value = if (it.info.size >= 5) it.info[4] else 0
+                val6Property.value = if (it.info.size >= 6) it.info[5] else 0
+                val7Property.value = if (it.info.size >= 7) it.info[6] else 0
+                val8Property.value = if (it.info.size == 8) it.info[7] else 0
+            }
+        }
+
         override fun isempty(): Boolean {
             return field23.info.isEmpty()
         }
         override var number = SimpleIntegerProperty(23) as  Property<Int>
+
 
         override fun onCommit() {
             super.onCommit()

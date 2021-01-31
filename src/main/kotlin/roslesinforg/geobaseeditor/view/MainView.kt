@@ -228,7 +228,7 @@ class MainView : View("My View") {
     val field_dop4_8: TextField by fxid()
     val field_dop5_8: TextField by fxid()
     val field_dop6_8: TextField by fxid()
-    lateinit var kv_list: javafx.scene.control.TableView<Area>
+    lateinit var kv_list: TableView<Area>
     val btn_open: Button by fxid()
     val btn_save: Button by fxid()
 
@@ -328,13 +328,14 @@ class MainView : View("My View") {
                 field_31_element2 bystr element2Property
             }
 
-            bindDop()
+           // bindDop()
         }
     }
 
     private fun bindDop(){
         val dopFields = model.dopViewModel.dopFields
         val size = dopFields.size
+        if (size == 0) return
         var idx = 0
 
         bindDopLine(field_dop1_n, field_dop1_1, field_dop1_2, field_dop1_3, field_dop1_4,
@@ -429,11 +430,6 @@ class MainView : View("My View") {
 
     }
 
-
-    private fun unbindDop(){
-
-    }
-
     private fun buildKvList(){
         root.apply { //todo test, replace with table view with row expander
             val format = DataFormat("application/x-java-serialized-object")
@@ -441,23 +437,7 @@ class MainView : View("My View") {
             kv_list = tableview(controller.areas){
             model.rebindOnChange(this){
                 item = it
-                if (it == null) return@rebindOnChange
-                field1Model.item = it.field1
-                field2ViewModel.item = it.field2
-                field3ViewModel.item = it.field3
-                field4ViewModel.item = it.field4
-                field31ViewModel.item = it.field31
-                for (i in it.field10.forestElements.indices){
-                    f10Elements[i].item = it.field10.forestElements[i]
-                }
-                with(dopViewModel){
-                    field12ViewModel?.item = it.field12
-                    field11ViewModel?.item = it.field11
-                    field13ViewModel?.item = it.field13
-                    field19ViewModel?.item = it.field19
-                    field23ViewModel?.item = it.field23
-                    field29ViewModel?.item = it.field29
-                }
+                bindDop()
             }
             isEditable = true
             anchorpaneConstraints {
