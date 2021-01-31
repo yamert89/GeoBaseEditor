@@ -2,16 +2,14 @@ package roslesinforg.geobaseeditor
 
 import javafx.beans.property.SimpleIntegerProperty
 import javafx.beans.property.SimpleListProperty
-import javafx.collections.ObservableList
 import roslesinforg.geobaseeditor.model.DataReader
 import roslesinforg.geobaseeditor.model.RawDataReader
 import roslesinforg.porokhin.areatypes.Area
 import roslesinforg.porokhin.areatypes.fields.Field1
-import roslesinforg.porokhin.areawriter.RawAreaWriter
+import roslesinforg.porokhin.areawriter.RawSoliAreaWriter
 import tornadofx.Controller
 import tornadofx.toObservable
 import java.io.File
-import java.util.*
 
 class GeoBaseEditorController: Controller() {
     var areas: SimpleListProperty<Area> = SimpleListProperty()
@@ -32,7 +30,7 @@ class GeoBaseEditorController: Controller() {
     }
 
     fun writeToRawFile(file: File){
-        val writer = RawAreaWriter(file)
+        val writer = RawSoliAreaWriter(file)
         writer.writeAreas(areas)
     }
 

@@ -13,7 +13,12 @@ class FieldIntConverter: IntegerStringConverter() {
 
 class FieldFloatConverter: FloatStringConverter(){
     override fun toString(value: Float?): String {
-        return if (value == 0f) "" else value.toString() //todo.0 add splitting
+        val strValue = value.toString()
+        return when{
+            value == 0f -> ""
+            strValue.endsWith(".0") -> strValue.substringBeforeLast(".0")
+            else -> strValue
+        }
     }
 }
 
