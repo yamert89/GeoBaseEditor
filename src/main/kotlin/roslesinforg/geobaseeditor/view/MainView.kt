@@ -233,6 +233,7 @@ class MainView : View("My View") {
     val btn_save: Button by fxid()
 
     var path: Path
+    var input: Path //todo for test
 
     
     var model: AreaModel
@@ -242,7 +243,11 @@ class MainView : View("My View") {
     init {
         model = AreaModel(Area())
         path = Paths.get("D:/my/json")
-        if (Files.notExists(Paths.get("D:/my"))) path = Paths.get("J:/json")
+        input = Paths.get("D:/my/0309")
+        if (Files.notExists(Paths.get("D:/my"))) {
+            path = Paths.get("J:/json")
+            input = Paths.get("J:/0309")
+        }
 
         /*
         model = if(Files.exists(path)) {
@@ -255,6 +260,7 @@ class MainView : View("My View") {
         bindModel()
         buildKvList() //todo load list
         applyButtons()
+        controller.read(Paths.get("J:/0309").toFile())
 
 
         primaryStage.setOnCloseRequest {
@@ -393,6 +399,8 @@ class MainView : View("My View") {
                     col7 byint degreeDamage2
                 }
                 is DopViewModel.Field13ViewModel -> {
+                    col2.textProperty().unbind()//todo
+
                     col1 byfloat widthProperty
                     col2 byfloat lengthProperty
                     col3 byint stateProperty
@@ -437,6 +445,7 @@ class MainView : View("My View") {
             kv_list = tableview(controller.areas){
             model.rebindOnChange(this){
                 item = it
+                println("Selection kv: ${item.kv} vid: ${item.field1.number}")
                 bindDop()
             }
             isEditable = true

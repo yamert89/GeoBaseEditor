@@ -9,7 +9,7 @@ import roslesinforg.porokhin.areatypes.fields.*
 import roslesinforg.porokhin.areatypes.fields.Field
 import tornadofx.*
 @Suppress("UNCHECKED_CAST")
-class DopViewModel(area: Area): ItemViewModel<Area>(area) {
+class DopViewModel(val area: Area): ItemViewModel<Area>(area) {
 
     var field11ViewModel: Field11ViewModel? = if (area.field11 == Field11.Empty11) null else Field11ViewModel(area.field11)
     var field12ViewModel: Field12ViewModel? = if (area.field12 == Field12.Empty12) null else Field12ViewModel(area.field12)
@@ -20,9 +20,11 @@ class DopViewModel(area: Area): ItemViewModel<Area>(area) {
     val dopFields = mutableListOf<DopFieldViewModel<out Field>>()
 
     init {
-       updateDopFields()
+        initProperties(area)
+        updateDopFields()
         itemProperty.onChange {
             it!!
+            initProperties(it)
             field12ViewModel?.item = it.field12
             field11ViewModel?.item = it.field11
             field13ViewModel?.item = it.field13
@@ -30,6 +32,14 @@ class DopViewModel(area: Area): ItemViewModel<Area>(area) {
             field23ViewModel?.item = it.field23
             field29ViewModel?.item = it.field29
             updateDopFields() }
+    }
+
+    private fun initProperties(area: Area){
+       field11ViewModel = if (area.field11 == Field11.Empty11) null else Field11ViewModel(area.field11)
+       field12ViewModel = if (area.field12 == Field12.Empty12) null else Field12ViewModel(area.field12)
+       field13ViewModel = if (area.field13 == Field13.Empty13) null else Field13ViewModel(area.field13)
+       field19ViewModel = if (area.field19 == Field19.Empty19) null else Field19ViewModel(area.field19)
+       field29ViewModel = if (area.field29 == Field29.Empty29) null else Field29ViewModel(area.field29)
     }
 
     private fun updateDopFields(){
@@ -67,6 +77,19 @@ class DopViewModel(area: Area): ItemViewModel<Area>(area) {
         val countProperty = bind(Field11::count)
         val stateProperty = bind(Field11::state)
         val reasonOfDeathProperty = bind(Field11::reazonOfDeath)
+        init {
+            itemProperty.onChange {
+                it!!
+                birthYearProperty.value = it.birthYear
+                prepareTypeProperty.value = it.prepareType
+                createTypeProperty.value = it.createType
+                inLineProperty.value = it.inLine
+                betweenRowsProperty.value = it.betweenRows
+                countProperty.value = it.count
+                stateProperty.value = it.state
+                reasonOfDeathProperty.value = it.reazonOfDeath
+            }
+        }
         override fun isempty() = field11 == Field11.Empty11
         override var number = SimpleIntegerProperty(11)  as Property<Int>
 

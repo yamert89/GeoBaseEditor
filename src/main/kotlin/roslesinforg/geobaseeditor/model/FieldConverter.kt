@@ -13,11 +13,18 @@ class FieldIntConverter: IntegerStringConverter() {
 
 class FieldFloatConverter: FloatStringConverter(){
     override fun toString(value: Float?): String {
-        val strValue = value.toString()
+        val strValue = value.toString().replace(".", ",")
         return when{
             value == 0f -> ""
-            strValue.endsWith(".0") -> strValue.substringBeforeLast(".0")
+            strValue.endsWith(",0") -> strValue.substringBeforeLast(",0")
             else -> strValue
+        }
+    }
+
+    override fun fromString(value: String?): Float {
+        return when{
+            value == null || value.isEmpty() -> 0f
+            else -> value.replace(",", ".").toDouble().toFloat()
         }
     }
 }
