@@ -35,7 +35,6 @@ class DopViewModel(val area: Area): ItemViewModel<Area>(area) {
     }
 
     private fun initProperties(area: Area){
-       field11ViewModel = if (area.field11 == Field11.Empty11) null else Field11ViewModel(area.field11)
        field12ViewModel = if (area.field12 == Field12.Empty12) null else Field12ViewModel(area.field12)
        field13ViewModel = if (area.field13 == Field13.Empty13) null else Field13ViewModel(area.field13)
        field19ViewModel = if (area.field19 == Field19.Empty19) null else Field19ViewModel(area.field19)

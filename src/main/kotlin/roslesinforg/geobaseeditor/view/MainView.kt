@@ -260,7 +260,7 @@ class MainView : View("My View") {
         bindModel()
         buildKvList() //todo load list
         applyButtons()
-        controller.read(Paths.get("J:/0309").toFile())
+        controller.read(input.toFile())
 
 
         primaryStage.setOnCloseRequest {
@@ -399,8 +399,6 @@ class MainView : View("My View") {
                     col7 byint degreeDamage2
                 }
                 is DopViewModel.Field13ViewModel -> {
-                    col2.textProperty().unbind()//todo
-
                     col1 byfloat widthProperty
                     col2 byfloat lengthProperty
                     col3 byint stateProperty
@@ -439,7 +437,7 @@ class MainView : View("My View") {
     }
 
     private fun buildKvList(){
-        root.apply { //todo test, replace with table view with row expander
+        root.apply { //todo table view with row expander
             val format = DataFormat("application/x-java-serialized-object")
 
             kv_list = tableview(controller.areas){
