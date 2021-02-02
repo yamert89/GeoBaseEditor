@@ -9,7 +9,9 @@ import roslesinforg.porokhin.areatypes.fields.*
 import roslesinforg.porokhin.areatypes.fields.Field
 import tornadofx.*
 @Suppress("UNCHECKED_CAST")
-class DopViewModel(val area: Area): ItemViewModel<Area>(area) {
+class DopViewModel(area: Area): ItemViewModel<Area>(area) {
+
+
 
     var field11ViewModel: Field11ViewModel? = if (area.field11 == Field11.Empty11) null else Field11ViewModel(area.field11)
     var field12ViewModel: Field12ViewModel? = if (area.field12 == Field12.Empty12) null else Field12ViewModel(area.field12)

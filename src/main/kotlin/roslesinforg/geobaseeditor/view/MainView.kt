@@ -1,5 +1,6 @@
 package roslesinforg.geobaseeditor.view
 
+import javafx.beans.InvalidationListener
 import javafx.beans.property.*
 import javafx.event.EventHandler
 import javafx.geometry.Insets
@@ -383,7 +384,7 @@ class MainView : View("My View") {
                     col1 byint birthYearProperty
                     col2 byint prepareTypeProperty
                     col3 byint createTypeProperty
-                    col4 byfloat  inLineProperty
+                    col4 byfloat inLineProperty
                     col5 byfloat betweenRowsProperty
                     col6 byfloat countProperty
                     col7 byint stateProperty
@@ -547,6 +548,7 @@ class MainView : View("My View") {
                 controller.writeToRawFile(dir)
             }
             tooltip("Сохранить")
+
         }
     }
 
