@@ -21,6 +21,7 @@ class AreaModel(var area: Area) : ItemViewModel<Area>(area) {
         area.field10.forestElements.forEach { f10Elements.add(ElementOfForestViewModel(it)) }
         while (f10Elements.size < 10) f10Elements.add(ElementOfForestViewModel(ElementOfForest()))
         itemProperty.onChange {
+            commit()
             if (it == null) return@onChange
             field1Model.item = it.field1
             field2ViewModel.item = it.field2

@@ -29,16 +29,20 @@ class DopViewModelv2(area: Area): ItemViewModel<Area>(area) {
     init {
         itemProperty.onChange {
             if (it == null) return@onChange
+            invalidateViewModels()
             updateDopFields(it)
         }
     }
 
     override fun onCommit() {
+        println("commit dop model")
         val area = item
         var model: DopFieldViewModel = dopFieldViewModel1
-        invalidateViewModels()
+        //invalidateViewModels()
         with(model){
-            while (isBounds){
+            while (model.isBounds){
+                isBounds = true
+                println(numberProperty.value)
                 when(numberProperty.value){
                     11 -> area.field11 = Field11(
                         col1Property.value.toInt(),
@@ -113,7 +117,7 @@ class DopViewModelv2(area: Area): ItemViewModel<Area>(area) {
     }
 
     private fun updateDopFields(area: Area){
-        invalidateViewModels()
+        println("update dop fields")
         with(area){
             if (field11.isNotEmpty()) {
                 val model = changeDopFieldViewModel()
@@ -147,6 +151,7 @@ class DopViewModelv2(area: Area): ItemViewModel<Area>(area) {
     }
 
     private fun invalidateViewModels(){
+        println("dop models invalidated")
         dopFieldViewModels.forEach {
             it.apply {
                 isBounds = false
@@ -188,6 +193,7 @@ class DopViewModelv2(area: Area): ItemViewModel<Area>(area) {
 
         init {
             itemProperty.onChange {
+                println("dop field model changed")
                 when(it){
                     is Field11 -> {
                         numberProperty.value = 11
@@ -263,6 +269,10 @@ class DopViewModelv2(area: Area): ItemViewModel<Area>(area) {
                 }
                 isBounds = true
             }
+        }
+
+        override fun toString(): String {
+            return "DopFieldViewModel_${numberProperty.value}"
         }
     }
 

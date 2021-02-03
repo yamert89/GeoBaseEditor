@@ -2,6 +2,7 @@ package roslesinforg.geobaseeditor.view.viewmodels
 
 import roslesinforg.porokhin.areatypes.fields.ElementOfForest
 import tornadofx.ItemViewModel
+import tornadofx.onChange
 
 class ElementOfForestViewModel(element: ElementOfForest): ItemViewModel<ElementOfForest>(element) {
     val hRangProperty = bind(ElementOfForest::hRang)
@@ -14,4 +15,7 @@ class ElementOfForestViewModel(element: ElementOfForest): ItemViewModel<ElementO
     val generationProperty = bind(ElementOfForest::generation)
     val weightProperty = bind(ElementOfForest::weight)
     val sumOfTimberProperty = bind(ElementOfForest::sumOfTimber)
+    init {
+        itemProperty.onChange { commit() }
+    }
 }
