@@ -16,10 +16,6 @@ import javafx.util.converter.IntegerStringConverter
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
-import roslesinforg.geobaseeditor.view.viewmodels.AreaModel
-import roslesinforg.geobaseeditor.view.viewmodels.DopViewModel
-import roslesinforg.geobaseeditor.view.viewmodels.ElementOfForestViewModel
-import roslesinforg.geobaseeditor.view.viewmodels.Field1ViewModel
 import roslesinforg.porokhin.areatypes.Area
 import roslesinforg.porokhin.areatypes.fields.*
 import roslesinforg.porokhin.areatypes.fields.Field
@@ -33,6 +29,7 @@ import kotlin.reflect.jvm.javaField
 import roslesinforg.geobaseeditor.GeoBaseEditorController
 import roslesinforg.geobaseeditor.model.FieldFloatConverter
 import roslesinforg.geobaseeditor.model.FieldIntConverter
+import roslesinforg.geobaseeditor.view.viewmodels.*
 
 
 fun main() {
@@ -335,33 +332,25 @@ class MainView : View("My View") {
                 field_31_element2 bystr element2Property
             }
 
-           // bindDop()
+           bindDop()
         }
     }
 
     private fun bindDop(){
-        val dopFields = model.dopViewModel.dopFields
-        val size = dopFields.size
-        if (size == 0) return
-        var idx = 0
-
-        bindDopLine(field_dop1_n, field_dop1_1, field_dop1_2, field_dop1_3, field_dop1_4,
-            field_dop1_5, field_dop1_6, field_dop1_7, field_dop1_8, dopFields[idx++])
-        if (idx == size) return
-        bindDopLine(field_dop2_n, field_dop2_1, field_dop2_2, field_dop2_3, field_dop2_4,
-            field_dop2_5, field_dop2_6, field_dop2_7, field_dop2_8, dopFields[idx++])
-        if (idx == size) return
-        bindDopLine(field_dop3_n, field_dop3_1, field_dop3_2, field_dop3_3, field_dop3_4,
-            field_dop3_5, field_dop3_6, field_dop3_7, field_dop3_8, dopFields[idx++])
-        if (idx == size) return
-        bindDopLine(field_dop4_n, field_dop4_1, field_dop4_2, field_dop4_3, field_dop4_4,
-            field_dop4_5, field_dop4_6, field_dop4_7, field_dop4_8, dopFields[idx++])
-        if (idx == size) return
-        bindDopLine(field_dop5_n, field_dop5_1, field_dop5_2, field_dop5_3, field_dop5_4,
-            field_dop5_5, field_dop5_6, field_dop5_7, field_dop5_8, dopFields[idx++])
-        if (idx == size) return
-        bindDopLine(field_dop6_n, field_dop6_1, field_dop6_2, field_dop6_3, field_dop6_4,
-            field_dop6_5, field_dop6_6, field_dop6_7, field_dop6_8, dopFields[idx])
+        with(model.dopViewModelv2){
+            bindDopLine(field_dop1_n, field_dop1_1, field_dop1_2, field_dop1_3, field_dop1_4, field_dop1_5, field_dop1_6,
+                field_dop1_7, field_dop1_8, dopFieldViewModel1)
+            bindDopLine(field_dop2_n, field_dop2_1, field_dop2_2, field_dop2_3, field_dop2_4, field_dop2_5, field_dop2_6,
+                field_dop2_7, field_dop2_8, dopFieldViewModel2)
+            bindDopLine(field_dop3_n, field_dop3_1, field_dop3_2, field_dop3_3, field_dop3_4, field_dop3_5, field_dop3_6,
+                field_dop3_7, field_dop3_8, dopFieldViewModel3)
+            bindDopLine(field_dop4_n, field_dop4_1, field_dop4_2, field_dop4_3, field_dop4_4, field_dop4_5, field_dop4_6,
+                field_dop4_7, field_dop4_8, dopFieldViewModel4)
+            bindDopLine(field_dop5_n, field_dop5_1, field_dop5_2, field_dop5_3, field_dop5_4, field_dop5_5, field_dop5_6,
+                field_dop5_7, field_dop5_8, dopFieldViewModel5)
+            bindDopLine(field_dop6_n, field_dop6_1, field_dop6_2, field_dop6_3, field_dop6_4, field_dop6_5, field_dop6_6,
+                field_dop6_7, field_dop6_8, dopFieldViewModel6)
+        }
     }
 
     private fun bindDopLine(
@@ -374,65 +363,20 @@ class MainView : View("My View") {
         col6: TextField,
         col7: TextField,
         col8: TextField,
-        dopViewModel: DopViewModel.DopFieldViewModel<out Field>
+        dopViewModel: DopViewModelv2.DopFieldViewModel
     ){
 
+
         with(dopViewModel){
-            fieldName byint number
-            when(this){
-                is DopViewModel.Field11ViewModel -> {
-                    col1 byint birthYearProperty
-                    col2 byint prepareTypeProperty
-                    col3 byint createTypeProperty
-                    col4 byfloat inLineProperty
-                    col5 byfloat betweenRowsProperty
-                    col6 byfloat countProperty
-                    col7 byint stateProperty
-                    col8 byint reasonOfDeathProperty
-                }
-                is DopViewModel.Field12ViewModel -> {
-                    col1 byint reasonOfDamageProperty
-                    col2 byint yearOfDamageProperty
-                    col3 bystr speciesOfDamageProperty
-                    col4 byint typeEnemy1
-                    col5 byint degreeDamage1
-                    col6 byint typeEnemy2
-                    col7 byint degreeDamage2
-                }
-                is DopViewModel.Field13ViewModel -> {
-                    col1 byfloat widthProperty
-                    col2 byfloat lengthProperty
-                    col3 byint stateProperty
-                    col4 byint purposeProperty
-                    col5 byint typeOfRoadSurfaceProperty
-                    col6 byint widthOfRoadProperty
-                    col7 byint seasonalityProperty
-                }
-                is DopViewModel.Field19ViewModel -> {
-                    col1 byint typeSwampProperty
-                    col2 byint typePlantsProperty
-                    col3 byfloat weightOfPeatProperty
-                }
-                is DopViewModel.Field29ViewModel -> {
-                    col1 byint typeProperty
-                    col2 byint yearProperty
-                    col3 byint categoryBeforeProperty
-                    col4 bystr speciesBeforeProperty
-                    col5 byfloat lengthBeforeProperty
-                    col6 byfloat lengthBetweenProperty
-                    col7 bystr bonProperty
-                }
-                is DopViewModel.Field23ViewModel -> {
-                    col1 byint val1Property
-                    col2 byint val2Property
-                    col3 byint val3Property
-                    col4 byint val4Property
-                    col5 byint val5Property
-                    col6 byint val6Property
-                    col7 byint val7Property
-                    col8 byint val8Property
-                }
-            }
+            fieldName.bind(numberProperty)
+            col1.bind(col1Property)
+            col2.bind(col2Property)
+            col3.bind(col3Property)
+            col4.bind(col4Property)
+            col5.bind(col5Property)
+            col6.bind(col6Property)
+            col7.bind(col7Property)
+            col8.bind(col8Property)
         }
 
     }
@@ -445,7 +389,6 @@ class MainView : View("My View") {
             model.rebindOnChange(this){
                 item = it
                 println("Selection kv: ${item.kv} vid: ${item.field1.number}")
-                bindDop()
             }
             isEditable = true
             anchorpaneConstraints {

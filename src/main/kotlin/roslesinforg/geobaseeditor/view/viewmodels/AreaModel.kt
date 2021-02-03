@@ -14,7 +14,7 @@ class AreaModel(var area: Area) : ItemViewModel<Area>(area) {
     val field4ViewModel = Field4ViewModel(area.field4)
     val f10Elements = ArrayList<ElementOfForestViewModel>(10) //fixme sorting by hrang
     val field31ViewModel = Field31ViewModel(area.field31)
-    val dopViewModel = DopViewModel(area)
+    val dopViewModelv2 = DopViewModelv2(area)
 
 
     init {
@@ -30,7 +30,7 @@ class AreaModel(var area: Area) : ItemViewModel<Area>(area) {
             for (i in it.field10.forestElements.indices){
                 f10Elements[i].item = it.field10.forestElements[i]
             }
-            dopViewModel.item = it
+            dopViewModelv2.item = it
         }
     }
 
@@ -43,7 +43,7 @@ class AreaModel(var area: Area) : ItemViewModel<Area>(area) {
         field3ViewModel.commit()
         field4ViewModel.commit()
         field31ViewModel.commit()
-        dopViewModel.commit()
+        dopViewModelv2.commit()
         area.field10.forestElements.clear()
         f10Elements.forEach {
             area.field10.forestElements.add(
