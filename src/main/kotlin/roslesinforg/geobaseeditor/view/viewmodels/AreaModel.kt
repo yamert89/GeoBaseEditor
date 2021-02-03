@@ -18,8 +18,10 @@ class AreaModel(var area: Area) : ItemViewModel<Area>(area) {
 
 
     init {
-        area.field10.forestElements.forEach { f10Elements.add(ElementOfForestViewModel(it)) }
-        while (f10Elements.size < 10) f10Elements.add(ElementOfForestViewModel(ElementOfForest()))
+        with(area.field10.forestElements){
+            while (size < 10) add(ElementOfForest())
+            forEach { f10Elements.add(ElementOfForestViewModel(it)) }
+        }
         itemProperty.onChange {
             commit()
             if (it == null) return@onChange
@@ -45,14 +47,15 @@ class AreaModel(var area: Area) : ItemViewModel<Area>(area) {
         field4ViewModel.commit()
         field31ViewModel.commit()
         dopViewModelv2.commit()
-        area.field10.forestElements.clear()
-        f10Elements.forEach {
+        f10Elements.forEach { it.commit() }
+
+        /*f10Elements.forEach {
             area.field10.forestElements.add(
                     ElementOfForest(it.hRangProperty.value, it.proportionProperty.value, it.speciesProperty.value,
                     it.ageProperty.value, it.hProperty.value, it.dProperty.value, it.tradeClassProperty.value, it.generationProperty.value,
                     it.weightProperty.value, it.sumOfTimberProperty.value)
             )
-        }
+        }*/
     }
 
 

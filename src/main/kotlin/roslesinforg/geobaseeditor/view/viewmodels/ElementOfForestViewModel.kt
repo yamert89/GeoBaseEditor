@@ -15,7 +15,7 @@ class ElementOfForestViewModel(element: ElementOfForest): ItemViewModel<ElementO
     val generationProperty = bind(ElementOfForest::generation)
     val weightProperty = bind(ElementOfForest::weight)
     val sumOfTimberProperty = bind(ElementOfForest::sumOfTimber)
-    init {
-        itemProperty.onChange { commit() }
+    override fun onCommit() {
+        println("commit element of forest")
     }
 }
