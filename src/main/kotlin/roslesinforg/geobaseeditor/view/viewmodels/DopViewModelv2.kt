@@ -11,19 +11,13 @@ import roslesinforg.porokhin.areatypes.fields.Field
 import tornadofx.*
 @Suppress("UNCHECKED_CAST") //todo refactoring with lists?
 class DopViewModelv2(area: Area): ItemViewModel<Area>(area) {
-    val dopFieldViewModel1: DopFieldViewModel = DopFieldViewModel(area.field11)
-    val dopFieldViewModel2: DopFieldViewModel = DopFieldViewModel(area.field11)
-    val dopFieldViewModel3: DopFieldViewModel = DopFieldViewModel(area.field11)
-    val dopFieldViewModel4: DopFieldViewModel = DopFieldViewModel(area.field11)
-    val dopFieldViewModel5: DopFieldViewModel = DopFieldViewModel(area.field11)
-    val dopFieldViewModel6: DopFieldViewModel = DopFieldViewModel(area.field11)
     val dopFieldViewModels = listOf(
-        dopFieldViewModel1,
-        dopFieldViewModel2,
-        dopFieldViewModel3,
-        dopFieldViewModel4,
-        dopFieldViewModel5,
-        dopFieldViewModel6
+        DopFieldViewModel(Field23.Empty23),
+        DopFieldViewModel(Field23.Empty23),
+        DopFieldViewModel(Field23.Empty23),
+        DopFieldViewModel(Field23.Empty23),
+        DopFieldViewModel(Field23.Empty23),
+        DopFieldViewModel(Field23.Empty23)
     )
 
     init {
@@ -37,7 +31,7 @@ class DopViewModelv2(area: Area): ItemViewModel<Area>(area) {
     override fun onCommit() {
         println("commit dop model")
         val area = item
-        var model: DopFieldViewModel = dopFieldViewModel1
+        var model: DopFieldViewModel = dopFieldViewModels[0]
         //invalidateViewModels()
         with(model){
             while (model.isBounds){
@@ -169,13 +163,7 @@ class DopViewModelv2(area: Area): ItemViewModel<Area>(area) {
     }
 
     private fun changeDopFieldViewModel(): DopFieldViewModel{
-        return if (!dopFieldViewModel1.isBounds) dopFieldViewModel1 else
-                if (!dopFieldViewModel2.isBounds) dopFieldViewModel2 else
-                    if (!dopFieldViewModel3.isBounds) dopFieldViewModel3 else
-                        if (!dopFieldViewModel4.isBounds) dopFieldViewModel4 else
-                            if (!dopFieldViewModel5.isBounds) dopFieldViewModel5 else
-                                 dopFieldViewModel6
-
+        return dopFieldViewModels.first { !it.isBounds }
     }
 
 

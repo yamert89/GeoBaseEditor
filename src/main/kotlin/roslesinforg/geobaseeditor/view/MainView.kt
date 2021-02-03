@@ -339,17 +339,17 @@ class MainView : View("My View") {
     private fun bindDop(){
         with(model.dopViewModelv2){
             bindDopLine(field_dop1_n, field_dop1_1, field_dop1_2, field_dop1_3, field_dop1_4, field_dop1_5, field_dop1_6,
-                field_dop1_7, field_dop1_8, dopFieldViewModel1)
+                field_dop1_7, field_dop1_8, dopFieldViewModels[0])
             bindDopLine(field_dop2_n, field_dop2_1, field_dop2_2, field_dop2_3, field_dop2_4, field_dop2_5, field_dop2_6,
-                field_dop2_7, field_dop2_8, dopFieldViewModel2)
+                field_dop2_7, field_dop2_8, dopFieldViewModels[1])
             bindDopLine(field_dop3_n, field_dop3_1, field_dop3_2, field_dop3_3, field_dop3_4, field_dop3_5, field_dop3_6,
-                field_dop3_7, field_dop3_8, dopFieldViewModel3)
+                field_dop3_7, field_dop3_8, dopFieldViewModels[2])
             bindDopLine(field_dop4_n, field_dop4_1, field_dop4_2, field_dop4_3, field_dop4_4, field_dop4_5, field_dop4_6,
-                field_dop4_7, field_dop4_8, dopFieldViewModel4)
+                field_dop4_7, field_dop4_8, dopFieldViewModels[3])
             bindDopLine(field_dop5_n, field_dop5_1, field_dop5_2, field_dop5_3, field_dop5_4, field_dop5_5, field_dop5_6,
-                field_dop5_7, field_dop5_8, dopFieldViewModel5)
+                field_dop5_7, field_dop5_8, dopFieldViewModels[4])
             bindDopLine(field_dop6_n, field_dop6_1, field_dop6_2, field_dop6_3, field_dop6_4, field_dop6_5, field_dop6_6,
-                field_dop6_7, field_dop6_8, dopFieldViewModel6)
+                field_dop6_7, field_dop6_8, dopFieldViewModels[5])
         }
     }
 
