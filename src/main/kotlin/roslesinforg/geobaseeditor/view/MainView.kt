@@ -368,15 +368,15 @@ class MainView : View("My View") {
 
 
         with(dopViewModel){
-            fieldName.bind(numberProperty)
-            col1.bind(col1Property)
-            col2.bind(col2Property)
-            col3.bind(col3Property)
-            col4.bind(col4Property)
-            col5.bind(col5Property)
-            col6.bind(col6Property)
-            col7.bind(col7Property)
-            col8.bind(col8Property)
+            fieldName byint numberProperty
+            col1 bystr col1Property
+            col2 bystr col2Property
+            col3 bystr col3Property
+            col4 bystr col4Property
+            col5 bystr col5Property
+            col6 bystr col6Property
+            col7 bystr col7Property
+            col8 bystr col8Property
         }
 
     }

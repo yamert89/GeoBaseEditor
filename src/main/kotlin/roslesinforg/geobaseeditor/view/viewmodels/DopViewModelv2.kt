@@ -168,7 +168,7 @@ class DopViewModelv2(area: Area): ItemViewModel<Area>(area) {
 
 
     class DopFieldViewModel(field: Field) : ItemViewModel<Field>(field){
-        var numberProperty = SimpleIntegerProperty()
+        var numberProperty = SimpleIntegerProperty() as Property<Int>
         var col1Property = SimpleStringProperty()
         var col2Property = SimpleStringProperty()
         var col3Property = SimpleStringProperty()
@@ -262,6 +262,7 @@ class DopViewModelv2(area: Area): ItemViewModel<Area>(area) {
         override fun toString(): String {
             return "DopFieldViewModel_${numberProperty.value}"
         }
+        //fun Int.prepare() = this.toString().replace("0", "")
     }
 
 
