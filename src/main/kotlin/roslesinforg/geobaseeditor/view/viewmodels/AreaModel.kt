@@ -36,7 +36,6 @@ class AreaModel(var area: Area) : ItemViewModel<Area>(area) {
         }
     }
 
-
     override fun onCommit() {
         super.onCommit()
         println("commit ${area.kv}")
@@ -47,17 +46,7 @@ class AreaModel(var area: Area) : ItemViewModel<Area>(area) {
         field31ViewModel.commit()
         dopViewModel.commit()
         f10Elements.forEach { it.commit() }
-
-        /*f10Elements.forEach {
-            area.field10.forestElements.add(
-                    ElementOfForest(it.hRangProperty.value, it.proportionProperty.value, it.speciesProperty.value,
-                    it.ageProperty.value, it.hProperty.value, it.dProperty.value, it.tradeClassProperty.value, it.generationProperty.value,
-                    it.weightProperty.value, it.sumOfTimberProperty.value)
-            )
-        }*/
     }
-
-
 
 
 

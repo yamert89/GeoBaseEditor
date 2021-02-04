@@ -30,6 +30,7 @@ class GeoBaseEditorController: Controller() {
     }
 
     fun writeToRawFile(file: File){
+        prepareForSaving()
         val writer = RawSoliAreaWriter(file)
         writer.writeAreas(areas)
     }
@@ -37,4 +38,15 @@ class GeoBaseEditorController: Controller() {
     fun selectArea(kv: Int, area: Int){
         
     }
+
+    private fun prepareForSaving(){
+        areas.forEach { area ->
+            with(area.field10.forestElements){
+                val filtered = filter { it.hRang != 0 }
+                clear()
+                addAll(filtered)
+            }
+        }
+    }
+
 }
