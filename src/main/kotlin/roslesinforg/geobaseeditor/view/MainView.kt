@@ -373,6 +373,7 @@ class MainView : View("My View") {
 
             kv_list = tableview(controller.areas){
             model.rebindOnChange(this){
+                if (it == null) return@rebindOnChange
                 item = it
                 println("Selection kv: ${item.kv} vid: ${item.field1.number}")
             }

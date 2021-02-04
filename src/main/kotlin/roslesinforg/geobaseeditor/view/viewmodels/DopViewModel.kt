@@ -1,14 +1,14 @@
 package roslesinforg.geobaseeditor.view.viewmodels
 
-import javafx.beans.property.IntegerProperty
 import javafx.beans.property.Property
 import javafx.beans.property.SimpleIntegerProperty
 import javafx.beans.property.SimpleStringProperty
-import javafx.collections.ObservableList
 import roslesinforg.porokhin.areatypes.Area
 import roslesinforg.porokhin.areatypes.fields.*
 import roslesinforg.porokhin.areatypes.fields.Field
 import tornadofx.*
+import kotlin.text.toFloat as originalToFloat
+
 @Suppress("UNCHECKED_CAST") //todo refactoring with lists?
 class DopViewModel(area: Area): ItemViewModel<Area>(area) {
     val dopFieldViewModels = listOf(
@@ -32,7 +32,6 @@ class DopViewModel(area: Area): ItemViewModel<Area>(area) {
         println("commit dop model")
         val area = item
         var model: DopFieldViewModel = dopFieldViewModels[0]
-        //invalidateViewModels()
         with(model){
             while (model.isBounds){
                 isBounds = true
@@ -278,6 +277,8 @@ class DopViewModel(area: Area): ItemViewModel<Area>(area) {
     }
 
     fun String.toInt():Int = if (this.isEmpty()) 0 else Integer.parseInt(this)
+
+    fun String.toFloat(): Float = if (this.isEmpty()) 0f else this.originalToFloat()
 
 
 }
