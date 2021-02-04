@@ -276,9 +276,9 @@ class DopViewModel(area: Area): ItemViewModel<Area>(area) {
 
     }
 
-    fun String.toInt():Int = if (this.isEmpty()) 0 else Integer.parseInt(this)
+    private fun String.toInt():Int = if (this.isEmpty()) 0 else Integer.parseInt(this)
 
-    fun String.toFloat(): Float = if (this.isEmpty()) 0f else this.originalToFloat()
+    private fun String.toFloat(): Float = if (this.isEmpty()) 0f else this.originalToFloat()
 
 
 }

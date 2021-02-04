@@ -18,6 +18,7 @@ import roslesinforg.geobaseeditor.model.FieldFloatConverter
 import roslesinforg.geobaseeditor.model.FieldIntConverter
 import roslesinforg.geobaseeditor.model.FieldStringConverter
 import roslesinforg.geobaseeditor.view.viewmodels.*
+import java.lang.Exception
 
 
 fun main() {
@@ -221,6 +222,8 @@ class MainView : View("My View") {
     var path: Path
     var input: Path //todo for test
 
+    val context = ValidationContext()
+
     
     var model: AreaModel
     val controller = find(GeoBaseEditorController::class)
@@ -254,6 +257,17 @@ class MainView : View("My View") {
             val out = Json.encodeToString(model.area)
             println(out)
             Files.write(path, out.toByteArray(UTF_8))
+        }
+
+
+       //todo replace
+        context.addValidator(field_areaNumber, field_areaNumber.textProperty()){
+            try {
+                it!!.toInt()
+                null
+            }catch (e: Exception){
+                error("Введите целое число")
+            }
         }
     }
 
@@ -373,6 +387,11 @@ class MainView : View("My View") {
 
             kv_list = tableview(controller.areas){
             model.rebindOnChange(this){
+                if (!context.validate()){
+                    alert(content = "Fuck", header = "alert", type = Alert.AlertType.ERROR) //todo
+                    rollback()
+                    return@rebindOnChange
+                }
                 if (it == null) return@rebindOnChange
                 item = it
                 println("Selection kv: ${item.kv} vid: ${item.field1.number}")
