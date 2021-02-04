@@ -1,31 +1,18 @@
 package roslesinforg.geobaseeditor.view
 
-import javafx.beans.InvalidationListener
 import javafx.beans.property.*
-import javafx.event.EventHandler
-import javafx.geometry.Insets
 import javafx.scene.control.*
-import javafx.scene.control.cell.TextFieldTableCell
-import javafx.scene.control.cell.TextFieldTreeCell
-import javafx.scene.control.cell.TextFieldTreeTableCell
 import javafx.scene.input.*
 import javafx.scene.layout.*
-import javafx.scene.paint.Paint
-import javafx.util.StringConverter
-import javafx.util.converter.IntegerStringConverter
-import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import roslesinforg.porokhin.areatypes.Area
 import roslesinforg.porokhin.areatypes.fields.*
-import roslesinforg.porokhin.areatypes.fields.Field
 import tornadofx.*
 import java.nio.charset.StandardCharsets.UTF_8
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
-import kotlin.reflect.full.instanceParameter
-import kotlin.reflect.jvm.javaField
 import roslesinforg.geobaseeditor.GeoBaseEditorController
 import roslesinforg.geobaseeditor.model.FieldFloatConverter
 import roslesinforg.geobaseeditor.model.FieldIntConverter
@@ -338,7 +325,7 @@ class MainView : View("My View") {
     }
 
     private fun bindDop(){
-        with(model.dopViewModelv2){
+        with(model.dopViewModel){
             bindDopLine(field_dop1_n, field_dop1_1, field_dop1_2, field_dop1_3, field_dop1_4, field_dop1_5, field_dop1_6,
                 field_dop1_7, field_dop1_8, dopFieldViewModels[0])
             bindDopLine(field_dop2_n, field_dop2_1, field_dop2_2, field_dop2_3, field_dop2_4, field_dop2_5, field_dop2_6,
@@ -364,7 +351,7 @@ class MainView : View("My View") {
         col6: TextField,
         col7: TextField,
         col8: TextField,
-        dopViewModel: DopViewModelv2.DopFieldViewModel
+        dopViewModel: DopViewModel.DopFieldViewModel
     ){
         with(dopViewModel){
             fieldName byint numberProperty

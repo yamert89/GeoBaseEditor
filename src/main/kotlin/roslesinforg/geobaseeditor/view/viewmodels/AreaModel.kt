@@ -3,7 +3,6 @@ package roslesinforg.geobaseeditor.view.viewmodels
 import javafx.beans.property.*
 import roslesinforg.porokhin.areatypes.Area
 import roslesinforg.porokhin.areatypes.fields.ElementOfForest
-import roslesinforg.porokhin.areatypes.fields.Field31
 import tornadofx.*
 
 class AreaModel(var area: Area) : ItemViewModel<Area>(area) {
@@ -14,7 +13,7 @@ class AreaModel(var area: Area) : ItemViewModel<Area>(area) {
     val field4ViewModel = Field4ViewModel(area.field4)
     val f10Elements = ArrayList<ElementOfForestViewModel>(10) //fixme sorting by hrang
     val field31ViewModel = Field31ViewModel(area.field31)
-    val dopViewModelv2 = DopViewModelv2(area)
+    val dopViewModel = DopViewModel(area)
 
 
     init {
@@ -33,7 +32,7 @@ class AreaModel(var area: Area) : ItemViewModel<Area>(area) {
             for (i in it.field10.forestElements.indices){
                 f10Elements[i].item = it.field10.forestElements[i]
             }
-            dopViewModelv2.item = it
+            dopViewModel.item = it
         }
     }
 
@@ -46,7 +45,7 @@ class AreaModel(var area: Area) : ItemViewModel<Area>(area) {
         field3ViewModel.commit()
         field4ViewModel.commit()
         field31ViewModel.commit()
-        dopViewModelv2.commit()
+        dopViewModel.commit()
         f10Elements.forEach { it.commit() }
 
         /*f10Elements.forEach {

@@ -3,191 +3,282 @@ package roslesinforg.geobaseeditor.view.viewmodels
 import javafx.beans.property.IntegerProperty
 import javafx.beans.property.Property
 import javafx.beans.property.SimpleIntegerProperty
+import javafx.beans.property.SimpleStringProperty
 import javafx.collections.ObservableList
 import roslesinforg.porokhin.areatypes.Area
 import roslesinforg.porokhin.areatypes.fields.*
 import roslesinforg.porokhin.areatypes.fields.Field
 import tornadofx.*
-@Suppress("UNCHECKED_CAST")
+@Suppress("UNCHECKED_CAST") //todo refactoring with lists?
 class DopViewModel(area: Area): ItemViewModel<Area>(area) {
-
-
-
-    var field11ViewModel: Field11ViewModel? = if (area.field11 == Field11.Empty11) null else Field11ViewModel(area.field11)
-    var field12ViewModel: Field12ViewModel? = if (area.field12 == Field12.Empty12) null else Field12ViewModel(area.field12)
-    var field13ViewModel: Field13ViewModel? = if (area.field13 == Field13.Empty13) null else Field13ViewModel(area.field13)
-    var field19ViewModel: Field19ViewModel? = if (area.field19 == Field19.Empty19) null else Field19ViewModel(area.field19)
-    var field29ViewModel: Field29ViewModel? = if (area.field29 == Field29.Empty29) null else Field29ViewModel(area.field29)
-    var field23ViewModel: Field23ViewModel? = Field23ViewModel(area.field23)
-    val dopFields = mutableListOf<DopFieldViewModel<out Field>>()
+    val dopFieldViewModels = listOf(
+        DopFieldViewModel(Field23.Empty23),
+        DopFieldViewModel(Field23.Empty23),
+        DopFieldViewModel(Field23.Empty23),
+        DopFieldViewModel(Field23.Empty23),
+        DopFieldViewModel(Field23.Empty23),
+        DopFieldViewModel(Field23.Empty23)
+    )
 
     init {
-        initProperties(area)
-        updateDopFields()
         itemProperty.onChange {
-            it!!
-            initProperties(it)
-            field12ViewModel?.item = it.field12
-            field11ViewModel?.item = it.field11
-            field13ViewModel?.item = it.field13
-            field19ViewModel?.item = it.field19
-            field23ViewModel?.item = it.field23
-            field29ViewModel?.item = it.field29
-            updateDopFields() }
-    }
-
-    private fun initProperties(area: Area){
-       field12ViewModel = if (area.field12 == Field12.Empty12) null else Field12ViewModel(area.field12)
-       field13ViewModel = if (area.field13 == Field13.Empty13) null else Field13ViewModel(area.field13)
-       field19ViewModel = if (area.field19 == Field19.Empty19) null else Field19ViewModel(area.field19)
-       field29ViewModel = if (area.field29 == Field29.Empty29) null else Field29ViewModel(area.field29)
-    }
-
-    private fun updateDopFields(){
-        dopFields.clear()
-        dopFields.apply {
-            field11ViewModel?.let { add(it) }
-            field12ViewModel?.let { add(it) }
-            field13ViewModel?.let { add(it) }
-            field19ViewModel?.let { add(it) }
-            field23ViewModel?.let { add(it) }
-            field29ViewModel?.let { add(it) }
+            if (it == null) return@onChange
+            invalidateViewModels()
+            updateDopFields(it)
         }
     }
 
     override fun onCommit() {
-        super.onCommit()
-        field23ViewModel?.commit()
-        field11ViewModel?.commit()
-        field13ViewModel?.commit()
-        field19ViewModel?.commit()
-        field29ViewModel?.commit()
+        println("commit dop model")
+        val area = item
+        var model: DopFieldViewModel = dopFieldViewModels[0]
+        //invalidateViewModels()
+        with(model){
+            while (model.isBounds){
+                isBounds = true
+                println(numberProperty.value)
+                when(numberProperty.value){
+                    11 -> area.field11 = Field11(
+                        col1Property.value.toInt(),
+                        col2Property.value.toInt(),
+                        col3Property.value.toInt(),
+                        col4Property.value.toFloat(),
+                        col5Property.value.toFloat(),
+                        col6Property.value.toFloat(),
+                        col7Property.value.toInt(),
+                        col8Property.value.toInt()
+                    )
+                    12 -> area.field12 = Field12(
+                        col1Property.value.toInt(),
+                        col2Property.value.toInt(),
+                        col3Property.value,
+                        col4Property.value.toInt(),
+                        col5Property.value.toInt(),
+                        col6Property.value.toInt(),
+                        col7Property.value.toInt()
+                    )
+                    13 -> area.field13 = Field13(
+                        col1Property.value.toFloat(),
+                        col2Property.value.toFloat(),
+                        col3Property.value.toInt(),
+                        col4Property.value.toInt(),
+                        col5Property.value.toInt(),
+                        col6Property.value.toInt(),
+                        col7Property.value.toInt()
+                    )
+                    19 -> area.field19 = Field19(
+                        col1Property.value.toInt(),
+                        col2Property.value.toInt(),
+                        col3Property.value.toFloat()
+                    )
+                    21 -> area.field21 = Field21(
+                        col1Property.value.toInt(),
+                        col2Property.value.toInt(),
+                        col3Property.value.toInt(),
+                        col4Property.value.toInt(),
+                        col5Property.value.toInt(),
+                        col6Property.value.toInt(),
+                        col7Property.value.toInt(),
+                        col8Property.value.toInt(),
+                    )
+                    23 -> {
+                        area.field23.info.apply {
+                            clear()
+                            if (col1Property.value.isNotEmpty()) add(col1Property.value.toInt()) else return@apply
+                            if (col2Property.value.isNotEmpty()) add(col2Property.value.toInt()) else return@apply
+                            if (col3Property.value.isNotEmpty()) add(col3Property.value.toInt()) else return@apply
+                            if (col4Property.value.isNotEmpty()) add(col4Property.value.toInt()) else return@apply
+                            if (col5Property.value.isNotEmpty()) add(col5Property.value.toInt()) else return@apply
+                            if (col6Property.value.isNotEmpty()) add(col6Property.value.toInt()) else return@apply
+                            if (col7Property.value.isNotEmpty()) add(col7Property.value.toInt()) else return@apply
+                            if (col8Property.value.isNotEmpty()) add(col8Property.value.toInt()) else return@apply
+                        }
+                    }
+                    29 -> area.field29 = Field29(
+                       col1Property.value.toInt(),
+                       col2Property.value.toInt(),
+                       col3Property.value.toInt(),
+                       col4Property.value,
+                       col5Property.value.toFloat(),
+                       col6Property.value.toFloat(),
+                       col7Property.value
+                    )
+                }
+                model = changeDopFieldViewModel()
+            }
+        }
+
     }
 
-    abstract class DopFieldViewModel <T>(field: T) : ItemViewModel<T>(field){
-        abstract fun isempty(): Boolean
-        open var number: Property<Int> = SimpleIntegerProperty(0) as Property<Int>
+    private fun updateDopFields(area: Area){
+        println("update dop fields")
+        with(area){
+            if (field11.isNotEmpty()) {
+                val model = changeDopFieldViewModel()
+                model.item = field11
+            }
+            if (field12.isNotEmpty()) {
+                val model = changeDopFieldViewModel()
+                model.item = field12
+            }
+            if (field13.isNotEmpty()) {
+                val model = changeDopFieldViewModel()
+                model.item = field13
+            }
+            if (field19.isNotEmpty()) {
+                val model = changeDopFieldViewModel()
+                model.item = field19
+            }
+            if (field21.isNotEmpty()) {
+                val model = changeDopFieldViewModel()
+                model.item = field21
+            }
+            if (field23.isNotEmpty()) {
+                val model = changeDopFieldViewModel()
+                model.item = field23
+            }
+            if (field29.isNotEmpty()) {
+                val model = changeDopFieldViewModel()
+                model.item = field29
+            }
+        }
     }
 
-    class Field11ViewModel(private val field11: Field11): DopFieldViewModel<Field11>(field11){
-        val birthYearProperty = bind(Field11::birthYear)
-        val prepareTypeProperty = bind(Field11::prepareType)
-        val createTypeProperty = bind(Field11::createType)
-        val inLineProperty = bind(Field11::inLine)
-        val betweenRowsProperty = bind(Field11::betweenRows)
-        val countProperty = bind(Field11::count)
-        val stateProperty = bind(Field11::state)
-        val reasonOfDeathProperty = bind(Field11::reazonOfDeath)
+    private fun invalidateViewModels(){
+        println("dop models invalidated")
+        dopFieldViewModels.forEach {
+            it.apply {
+                isBounds = false
+                numberProperty.value = 0
+                col1Property.value = ""
+                col2Property.value = ""
+                col3Property.value = ""
+                col4Property.value = ""
+                col5Property.value = ""
+                col6Property.value = ""
+                col7Property.value = ""
+                col8Property.value = ""
+            }
+        }
+    }
+
+    private fun changeDopFieldViewModel(): DopFieldViewModel{
+        return dopFieldViewModels.first { !it.isBounds }
+    }
+
+
+    class DopFieldViewModel(field: Field) : ItemViewModel<Field>(field){
+        var numberProperty = SimpleIntegerProperty() as Property<Int>
+        var col1Property = SimpleStringProperty()
+        var col2Property = SimpleStringProperty()
+        var col3Property = SimpleStringProperty()
+        var col4Property = SimpleStringProperty()
+        var col5Property = SimpleStringProperty()
+        var col6Property = SimpleStringProperty()
+        var col7Property = SimpleStringProperty()
+        var col8Property = SimpleStringProperty()
+        var isBounds = false
+
         init {
             itemProperty.onChange {
-                it!!
-                birthYearProperty.value = it.birthYear
-                prepareTypeProperty.value = it.prepareType
-                createTypeProperty.value = it.createType
-                inLineProperty.value = it.inLine
-                betweenRowsProperty.value = it.betweenRows
-                countProperty.value = it.count
-                stateProperty.value = it.state
-                reasonOfDeathProperty.value = it.reazonOfDeath
-            }
-        }
-        override fun isempty() = field11 == Field11.Empty11
-        override var number = SimpleIntegerProperty(11)  as Property<Int>
-
-    }
-
-    class Field12ViewModel(private val field12: Field12): DopFieldViewModel<Field12>(field12){
-        val reasonOfDamageProperty = bind(Field12::reasonOfDamage)
-        val yearOfDamageProperty = bind(Field12::yearOfDamage)
-        val speciesOfDamageProperty = bind(Field12::speciesOfDamage)
-        val typeEnemy1 = bind(Field12::typeEnemy1)
-        val degreeDamage1 = bind(Field12::degreeDamage1)
-        val typeEnemy2 = bind(Field12::typeEnemy2)
-        val degreeDamage2 = bind(Field12::degreeDamage2)
-        override fun isempty() = field12 == Field12.Empty12
-        override var number = SimpleIntegerProperty(12)  as Property<Int>
-    }
-
-    class Field13ViewModel(private val field13: Field13): DopFieldViewModel<Field13>(field13){
-        val widthProperty = bind(Field13::width)
-        val lengthProperty = bind(Field13::length)
-        val stateProperty = bind(Field13::state)
-        val purposeProperty = bind(Field13::purpose)
-        val typeOfRoadSurfaceProperty = bind(Field13::typeOfRoadSurface)
-        val widthOfRoadProperty = bind(Field13::widthOfRoad)
-        val seasonalityProperty = bind(Field13::seasonality)
-        override fun isempty() = field13 == Field13.Empty13
-        override var number = SimpleIntegerProperty(13)  as Property<Int>
-    }
-
-    class Field19ViewModel(private val field19: Field19): DopFieldViewModel<Field19>(field19){
-        val typeSwampProperty = bind(Field19::typeSwamp)
-        val typePlantsProperty = bind(Field19::typePlants)
-        val weightOfPeatProperty = bind(Field19::weightOfPeat)
-        override fun isempty() = field19 == Field19.Empty19
-        override var number = SimpleIntegerProperty(19)  as Property<Int>
-    }
-
-    class Field29ViewModel(private val field29: Field29): DopFieldViewModel<Field29>(field29){
-        val typeProperty = bind(Field29::type)
-        val yearProperty = bind(Field29::year)
-        var categoryBeforeProperty = bind(Field29::categoryBefore)
-        var speciesBeforeProperty = bind(Field29::speciesBefore)
-        var lengthBeforeProperty = bind(Field29::lengthBefore)
-        var lengthBetweenProperty = bind(Field29::lengthBetween)
-        var bonProperty = bind(Field29::bon)
-        override fun isempty() = field29 == Field29.Empty29
-        override var number = SimpleIntegerProperty(29)  as Property<Int>
-    }
-
-    class Field23ViewModel(private val field23: Field23): DopFieldViewModel<Field23>(field23){
-        val val1Property: Property<Int> = SimpleIntegerProperty(if (field23.info.isNotEmpty()) field23.info[0] else 0)  as  Property<Int>
-        val val2Property: Property<Int> = SimpleIntegerProperty(if (field23.info.size >= 2) field23.info[1] else 0)  as  Property<Int>
-        val val3Property: Property<Int> = SimpleIntegerProperty(if (field23.info.size >= 3) field23.info[2] else 0)  as  Property<Int>
-        val val4Property: Property<Int> = SimpleIntegerProperty(if (field23.info.size >= 4) field23.info[3] else 0)  as  Property<Int>
-        val val5Property: Property<Int> = SimpleIntegerProperty(if (field23.info.size >= 5) field23.info[4] else 0)  as  Property<Int>
-        val val6Property: Property<Int> = SimpleIntegerProperty(if (field23.info.size >= 6) field23.info[5] else 0)  as  Property<Int>
-        val val7Property: Property<Int> = SimpleIntegerProperty(if (field23.info.size >= 7) field23.info[6] else 0)  as  Property<Int>
-        val val8Property: Property<Int> = SimpleIntegerProperty(if (field23.info.size == 8) field23.info[7] else 0)  as  Property<Int>
-
-        init {
-            itemProperty.onChange {
-                it!!
-                if (it.info.isEmpty()) return@onChange
-                val1Property.value = if (it.info.isNotEmpty()) it.info[0] else 0
-                val2Property.value = if (it.info.size >= 2) it.info[1] else 0
-                val3Property.value = if (it.info.size >= 3) it.info[2] else 0
-                val4Property.value = if (it.info.size >= 4) it.info[3] else 0
-                val5Property.value = if (it.info.size >= 5) it.info[4] else 0
-                val6Property.value = if (it.info.size >= 6) it.info[5] else 0
-                val7Property.value = if (it.info.size >= 7) it.info[6] else 0
-                val8Property.value = if (it.info.size == 8) it.info[7] else 0
+                println("dop field model changed")
+                when(it){
+                    is Field11 -> {
+                        numberProperty.value = 11
+                        col1Property.value = it.birthYear.prepare()
+                        col2Property.value = it.prepareType.prepare()
+                        col3Property.value = it.createType.prepare()
+                        col4Property.value = it.inLine.prepare()
+                        col5Property.value = it.betweenRows.prepare()
+                        col6Property.value = it.count.prepare()
+                        col7Property.value = it.state.prepare()
+                        col8Property.value = it.reazonOfDeath.prepare()
+                    }
+                    is Field12 -> {
+                        numberProperty.value = 12
+                        col1Property.value = it.reasonOfDamage.prepare()
+                        col2Property.value = it.yearOfDamage.prepare()
+                        col3Property.value = it.speciesOfDamage
+                        col4Property.value = it.typeEnemy1.prepare()
+                        col5Property.value = it.degreeDamage1.prepare()
+                        col6Property.value = it.typeEnemy2.prepare()
+                        col7Property.value = it.degreeDamage2.prepare()
+                    }
+                    is Field13 -> {
+                        numberProperty.value = 13
+                        col1Property.value = it.width.prepare()
+                        col2Property.value = it.length.prepare()
+                        col3Property.value = it.state.prepare()
+                        col4Property.value = it.purpose.prepare()
+                        col5Property.value = it.typeOfRoadSurface.prepare()
+                        col6Property.value = it.widthOfRoad.prepare()
+                        col7Property.value = it.seasonality.prepare()
+                    }
+                    is Field19 -> {
+                        numberProperty.value = 19
+                        col1Property.value = it.typeSwamp.prepare()
+                        col2Property.value = it.typePlants.prepare()
+                        col3Property.value = it.weightOfPeat.prepare()
+                    }
+                    is Field21 -> {
+                        numberProperty.value = 21
+                        col1Property.value = it.landscape.prepare()
+                        col2Property.value = it.ethetic.prepare()
+                        col3Property.value = it.sanytary.prepare()
+                        col4Property.value = it.stability.prepare()
+                        col5Property.value = it.freeSpace.prepare()
+                        col6Property.value = it.visualDistance.prepare()
+                        col7Property.value = it.health.prepare()
+                        col8Property.value = it.antropoElements.prepare()
+                    }
+                    is Field23 -> {
+                        numberProperty.value = 23
+                        if (it.info.isEmpty()) return@onChange
+                        var idx = 0
+                        col1Property.value = it.info[idx++].prepare()
+                        if (it.info.size > idx) col2Property.value = it.info[idx++].prepare()
+                        if (it.info.size > idx) col3Property.value = it.info[idx++].prepare()
+                        if (it.info.size > idx) col4Property.value = it.info[idx++].prepare()
+                        if (it.info.size > idx) col5Property.value = it.info[idx++].prepare()
+                        if (it.info.size > idx) col6Property.value = it.info[idx++].prepare()
+                        if (it.info.size > idx) col7Property.value = it.info[idx++].prepare()
+                        if (it.info.size > idx) col8Property.value = it.info[idx].prepare()
+                    }
+                    is Field29 -> {
+                        numberProperty.value = 29
+                        col1Property.value = it.type.prepare()
+                        col2Property.value = it.year.prepare()
+                        col3Property.value = it.categoryBefore.prepare()
+                        col4Property.value = it.speciesBefore
+                        col5Property.value = it.lengthBefore.prepare()
+                        col6Property.value = it.lengthBetween.prepare()
+                        col7Property.value = it.bon
+                    }
+                }
+                isBounds = true
             }
         }
 
-        override fun isempty(): Boolean {
-            return field23.info.isEmpty()
+        override fun toString(): String {
+            return "DopFieldViewModel_${numberProperty.value}"
         }
-        override var number = SimpleIntegerProperty(23) as  Property<Int>
-
-
-        override fun onCommit() {
-            super.onCommit()
-            field23.info.apply {
-                clear()
-                addAll(listOf(
-                    val1Property.value,
-                    val2Property.value,
-                    val3Property.value,
-                    val4Property.value,
-                    val5Property.value,
-                    val6Property.value,
-                    val7Property.value,
-                    val8Property.value))
+        
+        private fun Any.prepare(): String{
+            val str: String = when(this){
+                is Float, is Int -> this.toString()
+                else -> this as String
             }
-
+            return when(str){
+                "0", "0.0" -> ""
+                else -> str
+            }
         }
+
+
     }
+
+    fun String.toInt():Int = if (this.isEmpty()) 0 else Integer.parseInt(this)
+
 
 }
 
