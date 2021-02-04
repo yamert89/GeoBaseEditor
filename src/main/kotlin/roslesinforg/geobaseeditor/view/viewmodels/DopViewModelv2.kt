@@ -185,73 +185,73 @@ class DopViewModelv2(area: Area): ItemViewModel<Area>(area) {
                 when(it){
                     is Field11 -> {
                         numberProperty.value = 11
-                        col1Property.value = it.birthYear.toString()
-                        col2Property.value = it.prepareType.toString()
-                        col3Property.value = it.createType.toString()
-                        col4Property.value = it.inLine.toString()
-                        col5Property.value = it.betweenRows.toString()
-                        col6Property.value = it.count.toString()
-                        col7Property.value = it.state.toString()
-                        col8Property.value = it.reazonOfDeath.toString()
+                        col1Property.value = it.birthYear.prepare()
+                        col2Property.value = it.prepareType.prepare()
+                        col3Property.value = it.createType.prepare()
+                        col4Property.value = it.inLine.prepare()
+                        col5Property.value = it.betweenRows.prepare()
+                        col6Property.value = it.count.prepare()
+                        col7Property.value = it.state.prepare()
+                        col8Property.value = it.reazonOfDeath.prepare()
                     }
                     is Field12 -> {
                         numberProperty.value = 12
-                        col1Property.value = it.reasonOfDamage.toString()
-                        col2Property.value = it.yearOfDamage.toString()
+                        col1Property.value = it.reasonOfDamage.prepare()
+                        col2Property.value = it.yearOfDamage.prepare()
                         col3Property.value = it.speciesOfDamage
-                        col4Property.value = it.typeEnemy1.toString()
-                        col5Property.value = it.degreeDamage1.toString()
-                        col6Property.value = it.typeEnemy2.toString()
-                        col7Property.value = it.degreeDamage2.toString()
+                        col4Property.value = it.typeEnemy1.prepare()
+                        col5Property.value = it.degreeDamage1.prepare()
+                        col6Property.value = it.typeEnemy2.prepare()
+                        col7Property.value = it.degreeDamage2.prepare()
                     }
                     is Field13 -> {
                         numberProperty.value = 13
-                        col1Property.value = it.width.toString()
-                        col2Property.value = it.length.toString()
-                        col3Property.value = it.state.toString()
-                        col4Property.value = it.purpose.toString()
-                        col5Property.value = it.typeOfRoadSurface.toString()
-                        col6Property.value = it.widthOfRoad.toString()
-                        col7Property.value = it.seasonality.toString()
+                        col1Property.value = it.width.prepare()
+                        col2Property.value = it.length.prepare()
+                        col3Property.value = it.state.prepare()
+                        col4Property.value = it.purpose.prepare()
+                        col5Property.value = it.typeOfRoadSurface.prepare()
+                        col6Property.value = it.widthOfRoad.prepare()
+                        col7Property.value = it.seasonality.prepare()
                     }
                     is Field19 -> {
                         numberProperty.value = 19
-                        col1Property.value = it.typeSwamp.toString()
-                        col2Property.value = it.typePlants.toString()
-                        col3Property.value = it.weightOfPeat.toString()
+                        col1Property.value = it.typeSwamp.prepare()
+                        col2Property.value = it.typePlants.prepare()
+                        col3Property.value = it.weightOfPeat.prepare()
                     }
                     is Field21 -> {
                         numberProperty.value = 21
-                        col1Property.value = it.landscape.toString()
-                        col2Property.value = it.ethetic.toString()
-                        col3Property.value = it.sanytary.toString()
-                        col4Property.value = it.stability.toString()
-                        col5Property.value = it.freeSpace.toString()
-                        col6Property.value = it.visualDistance.toString()
-                        col7Property.value = it.health.toString()
-                        col8Property.value = it.antropoElements.toString()
+                        col1Property.value = it.landscape.prepare()
+                        col2Property.value = it.ethetic.prepare()
+                        col3Property.value = it.sanytary.prepare()
+                        col4Property.value = it.stability.prepare()
+                        col5Property.value = it.freeSpace.prepare()
+                        col6Property.value = it.visualDistance.prepare()
+                        col7Property.value = it.health.prepare()
+                        col8Property.value = it.antropoElements.prepare()
                     }
                     is Field23 -> {
                         numberProperty.value = 23
                         if (it.info.isEmpty()) return@onChange
                         var idx = 0
-                        col1Property.value = it.info[idx++].toString()
-                        if (it.info.size > idx) col2Property.value = it.info[idx++].toString()
-                        if (it.info.size > idx) col3Property.value = it.info[idx++].toString()
-                        if (it.info.size > idx) col4Property.value = it.info[idx++].toString()
-                        if (it.info.size > idx) col5Property.value = it.info[idx++].toString()
-                        if (it.info.size > idx) col6Property.value = it.info[idx++].toString()
-                        if (it.info.size > idx) col7Property.value = it.info[idx++].toString()
-                        if (it.info.size > idx) col8Property.value = it.info[idx].toString()
+                        col1Property.value = it.info[idx++].prepare()
+                        if (it.info.size > idx) col2Property.value = it.info[idx++].prepare()
+                        if (it.info.size > idx) col3Property.value = it.info[idx++].prepare()
+                        if (it.info.size > idx) col4Property.value = it.info[idx++].prepare()
+                        if (it.info.size > idx) col5Property.value = it.info[idx++].prepare()
+                        if (it.info.size > idx) col6Property.value = it.info[idx++].prepare()
+                        if (it.info.size > idx) col7Property.value = it.info[idx++].prepare()
+                        if (it.info.size > idx) col8Property.value = it.info[idx].prepare()
                     }
                     is Field29 -> {
                         numberProperty.value = 29
-                        col1Property.value = it.type.toString()
-                        col2Property.value = it.year.toString()
-                        col3Property.value = it.categoryBefore.toString()
+                        col1Property.value = it.type.prepare()
+                        col2Property.value = it.year.prepare()
+                        col3Property.value = it.categoryBefore.prepare()
                         col4Property.value = it.speciesBefore
-                        col5Property.value = it.lengthBefore.toString()
-                        col6Property.value = it.lengthBetween.toString()
+                        col5Property.value = it.lengthBefore.prepare()
+                        col6Property.value = it.lengthBetween.prepare()
                         col7Property.value = it.bon
                     }
                 }
@@ -262,8 +262,22 @@ class DopViewModelv2(area: Area): ItemViewModel<Area>(area) {
         override fun toString(): String {
             return "DopFieldViewModel_${numberProperty.value}"
         }
-        //fun Int.prepare() = this.toString().replace("0", "")
+        
+        private fun Any.prepare(): String{
+            val str: String = when(this){
+                is Float, is Int -> this.toString()
+                else -> this as String
+            }
+            return when(str){
+                "0", "0.0" -> ""
+                else -> str
+            }
+        }
+
+
     }
+
+    fun String.toInt():Int = if (this.isEmpty()) 0 else Integer.parseInt(this)
 
 
 }

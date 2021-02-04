@@ -29,6 +29,7 @@ import kotlin.reflect.jvm.javaField
 import roslesinforg.geobaseeditor.GeoBaseEditorController
 import roslesinforg.geobaseeditor.model.FieldFloatConverter
 import roslesinforg.geobaseeditor.model.FieldIntConverter
+import roslesinforg.geobaseeditor.model.FieldStringConverter
 import roslesinforg.geobaseeditor.view.viewmodels.*
 
 
@@ -365,8 +366,6 @@ class MainView : View("My View") {
         col8: TextField,
         dopViewModel: DopViewModelv2.DopFieldViewModel
     ){
-
-
         with(dopViewModel){
             fieldName byint numberProperty
             col1 bystr col1Property
@@ -496,7 +495,7 @@ class MainView : View("My View") {
     }
 
 
-    private infix fun TextField.bystr(other: Property<String>) = this.bind(other)
+    private infix fun TextField.bystr(other: Property<String>) = this.bind(property = other, readonly = false, converter = FieldStringConverter())
     private infix fun TextField.byint(other: Property<Int>) = this.bind(property = other, readonly = false, converter = FieldIntConverter())
     private infix fun TextField.byfloat(other: Property<Float>) = this.bind(property = other, converter = FieldFloatConverter())
 

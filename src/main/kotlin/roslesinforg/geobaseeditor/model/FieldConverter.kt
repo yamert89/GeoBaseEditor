@@ -29,6 +29,20 @@ class FieldFloatConverter: FloatStringConverter(){
     }
 }
 
+class FieldStringConverter: StringConverter<String>(){ //fixme not running
+    override fun toString(s: String?): String {
+        return when(s){
+            "0", "0.0", null -> ""
+            else -> s
+        }
+    }
+
+    override fun fromString(string: String?): String {
+        return string ?: ""
+    }
+
+}
+
 
 
 
