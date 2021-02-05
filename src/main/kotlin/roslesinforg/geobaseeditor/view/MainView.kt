@@ -17,8 +17,11 @@ import roslesinforg.geobaseeditor.GeoBaseEditorController
 import roslesinforg.geobaseeditor.model.FieldFloatConverter
 import roslesinforg.geobaseeditor.model.FieldIntConverter
 import roslesinforg.geobaseeditor.model.FieldStringConverter
+import roslesinforg.geobaseeditor.model.validators.ValidatorFactory
+import roslesinforg.geobaseeditor.model.validators.ValidatorFactory.*
 import roslesinforg.geobaseeditor.view.viewmodels.*
 import java.lang.Exception
+
 
 
 fun main() {
@@ -261,14 +264,11 @@ class MainView : View("My View") {
 
 
        //todo replace
-        context.addValidator(field_areaNumber, field_areaNumber.textProperty()){
-            try {
-                it!!.toInt()
-                null
-            }catch (e: Exception){
-                error("Введите целое число")
-            }
-        }
+        val factory = ValidatorFactory(context)
+        context.addValidator(factory.stringValidator(field_species))
+
+        context.addValidator(factory.numberValidator(field_area))
+
     }
 
     private fun bindModel(){
