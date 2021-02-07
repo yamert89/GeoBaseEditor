@@ -17,11 +17,10 @@ import roslesinforg.geobaseeditor.GeoBaseEditorController
 import roslesinforg.geobaseeditor.model.FieldFloatConverter
 import roslesinforg.geobaseeditor.model.FieldIntConverter
 import roslesinforg.geobaseeditor.model.FieldStringConverter
+import roslesinforg.geobaseeditor.model.validators.ValidationHelper
 import roslesinforg.geobaseeditor.model.validators.ValidatorFactory
 import roslesinforg.geobaseeditor.model.validators.ValidatorFactory.*
 import roslesinforg.geobaseeditor.view.viewmodels.*
-import java.lang.Exception
-
 
 
 fun main() {
@@ -32,200 +31,202 @@ class GeoBaseEditorApp: App(MainView::class)
 
 class MainView : View("My View") {
     override val root: AnchorPane by fxml("/gui/MainView.fxml")
-    val field_gir: TextField by fxid()
-    val field_kvNumber: TextField by fxid()
-    val field_areaNumber: TextField by fxid()
-    val field_area: TextField by fxid()
-    val field_categoryArea: TextField by fxid()
-    val field_ozu: TextField by fxid()
-    val field_dp: TextField by fxid()
-    val field_species: TextField by fxid()
-    val field_bon: TextField by fxid()
-    val field_type: TextField by fxid()
-    val field_subType: TextField by fxid()
-    val field_yearOfDeforest: TextField by fxid()
-    val field_countOfStump: TextField by fxid()
-    val field_countOfPinusStump: TextField by fxid()
-    val field_stumpDiameter: TextField by fxid()
-    val field_typeDeforest: TextField by fxid()
-    val field_disorder: TextField by fxid()
-    val field_validDisorder: TextField by fxid()
-    val field_dryTimber: TextField by fxid()
-    val field_action1: TextField by fxid()
-    val field_action2: TextField by fxid()
-    val field_action3: TextField by fxid()
+    val fGir: TextField by fxid()
+    val fKvNumber: TextField by fxid()
+    val fAreaNumber: TextField by fxid()
+    val fArea: TextField by fxid()
+    val fCategoryArea: TextField by fxid()
+    val fOzu: TextField by fxid()
+    val fDP: TextField by fxid()
+    val fSpecies: TextField by fxid()
+    val fBon: TextField by fxid()
+    val fType: TextField by fxid()
+    val fSubType: TextField by fxid()
+    val fYearOfDeforest: TextField by fxid()
+    val fCountOfStump: TextField by fxid()
+    val fCountOfPinusStump: TextField by fxid()
+    val fStumpDiameter: TextField by fxid()
+    val fTypeDeforest: TextField by fxid()
+    val fDisorder: TextField by fxid()
+    val fValidDisorder: TextField by fxid()
+    val fDryTimber: TextField by fxid()
+    val fAction1: TextField by fxid()
+    val fAction2: TextField by fxid()
+    val fAction3: TextField by fxid()
     val container23: FlowPane by fxid()
     val container23_2: FlowPane by fxid()
     val container_10: FlowPane by fxid()
-    val field_hrang1: TextField by fxid()
-    val field_hrang2: TextField by fxid()
-    val field_hrang3: TextField by fxid()
-    val field_hrang4: TextField by fxid()
-    val field_hrang5: TextField by fxid()
-    val field_hrang6: TextField by fxid()
-    val field_hrang7: TextField by fxid()
-    val field_hrang8: TextField by fxid()
-    val field_hrang9: TextField by fxid()
-    val field_hrang10: TextField by fxid()
-    val field_proportion1: TextField by fxid()
-    val field_proportion2: TextField by fxid()
-    val field_proportion3: TextField by fxid()
-    val field_proportion4: TextField by fxid()
-    val field_proportion5: TextField by fxid()
-    val field_proportion6: TextField by fxid()
-    val field_proportion7: TextField by fxid()
-    val field_proportion8: TextField by fxid()
-    val field_proportion9: TextField by fxid()
-    val field_proportion10: TextField by fxid()
-    val field_species1: TextField by fxid()
-    val field_species2: TextField by fxid()
-    val field_species3: TextField by fxid()
-    val field_species4: TextField by fxid()
-    val field_species5: TextField by fxid()
-    val field_species6: TextField by fxid()
-    val field_species7: TextField by fxid()
-    val field_species8: TextField by fxid()
-    val field_species9: TextField by fxid()
-    val field_species10: TextField by fxid()
-    val field_age1: TextField by fxid()
-    val field_age2: TextField by fxid()
-    val field_age3: TextField by fxid()
-    val field_age4: TextField by fxid()
-    val field_age5: TextField by fxid()
-    val field_age6: TextField by fxid()
-    val field_age7: TextField by fxid()
-    val field_age8: TextField by fxid()
-    val field_age9: TextField by fxid()
-    val field_age10: TextField by fxid()
-    val field_h1: TextField by fxid()
-    val field_h2: TextField by fxid()
-    val field_h3: TextField by fxid()
-    val field_h4: TextField by fxid()
-    val field_h5: TextField by fxid()
-    val field_h6: TextField by fxid()
-    val field_h7: TextField by fxid()
-    val field_h8: TextField by fxid()
-    val field_h9: TextField by fxid()
-    val field_h10: TextField by fxid()
-    val field_d1: TextField by fxid()
-    val field_d2: TextField by fxid()
-    val field_d3: TextField by fxid()
-    val field_d4: TextField by fxid()
-    val field_d5: TextField by fxid()
-    val field_d6: TextField by fxid()
-    val field_d7: TextField by fxid()
-    val field_d8: TextField by fxid()
-    val field_d9: TextField by fxid()
-    val field_d10: TextField by fxid()
-    val field_tradeClass1: TextField by fxid()
-    val field_tradeClass2: TextField by fxid()
-    val field_tradeClass3: TextField by fxid()
-    val field_tradeClass4: TextField by fxid()
-    val field_tradeClass5: TextField by fxid()
-    val field_tradeClass6: TextField by fxid()
-    val field_tradeClass7: TextField by fxid()
-    val field_tradeClass8: TextField by fxid()
-    val field_tradeClass9: TextField by fxid()
-    val field_tradeClass10: TextField by fxid()
-    val field_origin1: TextField by fxid()
-    val field_origin2: TextField by fxid()
-    val field_origin3: TextField by fxid()
-    val field_origin4: TextField by fxid()
-    val field_origin5: TextField by fxid()
-    val field_origin6: TextField by fxid()
-    val field_origin7: TextField by fxid()
-    val field_origin8: TextField by fxid()
-    val field_origin9: TextField by fxid()
-    val field_origin10: TextField by fxid()
-    val field_weight1: TextField by fxid()
-    val field_weight2: TextField by fxid()
-    val field_weight3: TextField by fxid()
-    val field_weight4: TextField by fxid()
-    val field_weight5: TextField by fxid()
-    val field_weight6: TextField by fxid()
-    val field_weight7: TextField by fxid()
-    val field_weight8: TextField by fxid()
-    val field_weight9: TextField by fxid()
-    val field_weight10: TextField by fxid()
-    val field_sumOfTimber1: TextField by fxid()
-    val field_sumOfTimber2: TextField by fxid()
-    val field_sumOfTimber3: TextField by fxid()
-    val field_sumOfTimber4: TextField by fxid()
-    val field_sumOfTimber5: TextField by fxid()
-    val field_sumOfTimber6: TextField by fxid()
-    val field_sumOfTimber7: TextField by fxid()
-    val field_sumOfTimber8: TextField by fxid()
-    val field_sumOfTimber9: TextField by fxid()
-    val field_sumOfTimber10: TextField by fxid()
-    val field_31_count: TextField by fxid()
-    val field_31_h: TextField by fxid()
-    val field_31_age: TextField by fxid()
-    val field_31_proportion1: TextField by fxid()
-    val field_31_element1: TextField by fxid()
-    val field_31_proportion2: TextField by fxid()
-    val field_31_element2: TextField by fxid()
-    val field_dop1_n: TextField by fxid()
-    val field_dop2_n: TextField by fxid()
-    val field_dop3_n: TextField by fxid()
-    val field_dop4_n: TextField by fxid()
-    val field_dop5_n: TextField by fxid()
-    val field_dop6_n: TextField by fxid()
-    val field_dop1_1: TextField by fxid()
-    val field_dop2_1: TextField by fxid()
-    val field_dop3_1: TextField by fxid()
-    val field_dop4_1: TextField by fxid()
-    val field_dop5_1: TextField by fxid()
-    val field_dop6_1: TextField by fxid()
-    val field_dop1_2: TextField by fxid()
-    val field_dop2_2: TextField by fxid()
-    val field_dop3_2: TextField by fxid()
-    val field_dop4_2: TextField by fxid()
-    val field_dop5_2: TextField by fxid()
-    val field_dop6_2: TextField by fxid()
-    val field_dop1_3: TextField by fxid()
-    val field_dop2_3: TextField by fxid()
-    val field_dop3_3: TextField by fxid()
-    val field_dop4_3: TextField by fxid()
-    val field_dop5_3: TextField by fxid()
-    val field_dop6_3: TextField by fxid()
-    val field_dop1_4: TextField by fxid()
-    val field_dop2_4: TextField by fxid()
-    val field_dop3_4: TextField by fxid()
-    val field_dop4_4: TextField by fxid()
-    val field_dop5_4: TextField by fxid()
-    val field_dop6_4: TextField by fxid()
-    val field_dop1_5: TextField by fxid()
-    val field_dop2_5: TextField by fxid()
-    val field_dop3_5: TextField by fxid()
-    val field_dop4_5: TextField by fxid()
-    val field_dop5_5: TextField by fxid()
-    val field_dop6_5: TextField by fxid()
-    val field_dop1_6: TextField by fxid()
-    val field_dop2_6: TextField by fxid()
-    val field_dop3_6: TextField by fxid()
-    val field_dop4_6: TextField by fxid()
-    val field_dop5_6: TextField by fxid()
-    val field_dop6_6: TextField by fxid()
-    val field_dop1_7: TextField by fxid()
-    val field_dop2_7: TextField by fxid()
-    val field_dop3_7: TextField by fxid()
-    val field_dop4_7: TextField by fxid()
-    val field_dop5_7: TextField by fxid()
-    val field_dop6_7: TextField by fxid()
-    val field_dop1_8: TextField by fxid()
-    val field_dop2_8: TextField by fxid()
-    val field_dop3_8: TextField by fxid()
-    val field_dop4_8: TextField by fxid()
-    val field_dop5_8: TextField by fxid()
-    val field_dop6_8: TextField by fxid()
+    val fHrang1: TextField by fxid()
+    val fHrang2: TextField by fxid()
+    val fHrang3: TextField by fxid()
+    val fHrang4: TextField by fxid()
+    val fHrang5: TextField by fxid()
+    val fHrang6: TextField by fxid()
+    val fHrang7: TextField by fxid()
+    val fHrang8: TextField by fxid()
+    val fHrang9: TextField by fxid()
+    val fHrang10: TextField by fxid()
+    val fProportion1: TextField by fxid()
+    val fProportion2: TextField by fxid()
+    val fProportion3: TextField by fxid()
+    val fProportion4: TextField by fxid()
+    val fProportion5: TextField by fxid()
+    val fProportion6: TextField by fxid()
+    val fProportion7: TextField by fxid()
+    val fProportion8: TextField by fxid()
+    val fProportion9: TextField by fxid()
+    val fProportion10: TextField by fxid()
+    val fSpecies1: TextField by fxid()
+    val fSpecies2: TextField by fxid()
+    val fSpecies3: TextField by fxid()
+    val fSpecies4: TextField by fxid()
+    val fSpecies5: TextField by fxid()
+    val fSpecies6: TextField by fxid()
+    val fSpecies7: TextField by fxid()
+    val fSpecies8: TextField by fxid()
+    val fSpecies9: TextField by fxid()
+    val fSpecies10: TextField by fxid()
+    val fAge1: TextField by fxid()
+    val fAge2: TextField by fxid()
+    val fAge3: TextField by fxid()
+    val fAge4: TextField by fxid()
+    val fAge5: TextField by fxid()
+    val fAge6: TextField by fxid()
+    val fAge7: TextField by fxid()
+    val fAge8: TextField by fxid()
+    val fAge9: TextField by fxid()
+    val fAge10: TextField by fxid()
+    val fH1: TextField by fxid()
+    val fH2: TextField by fxid()
+    val fH3: TextField by fxid()
+    val fH4: TextField by fxid()
+    val fH5: TextField by fxid()
+    val fH6: TextField by fxid()
+    val fH7: TextField by fxid()
+    val fH8: TextField by fxid()
+    val fH9: TextField by fxid()
+    val fH10: TextField by fxid()
+    val fD1: TextField by fxid()
+    val fD2: TextField by fxid()
+    val fD3: TextField by fxid()
+    val fD4: TextField by fxid()
+    val fD5: TextField by fxid()
+    val fD6: TextField by fxid()
+    val fD7: TextField by fxid()
+    val fD8: TextField by fxid()
+    val fD9: TextField by fxid()
+    val fD10: TextField by fxid()
+    val fTradeClass1: TextField by fxid()
+    val fTradeClass2: TextField by fxid()
+    val fTradeClass3: TextField by fxid()
+    val fTradeClass4: TextField by fxid()
+    val fTradeClass5: TextField by fxid()
+    val fTradeClass6: TextField by fxid()
+    val fTradeClass7: TextField by fxid()
+    val fTradeClass8: TextField by fxid()
+    val fTradeClass9: TextField by fxid()
+    val fTradeClass10: TextField by fxid()
+    val fOrigin1: TextField by fxid()
+    val fOrigin2: TextField by fxid()
+    val fOrigin3: TextField by fxid()
+    val fOrigin4: TextField by fxid()
+    val fOrigin5: TextField by fxid()
+    val fOrigin6: TextField by fxid()
+    val fOrigin7: TextField by fxid()
+    val fOrigin8: TextField by fxid()
+    val fOrigin9: TextField by fxid()
+    val fOrigin10: TextField by fxid()
+    val fWeight1: TextField by fxid()
+    val fWeight2: TextField by fxid()
+    val fWeight3: TextField by fxid()
+    val fWeight4: TextField by fxid()
+    val fWeight5: TextField by fxid()
+    val fWeight6: TextField by fxid()
+    val fWeight7: TextField by fxid()
+    val fWeight8: TextField by fxid()
+    val fWeight9: TextField by fxid()
+    val fWeight10: TextField by fxid()
+    val fSumOfTimber1: TextField by fxid()
+    val fSumOfTimber2: TextField by fxid()
+    val fSumOfTimber3: TextField by fxid()
+    val fSumOfTimber4: TextField by fxid()
+    val fSumOfTimber5: TextField by fxid()
+    val fSumOfTimber6: TextField by fxid()
+    val fSumOfTimber7: TextField by fxid()
+    val fSumOfTimber8: TextField by fxid()
+    val fSumOfTimber9: TextField by fxid()
+    val fSumOfTimber10: TextField by fxid()
+    val f31_count: TextField by fxid()
+    val f31_h: TextField by fxid()
+    val f31_age: TextField by fxid()
+    val f31_proportion1: TextField by fxid()
+    val f31_element1: TextField by fxid()
+    val f31_proportion2: TextField by fxid()
+    val f31_element2: TextField by fxid()
+    val fDop1_n: TextField by fxid()
+    val fDop2_n: TextField by fxid()
+    val fDop3_n: TextField by fxid()
+    val fDop4_n: TextField by fxid()
+    val fDop5_n: TextField by fxid()
+    val fDop6_n: TextField by fxid()
+    val fDop1_1: TextField by fxid()
+    val fDop2_1: TextField by fxid()
+    val fDop3_1: TextField by fxid()
+    val fDop4_1: TextField by fxid()
+    val fDop5_1: TextField by fxid()
+    val fDop6_1: TextField by fxid()
+    val fDop1_2: TextField by fxid()
+    val fDop2_2: TextField by fxid()
+    val fDop3_2: TextField by fxid()
+    val fDop4_2: TextField by fxid()
+    val fDop5_2: TextField by fxid()
+    val fDop6_2: TextField by fxid()
+    val fDop1_3: TextField by fxid()
+    val fDop2_3: TextField by fxid()
+    val fDop3_3: TextField by fxid()
+    val fDop4_3: TextField by fxid()
+    val fDop5_3: TextField by fxid()
+    val fDop6_3: TextField by fxid()
+    val fDop1_4: TextField by fxid()
+    val fDop2_4: TextField by fxid()
+    val fDop3_4: TextField by fxid()
+    val fDop4_4: TextField by fxid()
+    val fDop5_4: TextField by fxid()
+    val fDop6_4: TextField by fxid()
+    val fDop1_5: TextField by fxid()
+    val fDop2_5: TextField by fxid()
+    val fDop3_5: TextField by fxid()
+    val fDop4_5: TextField by fxid()
+    val fDop5_5: TextField by fxid()
+    val fDop6_5: TextField by fxid()
+    val fDop1_6: TextField by fxid()
+    val fDop2_6: TextField by fxid()
+    val fDop3_6: TextField by fxid()
+    val fDop4_6: TextField by fxid()
+    val fDop5_6: TextField by fxid()
+    val fDop6_6: TextField by fxid()
+    val fDop1_7: TextField by fxid()
+    val fDop2_7: TextField by fxid()
+    val fDop3_7: TextField by fxid()
+    val fDop4_7: TextField by fxid()
+    val fDop5_7: TextField by fxid()
+    val fDop6_7: TextField by fxid()
+    val fDop1_8: TextField by fxid()
+    val fDop2_8: TextField by fxid()
+    val fDop3_8: TextField by fxid()
+    val fDop4_8: TextField by fxid()
+    val fDop5_8: TextField by fxid()
+    val fDop6_8: TextField by fxid()
     lateinit var kv_list: TableView<Area>
-    val btn_open: Button by fxid()
-    val btn_save: Button by fxid()
+    val btnOpen: Button by fxid()
+    val btnSave: Button by fxid()
 
     var path: Path
     var input: Path //todo for test
 
-    val context = ValidationContext()
+    val validationContext = ValidationContext()
+    val factory = ValidatorFactory(validationContext)
+    val validationHelper = ValidationHelper(validationContext, factory)
 
     
     var model: AreaModel
@@ -263,75 +264,88 @@ class MainView : View("My View") {
         }
 
 
-       //todo replace
-        val factory = ValidatorFactory(context)
-        context.addValidator(factory.stringValidator(field_species))
 
-        context.addValidator(factory.numberValidator(field_area))
+        validationHelper.stringValidatorFor(fSpecies, fBon, fType, fSubType, fTypeDeforest,
+          fSpecies1, fSpecies2, fSpecies3, fSpecies4, fSpecies5, fSpecies6, fSpecies7, fSpecies8, fSpecies9,
+          f31_element1, f31_element2)
+
+        validationHelper.numberValidatorFor(fAreaNumber, fCategoryArea, fOzu, fDP, fYearOfDeforest, fCountOfStump,
+        fCountOfPinusStump, fStumpDiameter, fDisorder, fValidDisorder, fDryTimber, fAction1, fAction2, fAction3,
+        fHrang1, fHrang2, fHrang3, fHrang4, fHrang5, fHrang6, fHrang7, fHrang8, fHrang9, fHrang10, fProportion1,
+        fProportion2, fProportion3, fProportion4, fProportion5, fProportion6, fProportion7, fProportion8, fProportion9,
+        fProportion10, fAge1, fAge2, fAge3, fAge4, fAge5, fAge6, fAge7, fAge8, fAge9, fAge10, fH1, fH2, fH3, fH4, fH5,
+        fH6, fH7, fH8, fH9, fH10, fD1, fD2, fD3, fD4, fD5, fD6, fD7, fD8, fD9, fD10, fTradeClass1, fTradeClass2,
+        fTradeClass3, fTradeClass4, fTradeClass5, fTradeClass6, fTradeClass7, fTradeClass8, fTradeClass9, fTradeClass10,
+        fOrigin1, fOrigin2, fOrigin3, fOrigin4, fOrigin5, fOrigin6, fOrigin7, fOrigin8, fOrigin9, fOrigin10, fWeight1,
+        fWeight2, fWeight3, fWeight4, fWeight5, fWeight6, fWeight7, fWeight8, fWeight9, fWeight10, fSumOfTimber1,
+        fSumOfTimber2, fSumOfTimber3, fSumOfTimber4, fSumOfTimber5, fSumOfTimber6, fSumOfTimber7, fSumOfTimber8,
+        fSumOfTimber9, fSumOfTimber10, f31_count, f31_h, f31_age, f31_proportion1, f31_proportion2)
+
+
 
     }
 
     private fun bindModel(){
         with(model){
-            field_kvNumber byint kvProperty
+            fKvNumber byint kvProperty
             //field_areaNumber.bind(model.numProperty)
             field1Model.apply {
-                field_areaNumber byint numberProperty
-                field_area byfloat areaProperty
-                field_categoryArea byint categoryProperty
-                field_dp byint dpProperty
-                field_ozu byint typeOfProtectionProperty
+                fAreaNumber byint numberProperty
+                fArea byfloat areaProperty
+                fCategoryArea byint categoryProperty
+                fDP byint dpProperty
+                fOzu byint typeOfProtectionProperty
             }
             field2ViewModel.apply {
-                field_action1 byint firstActionProperty
-                field_action2 byint secondActionProperty
-                field_action3 byint thirdActionProperty
+                fAction1 byint firstActionProperty
+                fAction2 byint secondActionProperty
+                fAction3 byint thirdActionProperty
             }
             field3ViewModel.apply {
-                field_species bystr speciesProperty
-                field_bon bystr bonProperty
-                field_type bystr typeProperty
-                field_subType bystr subTypeProperty
-                field_yearOfDeforest byint yearOfDeforestationProperty
-                field_countOfStump byint countOfStumpProperty
-                field_countOfPinusStump byint countOfPinusStumpProperty
-                field_stumpDiameter byint stumpDiameterProperty
-                field_typeDeforest bystr typeOfDeforestationProperty
+                fSpecies bystr speciesProperty
+                fBon bystr bonProperty
+                fType bystr typeProperty
+                fSubType bystr subTypeProperty
+                fYearOfDeforest byint yearOfDeforestationProperty
+                fCountOfStump byint countOfStumpProperty
+                fCountOfPinusStump byint countOfPinusStumpProperty
+                fStumpDiameter byint stumpDiameterProperty
+                fTypeDeforest bystr typeOfDeforestationProperty
             }
             field4ViewModel.apply {
-                field_disorder byint disorderProperty
-                field_validDisorder byint validDisorderProperty
-                field_dryTimber byint dryTimberProperty
+                fDisorder byint disorderProperty
+                fValidDisorder byint validDisorderProperty
+                fDryTimber byint dryTimberProperty
             }
-            f10Elements[0].bind10(field_hrang1, field_proportion1, field_species1, field_age1, field_h1, field_d1,
-                field_tradeClass1, field_origin1, field_weight1, field_sumOfTimber1)
-            f10Elements[1].bind10(field_hrang2, field_proportion2, field_species2, field_age2, field_h2, field_d2,
-                field_tradeClass2, field_origin2, field_weight2, field_sumOfTimber2)
-            f10Elements[2].bind10(field_hrang3, field_proportion3, field_species3, field_age3, field_h3, field_d3,
-                field_tradeClass3, field_origin3, field_weight3, field_sumOfTimber3)
-            f10Elements[3].bind10(field_hrang4, field_proportion4, field_species4, field_age4, field_h4, field_d4,
-                field_tradeClass4, field_origin4, field_weight4, field_sumOfTimber4)
-            f10Elements[4].bind10(field_hrang5, field_proportion5, field_species5, field_age5, field_h5, field_d5,
-                field_tradeClass5, field_origin5, field_weight5, field_sumOfTimber5)
-            f10Elements[5].bind10(field_hrang6, field_proportion6, field_species6, field_age6, field_h6, field_d6,
-                field_tradeClass6, field_origin6, field_weight6, field_sumOfTimber6)
-            f10Elements[6].bind10(field_hrang7, field_proportion7, field_species7, field_age7, field_h7, field_d7,
-                field_tradeClass7, field_origin7, field_weight7, field_sumOfTimber7)
-            f10Elements[7].bind10(field_hrang8, field_proportion8, field_species8, field_age8, field_h8, field_d8,
-                field_tradeClass8, field_origin8, field_weight8, field_sumOfTimber8)
-            f10Elements[8].bind10(field_hrang9, field_proportion9, field_species9, field_age9, field_h9, field_d9,
-                field_tradeClass9, field_origin9, field_weight9, field_sumOfTimber9)
-            f10Elements[9].bind10(field_hrang10, field_proportion10, field_species10, field_age10, field_h10, field_d10,
-                field_tradeClass10, field_origin10, field_weight10, field_sumOfTimber10)
+            f10Elements[0].bind10(fHrang1, fProportion1, fSpecies1, fAge1, fH1, fD1,
+                fTradeClass1, fOrigin1, fWeight1, fSumOfTimber1)
+            f10Elements[1].bind10(fHrang2, fProportion2, fSpecies2, fAge2, fH2, fD2,
+                fTradeClass2, fOrigin2, fWeight2, fSumOfTimber2)
+            f10Elements[2].bind10(fHrang3, fProportion3, fSpecies3, fAge3, fH3, fD3,
+                fTradeClass3, fOrigin3, fWeight3, fSumOfTimber3)
+            f10Elements[3].bind10(fHrang4, fProportion4, fSpecies4, fAge4, fH4, fD4,
+                fTradeClass4, fOrigin4, fWeight4, fSumOfTimber4)
+            f10Elements[4].bind10(fHrang5, fProportion5, fSpecies5, fAge5, fH5, fD5,
+                fTradeClass5, fOrigin5, fWeight5, fSumOfTimber5)
+            f10Elements[5].bind10(fHrang6, fProportion6, fSpecies6, fAge6, fH6, fD6,
+                fTradeClass6, fOrigin6, fWeight6, fSumOfTimber6)
+            f10Elements[6].bind10(fHrang7, fProportion7, fSpecies7, fAge7, fH7, fD7,
+                fTradeClass7, fOrigin7, fWeight7, fSumOfTimber7)
+            f10Elements[7].bind10(fHrang8, fProportion8, fSpecies8, fAge8, fH8, fD8,
+                fTradeClass8, fOrigin8, fWeight8, fSumOfTimber8)
+            f10Elements[8].bind10(fHrang9, fProportion9, fSpecies9, fAge9, fH9, fD9,
+                fTradeClass9, fOrigin9, fWeight9, fSumOfTimber9)
+            f10Elements[9].bind10(fHrang10, fProportion10, fSpecies10, fAge10, fH10, fD10,
+                fTradeClass10, fOrigin10, fWeight10, fSumOfTimber10)
 
             field31ViewModel.apply {
-                field_31_count byfloat countProperty
-                field_31_age byint ageProperty
-                field_31_h byfloat hProperty
-                field_31_proportion1 byint proportion1Property
-                field_31_element1 bystr element1Property
-                field_31_proportion2 byint proportion2Property
-                field_31_element2 bystr element2Property
+                f31_count byfloat countProperty
+                f31_age byint ageProperty
+                f31_h byfloat hProperty
+                f31_proportion1 byint proportion1Property
+                f31_element1 bystr element1Property
+                f31_proportion2 byint proportion2Property
+                f31_element2 bystr element2Property
             }
 
            bindDop()
@@ -340,18 +354,18 @@ class MainView : View("My View") {
 
     private fun bindDop(){
         with(model.dopViewModel){
-            bindDopLine(field_dop1_n, field_dop1_1, field_dop1_2, field_dop1_3, field_dop1_4, field_dop1_5, field_dop1_6,
-                field_dop1_7, field_dop1_8, dopFieldViewModels[0])
-            bindDopLine(field_dop2_n, field_dop2_1, field_dop2_2, field_dop2_3, field_dop2_4, field_dop2_5, field_dop2_6,
-                field_dop2_7, field_dop2_8, dopFieldViewModels[1])
-            bindDopLine(field_dop3_n, field_dop3_1, field_dop3_2, field_dop3_3, field_dop3_4, field_dop3_5, field_dop3_6,
-                field_dop3_7, field_dop3_8, dopFieldViewModels[2])
-            bindDopLine(field_dop4_n, field_dop4_1, field_dop4_2, field_dop4_3, field_dop4_4, field_dop4_5, field_dop4_6,
-                field_dop4_7, field_dop4_8, dopFieldViewModels[3])
-            bindDopLine(field_dop5_n, field_dop5_1, field_dop5_2, field_dop5_3, field_dop5_4, field_dop5_5, field_dop5_6,
-                field_dop5_7, field_dop5_8, dopFieldViewModels[4])
-            bindDopLine(field_dop6_n, field_dop6_1, field_dop6_2, field_dop6_3, field_dop6_4, field_dop6_5, field_dop6_6,
-                field_dop6_7, field_dop6_8, dopFieldViewModels[5])
+            bindDopLine(fDop1_n, fDop1_1, fDop1_2, fDop1_3, fDop1_4, fDop1_5, fDop1_6,
+                fDop1_7, fDop1_8, dopFieldViewModels[0])
+            bindDopLine(fDop2_n, fDop2_1, fDop2_2, fDop2_3, fDop2_4, fDop2_5, fDop2_6,
+                fDop2_7, fDop2_8, dopFieldViewModels[1])
+            bindDopLine(fDop3_n, fDop3_1, fDop3_2, fDop3_3, fDop3_4, fDop3_5, fDop3_6,
+                fDop3_7, fDop3_8, dopFieldViewModels[2])
+            bindDopLine(fDop4_n, fDop4_1, fDop4_2, fDop4_3, fDop4_4, fDop4_5, fDop4_6,
+                fDop4_7, fDop4_8, dopFieldViewModels[3])
+            bindDopLine(fDop5_n, fDop5_1, fDop5_2, fDop5_3, fDop5_4, fDop5_5, fDop5_6,
+                fDop5_7, fDop5_8, dopFieldViewModels[4])
+            bindDopLine(fDop6_n, fDop6_1, fDop6_2, fDop6_3, fDop6_4, fDop6_5, fDop6_6,
+                fDop6_7, fDop6_8, dopFieldViewModels[5])
         }
     }
 
@@ -387,7 +401,7 @@ class MainView : View("My View") {
 
             kv_list = tableview(controller.areas){
             model.rebindOnChange(this){
-                if (!context.validate()){
+                if (!this@MainView.validationContext.validate()){
                     alert(content = "Fuck", header = "alert", type = Alert.AlertType.ERROR) //todo
                     rollback()
                     return@rebindOnChange
@@ -469,7 +483,7 @@ class MainView : View("My View") {
     }
 
     private fun applyButtons(){
-        btn_open.apply {
+        btnOpen.apply {
             action {
                 val files = chooseFile(
                     "Выберите файл",
@@ -488,7 +502,7 @@ class MainView : View("My View") {
             tooltip("Открыть")
         }
 
-        btn_save.apply {
+        btnSave.apply {
             action {
                 val dir = chooseDirectory(
                     "Сохранить",
