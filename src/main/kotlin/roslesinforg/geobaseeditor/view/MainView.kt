@@ -421,7 +421,7 @@ class MainView : View("My View") {
                 leftAnchor = 0
                 bottomAnchor = 0
             }
-            prefWidth = 130.0
+            prefWidth = 100.0
                 shortcut(KeyCombination.keyCombination(KeyCode.DELETE.name)){
                     println("hi") //todo
                 }

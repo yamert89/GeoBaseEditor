@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.FlowPane?>
 
-<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="523.0" prefWidth="800.0" stylesheets="main.css" xmlns="http://javafx.com/javafx/8.0.102" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="523.0" prefWidth="770.0" stylesheets="main.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <ButtonBar buttonMinWidth="50.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="18.0" prefWidth="800.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <buttons>
@@ -19,7 +19,7 @@
             <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
          </padding>
       </ButtonBar>
-      <AnchorPane layoutX="130.0" prefHeight="492.0" prefWidth="670.0" styleClass="back" stylesheets="@main.css" AnchorPane.bottomAnchor="0.0">
+      <AnchorPane layoutX="100.0" prefHeight="492.0" prefWidth="670.0" styleClass="back" stylesheets="@main.css" AnchorPane.bottomAnchor="0.0">
          <children>
             <FlowPane layoutX="33.0" layoutY="141.0" prefHeight="17.0" prefWidth="527.0">
                <children>
