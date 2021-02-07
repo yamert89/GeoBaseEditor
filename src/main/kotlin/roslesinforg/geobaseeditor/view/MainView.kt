@@ -265,7 +265,7 @@ class MainView : View("My View") {
 
 
 
-        validationHelper.stringValidatorFor(fSpecies, fBon, fType, fSubType, fTypeDeforest,
+        validationHelper.stringValidatorFor(fSpecies, fType, fSubType, fTypeDeforest,
           fSpecies1, fSpecies2, fSpecies3, fSpecies4, fSpecies5, fSpecies6, fSpecies7, fSpecies8, fSpecies9,
           f31_element1, f31_element2)
 
@@ -280,9 +280,6 @@ class MainView : View("My View") {
         fWeight2, fWeight3, fWeight4, fWeight5, fWeight6, fWeight7, fWeight8, fWeight9, fWeight10, fSumOfTimber1,
         fSumOfTimber2, fSumOfTimber3, fSumOfTimber4, fSumOfTimber5, fSumOfTimber6, fSumOfTimber7, fSumOfTimber8,
         fSumOfTimber9, fSumOfTimber10, f31_count, f31_h, f31_age, f31_proportion1, f31_proportion2)
-
-
-
     }
 
     private fun bindModel(){

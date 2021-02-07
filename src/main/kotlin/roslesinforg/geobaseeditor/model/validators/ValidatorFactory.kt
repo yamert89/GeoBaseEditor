@@ -11,7 +11,7 @@ import tornadofx.ValidationTrigger
 class ValidatorFactory(private val context: ValidationContext) {
     fun stringValidator(textField: TextField): ValidationContext.Validator<String>{
         return textFieldValidatorError(textField, "Неправильное значение"){
-            it == "3"
+            it!!.isNotEmpty() && !it.matches("[а-яА-Я\\s]{1,5}".toRegex())
         }
     }
     fun numberValidator(textField: TextField): ValidationContext.Validator<String> {
