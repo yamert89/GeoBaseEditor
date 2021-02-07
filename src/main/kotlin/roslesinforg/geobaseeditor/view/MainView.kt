@@ -17,10 +17,11 @@ import roslesinforg.geobaseeditor.GeoBaseEditorController
 import roslesinforg.geobaseeditor.model.FieldFloatConverter
 import roslesinforg.geobaseeditor.model.FieldIntConverter
 import roslesinforg.geobaseeditor.model.FieldStringConverter
-import roslesinforg.geobaseeditor.model.validators.ValidationHelper
-import roslesinforg.geobaseeditor.model.validators.ValidatorFactory
-import roslesinforg.geobaseeditor.model.validators.ValidatorFactory.*
+import roslesinforg.geobaseeditor.model.validation.ValidationHelper
+import roslesinforg.geobaseeditor.model.validation.ValidatorFactory
+import roslesinforg.geobaseeditor.model.validation.ValidatorFactory.*
 import roslesinforg.geobaseeditor.view.viewmodels.*
+import kotlin.RuntimeException
 
 
 fun main() {
@@ -393,18 +394,25 @@ class MainView : View("My View") {
     }
 
     private fun buildKvList(){
+
         root.apply { //todo table view with row expander
             val format = DataFormat("application/x-java-serialized-object")
 
             kv_list = tableview(controller.areas){
-            model.rebindOnChange(this){
-                if (!this@MainView.validationContext.validate()){
-                    alert(content = "Fuck", header = "alert", type = Alert.AlertType.ERROR) //todo
-                    rollback()
-                    return@rebindOnChange
+
+                onSelectionChange {
+                    if (!this@MainView.validationContext.validate()){
+                        error("Внимание", "Имеются некорректно заполненные поля, сохранить их?", ButtonType.OK, ButtonType.NO, title = "Ошибка"){
+                            if (it == ButtonType.NO){
+                                model.rollback()
+                                selectionModel.clearSelection()//fixme IOB exception
+                            }
+                        }
+                    }
                 }
-                if (it == null) return@rebindOnChange
-                item = it
+            model.rebindOnChange(this){ model ->
+                if (model == null) return@rebindOnChange
+                item = model
                 println("Selection kv: ${item.kv} vid: ${item.field1.number}")
             }
             isEditable = true

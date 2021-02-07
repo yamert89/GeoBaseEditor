@@ -1,11 +1,7 @@
-package roslesinforg.geobaseeditor.model.validators
+package roslesinforg.geobaseeditor.model.validation
 
-import javafx.beans.value.ObservableValue
-import javafx.scene.Node
 import javafx.scene.control.TextField
 import tornadofx.ValidationContext
-import tornadofx.ValidationMessage
-import tornadofx.ValidationSeverity
 import tornadofx.ValidationTrigger
 
 class ValidatorFactory(private val context: ValidationContext) {
