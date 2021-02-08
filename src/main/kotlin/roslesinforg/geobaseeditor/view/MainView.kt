@@ -288,8 +288,7 @@ class MainView : View("My View") {
     private fun bindModel(){
         with(model){
             fKvNumber byint kvProperty
-
-            //fKvNumber.bindDirty(model.dirtyStateFor(AreaModel::kvProperty))
+            fKvNumber.bindDirty(model.dirtyStateFor(AreaModel::kvProperty))//todo YESSS!!!!
 
 
 
@@ -297,9 +296,7 @@ class MainView : View("My View") {
 
             //field_areaNumber.bind(model.numProperty)
             field1Model.apply {
-                try{
-                    fAreaNumber byint numberProperty
-                }catch (e: Exception){e.printStackTrace()}
+                fAreaNumber byint numberProperty
 
                 fArea byfloat areaProperty
                 fCategoryArea byint categoryProperty
