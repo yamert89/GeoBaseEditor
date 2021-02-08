@@ -17,6 +17,7 @@ import roslesinforg.geobaseeditor.GeoBaseEditorController
 import roslesinforg.geobaseeditor.model.FieldFloatConverter
 import roslesinforg.geobaseeditor.model.FieldIntConverter
 import roslesinforg.geobaseeditor.model.FieldStringConverter
+import roslesinforg.geobaseeditor.model.TextFieldImpl
 import roslesinforg.geobaseeditor.model.validation.ValidationHelper
 import roslesinforg.geobaseeditor.model.validation.ValidatorFactory
 import roslesinforg.geobaseeditor.model.validation.ValidatorFactory.*
@@ -33,7 +34,7 @@ class GeoBaseEditorApp: App(MainView::class)
 class MainView : View("My View") {
     override val root: AnchorPane by fxml("/gui/MainView.fxml")
     val fGir: TextField by fxid()
-    val fKvNumber: TextField by fxid()
+    val fKvNumber: TextFieldImpl by fxid()
     val fAreaNumber: TextField by fxid()
     val fArea: TextField by fxid()
     val fCategoryArea: TextField by fxid()
@@ -281,14 +282,25 @@ class MainView : View("My View") {
         fWeight2, fWeight3, fWeight4, fWeight5, fWeight6, fWeight7, fWeight8, fWeight9, fWeight10, fSumOfTimber1,
         fSumOfTimber2, fSumOfTimber3, fSumOfTimber4, fSumOfTimber5, fSumOfTimber6, fSumOfTimber7, fSumOfTimber8,
         fSumOfTimber9, fSumOfTimber10, f31_count, f31_h, f31_age, f31_proportion1, f31_proportion2)
+
     }
 
     private fun bindModel(){
         with(model){
             fKvNumber byint kvProperty
+
+            //fKvNumber.bindDirty(model.dirtyStateFor(AreaModel::kvProperty))
+
+
+
+
+
             //field_areaNumber.bind(model.numProperty)
             field1Model.apply {
-                fAreaNumber byint numberProperty
+                try{
+                    fAreaNumber byint numberProperty
+                }catch (e: Exception){e.printStackTrace()}
+
                 fArea byfloat areaProperty
                 fCategoryArea byint categoryProperty
                 fDP byint dpProperty
@@ -523,6 +535,7 @@ class MainView : View("My View") {
 
     private infix fun TextField.bystr(other: Property<String>) = this.bind(property = other, readonly = false, converter = FieldStringConverter())
     private infix fun TextField.byint(other: Property<Int>) = this.bind(property = other, readonly = false, converter = FieldIntConverter())
+    private infix fun TextFieldImpl.byint(other: Property<Int>) = this.bind(property = other, readonly = false, converter = FieldIntConverter())
     private infix fun TextField.byfloat(other: Property<Float>) = this.bind(property = other, converter = FieldFloatConverter())
 
     private fun ElementOfForestViewModel.bind10(
