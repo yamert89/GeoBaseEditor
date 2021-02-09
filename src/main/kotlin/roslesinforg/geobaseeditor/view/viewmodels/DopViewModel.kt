@@ -22,6 +22,7 @@ class DopViewModel(area: Area): ItemViewModel<Area>(area) {
 
     init {
         itemProperty.onChange {
+            println("dopviewmodel item changed")
             if (it == null) return@onChange
             invalidateViewModels()
             updateDopFields(it)
@@ -36,7 +37,7 @@ class DopViewModel(area: Area): ItemViewModel<Area>(area) {
             while (model.isBounds){
                 isBounds = true
                 println(numberProperty.value)
-                when(numberProperty.value){
+                when(numberProperty.value){ //todo refactoring
                     11 -> area.field11 = Field11(
                         col1Property.value.toInt(),
                         col2Property.value.toInt(),
@@ -167,68 +168,46 @@ class DopViewModel(area: Area): ItemViewModel<Area>(area) {
 
 
     class DopFieldViewModel(field: Field) : ItemViewModel<Field>(field){
-        var numberProperty = SimpleIntegerProperty() as Property<Int>
-        var col1Property = SimpleStringProperty()
-        var col2Property = SimpleStringProperty()
-        var col3Property = SimpleStringProperty()
-        var col4Property = SimpleStringProperty()
-        var col5Property = SimpleStringProperty()
-        var col6Property = SimpleStringProperty()
-        var col7Property = SimpleStringProperty()
-        var col8Property = SimpleStringProperty()
+        var number = SimpleIntegerProperty() as Property<Int> //todo replace with val
+        var col1 = SimpleStringProperty()
+        var col2 = SimpleStringProperty()
+        var col3 = SimpleStringProperty()
+        var col4 = SimpleStringProperty()
+        var col5 = SimpleStringProperty()
+        var col6 = SimpleStringProperty()
+        var col7 = SimpleStringProperty()
+        var col8 = SimpleStringProperty()
+        var numberProperty = bind{number}
+        var col1Property = bind{col1}
+        var col2Property = bind{col2}
+        var col3Property = bind{col3}
+        var col4Property = bind{col4}
+        var col5Property = bind{col5}
+        var col6Property = bind{col6}
+        var col7Property = bind{col7}
+        var col8Property = bind{col8}
         var isBounds = false
 
         init {
+
             itemProperty.onChange {
                 println("dop field model changed")
                 when(it){
-                    is Field11 -> {
-                        numberProperty.value = 11
-                        col1Property.value = it.birthYear.prepare()
-                        col2Property.value = it.prepareType.prepare()
-                        col3Property.value = it.createType.prepare()
-                        col4Property.value = it.inLine.prepare()
-                        col5Property.value = it.betweenRows.prepare()
-                        col6Property.value = it.count.prepare()
-                        col7Property.value = it.state.prepare()
-                        col8Property.value = it.reazonOfDeath.prepare()
+                    is Field11 -> with(it){
+                        updateProperties(11, birthYear, prepareType, createType, inLine, betweenRows, count, state, reazonOfDeath)
                     }
-                    is Field12 -> {
-                        numberProperty.value = 12
-                        col1Property.value = it.reasonOfDamage.prepare()
-                        col2Property.value = it.yearOfDamage.prepare()
-                        col3Property.value = it.speciesOfDamage
-                        col4Property.value = it.typeEnemy1.prepare()
-                        col5Property.value = it.degreeDamage1.prepare()
-                        col6Property.value = it.typeEnemy2.prepare()
-                        col7Property.value = it.degreeDamage2.prepare()
+                    is Field12 -> with(it){
+                        updateProperties(12, reasonOfDamage, yearOfDamage, speciesOfDamage, typeEnemy1, degreeDamage1, typeEnemy2, degreeDamage2)
                     }
-                    is Field13 -> {
-                        numberProperty.value = 13
-                        col1Property.value = it.width.prepare()
-                        col2Property.value = it.length.prepare()
-                        col3Property.value = it.state.prepare()
-                        col4Property.value = it.purpose.prepare()
-                        col5Property.value = it.typeOfRoadSurface.prepare()
-                        col6Property.value = it.widthOfRoad.prepare()
-                        col7Property.value = it.seasonality.prepare()
+                    is Field13 -> with(it){
+                        updateProperties(13, width, length, state, purpose, typeOfRoadSurface, widthOfRoad, seasonality)
                     }
-                    is Field19 -> {
-                        numberProperty.value = 19
-                        col1Property.value = it.typeSwamp.prepare()
-                        col2Property.value = it.typePlants.prepare()
-                        col3Property.value = it.weightOfPeat.prepare()
+                    is Field19 -> with(it){
+                        updateProperties(19, typeSwamp, typePlants, weightOfPeat)
                     }
-                    is Field21 -> {
-                        numberProperty.value = 21
-                        col1Property.value = it.landscape.prepare()
-                        col2Property.value = it.ethetic.prepare()
-                        col3Property.value = it.sanytary.prepare()
-                        col4Property.value = it.stability.prepare()
-                        col5Property.value = it.freeSpace.prepare()
-                        col6Property.value = it.visualDistance.prepare()
-                        col7Property.value = it.health.prepare()
-                        col8Property.value = it.antropoElements.prepare()
+                    is Field21 -> with(it){
+                        updateProperties(21, landscape, ethetic, sanytary, stability, freeSpace, visualDistance,
+                        health, antropoElements)
                     }
                     is Field23 -> {
                         numberProperty.value = 23
@@ -243,20 +222,32 @@ class DopViewModel(area: Area): ItemViewModel<Area>(area) {
                         if (it.info.size > idx) col7Property.value = it.info[idx++].prepare()
                         if (it.info.size > idx) col8Property.value = it.info[idx].prepare()
                     }
-                    is Field29 -> {
-                        numberProperty.value = 29
-                        col1Property.value = it.type.prepare()
-                        col2Property.value = it.year.prepare()
-                        col3Property.value = it.categoryBefore.prepare()
-                        col4Property.value = it.speciesBefore
-                        col5Property.value = it.lengthBefore.prepare()
-                        col6Property.value = it.lengthBetween.prepare()
-                        col7Property.value = it.bon
+                    is Field29 -> with(it){
+                        updateProperties(29, type, year, categoryBefore, speciesBefore, lengthBefore, lengthBetween, bon)
                     }
                 }
                 isBounds = true
+
             }
         }
+
+        private fun updateProperties(num: Int, vararg col: Any){
+            number.value = num
+            for (i in col.indices){
+                val par = col[i].prepare()
+                when(i){
+                    0 -> col1.value = par
+                    1 -> col2.value = par
+                    2 -> col3.value = par
+                    3 -> col4.value = par
+                    4 -> col5.value = par
+                    5 -> col6.value = par
+                    6 -> col7.value = par
+                    7 -> col8.value = par
+                }
+            }
+        }
+
 
         override fun toString(): String {
             return "DopFieldViewModel_${numberProperty.value}"
