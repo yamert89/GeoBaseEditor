@@ -24,552 +24,552 @@
          <children>
             <FlowPane layoutX="33.0" layoutY="141.0" prefHeight="17.0" prefWidth="527.0">
                <children>
-                  <TextField fx:id="fSpecies" prefWidth="45.0" styleClass="field" stylesheets="@main.css" />
-                  <TextField fx:id="fBon" prefWidth="35.0" styleClass="field" stylesheets="@main.css" />
-                  <TextField fx:id="fType" prefWidth="49.0" styleClass="field" stylesheets="@main.css" />
-                  <TextField fx:id="fSubType" prefWidth="52.0" styleClass="field" stylesheets="@main.css" />
-                  <TextField fx:id="fYearOfDeforest" prefWidth="38.0" styleClass="field" stylesheets="@main.css" />
-                  <TextField fx:id="fCountOfStump" prefWidth="49.0" styleClass="field" stylesheets="@main.css" />
-                  <TextField fx:id="fCountOfPinusStump" prefWidth="50.0" styleClass="field" stylesheets="@main.css" />
-                  <TextField fx:id="fStumpDiameter" prefWidth="34.0" styleClass="field" stylesheets="@main.css" />
-                  <TextField fx:id="fTypeDeforest" prefWidth="33.0" styleClass="field" stylesheets="@main.css" />
-                  <TextField fx:id="fDisorder" prefWidth="45.0" styleClass="field" stylesheets="@main.css">
+                  <TextFieldImpl fx:id="fSpecies" prefWidth="45.0" styleClass="field" stylesheets="@main.css" />
+                  <TextFieldImpl fx:id="fBon" prefWidth="35.0" styleClass="field" stylesheets="@main.css" />
+                  <TextFieldImpl fx:id="fType" prefWidth="49.0" styleClass="field" stylesheets="@main.css" />
+                  <TextFieldImpl fx:id="fSubType" prefWidth="52.0" styleClass="field" stylesheets="@main.css" />
+                  <TextFieldImpl fx:id="fYearOfDeforest" prefWidth="38.0" styleClass="field" stylesheets="@main.css" />
+                  <TextFieldImpl fx:id="fCountOfStump" prefWidth="49.0" styleClass="field" stylesheets="@main.css" />
+                  <TextFieldImpl fx:id="fCountOfPinusStump" prefWidth="50.0" styleClass="field" stylesheets="@main.css" />
+                  <TextFieldImpl fx:id="fStumpDiameter" prefWidth="34.0" styleClass="field" stylesheets="@main.css" />
+                  <TextFieldImpl fx:id="fTypeDeforest" prefWidth="33.0" styleClass="field" stylesheets="@main.css" />
+                  <TextFieldImpl fx:id="fDisorder" prefWidth="45.0" styleClass="field" stylesheets="@main.css">
                      <FlowPane.margin>
                         <Insets left="18.0" />
                      </FlowPane.margin>
-                  </TextField>
-                  <TextField fx:id="fValidDisorder" prefWidth="44.0" styleClass="field" stylesheets="@main.css" />
-                  <TextField fx:id="fDryTimber" prefWidth="34.0" styleClass="field" stylesheets="@main.css" />
+                  </TextFieldImpl>
+                  <TextFieldImpl fx:id="fValidDisorder" prefWidth="44.0" styleClass="field" stylesheets="@main.css" />
+                  <TextFieldImpl fx:id="fDryTimber" prefWidth="34.0" styleClass="field" stylesheets="@main.css" />
                </children>
             </FlowPane>
             <FlowPane fx:id="container_10_2" layoutX="353.0" layoutY="201.0" maxHeight="77.0" maxWidth="305.0" prefHeight="77.0" prefWidth="305.0">
                <children>
-                  <TextField fx:id="fHrang6" layoutY="55.0" prefWidth="30.0" styleClass="field" stylesheets="@main.css" />
-                  <TextField fx:id="fProportion6" layoutY="42.0" prefHeight="13.0" prefWidth="41.0" styleClass="field" stylesheets="@main.css" />
-                  <TextField fx:id="fSpecies6" layoutY="28.0" prefWidth="38.0" styleClass="field" stylesheets="@main.css" />
-                  <TextField fx:id="fAge6" layoutY="14.0" prefWidth="21.0" styleClass="field" stylesheets="@main.css" />
-                  <TextField fx:id="fH6" layoutX="5.0" layoutY="4.0" prefHeight="11.0" prefWidth="21.0" styleClass="field" stylesheets="@main.css" />
-                  <TextField fx:id="fD6" layoutX="21.0" prefHeight="13.0" prefWidth="21.0" styleClass="field" stylesheets="@main.css" />
-                  <TextField fx:id="fTradeClass6" layoutX="20.0" layoutY="15.0" prefHeight="13.0" prefWidth="31.0" styleClass="field" stylesheets="@main.css" />
-                  <TextField fx:id="fOrigin6" layoutX="22.0" layoutY="29.0" prefHeight="13.0" prefWidth="26.0" styleClass="field" stylesheets="@main.css" />
-                  <TextField fx:id="fWeight6" layoutX="21.0" layoutY="42.0" prefHeight="13.0" prefWidth="27.0" styleClass="field" stylesheets="@main.css" />
-                  <TextField fx:id="fSumOfTimber6" layoutX="21.0" layoutY="56.0" prefHeight="13.0" prefWidth="34.0" styleClass="field" stylesheets="@main.css">
+                  <TextFieldImpl fx:id="fHrang6" layoutY="55.0" prefWidth="30.0" styleClass="field" stylesheets="@main.css" />
+                  <TextFieldImpl fx:id="fProportion6" layoutY="42.0" prefHeight="13.0" prefWidth="41.0" styleClass="field" stylesheets="@main.css" />
+                  <TextFieldImpl fx:id="fSpecies6" layoutY="28.0" prefWidth="38.0" styleClass="field" stylesheets="@main.css" />
+                  <TextFieldImpl fx:id="fAge6" layoutY="14.0" prefWidth="21.0" styleClass="field" stylesheets="@main.css" />
+                  <TextFieldImpl fx:id="fH6" layoutX="5.0" layoutY="4.0" prefHeight="11.0" prefWidth="21.0" styleClass="field" stylesheets="@main.css" />
+                  <TextFieldImpl fx:id="fD6" layoutX="21.0" prefHeight="13.0" prefWidth="21.0" styleClass="field" stylesheets="@main.css" />
+                  <TextFieldImpl fx:id="fTradeClass6" layoutX="20.0" layoutY="15.0" prefHeight="13.0" prefWidth="31.0" styleClass="field" stylesheets="@main.css" />
+                  <TextFieldImpl fx:id="fOrigin6" layoutX="22.0" layoutY="29.0" prefHeight="13.0" prefWidth="26.0" styleClass="field" stylesheets="@main.css" />
+                  <TextFieldImpl fx:id="fWeight6" layoutX="21.0" layoutY="42.0" prefHeight="13.0" prefWidth="27.0" styleClass="field" stylesheets="@main.css" />
+                  <TextFieldImpl fx:id="fSumOfTimber6" layoutX="21.0" layoutY="56.0" prefHeight="13.0" prefWidth="34.0" styleClass="field" stylesheets="@main.css">
                      <FlowPane.margin>
                         <Insets left="14.0" />
                      </FlowPane.margin>
-                  </TextField>
-                  <TextField fx:id="fHrang7" layoutX="53.0" prefHeight="13.0" prefWidth="30.0" styleClass="field" stylesheets="@main.css" />
-                  <TextField fx:id="fProportion7" layoutX="52.0" layoutY="15.0" prefHeight="13.0" prefWidth="41.0" styleClass="field" stylesheets="@main.css" />
-                  <TextField fx:id="fSpecies7" layoutX="54.0" layoutY="27.0" prefHeight="13.0" prefWidth="38.0" styleClass="field" stylesheets="@main.css" />
-                  <TextField fx:id="fAge7" layoutX="52.0" layoutY="42.0" prefHeight="13.0" prefWidth="21.0" styleClass="field" stylesheets="@main.css" />
-                  <TextField fx:id="fH7" layoutX="54.0" layoutY="55.0" prefHeight="13.0" prefWidth="21.0" styleClass="field" stylesheets="@main.css" />
-                  <TextField fx:id="fD7" layoutX="84.0" prefHeight="13.0" prefWidth="21.0" styleClass="field" stylesheets="@main.css" />
-                  <TextField fx:id="fTradeClass7" layoutX="83.0" layoutY="14.0" prefHeight="13.0" prefWidth="31.0" styleClass="field" stylesheets="@main.css" />
-                  <TextField fx:id="fOrigin7" layoutX="84.0" layoutY="29.0" prefHeight="13.0" prefWidth="26.0" styleClass="field" stylesheets="@main.css" />
-                  <TextField fx:id="fWeight7" layoutX="84.0" layoutY="43.0" prefHeight="13.0" prefWidth="27.0" styleClass="field" stylesheets="@main.css" />
-                  <TextField fx:id="fSumOfTimber7" layoutX="85.0" layoutY="55.0" prefHeight="13.0" prefWidth="34.0" styleClass="field" stylesheets="@main.css">
+                  </TextFieldImpl>
+                  <TextFieldImpl fx:id="fHrang7" layoutX="53.0" prefHeight="13.0" prefWidth="30.0" styleClass="field" stylesheets="@main.css" />
+                  <TextFieldImpl fx:id="fProportion7" layoutX="52.0" layoutY="15.0" prefHeight="13.0" prefWidth="41.0" styleClass="field" stylesheets="@main.css" />
+                  <TextFieldImpl fx:id="fSpecies7" layoutX="54.0" layoutY="27.0" prefHeight="13.0" prefWidth="38.0" styleClass="field" stylesheets="@main.css" />
+                  <TextFieldImpl fx:id="fAge7" layoutX="52.0" layoutY="42.0" prefHeight="13.0" prefWidth="21.0" styleClass="field" stylesheets="@main.css" />
+                  <TextFieldImpl fx:id="fH7" layoutX="54.0" layoutY="55.0" prefHeight="13.0" prefWidth="21.0" styleClass="field" stylesheets="@main.css" />
+                  <TextFieldImpl fx:id="fD7" layoutX="84.0" prefHeight="13.0" prefWidth="21.0" styleClass="field" stylesheets="@main.css" />
+                  <TextFieldImpl fx:id="fTradeClass7" layoutX="83.0" layoutY="14.0" prefHeight="13.0" prefWidth="31.0" styleClass="field" stylesheets="@main.css" />
+                  <TextFieldImpl fx:id="fOrigin7" layoutX="84.0" layoutY="29.0" prefHeight="13.0" prefWidth="26.0" styleClass="field" stylesheets="@main.css" />
+                  <TextFieldImpl fx:id="fWeight7" layoutX="84.0" layoutY="43.0" prefHeight="13.0" prefWidth="27.0" styleClass="field" stylesheets="@main.css" />
+                  <TextFieldImpl fx:id="fSumOfTimber7" layoutX="85.0" layoutY="55.0" prefHeight="13.0" prefWidth="34.0" styleClass="field" stylesheets="@main.css">
                      <FlowPane.margin>
                         <Insets left="14.0" />
                      </FlowPane.margin>
-                  </TextField>
-                  <TextField fx:id="fHrang8" layoutX="102.0" layoutY="-1.0" prefHeight="13.0" prefWidth="30.0" styleClass="field" stylesheets="@main.css" />
-                  <TextField fx:id="fProportion8" layoutX="101.0" layoutY="13.0" prefHeight="13.0" prefWidth="41.0" styleClass="field" stylesheets="@main.css" />
-                  <TextField fx:id="fSpecies8" layoutX="102.0" layoutY="28.0" prefHeight="13.0" prefWidth="38.0" styleClass="field" stylesheets="@main.css" />
-                  <TextField fx:id="fAge8" layoutX="102.0" layoutY="42.0" prefHeight="13.0" prefWidth="21.0" styleClass="field" stylesheets="@main.css" />
-                  <TextField fx:id="fH8" layoutX="103.0" layoutY="54.0" prefHeight="13.0" prefWidth="21.0" styleClass="field" stylesheets="@main.css" />
-                  <TextField fx:id="fD8" layoutX="120.0" prefHeight="13.0" prefWidth="21.0" styleClass="field" stylesheets="@main.css" />
-                  <TextField fx:id="fTradeClass8" layoutX="119.0" layoutY="14.0" prefHeight="13.0" prefWidth="31.0" styleClass="field" stylesheets="@main.css" />
-                  <TextField fx:id="fOrigin8" layoutX="120.0" layoutY="29.0" prefHeight="13.0" prefWidth="26.0" styleClass="field" stylesheets="@main.css" />
-                  <TextField fx:id="fWeight8" layoutX="120.0" layoutY="43.0" prefHeight="13.0" prefWidth="27.0" styleClass="field" stylesheets="@main.css" />
-                  <TextField fx:id="fSumOfTimber8" layoutX="121.0" layoutY="55.0" prefHeight="13.0" prefWidth="34.0" styleClass="field" stylesheets="@main.css">
+                  </TextFieldImpl>
+                  <TextFieldImpl fx:id="fHrang8" layoutX="102.0" layoutY="-1.0" prefHeight="13.0" prefWidth="30.0" styleClass="field" stylesheets="@main.css" />
+                  <TextFieldImpl fx:id="fProportion8" layoutX="101.0" layoutY="13.0" prefHeight="13.0" prefWidth="41.0" styleClass="field" stylesheets="@main.css" />
+                  <TextFieldImpl fx:id="fSpecies8" layoutX="102.0" layoutY="28.0" prefHeight="13.0" prefWidth="38.0" styleClass="field" stylesheets="@main.css" />
+                  <TextFieldImpl fx:id="fAge8" layoutX="102.0" layoutY="42.0" prefHeight="13.0" prefWidth="21.0" styleClass="field" stylesheets="@main.css" />
+                  <TextFieldImpl fx:id="fH8" layoutX="103.0" layoutY="54.0" prefHeight="13.0" prefWidth="21.0" styleClass="field" stylesheets="@main.css" />
+                  <TextFieldImpl fx:id="fD8" layoutX="120.0" prefHeight="13.0" prefWidth="21.0" styleClass="field" stylesheets="@main.css" />
+                  <TextFieldImpl fx:id="fTradeClass8" layoutX="119.0" layoutY="14.0" prefHeight="13.0" prefWidth="31.0" styleClass="field" stylesheets="@main.css" />
+                  <TextFieldImpl fx:id="fOrigin8" layoutX="120.0" layoutY="29.0" prefHeight="13.0" prefWidth="26.0" styleClass="field" stylesheets="@main.css" />
+                  <TextFieldImpl fx:id="fWeight8" layoutX="120.0" layoutY="43.0" prefHeight="13.0" prefWidth="27.0" styleClass="field" stylesheets="@main.css" />
+                  <TextFieldImpl fx:id="fSumOfTimber8" layoutX="121.0" layoutY="55.0" prefHeight="13.0" prefWidth="34.0" styleClass="field" stylesheets="@main.css">
                      <FlowPane.margin>
                         <Insets left="14.0" />
                      </FlowPane.margin>
-                  </TextField>
-                  <TextField fx:id="fHrang9" layoutX="137.0" layoutY="-2.0" prefHeight="13.0" prefWidth="30.0" styleClass="field" stylesheets="@main.css" />
-                  <TextField fx:id="fProportion9" layoutX="136.0" layoutY="13.0" prefHeight="13.0" prefWidth="41.0" styleClass="field" stylesheets="@main.css" />
-                  <TextField fx:id="fSpecies9" layoutX="138.0" layoutY="27.0" prefHeight="13.0" prefWidth="38.0" styleClass="field" stylesheets="@main.css" />
-                  <TextField fx:id="fAge9" layoutX="137.0" layoutY="40.0" prefHeight="13.0" prefWidth="21.0" styleClass="field" stylesheets="@main.css" />
-                  <TextField fx:id="fH9" layoutX="137.0" layoutY="54.0" prefHeight="13.0" prefWidth="21.0" styleClass="field" stylesheets="@main.css" />
-                  <TextField fx:id="fD9" layoutX="204.0" layoutY="1.0" prefHeight="13.0" prefWidth="21.0" styleClass="field" stylesheets="@main.css" />
-                  <TextField fx:id="fTradeClass9" layoutX="163.0" layoutY="14.0" prefHeight="13.0" prefWidth="31.0" styleClass="field" stylesheets="@main.css" />
-                  <TextField fx:id="fOrigin9" layoutX="164.0" layoutY="29.0" prefHeight="13.0" prefWidth="26.0" styleClass="field" stylesheets="@main.css" />
-                  <TextField fx:id="fWeight9" layoutX="164.0" layoutY="42.0" prefHeight="13.0" prefWidth="27.0" styleClass="field" stylesheets="@main.css" />
-                  <TextField fx:id="fSumOfTimber9" layoutX="163.0" layoutY="55.0" prefHeight="13.0" prefWidth="34.0" styleClass="field" stylesheets="@main.css">
+                  </TextFieldImpl>
+                  <TextFieldImpl fx:id="fHrang9" layoutX="137.0" layoutY="-2.0" prefHeight="13.0" prefWidth="30.0" styleClass="field" stylesheets="@main.css" />
+                  <TextFieldImpl fx:id="fProportion9" layoutX="136.0" layoutY="13.0" prefHeight="13.0" prefWidth="41.0" styleClass="field" stylesheets="@main.css" />
+                  <TextFieldImpl fx:id="fSpecies9" layoutX="138.0" layoutY="27.0" prefHeight="13.0" prefWidth="38.0" styleClass="field" stylesheets="@main.css" />
+                  <TextFieldImpl fx:id="fAge9" layoutX="137.0" layoutY="40.0" prefHeight="13.0" prefWidth="21.0" styleClass="field" stylesheets="@main.css" />
+                  <TextFieldImpl fx:id="fH9" layoutX="137.0" layoutY="54.0" prefHeight="13.0" prefWidth="21.0" styleClass="field" stylesheets="@main.css" />
+                  <TextFieldImpl fx:id="fD9" layoutX="204.0" layoutY="1.0" prefHeight="13.0" prefWidth="21.0" styleClass="field" stylesheets="@main.css" />
+                  <TextFieldImpl fx:id="fTradeClass9" layoutX="163.0" layoutY="14.0" prefHeight="13.0" prefWidth="31.0" styleClass="field" stylesheets="@main.css" />
+                  <TextFieldImpl fx:id="fOrigin9" layoutX="164.0" layoutY="29.0" prefHeight="13.0" prefWidth="26.0" styleClass="field" stylesheets="@main.css" />
+                  <TextFieldImpl fx:id="fWeight9" layoutX="164.0" layoutY="42.0" prefHeight="13.0" prefWidth="27.0" styleClass="field" stylesheets="@main.css" />
+                  <TextFieldImpl fx:id="fSumOfTimber9" layoutX="163.0" layoutY="55.0" prefHeight="13.0" prefWidth="34.0" styleClass="field" stylesheets="@main.css">
                      <FlowPane.margin>
                         <Insets left="14.0" />
                      </FlowPane.margin>
-                  </TextField>
-                  <TextField fx:id="fHrang10" layoutX="228.0" prefHeight="13.0" prefWidth="30.0" styleClass="field" stylesheets="@main.css" AnchorPane.topAnchor="0.0" />
-                  <TextField fx:id="fProportion10" layoutX="228.0" layoutY="17.0" prefHeight="13.0" prefWidth="41.0" styleClass="field" stylesheets="@main.css" />
-                  <TextField fx:id="fSpecies10" layoutX="229.0" layoutY="34.0" prefHeight="13.0" prefWidth="38.0" styleClass="field" stylesheets="@main.css" />
-                  <TextField fx:id="fAge10" layoutX="229.0" layoutY="51.0" prefHeight="13.0" prefWidth="21.0" styleClass="field" stylesheets="@main.css" />
-                  <TextField fx:id="fH10" layoutX="229.0" layoutY="67.0" prefHeight="13.0" prefWidth="21.0" styleClass="field" stylesheets="@main.css" AnchorPane.bottomAnchor="0.0" />
-                  <TextField fx:id="fD10" layoutX="268.0" pickOnBounds="false" prefHeight="16.0" prefWidth="21.0" styleClass="field" stylesheets="@main.css" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                  <TextField fx:id="fTradeClass10" layoutX="276.0" layoutY="17.0" prefHeight="13.0" prefWidth="31.0" styleClass="field" stylesheets="@main.css" AnchorPane.rightAnchor="0.0" />
-                  <TextField fx:id="fOrigin10" layoutX="278.0" layoutY="34.0" prefHeight="13.0" prefWidth="26.0" styleClass="field" stylesheets="@main.css" AnchorPane.rightAnchor="0.0" />
-                  <TextField fx:id="fWeight10" layoutX="276.0" layoutY="51.0" prefHeight="13.0" prefWidth="27.0" styleClass="field" stylesheets="@main.css" AnchorPane.rightAnchor="0.0" />
-                  <TextField fx:id="fSumOfTimber10" layoutX="271.0" layoutY="69.0" prefHeight="13.0" prefWidth="34.0" styleClass="field" stylesheets="@main.css" AnchorPane.rightAnchor="0.0">
+                  </TextFieldImpl>
+                  <TextFieldImpl fx:id="fHrang10" layoutX="228.0" prefHeight="13.0" prefWidth="30.0" styleClass="field" stylesheets="@main.css" AnchorPane.topAnchor="0.0" />
+                  <TextFieldImpl fx:id="fProportion10" layoutX="228.0" layoutY="17.0" prefHeight="13.0" prefWidth="41.0" styleClass="field" stylesheets="@main.css" />
+                  <TextFieldImpl fx:id="fSpecies10" layoutX="229.0" layoutY="34.0" prefHeight="13.0" prefWidth="38.0" styleClass="field" stylesheets="@main.css" />
+                  <TextFieldImpl fx:id="fAge10" layoutX="229.0" layoutY="51.0" prefHeight="13.0" prefWidth="21.0" styleClass="field" stylesheets="@main.css" />
+                  <TextFieldImpl fx:id="fH10" layoutX="229.0" layoutY="67.0" prefHeight="13.0" prefWidth="21.0" styleClass="field" stylesheets="@main.css" AnchorPane.bottomAnchor="0.0" />
+                  <TextFieldImpl fx:id="fD10" layoutX="268.0" pickOnBounds="false" prefHeight="16.0" prefWidth="21.0" styleClass="field" stylesheets="@main.css" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <TextFieldImpl fx:id="fTradeClass10" layoutX="276.0" layoutY="17.0" prefHeight="13.0" prefWidth="31.0" styleClass="field" stylesheets="@main.css" AnchorPane.rightAnchor="0.0" />
+                  <TextFieldImpl fx:id="fOrigin10" layoutX="278.0" layoutY="34.0" prefHeight="13.0" prefWidth="26.0" styleClass="field" stylesheets="@main.css" AnchorPane.rightAnchor="0.0" />
+                  <TextFieldImpl fx:id="fWeight10" layoutX="276.0" layoutY="51.0" prefHeight="13.0" prefWidth="27.0" styleClass="field" stylesheets="@main.css" AnchorPane.rightAnchor="0.0" />
+                  <TextFieldImpl fx:id="fSumOfTimber10" layoutX="271.0" layoutY="69.0" prefHeight="13.0" prefWidth="34.0" styleClass="field" stylesheets="@main.css" AnchorPane.rightAnchor="0.0">
                      <FlowPane.margin>
                         <Insets left="14.0" />
                      </FlowPane.margin>
-                  </TextField>
+                  </TextFieldImpl>
                </children>
             </FlowPane>
             <FlowPane fx:id="container_10" layoutX="33.0" layoutY="201.0" maxHeight="77.0" maxWidth="305.0" prefHeight="77.0" prefWidth="305.0">
                <children>
-                  <TextField fx:id="fHrang1" layoutY="55.0" prefWidth="25.0" styleClass="field" stylesheets="@main.css" />
-                  <TextField fx:id="fProportion1" layoutY="42.0" prefHeight="13.0" prefWidth="40.0" styleClass="field" stylesheets="@main.css" />
-                  <TextField fx:id="fSpecies1" layoutY="28.0" prefWidth="38.0" styleClass="field" stylesheets="@main.css" />
-                  <TextField fx:id="fAge1" layoutY="14.0" prefWidth="22.0" styleClass="field" stylesheets="@main.css" />
-                  <TextField fx:id="fH1" layoutX="5.0" layoutY="4.0" prefHeight="11.0" prefWidth="22.0" styleClass="field" stylesheets="@main.css" />
-                  <TextField fx:id="fD1" layoutX="21.0" prefHeight="13.0" prefWidth="21.0" styleClass="field" stylesheets="@main.css" />
-                  <TextField fx:id="fTradeClass1" layoutX="20.0" layoutY="15.0" prefHeight="13.0" prefWidth="32.0" styleClass="field" stylesheets="@main.css" />
-                  <TextField fx:id="fOrigin1" layoutX="22.0" layoutY="29.0" prefHeight="13.0" prefWidth="30.0" styleClass="field" stylesheets="@main.css" />
-                  <TextField fx:id="fWeight1" layoutX="21.0" layoutY="42.0" prefHeight="13.0" prefWidth="25.0" styleClass="field" stylesheets="@main.css" />
-                  <TextField fx:id="fSumOfTimber1" layoutX="21.0" layoutY="56.0" prefHeight="13.0" prefWidth="33.0" styleClass="field" stylesheets="@main.css">
+                  <TextFieldImpl fx:id="fHrang1" layoutY="55.0" prefWidth="25.0" styleClass="field" stylesheets="@main.css" />
+                  <TextFieldImpl fx:id="fProportion1" layoutY="42.0" prefHeight="13.0" prefWidth="40.0" styleClass="field" stylesheets="@main.css" />
+                  <TextFieldImpl fx:id="fSpecies1" layoutY="28.0" prefWidth="38.0" styleClass="field" stylesheets="@main.css" />
+                  <TextFieldImpl fx:id="fAge1" layoutY="14.0" prefWidth="22.0" styleClass="field" stylesheets="@main.css" />
+                  <TextFieldImpl fx:id="fH1" layoutX="5.0" layoutY="4.0" prefHeight="11.0" prefWidth="22.0" styleClass="field" stylesheets="@main.css" />
+                  <TextFieldImpl fx:id="fD1" layoutX="21.0" prefHeight="13.0" prefWidth="21.0" styleClass="field" stylesheets="@main.css" />
+                  <TextFieldImpl fx:id="fTradeClass1" layoutX="20.0" layoutY="15.0" prefHeight="13.0" prefWidth="32.0" styleClass="field" stylesheets="@main.css" />
+                  <TextFieldImpl fx:id="fOrigin1" layoutX="22.0" layoutY="29.0" prefHeight="13.0" prefWidth="30.0" styleClass="field" stylesheets="@main.css" />
+                  <TextFieldImpl fx:id="fWeight1" layoutX="21.0" layoutY="42.0" prefHeight="13.0" prefWidth="25.0" styleClass="field" stylesheets="@main.css" />
+                  <TextFieldImpl fx:id="fSumOfTimber1" layoutX="21.0" layoutY="56.0" prefHeight="13.0" prefWidth="33.0" styleClass="field" stylesheets="@main.css">
                      <FlowPane.margin>
                         <Insets left="17.0" />
-                     </FlowPane.margin></TextField>
-                  <TextField fx:id="fHrang2" layoutX="53.0" prefHeight="13.0" prefWidth="25.0" styleClass="field" stylesheets="@main.css" />
-                  <TextField fx:id="fProportion2" layoutX="52.0" layoutY="15.0" prefHeight="13.0" prefWidth="40.0" styleClass="field" stylesheets="@main.css" />
-                  <TextField fx:id="fSpecies2" layoutX="54.0" layoutY="27.0" prefHeight="13.0" prefWidth="38.0" styleClass="field" stylesheets="@main.css" />
-                  <TextField fx:id="fAge2" layoutX="52.0" layoutY="42.0" prefHeight="13.0" prefWidth="22.0" styleClass="field" stylesheets="@main.css" />
-                  <TextField fx:id="fH2" layoutX="54.0" layoutY="55.0" prefHeight="13.0" prefWidth="22.0" styleClass="field" stylesheets="@main.css" />
-                  <TextField fx:id="fD2" layoutX="84.0" prefHeight="13.0" prefWidth="21.0" styleClass="field" stylesheets="@main.css" />
-                  <TextField fx:id="fTradeClass2" layoutX="83.0" layoutY="14.0" prefHeight="13.0" prefWidth="32.0" styleClass="field" stylesheets="@main.css" />
-                  <TextField fx:id="fOrigin2" layoutX="84.0" layoutY="29.0" prefHeight="13.0" prefWidth="29.0" styleClass="field" stylesheets="@main.css" />
-                  <TextField fx:id="fWeight2" layoutX="84.0" layoutY="43.0" prefHeight="13.0" prefWidth="26.0" styleClass="field" stylesheets="@main.css" />
-                  <TextField fx:id="fSumOfTimber2" layoutX="85.0" layoutY="55.0" prefHeight="13.0" prefWidth="33.0" styleClass="field" stylesheets="@main.css">
+                     </FlowPane.margin></TextFieldImpl>
+                  <TextFieldImpl fx:id="fHrang2" layoutX="53.0" prefHeight="13.0" prefWidth="25.0" styleClass="field" stylesheets="@main.css" />
+                  <TextFieldImpl fx:id="fProportion2" layoutX="52.0" layoutY="15.0" prefHeight="13.0" prefWidth="40.0" styleClass="field" stylesheets="@main.css" />
+                  <TextFieldImpl fx:id="fSpecies2" layoutX="54.0" layoutY="27.0" prefHeight="13.0" prefWidth="38.0" styleClass="field" stylesheets="@main.css" />
+                  <TextFieldImpl fx:id="fAge2" layoutX="52.0" layoutY="42.0" prefHeight="13.0" prefWidth="22.0" styleClass="field" stylesheets="@main.css" />
+                  <TextFieldImpl fx:id="fH2" layoutX="54.0" layoutY="55.0" prefHeight="13.0" prefWidth="22.0" styleClass="field" stylesheets="@main.css" />
+                  <TextFieldImpl fx:id="fD2" layoutX="84.0" prefHeight="13.0" prefWidth="21.0" styleClass="field" stylesheets="@main.css" />
+                  <TextFieldImpl fx:id="fTradeClass2" layoutX="83.0" layoutY="14.0" prefHeight="13.0" prefWidth="32.0" styleClass="field" stylesheets="@main.css" />
+                  <TextFieldImpl fx:id="fOrigin2" layoutX="84.0" layoutY="29.0" prefHeight="13.0" prefWidth="29.0" styleClass="field" stylesheets="@main.css" />
+                  <TextFieldImpl fx:id="fWeight2" layoutX="84.0" layoutY="43.0" prefHeight="13.0" prefWidth="26.0" styleClass="field" stylesheets="@main.css" />
+                  <TextFieldImpl fx:id="fSumOfTimber2" layoutX="85.0" layoutY="55.0" prefHeight="13.0" prefWidth="33.0" styleClass="field" stylesheets="@main.css">
                      <FlowPane.margin>
                         <Insets left="17.0" />
-                     </FlowPane.margin></TextField>
-                  <TextField fx:id="fHrang3" layoutX="102.0" layoutY="-1.0" prefHeight="13.0" prefWidth="25.0" styleClass="field" stylesheets="@main.css" />
-                  <TextField fx:id="fProportion3" layoutX="101.0" layoutY="13.0" prefHeight="13.0" prefWidth="40.0" styleClass="field" stylesheets="@main.css" />
-                  <TextField fx:id="fSpecies3" layoutX="102.0" layoutY="28.0" prefHeight="13.0" prefWidth="38.0" styleClass="field" stylesheets="@main.css" />
-                  <TextField fx:id="fAge3" layoutX="102.0" layoutY="42.0" prefHeight="13.0" prefWidth="22.0" styleClass="field" stylesheets="@main.css" />
-                  <TextField fx:id="fH3" layoutX="103.0" layoutY="54.0" prefHeight="13.0" prefWidth="22.0" styleClass="field" stylesheets="@main.css" />
-                  <TextField fx:id="fD3" layoutX="120.0" prefHeight="13.0" prefWidth="21.0" styleClass="field" stylesheets="@main.css" />
-                  <TextField fx:id="fTradeClass3" layoutX="119.0" layoutY="14.0" prefHeight="13.0" prefWidth="32.0" styleClass="field" stylesheets="@main.css" />
-                  <TextField fx:id="fOrigin3" layoutX="120.0" layoutY="29.0" prefHeight="13.0" prefWidth="29.0" styleClass="field" stylesheets="@main.css" />
-                  <TextField fx:id="fWeight3" layoutX="120.0" layoutY="43.0" prefHeight="13.0" prefWidth="26.0" styleClass="field" stylesheets="@main.css" />
-                  <TextField fx:id="fSumOfTimber3" layoutX="121.0" layoutY="55.0" prefHeight="13.0" prefWidth="33.0" styleClass="field" stylesheets="@main.css">
+                     </FlowPane.margin></TextFieldImpl>
+                  <TextFieldImpl fx:id="fHrang3" layoutX="102.0" layoutY="-1.0" prefHeight="13.0" prefWidth="25.0" styleClass="field" stylesheets="@main.css" />
+                  <TextFieldImpl fx:id="fProportion3" layoutX="101.0" layoutY="13.0" prefHeight="13.0" prefWidth="40.0" styleClass="field" stylesheets="@main.css" />
+                  <TextFieldImpl fx:id="fSpecies3" layoutX="102.0" layoutY="28.0" prefHeight="13.0" prefWidth="38.0" styleClass="field" stylesheets="@main.css" />
+                  <TextFieldImpl fx:id="fAge3" layoutX="102.0" layoutY="42.0" prefHeight="13.0" prefWidth="22.0" styleClass="field" stylesheets="@main.css" />
+                  <TextFieldImpl fx:id="fH3" layoutX="103.0" layoutY="54.0" prefHeight="13.0" prefWidth="22.0" styleClass="field" stylesheets="@main.css" />
+                  <TextFieldImpl fx:id="fD3" layoutX="120.0" prefHeight="13.0" prefWidth="21.0" styleClass="field" stylesheets="@main.css" />
+                  <TextFieldImpl fx:id="fTradeClass3" layoutX="119.0" layoutY="14.0" prefHeight="13.0" prefWidth="32.0" styleClass="field" stylesheets="@main.css" />
+                  <TextFieldImpl fx:id="fOrigin3" layoutX="120.0" layoutY="29.0" prefHeight="13.0" prefWidth="29.0" styleClass="field" stylesheets="@main.css" />
+                  <TextFieldImpl fx:id="fWeight3" layoutX="120.0" layoutY="43.0" prefHeight="13.0" prefWidth="26.0" styleClass="field" stylesheets="@main.css" />
+                  <TextFieldImpl fx:id="fSumOfTimber3" layoutX="121.0" layoutY="55.0" prefHeight="13.0" prefWidth="33.0" styleClass="field" stylesheets="@main.css">
                      <FlowPane.margin>
                         <Insets left="17.0" />
-                     </FlowPane.margin></TextField>
-                  <TextField fx:id="fHrang4" layoutX="137.0" layoutY="-2.0" prefHeight="13.0" prefWidth="25.0" styleClass="field" stylesheets="@main.css" />
-                  <TextField fx:id="fProportion4" layoutX="136.0" layoutY="13.0" prefHeight="13.0" prefWidth="40.0" styleClass="field" stylesheets="@main.css" />
-                  <TextField fx:id="fSpecies4" layoutX="138.0" layoutY="27.0" prefHeight="13.0" prefWidth="38.0" styleClass="field" stylesheets="@main.css" />
-                  <TextField fx:id="fAge4" layoutX="137.0" layoutY="40.0" prefHeight="13.0" prefWidth="22.0" styleClass="field" stylesheets="@main.css" />
-                  <TextField fx:id="fH4" layoutX="137.0" layoutY="54.0" prefHeight="13.0" prefWidth="22.0" styleClass="field" stylesheets="@main.css" />
-                  <TextField fx:id="fD4" layoutX="204.0" layoutY="1.0" prefHeight="13.0" prefWidth="21.0" styleClass="field" stylesheets="@main.css" />
-                  <TextField fx:id="fTradeClass4" layoutX="163.0" layoutY="14.0" prefHeight="13.0" prefWidth="32.0" styleClass="field" stylesheets="@main.css" />
-                  <TextField fx:id="fOrigin4" layoutX="164.0" layoutY="29.0" prefHeight="13.0" prefWidth="29.0" styleClass="field" stylesheets="@main.css" />
-                  <TextField fx:id="fWeight4" layoutX="164.0" layoutY="42.0" prefHeight="13.0" prefWidth="26.0" styleClass="field" stylesheets="@main.css" />
-                  <TextField fx:id="fSumOfTimber4" layoutX="163.0" layoutY="55.0" prefHeight="13.0" prefWidth="33.0" styleClass="field" stylesheets="@main.css">
+                     </FlowPane.margin></TextFieldImpl>
+                  <TextFieldImpl fx:id="fHrang4" layoutX="137.0" layoutY="-2.0" prefHeight="13.0" prefWidth="25.0" styleClass="field" stylesheets="@main.css" />
+                  <TextFieldImpl fx:id="fProportion4" layoutX="136.0" layoutY="13.0" prefHeight="13.0" prefWidth="40.0" styleClass="field" stylesheets="@main.css" />
+                  <TextFieldImpl fx:id="fSpecies4" layoutX="138.0" layoutY="27.0" prefHeight="13.0" prefWidth="38.0" styleClass="field" stylesheets="@main.css" />
+                  <TextFieldImpl fx:id="fAge4" layoutX="137.0" layoutY="40.0" prefHeight="13.0" prefWidth="22.0" styleClass="field" stylesheets="@main.css" />
+                  <TextFieldImpl fx:id="fH4" layoutX="137.0" layoutY="54.0" prefHeight="13.0" prefWidth="22.0" styleClass="field" stylesheets="@main.css" />
+                  <TextFieldImpl fx:id="fD4" layoutX="204.0" layoutY="1.0" prefHeight="13.0" prefWidth="21.0" styleClass="field" stylesheets="@main.css" />
+                  <TextFieldImpl fx:id="fTradeClass4" layoutX="163.0" layoutY="14.0" prefHeight="13.0" prefWidth="32.0" styleClass="field" stylesheets="@main.css" />
+                  <TextFieldImpl fx:id="fOrigin4" layoutX="164.0" layoutY="29.0" prefHeight="13.0" prefWidth="29.0" styleClass="field" stylesheets="@main.css" />
+                  <TextFieldImpl fx:id="fWeight4" layoutX="164.0" layoutY="42.0" prefHeight="13.0" prefWidth="26.0" styleClass="field" stylesheets="@main.css" />
+                  <TextFieldImpl fx:id="fSumOfTimber4" layoutX="163.0" layoutY="55.0" prefHeight="13.0" prefWidth="33.0" styleClass="field" stylesheets="@main.css">
                      <FlowPane.margin>
                         <Insets left="17.0" />
-                     </FlowPane.margin></TextField>
-                  <TextField fx:id="fHrang5" layoutX="228.0" prefHeight="13.0" prefWidth="25.0" styleClass="field" stylesheets="@main.css" AnchorPane.topAnchor="0.0" />
-                  <TextField fx:id="fProportion5" layoutX="228.0" layoutY="17.0" prefHeight="13.0" prefWidth="40.0" styleClass="field" stylesheets="@main.css" />
-                  <TextField fx:id="fSpecies5" layoutX="229.0" layoutY="34.0" prefHeight="13.0" prefWidth="38.0" styleClass="field" stylesheets="@main.css" />
-                  <TextField fx:id="fAge5" layoutX="229.0" layoutY="51.0" prefHeight="13.0" prefWidth="22.0" styleClass="field" stylesheets="@main.css" />
-                  <TextField fx:id="fH5" layoutX="229.0" layoutY="67.0" prefHeight="13.0" prefWidth="22.0" styleClass="field" stylesheets="@main.css" AnchorPane.bottomAnchor="0.0" />
-                  <TextField fx:id="fD5" layoutX="268.0" pickOnBounds="false" prefHeight="16.0" prefWidth="21.0" styleClass="field" stylesheets="@main.css" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                  <TextField fx:id="fTradeClass5" layoutX="276.0" layoutY="17.0" prefHeight="13.0" prefWidth="32.0" styleClass="field" stylesheets="@main.css" AnchorPane.rightAnchor="0.0" />
-                  <TextField fx:id="fOrigin5" layoutX="278.0" layoutY="34.0" prefHeight="13.0" prefWidth="29.0" styleClass="field" stylesheets="@main.css" AnchorPane.rightAnchor="0.0" />
-                  <TextField fx:id="fWeight5" layoutX="276.0" layoutY="51.0" prefHeight="13.0" prefWidth="26.0" styleClass="field" stylesheets="@main.css" AnchorPane.rightAnchor="0.0" />
-                  <TextField fx:id="fSumOfTimber5" layoutX="271.0" layoutY="69.0" prefHeight="13.0" prefWidth="33.0" styleClass="field" stylesheets="@main.css" AnchorPane.rightAnchor="0.0">
+                     </FlowPane.margin></TextFieldImpl>
+                  <TextFieldImpl fx:id="fHrang5" layoutX="228.0" prefHeight="13.0" prefWidth="25.0" styleClass="field" stylesheets="@main.css" AnchorPane.topAnchor="0.0" />
+                  <TextFieldImpl fx:id="fProportion5" layoutX="228.0" layoutY="17.0" prefHeight="13.0" prefWidth="40.0" styleClass="field" stylesheets="@main.css" />
+                  <TextFieldImpl fx:id="fSpecies5" layoutX="229.0" layoutY="34.0" prefHeight="13.0" prefWidth="38.0" styleClass="field" stylesheets="@main.css" />
+                  <TextFieldImpl fx:id="fAge5" layoutX="229.0" layoutY="51.0" prefHeight="13.0" prefWidth="22.0" styleClass="field" stylesheets="@main.css" />
+                  <TextFieldImpl fx:id="fH5" layoutX="229.0" layoutY="67.0" prefHeight="13.0" prefWidth="22.0" styleClass="field" stylesheets="@main.css" AnchorPane.bottomAnchor="0.0" />
+                  <TextFieldImpl fx:id="fD5" layoutX="268.0" pickOnBounds="false" prefHeight="16.0" prefWidth="21.0" styleClass="field" stylesheets="@main.css" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <TextFieldImpl fx:id="fTradeClass5" layoutX="276.0" layoutY="17.0" prefHeight="13.0" prefWidth="32.0" styleClass="field" stylesheets="@main.css" AnchorPane.rightAnchor="0.0" />
+                  <TextFieldImpl fx:id="fOrigin5" layoutX="278.0" layoutY="34.0" prefHeight="13.0" prefWidth="29.0" styleClass="field" stylesheets="@main.css" AnchorPane.rightAnchor="0.0" />
+                  <TextFieldImpl fx:id="fWeight5" layoutX="276.0" layoutY="51.0" prefHeight="13.0" prefWidth="26.0" styleClass="field" stylesheets="@main.css" AnchorPane.rightAnchor="0.0" />
+                  <TextFieldImpl fx:id="fSumOfTimber5" layoutX="271.0" layoutY="69.0" prefHeight="13.0" prefWidth="33.0" styleClass="field" stylesheets="@main.css" AnchorPane.rightAnchor="0.0">
                      <FlowPane.margin>
                         <Insets left="17.0" />
-                     </FlowPane.margin></TextField>
+                     </FlowPane.margin></TextFieldImpl>
                </children>
             </FlowPane>
             <FlowPane fx:id="container_23_2" layoutX="240.0" layoutY="365.0" prefHeight="47.0" prefWidth="225.0">
                <children>
-                  <TextField fx:id="fDop4_n" layoutY="1.0" prefWidth="25.0" stylesheets="@main.css">
+                  <TextFieldImpl fx:id="fDop4_n" layoutY="1.0" prefWidth="25.0" stylesheets="@main.css">
                      <styleClass>
                         <String fx:value="field" />
                         <String fx:value="smallField" />
                      </styleClass>
-                  </TextField>
-                  <TextField fx:id="fDop4_1" layoutY="13.0" prefWidth="24.0" stylesheets="@main.css">
+                  </TextFieldImpl>
+                  <TextFieldImpl fx:id="fDop4_1" layoutY="13.0" prefWidth="24.0" stylesheets="@main.css">
                      <styleClass>
                         <String fx:value="field" />
                         <String fx:value="smallField" />
                      </styleClass>
-                  </TextField>
-                  <TextField fx:id="fDop4_2" layoutY="25.0" prefWidth="25.0" stylesheets="@main.css">
+                  </TextFieldImpl>
+                  <TextFieldImpl fx:id="fDop4_2" layoutY="25.0" prefWidth="25.0" stylesheets="@main.css">
                      <styleClass>
                         <String fx:value="field" />
                         <String fx:value="smallField" />
                      </styleClass>
-                  </TextField>
-                  <TextField fx:id="fDop4_3" layoutX="19.0" layoutY="1.0" prefWidth="25.0" stylesheets="@main.css">
+                  </TextFieldImpl>
+                  <TextFieldImpl fx:id="fDop4_3" layoutX="19.0" layoutY="1.0" prefWidth="25.0" stylesheets="@main.css">
                      <styleClass>
                         <String fx:value="field" />
                         <String fx:value="smallField" />
                      </styleClass>
-                  </TextField>
-                  <TextField fx:id="fDop4_4" layoutX="19.0" layoutY="13.0" prefWidth="26.0" stylesheets="@main.css">
+                  </TextFieldImpl>
+                  <TextFieldImpl fx:id="fDop4_4" layoutX="19.0" layoutY="13.0" prefWidth="26.0" stylesheets="@main.css">
                      <styleClass>
                         <String fx:value="field" />
                         <String fx:value="smallField" />
                      </styleClass>
-                  </TextField>
-                  <TextField fx:id="fDop4_5" layoutX="19.0" layoutY="25.0" prefWidth="25.0" stylesheets="@main.css">
+                  </TextFieldImpl>
+                  <TextFieldImpl fx:id="fDop4_5" layoutX="19.0" layoutY="25.0" prefWidth="25.0" stylesheets="@main.css">
                      <styleClass>
                         <String fx:value="field" />
                         <String fx:value="smallField" />
                      </styleClass>
-                  </TextField>
-                  <TextField fx:id="fDop4_6" layoutX="40.0" layoutY="1.0" prefWidth="25.0" stylesheets="@main.css">
+                  </TextFieldImpl>
+                  <TextFieldImpl fx:id="fDop4_6" layoutX="40.0" layoutY="1.0" prefWidth="25.0" stylesheets="@main.css">
                      <styleClass>
                         <String fx:value="field" />
                         <String fx:value="smallField" />
                      </styleClass>
-                  </TextField>
-                  <TextField fx:id="fDop4_7" layoutX="41.0" layoutY="13.0" prefWidth="25.0" stylesheets="@main.css">
+                  </TextFieldImpl>
+                  <TextFieldImpl fx:id="fDop4_7" layoutX="41.0" layoutY="13.0" prefWidth="25.0" stylesheets="@main.css">
                      <styleClass>
                         <String fx:value="field" />
                         <String fx:value="smallField" />
                      </styleClass>
-                  </TextField>
-                  <TextField fx:id="fDop4_8" layoutX="40.0" layoutY="25.0" prefWidth="25.0" stylesheets="@main.css">
+                  </TextFieldImpl>
+                  <TextFieldImpl fx:id="fDop4_8" layoutX="40.0" layoutY="25.0" prefWidth="25.0" stylesheets="@main.css">
                      <styleClass>
                         <String fx:value="field" />
                         <String fx:value="smallField" />
                      </styleClass>
-                  </TextField>
-                  <TextField fx:id="fDop5_n" layoutX="59.0" layoutY="2.0" prefWidth="25.0" stylesheets="@main.css">
+                  </TextFieldImpl>
+                  <TextFieldImpl fx:id="fDop5_n" layoutX="59.0" layoutY="2.0" prefWidth="25.0" stylesheets="@main.css">
                      <styleClass>
                         <String fx:value="field" />
                         <String fx:value="smallField" />
                      </styleClass>
-                  </TextField>
-                  <TextField fx:id="fDop5_1" layoutX="59.0" layoutY="13.0" prefWidth="24.0" stylesheets="@main.css">
+                  </TextFieldImpl>
+                  <TextFieldImpl fx:id="fDop5_1" layoutX="59.0" layoutY="13.0" prefWidth="24.0" stylesheets="@main.css">
                      <styleClass>
                         <String fx:value="field" />
                         <String fx:value="smallField" />
                      </styleClass>
-                  </TextField>
-                  <TextField fx:id="fDop5_2" layoutX="60.0" layoutY="26.0" prefWidth="25.0" stylesheets="@main.css">
+                  </TextFieldImpl>
+                  <TextFieldImpl fx:id="fDop5_2" layoutX="60.0" layoutY="26.0" prefWidth="25.0" stylesheets="@main.css">
                      <styleClass>
                         <String fx:value="field" />
                         <String fx:value="smallField" />
                      </styleClass>
-                  </TextField>
-                  <TextField fx:id="fDop5_3" layoutX="80.0" layoutY="1.0" prefWidth="25.0" stylesheets="@main.css">
+                  </TextFieldImpl>
+                  <TextFieldImpl fx:id="fDop5_3" layoutX="80.0" layoutY="1.0" prefWidth="25.0" stylesheets="@main.css">
                      <styleClass>
                         <String fx:value="field" />
                         <String fx:value="smallField" />
                      </styleClass>
-                  </TextField>
-                  <TextField fx:id="fDop5_4" layoutX="81.0" layoutY="13.0" prefWidth="26.0" stylesheets="@main.css">
+                  </TextFieldImpl>
+                  <TextFieldImpl fx:id="fDop5_4" layoutX="81.0" layoutY="13.0" prefWidth="26.0" stylesheets="@main.css">
                      <styleClass>
                         <String fx:value="field" />
                         <String fx:value="smallField" />
                      </styleClass>
-                  </TextField>
-                  <TextField fx:id="fDop5_5" layoutX="80.0" layoutY="25.0" prefWidth="25.0" stylesheets="@main.css">
+                  </TextFieldImpl>
+                  <TextFieldImpl fx:id="fDop5_5" layoutX="80.0" layoutY="25.0" prefWidth="25.0" stylesheets="@main.css">
                      <styleClass>
                         <String fx:value="field" />
                         <String fx:value="smallField" />
                      </styleClass>
-                  </TextField>
-                  <TextField fx:id="fDop5_6" layoutX="101.0" prefWidth="25.0" stylesheets="@main.css">
+                  </TextFieldImpl>
+                  <TextFieldImpl fx:id="fDop5_6" layoutX="101.0" prefWidth="25.0" stylesheets="@main.css">
                      <styleClass>
                         <String fx:value="field" />
                         <String fx:value="smallField" />
                      </styleClass>
-                  </TextField>
-                  <TextField fx:id="fDop5_7" layoutX="102.0" layoutY="12.0" prefWidth="25.0" stylesheets="@main.css">
+                  </TextFieldImpl>
+                  <TextFieldImpl fx:id="fDop5_7" layoutX="102.0" layoutY="12.0" prefWidth="25.0" stylesheets="@main.css">
                      <styleClass>
                         <String fx:value="field" />
                         <String fx:value="smallField" />
                      </styleClass>
-                  </TextField>
-                  <TextField fx:id="fDop5_8" layoutX="101.0" layoutY="24.0" prefWidth="25.0" stylesheets="@main.css">
+                  </TextFieldImpl>
+                  <TextFieldImpl fx:id="fDop5_8" layoutX="101.0" layoutY="24.0" prefWidth="25.0" stylesheets="@main.css">
                      <styleClass>
                         <String fx:value="field" />
                         <String fx:value="smallField" />
                      </styleClass>
-                  </TextField>
-                  <TextField fx:id="fDop6_n" layoutX="122.0" layoutY="1.0" prefWidth="25.0" stylesheets="@main.css">
+                  </TextFieldImpl>
+                  <TextFieldImpl fx:id="fDop6_n" layoutX="122.0" layoutY="1.0" prefWidth="25.0" stylesheets="@main.css">
                      <styleClass>
                         <String fx:value="field" />
                         <String fx:value="smallField" />
                      </styleClass>
-                  </TextField>
-                  <TextField fx:id="fDop6_1" layoutX="123.0" layoutY="13.0" prefWidth="24.0" stylesheets="@main.css">
+                  </TextFieldImpl>
+                  <TextFieldImpl fx:id="fDop6_1" layoutX="123.0" layoutY="13.0" prefWidth="24.0" stylesheets="@main.css">
                      <styleClass>
                         <String fx:value="field" />
                         <String fx:value="smallField" />
                      </styleClass>
-                  </TextField>
-                  <TextField fx:id="fDop6_2" layoutX="122.0" layoutY="25.0" prefWidth="25.0" stylesheets="@main.css">
+                  </TextFieldImpl>
+                  <TextFieldImpl fx:id="fDop6_2" layoutX="122.0" layoutY="25.0" prefWidth="25.0" stylesheets="@main.css">
                      <styleClass>
                         <String fx:value="field" />
                         <String fx:value="smallField" />
                      </styleClass>
-                  </TextField>
-                  <TextField fx:id="fDop6_3" layoutX="142.0" layoutY="1.0" prefWidth="25.0" stylesheets="@main.css">
+                  </TextFieldImpl>
+                  <TextFieldImpl fx:id="fDop6_3" layoutX="142.0" layoutY="1.0" prefWidth="25.0" stylesheets="@main.css">
                      <styleClass>
                         <String fx:value="field" />
                         <String fx:value="smallField" />
                      </styleClass>
-                  </TextField>
-                  <TextField fx:id="fDop6_4" layoutX="143.0" layoutY="13.0" prefWidth="26.0" stylesheets="@main.css">
+                  </TextFieldImpl>
+                  <TextFieldImpl fx:id="fDop6_4" layoutX="143.0" layoutY="13.0" prefWidth="26.0" stylesheets="@main.css">
                      <styleClass>
                         <String fx:value="field" />
                         <String fx:value="smallField" />
                      </styleClass>
-                  </TextField>
-                  <TextField fx:id="fDop6_5" layoutX="142.0" layoutY="25.0" prefWidth="25.0" stylesheets="@main.css">
+                  </TextFieldImpl>
+                  <TextFieldImpl fx:id="fDop6_5" layoutX="142.0" layoutY="25.0" prefWidth="25.0" stylesheets="@main.css">
                      <styleClass>
                         <String fx:value="field" />
                         <String fx:value="smallField" />
                      </styleClass>
-                  </TextField>
-                  <TextField fx:id="fDop6_6" layoutX="162.0" layoutY="1.0" prefWidth="25.0" stylesheets="@main.css">
+                  </TextFieldImpl>
+                  <TextFieldImpl fx:id="fDop6_6" layoutX="162.0" layoutY="1.0" prefWidth="25.0" stylesheets="@main.css">
                      <styleClass>
                         <String fx:value="field" />
                         <String fx:value="smallField" />
                      </styleClass>
-                  </TextField>
-                  <TextField fx:id="fDop6_7" layoutX="163.0" layoutY="13.0" prefWidth="25.0" stylesheets="@main.css">
+                  </TextFieldImpl>
+                  <TextFieldImpl fx:id="fDop6_7" layoutX="163.0" layoutY="13.0" prefWidth="25.0" stylesheets="@main.css">
                      <styleClass>
                         <String fx:value="field" />
                         <String fx:value="smallField" />
                      </styleClass>
-                  </TextField>
-                  <TextField fx:id="fDop6_8" layoutX="162.0" layoutY="25.0" prefWidth="25.0" stylesheets="@main.css">
+                  </TextFieldImpl>
+                  <TextFieldImpl fx:id="fDop6_8" layoutX="162.0" layoutY="25.0" prefWidth="25.0" stylesheets="@main.css">
                      <styleClass>
                         <String fx:value="field" />
                         <String fx:value="smallField" />
                      </styleClass>
-                  </TextField>
+                  </TextFieldImpl>
                </children>
             </FlowPane>
             <FlowPane fx:id="container_23" layoutX="15.0" layoutY="365.0" prefHeight="47.0" prefWidth="225.0">
                <children>
-                  <TextField fx:id="fDop1_n" layoutY="1.0" prefWidth="25.0" stylesheets="@main.css">
+                  <TextFieldImpl fx:id="fDop1_n" layoutY="1.0" prefWidth="25.0" stylesheets="@main.css">
                      <styleClass>
                         <String fx:value="field" />
                         <String fx:value="smallField" />
                      </styleClass>
-                  </TextField>
-                  <TextField fx:id="fDop1_1" layoutY="13.0" prefWidth="24.0" stylesheets="@main.css">
+                  </TextFieldImpl>
+                  <TextFieldImpl fx:id="fDop1_1" layoutY="13.0" prefWidth="24.0" stylesheets="@main.css">
                      <styleClass>
                         <String fx:value="field" />
                         <String fx:value="smallField" />
                      </styleClass>
-                  </TextField>
-                  <TextField fx:id="fDop1_2" layoutY="25.0" prefWidth="25.0" stylesheets="@main.css">
+                  </TextFieldImpl>
+                  <TextFieldImpl fx:id="fDop1_2" layoutY="25.0" prefWidth="25.0" stylesheets="@main.css">
                      <styleClass>
                         <String fx:value="field" />
                         <String fx:value="smallField" />
                      </styleClass>
-                  </TextField>
-                  <TextField fx:id="fDop1_3" layoutX="19.0" layoutY="1.0" prefWidth="25.0" stylesheets="@main.css">
+                  </TextFieldImpl>
+                  <TextFieldImpl fx:id="fDop1_3" layoutX="19.0" layoutY="1.0" prefWidth="25.0" stylesheets="@main.css">
                      <styleClass>
                         <String fx:value="field" />
                         <String fx:value="smallField" />
                      </styleClass>
-                  </TextField>
-                  <TextField fx:id="fDop1_4" layoutX="19.0" layoutY="13.0" prefWidth="26.0" stylesheets="@main.css">
+                  </TextFieldImpl>
+                  <TextFieldImpl fx:id="fDop1_4" layoutX="19.0" layoutY="13.0" prefWidth="26.0" stylesheets="@main.css">
                      <styleClass>
                         <String fx:value="field" />
                         <String fx:value="smallField" />
                      </styleClass>
-                  </TextField>
-                  <TextField fx:id="fDop1_5" layoutX="19.0" layoutY="25.0" prefWidth="25.0" stylesheets="@main.css">
+                  </TextFieldImpl>
+                  <TextFieldImpl fx:id="fDop1_5" layoutX="19.0" layoutY="25.0" prefWidth="25.0" stylesheets="@main.css">
                      <styleClass>
                         <String fx:value="field" />
                         <String fx:value="smallField" />
                      </styleClass>
-                  </TextField>
-                  <TextField fx:id="fDop1_6" layoutX="40.0" layoutY="1.0" prefWidth="25.0" stylesheets="@main.css">
+                  </TextFieldImpl>
+                  <TextFieldImpl fx:id="fDop1_6" layoutX="40.0" layoutY="1.0" prefWidth="25.0" stylesheets="@main.css">
                      <styleClass>
                         <String fx:value="field" />
                         <String fx:value="smallField" />
                      </styleClass>
-                  </TextField>
-                  <TextField fx:id="fDop1_7" layoutX="41.0" layoutY="13.0" prefWidth="25.0" stylesheets="@main.css">
+                  </TextFieldImpl>
+                  <TextFieldImpl fx:id="fDop1_7" layoutX="41.0" layoutY="13.0" prefWidth="25.0" stylesheets="@main.css">
                      <styleClass>
                         <String fx:value="field" />
                         <String fx:value="smallField" />
                      </styleClass>
-                  </TextField>
-                  <TextField fx:id="fDop1_8" layoutX="40.0" layoutY="25.0" prefWidth="25.0" stylesheets="@main.css">
+                  </TextFieldImpl>
+                  <TextFieldImpl fx:id="fDop1_8" layoutX="40.0" layoutY="25.0" prefWidth="25.0" stylesheets="@main.css">
                      <styleClass>
                         <String fx:value="field" />
                         <String fx:value="smallField" />
                      </styleClass>
-                  </TextField>
-                  <TextField fx:id="fDop2_n" layoutX="59.0" layoutY="2.0" prefWidth="25.0" stylesheets="@main.css">
+                  </TextFieldImpl>
+                  <TextFieldImpl fx:id="fDop2_n" layoutX="59.0" layoutY="2.0" prefWidth="25.0" stylesheets="@main.css">
                      <styleClass>
                         <String fx:value="field" />
                         <String fx:value="smallField" />
                      </styleClass>
-                  </TextField>
-                  <TextField fx:id="fDop2_1" layoutX="59.0" layoutY="13.0" prefWidth="24.0" stylesheets="@main.css">
+                  </TextFieldImpl>
+                  <TextFieldImpl fx:id="fDop2_1" layoutX="59.0" layoutY="13.0" prefWidth="24.0" stylesheets="@main.css">
                      <styleClass>
                         <String fx:value="field" />
                         <String fx:value="smallField" />
                      </styleClass>
-                  </TextField>
-                  <TextField fx:id="fDop2_2" layoutX="60.0" layoutY="26.0" prefWidth="25.0" stylesheets="@main.css">
+                  </TextFieldImpl>
+                  <TextFieldImpl fx:id="fDop2_2" layoutX="60.0" layoutY="26.0" prefWidth="25.0" stylesheets="@main.css">
                      <styleClass>
                         <String fx:value="field" />
                         <String fx:value="smallField" />
                      </styleClass>
-                  </TextField>
-                  <TextField fx:id="fDop2_3" layoutX="80.0" layoutY="1.0" prefWidth="25.0" stylesheets="@main.css">
+                  </TextFieldImpl>
+                  <TextFieldImpl fx:id="fDop2_3" layoutX="80.0" layoutY="1.0" prefWidth="25.0" stylesheets="@main.css">
                      <styleClass>
                         <String fx:value="field" />
                         <String fx:value="smallField" />
                      </styleClass>
-                  </TextField>
-                  <TextField fx:id="fDop2_4" layoutX="81.0" layoutY="13.0" prefWidth="26.0" stylesheets="@main.css">
+                  </TextFieldImpl>
+                  <TextFieldImpl fx:id="fDop2_4" layoutX="81.0" layoutY="13.0" prefWidth="26.0" stylesheets="@main.css">
                      <styleClass>
                         <String fx:value="field" />
                         <String fx:value="smallField" />
                      </styleClass>
-                  </TextField>
-                  <TextField fx:id="fDop2_5" layoutX="80.0" layoutY="25.0" prefWidth="25.0" stylesheets="@main.css">
+                  </TextFieldImpl>
+                  <TextFieldImpl fx:id="fDop2_5" layoutX="80.0" layoutY="25.0" prefWidth="25.0" stylesheets="@main.css">
                      <styleClass>
                         <String fx:value="field" />
                         <String fx:value="smallField" />
                      </styleClass>
-                  </TextField>
-                  <TextField fx:id="fDop2_6" layoutX="101.0" prefWidth="25.0" stylesheets="@main.css">
+                  </TextFieldImpl>
+                  <TextFieldImpl fx:id="fDop2_6" layoutX="101.0" prefWidth="25.0" stylesheets="@main.css">
                      <styleClass>
                         <String fx:value="field" />
                         <String fx:value="smallField" />
                      </styleClass>
-                  </TextField>
-                  <TextField fx:id="fDop2_7" layoutX="102.0" layoutY="12.0" prefWidth="25.0" stylesheets="@main.css">
+                  </TextFieldImpl>
+                  <TextFieldImpl fx:id="fDop2_7" layoutX="102.0" layoutY="12.0" prefWidth="25.0" stylesheets="@main.css">
                      <styleClass>
                         <String fx:value="field" />
                         <String fx:value="smallField" />
                      </styleClass>
-                  </TextField>
-                  <TextField fx:id="fDop2_8" layoutX="101.0" layoutY="24.0" prefWidth="25.0" stylesheets="@main.css">
+                  </TextFieldImpl>
+                  <TextFieldImpl fx:id="fDop2_8" layoutX="101.0" layoutY="24.0" prefWidth="25.0" stylesheets="@main.css">
                      <styleClass>
                         <String fx:value="field" />
                         <String fx:value="smallField" />
                      </styleClass>
-                  </TextField>
-                  <TextField fx:id="fDop3_n" layoutX="122.0" layoutY="1.0" prefWidth="25.0" stylesheets="@main.css">
+                  </TextFieldImpl>
+                  <TextFieldImpl fx:id="fDop3_n" layoutX="122.0" layoutY="1.0" prefWidth="25.0" stylesheets="@main.css">
                      <styleClass>
                         <String fx:value="field" />
                         <String fx:value="smallField" />
                      </styleClass>
-                  </TextField>
-                  <TextField fx:id="fDop3_1" layoutX="123.0" layoutY="13.0" prefWidth="24.0" stylesheets="@main.css">
+                  </TextFieldImpl>
+                  <TextFieldImpl fx:id="fDop3_1" layoutX="123.0" layoutY="13.0" prefWidth="24.0" stylesheets="@main.css">
                      <styleClass>
                         <String fx:value="field" />
                         <String fx:value="smallField" />
                      </styleClass>
-                  </TextField>
-                  <TextField fx:id="fDop3_2" layoutX="122.0" layoutY="25.0" prefWidth="25.0" stylesheets="@main.css">
+                  </TextFieldImpl>
+                  <TextFieldImpl fx:id="fDop3_2" layoutX="122.0" layoutY="25.0" prefWidth="25.0" stylesheets="@main.css">
                      <styleClass>
                         <String fx:value="field" />
                         <String fx:value="smallField" />
                      </styleClass>
-                  </TextField>
-                  <TextField fx:id="fDop3_3" layoutX="142.0" layoutY="1.0" prefWidth="25.0" stylesheets="@main.css">
+                  </TextFieldImpl>
+                  <TextFieldImpl fx:id="fDop3_3" layoutX="142.0" layoutY="1.0" prefWidth="25.0" stylesheets="@main.css">
                      <styleClass>
                         <String fx:value="field" />
                         <String fx:value="smallField" />
                      </styleClass>
-                  </TextField>
-                  <TextField fx:id="fDop3_4" layoutX="143.0" layoutY="13.0" prefWidth="26.0" stylesheets="@main.css">
+                  </TextFieldImpl>
+                  <TextFieldImpl fx:id="fDop3_4" layoutX="143.0" layoutY="13.0" prefWidth="26.0" stylesheets="@main.css">
                      <styleClass>
                         <String fx:value="field" />
                         <String fx:value="smallField" />
                      </styleClass>
-                  </TextField>
-                  <TextField fx:id="fDop3_5" layoutX="142.0" layoutY="25.0" prefWidth="25.0" stylesheets="@main.css">
+                  </TextFieldImpl>
+                  <TextFieldImpl fx:id="fDop3_5" layoutX="142.0" layoutY="25.0" prefWidth="25.0" stylesheets="@main.css">
                      <styleClass>
                         <String fx:value="field" />
                         <String fx:value="smallField" />
                      </styleClass>
-                  </TextField>
-                  <TextField fx:id="fDop3_6" layoutX="162.0" layoutY="1.0" prefWidth="25.0" stylesheets="@main.css">
+                  </TextFieldImpl>
+                  <TextFieldImpl fx:id="fDop3_6" layoutX="162.0" layoutY="1.0" prefWidth="25.0" stylesheets="@main.css">
                      <styleClass>
                         <String fx:value="field" />
                         <String fx:value="smallField" />
                      </styleClass>
-                  </TextField>
-                  <TextField fx:id="fDop3_7" layoutX="163.0" layoutY="13.0" prefWidth="25.0" stylesheets="@main.css">
+                  </TextFieldImpl>
+                  <TextFieldImpl fx:id="fDop3_7" layoutX="163.0" layoutY="13.0" prefWidth="25.0" stylesheets="@main.css">
                      <styleClass>
                         <String fx:value="field" />
                         <String fx:value="smallField" />
                      </styleClass>
-                  </TextField>
-                  <TextField fx:id="fDop3_8" layoutX="162.0" layoutY="25.0" prefWidth="25.0" stylesheets="@main.css">
+                  </TextFieldImpl>
+                  <TextFieldImpl fx:id="fDop3_8" layoutX="162.0" layoutY="25.0" prefWidth="25.0" stylesheets="@main.css">
                      <styleClass>
                         <String fx:value="field" />
                         <String fx:value="smallField" />
                      </styleClass>
-                  </TextField>
+                  </TextFieldImpl>
                </children>
             </FlowPane>
             <FlowPane layoutX="32.0" layoutY="77.0" prefHeight="14.0" prefWidth="281.0">
                <children>
-                  <TextField fx:id="fAreaNumber" prefHeight="19.0" prefWidth="46.0" styleClass="field" stylesheets="@main.css" />
-                  <TextField fx:id="fArea" prefHeight="19.0" prefWidth="57.0" styleClass="field" stylesheets="@main.css" />
-                  <TextField fx:id="fCategoryArea" prefHeight="15.0" prefWidth="117.0" styleClass="field" stylesheets="@main.css" />
-                  <TextField fx:id="fDP" prefWidth="26.0" styleClass="field" stylesheets="@main.css" />
-                  <TextField fx:id="fOzu" prefWidth="34.0" styleClass="field" stylesheets="@main.css" />
+                  <TextFieldImpl fx:id="fAreaNumber" prefHeight="19.0" prefWidth="46.0" styleClass="field" stylesheets="@main.css" />
+                  <TextFieldImpl fx:id="fArea" prefHeight="19.0" prefWidth="57.0" styleClass="field" stylesheets="@main.css" />
+                  <TextFieldImpl fx:id="fCategoryArea" prefHeight="15.0" prefWidth="117.0" styleClass="field" stylesheets="@main.css" />
+                  <TextFieldImpl fx:id="fDP" prefWidth="26.0" styleClass="field" stylesheets="@main.css" />
+                  <TextFieldImpl fx:id="fOzu" prefWidth="34.0" styleClass="field" stylesheets="@main.css" />
                </children>
             </FlowPane>
             <FlowPane layoutX="65.0" layoutY="321.0" prefHeight="18.0" prefWidth="299.0">
                <children>
-                  <TextField fx:id="f31_count" prefHeight="13.0" prefWidth="67.0" stylesheets="@main.css">
+                  <TextFieldImpl fx:id="f31_count" prefHeight="13.0" prefWidth="67.0" stylesheets="@main.css">
                      <styleClass>
                         <String fx:value="field" />
                         <String fx:value="smallField" />
                      </styleClass>
-                  </TextField>
-                  <TextField fx:id="f31_h" prefHeight="13.0" prefWidth="35.0" stylesheets="@main.css">
+                  </TextFieldImpl>
+                  <TextFieldImpl fx:id="f31_h" prefHeight="13.0" prefWidth="35.0" stylesheets="@main.css">
                      <styleClass>
                         <String fx:value="field" />
                         <String fx:value="smallField" />
                      </styleClass>
-                  </TextField>
-                  <TextField fx:id="f31_age" prefHeight="13.0" prefWidth="39.0" stylesheets="@main.css">
+                  </TextFieldImpl>
+                  <TextFieldImpl fx:id="f31_age" prefHeight="13.0" prefWidth="39.0" stylesheets="@main.css">
                      <styleClass>
                         <String fx:value="field" />
                         <String fx:value="smallField" />
                      </styleClass>
-                  </TextField>
-                  <TextField fx:id="f31_proportion1" prefHeight="13.0" prefWidth="42.0" stylesheets="@main.css">
+                  </TextFieldImpl>
+                  <TextFieldImpl fx:id="f31_proportion1" prefHeight="13.0" prefWidth="42.0" stylesheets="@main.css">
                      <styleClass>
                         <String fx:value="field" />
                         <String fx:value="smallField" />
                      </styleClass>
-                  </TextField>
-                  <TextField fx:id="f31_element1" prefHeight="13.0" prefWidth="38.0" stylesheets="@main.css">
+                  </TextFieldImpl>
+                  <TextFieldImpl fx:id="f31_element1" prefHeight="13.0" prefWidth="38.0" stylesheets="@main.css">
                      <styleClass>
                         <String fx:value="field" />
                         <String fx:value="smallField" />
                      </styleClass>
-                  </TextField>
-                  <TextField fx:id="f31_proportion2" prefHeight="13.0" prefWidth="40.0" stylesheets="@main.css">
+                  </TextFieldImpl>
+                  <TextFieldImpl fx:id="f31_proportion2" prefHeight="13.0" prefWidth="40.0" stylesheets="@main.css">
                      <styleClass>
                         <String fx:value="field" />
                         <String fx:value="smallField" />
                      </styleClass>
-                  </TextField>
-                  <TextField fx:id="f31_element2" prefHeight="13.0" prefWidth="37.0" stylesheets="@main.css">
+                  </TextFieldImpl>
+                  <TextFieldImpl fx:id="f31_element2" prefHeight="13.0" prefWidth="37.0" stylesheets="@main.css">
                      <styleClass>
                         <String fx:value="field" />
                         <String fx:value="smallField" />
                      </styleClass>
-                  </TextField>
+                  </TextFieldImpl>
                </children>
             </FlowPane>
             <TextFieldImpl fx:id="fKvNumber" layoutX="48.0" layoutY="31.0" prefWidth="88.0" stylesheets="@main.css">
@@ -578,15 +578,15 @@
                   <String fx:value="verySmallField" />
                </styleClass>
             </TextFieldImpl>
-            <TextField fx:id="fGir" layoutX="173.0" layoutY="30.0" prefWidth="104.0" stylesheets="@main.css">
+            <TextFieldImpl fx:id="fGir" layoutX="173.0" layoutY="30.0" prefWidth="104.0" stylesheets="@main.css">
                <styleClass>
                   <String fx:value="field" />
                   <String fx:value="verySmallField" />
                </styleClass>
-            </TextField>
-            <TextField fx:id="fAction2" layoutX="479.0" layoutY="78.0" prefHeight="17.0" prefWidth="34.0" styleClass="field" stylesheets="@main.css" />
-            <TextField fx:id="fAction3" layoutX="547.0" layoutY="78.0" prefHeight="17.0" prefWidth="33.0" styleClass="field" stylesheets="@main.css" />
-            <TextField fx:id="fAction1" layoutX="398.0" layoutY="77.0" prefHeight="20.0" prefWidth="28.0" styleClass="field" stylesheets="@main.css" />
+            </TextFieldImpl>
+            <TextFieldImpl fx:id="fAction2" layoutX="479.0" layoutY="78.0" prefHeight="17.0" prefWidth="34.0" styleClass="field" stylesheets="@main.css" />
+            <TextFieldImpl fx:id="fAction3" layoutX="547.0" layoutY="78.0" prefHeight="17.0" prefWidth="33.0" styleClass="field" stylesheets="@main.css" />
+            <TextFieldImpl fx:id="fAction1" layoutX="398.0" layoutY="77.0" prefHeight="20.0" prefWidth="28.0" styleClass="field" stylesheets="@main.css" />
          </children>
       </AnchorPane>
    </children>

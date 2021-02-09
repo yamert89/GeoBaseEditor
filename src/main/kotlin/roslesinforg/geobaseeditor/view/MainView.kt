@@ -14,15 +14,12 @@ import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
 import roslesinforg.geobaseeditor.GeoBaseEditorController
-import roslesinforg.geobaseeditor.model.FieldFloatConverter
-import roslesinforg.geobaseeditor.model.FieldIntConverter
-import roslesinforg.geobaseeditor.model.FieldStringConverter
-import roslesinforg.geobaseeditor.model.TextFieldImpl
+import roslesinforg.geobaseeditor.model.*
 import roslesinforg.geobaseeditor.model.validation.ValidationHelper
 import roslesinforg.geobaseeditor.model.validation.ValidatorFactory
 import roslesinforg.geobaseeditor.model.validation.ValidatorFactory.*
 import roslesinforg.geobaseeditor.view.viewmodels.*
-import kotlin.RuntimeException
+import kotlin.reflect.KProperty1
 
 
 fun main() {
@@ -33,192 +30,192 @@ class GeoBaseEditorApp: App(MainView::class)
 
 class MainView : View("My View") {
     override val root: AnchorPane by fxml("/gui/MainView.fxml")
-    val fGir: TextField by fxid()
+    val fGir: TextFieldImpl by fxid()
     val fKvNumber: TextFieldImpl by fxid()
-    val fAreaNumber: TextField by fxid()
-    val fArea: TextField by fxid()
-    val fCategoryArea: TextField by fxid()
-    val fOzu: TextField by fxid()
-    val fDP: TextField by fxid()
-    val fSpecies: TextField by fxid()
-    val fBon: TextField by fxid()
-    val fType: TextField by fxid()
-    val fSubType: TextField by fxid()
-    val fYearOfDeforest: TextField by fxid()
-    val fCountOfStump: TextField by fxid()
-    val fCountOfPinusStump: TextField by fxid()
-    val fStumpDiameter: TextField by fxid()
-    val fTypeDeforest: TextField by fxid()
-    val fDisorder: TextField by fxid()
-    val fValidDisorder: TextField by fxid()
-    val fDryTimber: TextField by fxid()
-    val fAction1: TextField by fxid()
-    val fAction2: TextField by fxid()
-    val fAction3: TextField by fxid()
+    val fAreaNumber: TextFieldImpl by fxid()
+    val fArea: TextFieldImpl by fxid()
+    val fCategoryArea: TextFieldImpl by fxid()
+    val fOzu: TextFieldImpl by fxid()
+    val fDP: TextFieldImpl by fxid()
+    val fSpecies: TextFieldImpl by fxid()
+    val fBon: TextFieldImpl by fxid()
+    val fType: TextFieldImpl by fxid()
+    val fSubType: TextFieldImpl by fxid()
+    val fYearOfDeforest: TextFieldImpl by fxid()
+    val fCountOfStump: TextFieldImpl by fxid()
+    val fCountOfPinusStump: TextFieldImpl by fxid()
+    val fStumpDiameter: TextFieldImpl by fxid()
+    val fTypeDeforest: TextFieldImpl by fxid()
+    val fDisorder: TextFieldImpl by fxid()
+    val fValidDisorder: TextFieldImpl by fxid()
+    val fDryTimber: TextFieldImpl by fxid()
+    val fAction1: TextFieldImpl by fxid()
+    val fAction2: TextFieldImpl by fxid()
+    val fAction3: TextFieldImpl by fxid()
     val container23: FlowPane by fxid()
     val container23_2: FlowPane by fxid()
     val container_10: FlowPane by fxid()
-    val fHrang1: TextField by fxid()
-    val fHrang2: TextField by fxid()
-    val fHrang3: TextField by fxid()
-    val fHrang4: TextField by fxid()
-    val fHrang5: TextField by fxid()
-    val fHrang6: TextField by fxid()
-    val fHrang7: TextField by fxid()
-    val fHrang8: TextField by fxid()
-    val fHrang9: TextField by fxid()
-    val fHrang10: TextField by fxid()
-    val fProportion1: TextField by fxid()
-    val fProportion2: TextField by fxid()
-    val fProportion3: TextField by fxid()
-    val fProportion4: TextField by fxid()
-    val fProportion5: TextField by fxid()
-    val fProportion6: TextField by fxid()
-    val fProportion7: TextField by fxid()
-    val fProportion8: TextField by fxid()
-    val fProportion9: TextField by fxid()
-    val fProportion10: TextField by fxid()
-    val fSpecies1: TextField by fxid()
-    val fSpecies2: TextField by fxid()
-    val fSpecies3: TextField by fxid()
-    val fSpecies4: TextField by fxid()
-    val fSpecies5: TextField by fxid()
-    val fSpecies6: TextField by fxid()
-    val fSpecies7: TextField by fxid()
-    val fSpecies8: TextField by fxid()
-    val fSpecies9: TextField by fxid()
-    val fSpecies10: TextField by fxid()
-    val fAge1: TextField by fxid()
-    val fAge2: TextField by fxid()
-    val fAge3: TextField by fxid()
-    val fAge4: TextField by fxid()
-    val fAge5: TextField by fxid()
-    val fAge6: TextField by fxid()
-    val fAge7: TextField by fxid()
-    val fAge8: TextField by fxid()
-    val fAge9: TextField by fxid()
-    val fAge10: TextField by fxid()
-    val fH1: TextField by fxid()
-    val fH2: TextField by fxid()
-    val fH3: TextField by fxid()
-    val fH4: TextField by fxid()
-    val fH5: TextField by fxid()
-    val fH6: TextField by fxid()
-    val fH7: TextField by fxid()
-    val fH8: TextField by fxid()
-    val fH9: TextField by fxid()
-    val fH10: TextField by fxid()
-    val fD1: TextField by fxid()
-    val fD2: TextField by fxid()
-    val fD3: TextField by fxid()
-    val fD4: TextField by fxid()
-    val fD5: TextField by fxid()
-    val fD6: TextField by fxid()
-    val fD7: TextField by fxid()
-    val fD8: TextField by fxid()
-    val fD9: TextField by fxid()
-    val fD10: TextField by fxid()
-    val fTradeClass1: TextField by fxid()
-    val fTradeClass2: TextField by fxid()
-    val fTradeClass3: TextField by fxid()
-    val fTradeClass4: TextField by fxid()
-    val fTradeClass5: TextField by fxid()
-    val fTradeClass6: TextField by fxid()
-    val fTradeClass7: TextField by fxid()
-    val fTradeClass8: TextField by fxid()
-    val fTradeClass9: TextField by fxid()
-    val fTradeClass10: TextField by fxid()
-    val fOrigin1: TextField by fxid()
-    val fOrigin2: TextField by fxid()
-    val fOrigin3: TextField by fxid()
-    val fOrigin4: TextField by fxid()
-    val fOrigin5: TextField by fxid()
-    val fOrigin6: TextField by fxid()
-    val fOrigin7: TextField by fxid()
-    val fOrigin8: TextField by fxid()
-    val fOrigin9: TextField by fxid()
-    val fOrigin10: TextField by fxid()
-    val fWeight1: TextField by fxid()
-    val fWeight2: TextField by fxid()
-    val fWeight3: TextField by fxid()
-    val fWeight4: TextField by fxid()
-    val fWeight5: TextField by fxid()
-    val fWeight6: TextField by fxid()
-    val fWeight7: TextField by fxid()
-    val fWeight8: TextField by fxid()
-    val fWeight9: TextField by fxid()
-    val fWeight10: TextField by fxid()
-    val fSumOfTimber1: TextField by fxid()
-    val fSumOfTimber2: TextField by fxid()
-    val fSumOfTimber3: TextField by fxid()
-    val fSumOfTimber4: TextField by fxid()
-    val fSumOfTimber5: TextField by fxid()
-    val fSumOfTimber6: TextField by fxid()
-    val fSumOfTimber7: TextField by fxid()
-    val fSumOfTimber8: TextField by fxid()
-    val fSumOfTimber9: TextField by fxid()
-    val fSumOfTimber10: TextField by fxid()
-    val f31_count: TextField by fxid()
-    val f31_h: TextField by fxid()
-    val f31_age: TextField by fxid()
-    val f31_proportion1: TextField by fxid()
-    val f31_element1: TextField by fxid()
-    val f31_proportion2: TextField by fxid()
-    val f31_element2: TextField by fxid()
-    val fDop1_n: TextField by fxid()
-    val fDop2_n: TextField by fxid()
-    val fDop3_n: TextField by fxid()
-    val fDop4_n: TextField by fxid()
-    val fDop5_n: TextField by fxid()
-    val fDop6_n: TextField by fxid()
-    val fDop1_1: TextField by fxid()
-    val fDop2_1: TextField by fxid()
-    val fDop3_1: TextField by fxid()
-    val fDop4_1: TextField by fxid()
-    val fDop5_1: TextField by fxid()
-    val fDop6_1: TextField by fxid()
-    val fDop1_2: TextField by fxid()
-    val fDop2_2: TextField by fxid()
-    val fDop3_2: TextField by fxid()
-    val fDop4_2: TextField by fxid()
-    val fDop5_2: TextField by fxid()
-    val fDop6_2: TextField by fxid()
-    val fDop1_3: TextField by fxid()
-    val fDop2_3: TextField by fxid()
-    val fDop3_3: TextField by fxid()
-    val fDop4_3: TextField by fxid()
-    val fDop5_3: TextField by fxid()
-    val fDop6_3: TextField by fxid()
-    val fDop1_4: TextField by fxid()
-    val fDop2_4: TextField by fxid()
-    val fDop3_4: TextField by fxid()
-    val fDop4_4: TextField by fxid()
-    val fDop5_4: TextField by fxid()
-    val fDop6_4: TextField by fxid()
-    val fDop1_5: TextField by fxid()
-    val fDop2_5: TextField by fxid()
-    val fDop3_5: TextField by fxid()
-    val fDop4_5: TextField by fxid()
-    val fDop5_5: TextField by fxid()
-    val fDop6_5: TextField by fxid()
-    val fDop1_6: TextField by fxid()
-    val fDop2_6: TextField by fxid()
-    val fDop3_6: TextField by fxid()
-    val fDop4_6: TextField by fxid()
-    val fDop5_6: TextField by fxid()
-    val fDop6_6: TextField by fxid()
-    val fDop1_7: TextField by fxid()
-    val fDop2_7: TextField by fxid()
-    val fDop3_7: TextField by fxid()
-    val fDop4_7: TextField by fxid()
-    val fDop5_7: TextField by fxid()
-    val fDop6_7: TextField by fxid()
-    val fDop1_8: TextField by fxid()
-    val fDop2_8: TextField by fxid()
-    val fDop3_8: TextField by fxid()
-    val fDop4_8: TextField by fxid()
-    val fDop5_8: TextField by fxid()
-    val fDop6_8: TextField by fxid()
+    val fHrang1: TextFieldImpl by fxid()
+    val fHrang2: TextFieldImpl by fxid()
+    val fHrang3: TextFieldImpl by fxid()
+    val fHrang4: TextFieldImpl by fxid()
+    val fHrang5: TextFieldImpl by fxid()
+    val fHrang6: TextFieldImpl by fxid()
+    val fHrang7: TextFieldImpl by fxid()
+    val fHrang8: TextFieldImpl by fxid()
+    val fHrang9: TextFieldImpl by fxid()
+    val fHrang10: TextFieldImpl by fxid()
+    val fProportion1: TextFieldImpl by fxid()
+    val fProportion2: TextFieldImpl by fxid()
+    val fProportion3: TextFieldImpl by fxid()
+    val fProportion4: TextFieldImpl by fxid()
+    val fProportion5: TextFieldImpl by fxid()
+    val fProportion6: TextFieldImpl by fxid()
+    val fProportion7: TextFieldImpl by fxid()
+    val fProportion8: TextFieldImpl by fxid()
+    val fProportion9: TextFieldImpl by fxid()
+    val fProportion10: TextFieldImpl by fxid()
+    val fSpecies1: TextFieldImpl by fxid()
+    val fSpecies2: TextFieldImpl by fxid()
+    val fSpecies3: TextFieldImpl by fxid()
+    val fSpecies4: TextFieldImpl by fxid()
+    val fSpecies5: TextFieldImpl by fxid()
+    val fSpecies6: TextFieldImpl by fxid()
+    val fSpecies7: TextFieldImpl by fxid()
+    val fSpecies8: TextFieldImpl by fxid()
+    val fSpecies9: TextFieldImpl by fxid()
+    val fSpecies10: TextFieldImpl by fxid()
+    val fAge1: TextFieldImpl by fxid()
+    val fAge2: TextFieldImpl by fxid()
+    val fAge3: TextFieldImpl by fxid()
+    val fAge4: TextFieldImpl by fxid()
+    val fAge5: TextFieldImpl by fxid()
+    val fAge6: TextFieldImpl by fxid()
+    val fAge7: TextFieldImpl by fxid()
+    val fAge8: TextFieldImpl by fxid()
+    val fAge9: TextFieldImpl by fxid()
+    val fAge10: TextFieldImpl by fxid()
+    val fH1: TextFieldImpl by fxid()
+    val fH2: TextFieldImpl by fxid()
+    val fH3: TextFieldImpl by fxid()
+    val fH4: TextFieldImpl by fxid()
+    val fH5: TextFieldImpl by fxid()
+    val fH6: TextFieldImpl by fxid()
+    val fH7: TextFieldImpl by fxid()
+    val fH8: TextFieldImpl by fxid()
+    val fH9: TextFieldImpl by fxid()
+    val fH10: TextFieldImpl by fxid()
+    val fD1: TextFieldImpl by fxid()
+    val fD2: TextFieldImpl by fxid()
+    val fD3: TextFieldImpl by fxid()
+    val fD4: TextFieldImpl by fxid()
+    val fD5: TextFieldImpl by fxid()
+    val fD6: TextFieldImpl by fxid()
+    val fD7: TextFieldImpl by fxid()
+    val fD8: TextFieldImpl by fxid()
+    val fD9: TextFieldImpl by fxid()
+    val fD10: TextFieldImpl by fxid()
+    val fTradeClass1: TextFieldImpl by fxid()
+    val fTradeClass2: TextFieldImpl by fxid()
+    val fTradeClass3: TextFieldImpl by fxid()
+    val fTradeClass4: TextFieldImpl by fxid()
+    val fTradeClass5: TextFieldImpl by fxid()
+    val fTradeClass6: TextFieldImpl by fxid()
+    val fTradeClass7: TextFieldImpl by fxid()
+    val fTradeClass8: TextFieldImpl by fxid()
+    val fTradeClass9: TextFieldImpl by fxid()
+    val fTradeClass10: TextFieldImpl by fxid()
+    val fOrigin1: TextFieldImpl by fxid()
+    val fOrigin2: TextFieldImpl by fxid()
+    val fOrigin3: TextFieldImpl by fxid()
+    val fOrigin4: TextFieldImpl by fxid()
+    val fOrigin5: TextFieldImpl by fxid()
+    val fOrigin6: TextFieldImpl by fxid()
+    val fOrigin7: TextFieldImpl by fxid()
+    val fOrigin8: TextFieldImpl by fxid()
+    val fOrigin9: TextFieldImpl by fxid()
+    val fOrigin10: TextFieldImpl by fxid()
+    val fWeight1: TextFieldImpl by fxid()
+    val fWeight2: TextFieldImpl by fxid()
+    val fWeight3: TextFieldImpl by fxid()
+    val fWeight4: TextFieldImpl by fxid()
+    val fWeight5: TextFieldImpl by fxid()
+    val fWeight6: TextFieldImpl by fxid()
+    val fWeight7: TextFieldImpl by fxid()
+    val fWeight8: TextFieldImpl by fxid()
+    val fWeight9: TextFieldImpl by fxid()
+    val fWeight10: TextFieldImpl by fxid()
+    val fSumOfTimber1: TextFieldImpl by fxid()
+    val fSumOfTimber2: TextFieldImpl by fxid()
+    val fSumOfTimber3: TextFieldImpl by fxid()
+    val fSumOfTimber4: TextFieldImpl by fxid()
+    val fSumOfTimber5: TextFieldImpl by fxid()
+    val fSumOfTimber6: TextFieldImpl by fxid()
+    val fSumOfTimber7: TextFieldImpl by fxid()
+    val fSumOfTimber8: TextFieldImpl by fxid()
+    val fSumOfTimber9: TextFieldImpl by fxid()
+    val fSumOfTimber10: TextFieldImpl by fxid()
+    val f31_count: TextFieldImpl by fxid()
+    val f31_h: TextFieldImpl by fxid()
+    val f31_age: TextFieldImpl by fxid()
+    val f31_proportion1: TextFieldImpl by fxid()
+    val f31_element1: TextFieldImpl by fxid()
+    val f31_proportion2: TextFieldImpl by fxid()
+    val f31_element2: TextFieldImpl by fxid()
+    val fDop1_n: TextFieldImpl by fxid()
+    val fDop2_n: TextFieldImpl by fxid()
+    val fDop3_n: TextFieldImpl by fxid()
+    val fDop4_n: TextFieldImpl by fxid()
+    val fDop5_n: TextFieldImpl by fxid()
+    val fDop6_n: TextFieldImpl by fxid()
+    val fDop1_1: TextFieldImpl by fxid()
+    val fDop2_1: TextFieldImpl by fxid()
+    val fDop3_1: TextFieldImpl by fxid()
+    val fDop4_1: TextFieldImpl by fxid()
+    val fDop5_1: TextFieldImpl by fxid()
+    val fDop6_1: TextFieldImpl by fxid()
+    val fDop1_2: TextFieldImpl by fxid()
+    val fDop2_2: TextFieldImpl by fxid()
+    val fDop3_2: TextFieldImpl by fxid()
+    val fDop4_2: TextFieldImpl by fxid()
+    val fDop5_2: TextFieldImpl by fxid()
+    val fDop6_2: TextFieldImpl by fxid()
+    val fDop1_3: TextFieldImpl by fxid()
+    val fDop2_3: TextFieldImpl by fxid()
+    val fDop3_3: TextFieldImpl by fxid()
+    val fDop4_3: TextFieldImpl by fxid()
+    val fDop5_3: TextFieldImpl by fxid()
+    val fDop6_3: TextFieldImpl by fxid()
+    val fDop1_4: TextFieldImpl by fxid()
+    val fDop2_4: TextFieldImpl by fxid()
+    val fDop3_4: TextFieldImpl by fxid()
+    val fDop4_4: TextFieldImpl by fxid()
+    val fDop5_4: TextFieldImpl by fxid()
+    val fDop6_4: TextFieldImpl by fxid()
+    val fDop1_5: TextFieldImpl by fxid()
+    val fDop2_5: TextFieldImpl by fxid()
+    val fDop3_5: TextFieldImpl by fxid()
+    val fDop4_5: TextFieldImpl by fxid()
+    val fDop5_5: TextFieldImpl by fxid()
+    val fDop6_5: TextFieldImpl by fxid()
+    val fDop1_6: TextFieldImpl by fxid()
+    val fDop2_6: TextFieldImpl by fxid()
+    val fDop3_6: TextFieldImpl by fxid()
+    val fDop4_6: TextFieldImpl by fxid()
+    val fDop5_6: TextFieldImpl by fxid()
+    val fDop6_6: TextFieldImpl by fxid()
+    val fDop1_7: TextFieldImpl by fxid()
+    val fDop2_7: TextFieldImpl by fxid()
+    val fDop3_7: TextFieldImpl by fxid()
+    val fDop4_7: TextFieldImpl by fxid()
+    val fDop5_7: TextFieldImpl by fxid()
+    val fDop6_7: TextFieldImpl by fxid()
+    val fDop1_8: TextFieldImpl by fxid()
+    val fDop2_8: TextFieldImpl by fxid()
+    val fDop3_8: TextFieldImpl by fxid()
+    val fDop4_8: TextFieldImpl by fxid()
+    val fDop5_8: TextFieldImpl by fxid()
+    val fDop6_8: TextFieldImpl by fxid()
     lateinit var kv_list: TableView<Area>
     val btnOpen: Button by fxid()
     val btnSave: Button by fxid()
@@ -255,6 +252,7 @@ class MainView : View("My View") {
         bindModel()
         buildKvList() //todo load list
         applyButtons()
+
         controller.read(input.toFile())
 
 
@@ -288,13 +286,6 @@ class MainView : View("My View") {
     private fun bindModel(){
         with(model){
             fKvNumber byint kvProperty
-            fKvNumber.bindDirty(model.dirtyStateFor(AreaModel::kvProperty))//todo YESSS!!!!
-
-
-
-
-
-            //field_areaNumber.bind(model.numProperty)
             field1Model.apply {
                 fAreaNumber byint numberProperty
 
@@ -355,7 +346,8 @@ class MainView : View("My View") {
                 f31_element2 bystr element2Property
             }
 
-           bindDop()
+            bindDop()
+            stylize()
         }
     }
 
@@ -377,15 +369,15 @@ class MainView : View("My View") {
     }
 
     private fun bindDopLine(
-        fieldName: TextField,
-        col1: TextField,
-        col2: TextField,
-        col3: TextField,
-        col4: TextField,
-        col5: TextField,
-        col6: TextField,
-        col7: TextField,
-        col8: TextField,
+        fieldName: TextFieldImpl,
+        col1: TextFieldImpl,
+        col2: TextFieldImpl,
+        col3: TextFieldImpl,
+        col4: TextFieldImpl,
+        col5: TextFieldImpl,
+        col6: TextFieldImpl,
+        col7: TextFieldImpl,
+        col8: TextFieldImpl,
         dopViewModel: DopViewModel.DopFieldViewModel
     ){
         with(dopViewModel){
@@ -477,22 +469,7 @@ class MainView : View("My View") {
                 row
             }
             }
-
-            controller.updateCounter.onChange { reloadKvList() }
-
-
-
-
-            //kv_list = treeview<Area>()
         }
-
-        //kv_list.addTo(root)
-
-    }
-
-    fun reloadKvList(){
-        //kv_list.items.clear()
-        //kv_list.items.addAll(controller.areas)
 
     }
 
@@ -529,23 +506,128 @@ class MainView : View("My View") {
         }
     }
 
+    private fun stylize(){
+        fKvNumber.bindDirty(model.dirtyStateFor(AreaModel::kvProperty))
+        with(model.field1Model){
+            fAreaNumber.bindDirty(dirtyStateFor(Field1ViewModel::numberProperty))
+            fArea.bindDirty(dirtyStateFor(Field1ViewModel::areaProperty))
+            fCategoryArea.bindDirty(dirtyStateFor(Field1ViewModel::categoryProperty))
+            fDP.bindDirty(dirtyStateFor(Field1ViewModel::dpProperty))
+            fOzu.bindDirty(dirtyStateFor(Field1ViewModel::typeOfProtectionProperty))
+        }
+        with(model.field2ViewModel){
+            fAction1.bindDirty(dirtyStateFor(Field2ViewModel::firstActionProperty))
+            fAction2.bindDirty(dirtyStateFor(Field2ViewModel::secondActionProperty))
+            fAction3.bindDirty(dirtyStateFor(Field2ViewModel::thirdActionProperty))
+        }
+        with(model.field3ViewModel){
+            fSpecies.bindDirty(dirtyStateFor(Field3ViewModel::speciesProperty))
+            fBon.bindDirty(dirtyStateFor(Field3ViewModel::bonProperty))
+            fType.bindDirty(dirtyStateFor(Field3ViewModel::typeProperty))
+            fSubType.bindDirty(dirtyStateFor(Field3ViewModel::subTypeProperty))
+            fYearOfDeforest.bindDirty(dirtyStateFor(Field3ViewModel::yearOfDeforestationProperty))
+            fCountOfStump.bindDirty(dirtyStateFor(Field3ViewModel::countOfStumpProperty))
+            fCountOfPinusStump.bindDirty(dirtyStateFor(Field3ViewModel::countOfPinusStumpProperty))
+            fStumpDiameter.bindDirty(dirtyStateFor(Field3ViewModel::stumpDiameterProperty))
+            fTypeDeforest.bindDirty(dirtyStateFor(Field3ViewModel::typeOfDeforestationProperty))
+        }
+        with(model.field4ViewModel){
+            fDisorder.bindDirty(dirtyStateFor(Field4ViewModel::disorderProperty))
+            fValidDisorder.bindDirty(dirtyStateFor(Field4ViewModel::validDisorderProperty))
+            fDryTimber.bindDirty(dirtyStateFor(Field4ViewModel::dryTimberProperty))
+        }
+        with(model.f10Elements[0]){
+            fHrang1.bindDirty(dirtyStateFor(ElementOfForestViewModel::hRangProperty))
+            fProportion1.bindDirty(dirtyStateFor(ElementOfForestViewModel::proportionProperty))
+            fSpecies1.bindDirty(dirtyStateFor(ElementOfForestViewModel::speciesProperty))
+            fAge1.bindDirty(dirtyStateFor(ElementOfForestViewModel::ageProperty))
+            fH1.bindDirty(dirtyStateFor(ElementOfForestViewModel::hProperty))
+            fD1.bindDirty(dirtyStateFor(ElementOfForestViewModel::dProperty))
+            fTradeClass1.bindDirty(dirtyStateFor(ElementOfForestViewModel::tradeClassProperty))
+            fOrigin1.bindDirty(dirtyStateFor(ElementOfForestViewModel::generationProperty))
+            fWeight1.bindDirty(dirtyStateFor(ElementOfForestViewModel::weightProperty))
+            fSumOfTimber1.bindDirty(dirtyStateFor(ElementOfForestViewModel::sumOfTimberProperty))
+        }
 
-    private infix fun TextField.bystr(other: Property<String>) = this.bind(property = other, readonly = false, converter = FieldStringConverter())
-    private infix fun TextField.byint(other: Property<Int>) = this.bind(property = other, readonly = false, converter = FieldIntConverter())
+        with(model.f10Elements){
+            bindDirty(get(0), fHrang1, fProportion1, fSpecies1, fAge1, fH1, fD1, fTradeClass1, fOrigin1, fWeight1, fSumOfTimber1)
+            bindDirty(get(1), fHrang2, fProportion2, fSpecies2, fAge2, fH2, fD2, fTradeClass2, fOrigin2, fWeight2, fSumOfTimber2)
+            bindDirty(get(2), fHrang3, fProportion3, fSpecies3, fAge3, fH3, fD3, fTradeClass3, fOrigin3, fWeight3, fSumOfTimber3)
+            bindDirty(get(3), fHrang4, fProportion4, fSpecies4, fAge4, fH4, fD4, fTradeClass4, fOrigin4, fWeight4, fSumOfTimber4)
+            bindDirty(get(4), fHrang5, fProportion5, fSpecies5, fAge5, fH5, fD5, fTradeClass5, fOrigin5, fWeight5, fSumOfTimber5)
+            bindDirty(get(5), fHrang6, fProportion6, fSpecies6, fAge6, fH6, fD6, fTradeClass6, fOrigin6, fWeight6, fSumOfTimber6)
+            bindDirty(get(6), fHrang7, fProportion7, fSpecies7, fAge7, fH7, fD7, fTradeClass7, fOrigin7, fWeight7, fSumOfTimber7)
+            bindDirty(get(7), fHrang8, fProportion8, fSpecies8, fAge8, fH8, fD8, fTradeClass8, fOrigin8, fWeight8, fSumOfTimber8)
+            bindDirty(get(8), fHrang9, fProportion9, fSpecies9, fAge9, fH9, fD9, fTradeClass9, fOrigin9, fWeight9, fSumOfTimber9)
+            bindDirty(get(9), fHrang10, fProportion10, fSpecies10, fAge10, fH10, fD10, fTradeClass10, fOrigin10, fWeight10, fSumOfTimber10)
+        }
+
+        with(model.field31ViewModel){
+            f31_count.bindDirty(dirtyStateFor(Field31ViewModel::countProperty))
+            f31_h.bindDirty(dirtyStateFor(Field31ViewModel::hProperty))
+            f31_age.bindDirty(dirtyStateFor(Field31ViewModel::ageProperty))
+            f31_proportion1.bindDirty(dirtyStateFor(Field31ViewModel::proportion1Property))
+            f31_proportion2.bindDirty(dirtyStateFor(Field31ViewModel::proportion2Property))
+            f31_element1.bindDirty(dirtyStateFor(Field31ViewModel::element1Property))
+            f31_element2.bindDirty(dirtyStateFor(Field31ViewModel::element2Property))
+        }
+        val dops = model.dopViewModel.dopFieldViewModels
+        with(dops[0]){
+            fDop1_n.bindDirty(dirtyStateFor(DopViewModel.DopFieldViewModel::numberProperty))
+            fDop1_1.bindDirty(dirtyStateFor(DopViewModel.DopFieldViewModel::col1Property))
+            fDop1_2.bindDirty(dirtyStateFor(DopViewModel.DopFieldViewModel::col2Property))
+            fDop1_3.bindDirty(dirtyStateFor(DopViewModel.DopFieldViewModel::col3Property))
+            fDop1_4.bindDirty(dirtyStateFor(DopViewModel.DopFieldViewModel::col4Property))
+            fDop1_5.bindDirty(dirtyStateFor(DopViewModel.DopFieldViewModel::col5Property))
+            fDop1_6.bindDirty(dirtyStateFor(DopViewModel.DopFieldViewModel::col6Property))
+            fDop1_7.bindDirty(dirtyStateFor(DopViewModel.DopFieldViewModel::col7Property))
+            fDop1_8.bindDirty(dirtyStateFor(DopViewModel.DopFieldViewModel::col8Property))
+        }
+
+    }
+
+    private fun bindDirty(
+        model: ElementOfForestViewModel,
+        fHrang: TextFieldImpl,
+        fProp: TextFieldImpl,
+        fSpec: TextFieldImpl,
+        fAge: TextFieldImpl,
+        fH: TextFieldImpl,
+        fD: TextFieldImpl,
+        fTrade: TextFieldImpl,
+        fOrig: TextFieldImpl,
+        fWeight: TextFieldImpl,
+        fSumOfT: TextFieldImpl
+        ){
+        with(model){
+            fHrang.bindDirty(dirtyStateFor(ElementOfForestViewModel::hRangProperty))
+            fProp.bindDirty(dirtyStateFor(ElementOfForestViewModel::proportionProperty))
+            fSpec.bindDirty(dirtyStateFor(ElementOfForestViewModel::speciesProperty))
+            fAge.bindDirty(dirtyStateFor(ElementOfForestViewModel::ageProperty))
+            fH.bindDirty(dirtyStateFor(ElementOfForestViewModel::hProperty))
+            fD.bindDirty(dirtyStateFor(ElementOfForestViewModel::dProperty))
+            fTrade.bindDirty(dirtyStateFor(ElementOfForestViewModel::tradeClassProperty))
+            fOrig.bindDirty(dirtyStateFor(ElementOfForestViewModel::generationProperty))
+            fWeight.bindDirty(dirtyStateFor(ElementOfForestViewModel::weightProperty))
+            fSumOfT.bindDirty(dirtyStateFor(ElementOfForestViewModel::sumOfTimberProperty))
+        }
+    }
+
+    private infix fun TextFieldImpl.bystr(other: Property<String>) = this.bind(property = other, readonly = false, converter = FieldStringConverter())
     private infix fun TextFieldImpl.byint(other: Property<Int>) = this.bind(property = other, readonly = false, converter = FieldIntConverter())
-    private infix fun TextField.byfloat(other: Property<Float>) = this.bind(property = other, converter = FieldFloatConverter())
+    private infix fun TextFieldImpl.byfloat(other: Property<Float>) = this.bind(property = other, converter = FieldFloatConverter())
 
     private fun ElementOfForestViewModel.bind10(
-        hRang: TextField,
-        proportion: TextField,
-        species: TextField,
-        age: TextField,
-        h: TextField,
-        d: TextField,
-        tradeClass: TextField,
-        origin: TextField,
-        weight: TextField,
-        sumOfT: TextField
+        hRang: TextFieldImpl,
+        proportion: TextFieldImpl,
+        species: TextFieldImpl,
+        age: TextFieldImpl,
+        h: TextFieldImpl,
+        d: TextFieldImpl,
+        tradeClass: TextFieldImpl,
+        origin: TextFieldImpl,
+        weight: TextFieldImpl,
+        sumOfT: TextFieldImpl
     ){
         hRang byint hRangProperty
         proportion byint proportionProperty
