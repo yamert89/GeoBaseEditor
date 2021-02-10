@@ -1,6 +1,8 @@
 package roslesinforg.geobaseeditor.view
 
 import javafx.beans.property.*
+import javafx.event.Event
+import javafx.event.EventType
 import javafx.scene.control.*
 import javafx.scene.input.*
 import javafx.scene.layout.*
@@ -409,6 +411,7 @@ class MainView : View("My View") {
                             }
                         }
                     }
+                    //fKvNumber.inputMethodRequests = InputMethodRequests()
                 }
             model.rebindOnChange(this){ model ->
                 if (model == null) return@rebindOnChange
