@@ -24,6 +24,7 @@ class DopViewModel(area: Area): ItemViewModel<Area>(area) {
         itemProperty.onChange {
             println("dopviewmodel item changed")
             if (it == null) return@onChange
+            //commit()
             invalidateViewModels()
             updateDopFields(it)
         }
@@ -32,81 +33,83 @@ class DopViewModel(area: Area): ItemViewModel<Area>(area) {
     override fun onCommit() {
         println("commit dop model")
         val area = item
-        var model: DopFieldViewModel = dopFieldViewModels[0]
-        with(model){
             for(i in dopFieldViewModels.indices){
-                if (!dopFieldViewModels[i].isBounds) continue
-                println(numberProperty.value)
-                when(numberProperty.value){ //todo refactoring
+                val model = dopFieldViewModels[i]
+                model.commit()
+                //if (!dopFieldViewModels[i].isBounds) continue
+                when(model.number.value){ //todo refactoring
+                    0 -> continue
                     11 -> area.field11 = Field11(
-                        col1Property.value.toInt(),
-                        col2Property.value.toInt(),
-                        col3Property.value.toInt(),
-                        col4Property.value.toFloat(),
-                        col5Property.value.toFloat(),
-                        col6Property.value.toFloat(),
-                        col7Property.value.toInt(),
-                        col8Property.value.toInt()
+                        model.col1.value.toInt(),
+                        model.col2.value.toInt(),
+                        model.col3.value.toInt(),
+                        model.col4.value.toFloat(),
+                        model.col5.value.toFloat(),
+                        model.col6.value.toFloat(),
+                        model.col7.value.toInt(),
+                        model.col8.value.toInt()
                     )
                     12 -> area.field12 = Field12(
-                        col1Property.value.toInt(),
-                        col2Property.value.toInt(),
-                        col3Property.value,
-                        col4Property.value.toInt(),
-                        col5Property.value.toInt(),
-                        col6Property.value.toInt(),
-                        col7Property.value.toInt()
+                         model.col1.value.toInt(),
+                         model.col2.value.toInt(),
+                         model.col3.value,
+                         model.col4.value.toInt(),
+                         model.col5.value.toInt(),
+                         model.col6.value.toInt(),
+                         model.col7.value.toInt()
                     )
                     13 -> area.field13 = Field13(
-                        col1Property.value.toFloat(),
-                        col2Property.value.toFloat(),
-                        col3Property.value.toInt(),
-                        col4Property.value.toInt(),
-                        col5Property.value.toInt(),
-                        col6Property.value.toInt(),
-                        col7Property.value.toInt()
+                         model.col1.value.toFloat(),
+                         model.col2.value.toFloat(),
+                         model.col3.value.toInt(),
+                         model.col4.value.toInt(),
+                         model.col5.value.toInt(),
+                         model.col6.value.toInt(),
+                         model.col7.value.toInt()
                     )
                     19 -> area.field19 = Field19(
-                        col1Property.value.toInt(),
-                        col2Property.value.toInt(),
-                        col3Property.value.toFloat()
+                         model.col1.value.toInt(),
+                         model.col2.value.toInt(),
+                         model.col3.value.toFloat()
                     )
                     21 -> area.field21 = Field21(
-                        col1Property.value.toInt(),
-                        col2Property.value.toInt(),
-                        col3Property.value.toInt(),
-                        col4Property.value.toInt(),
-                        col5Property.value.toInt(),
-                        col6Property.value.toInt(),
-                        col7Property.value.toInt(),
-                        col8Property.value.toInt(),
+                         model.col1.value.toInt(),
+                         model.col2.value.toInt(),
+                         model.col3.value.toInt(),
+                         model.col4.value.toInt(),
+                         model.col5.value.toInt(),
+                         model.col6.value.toInt(),
+                         model.col7.value.toInt(),
+                         model.col8.value.toInt(),
                     )
                     23 -> {
-                        area.field23.info.apply {
-                            clear()
-                            if (col1Property.value?.isNotEmpty() == true) add(col1Property.value.toInt()) else return@apply
-                            if (col2Property.value?.isNotEmpty() == true) add(col2Property.value.toInt()) else return@apply
-                            if (col3Property.value?.isNotEmpty() == true) add(col3Property.value.toInt()) else return@apply
-                            if (col4Property.value?.isNotEmpty() == true) add(col4Property.value.toInt()) else return@apply
-                            if (col5Property.value?.isNotEmpty() == true) add(col5Property.value.toInt()) else return@apply
-                            if (col6Property.value?.isNotEmpty() == true) add(col6Property.value.toInt()) else return@apply
-                            if (col7Property.value?.isNotEmpty() == true) add(col7Property.value.toInt()) else return@apply
-                            if (col8Property.value?.isNotEmpty() == true) add(col8Property.value.toInt()) else return@apply
+                        area.field23 = Field23().apply {
+                            with(info){
+                                clear()
+                                if ( model.col1.value?.isNotEmpty() == true) add( model.col1.value.toInt()) else return@apply
+                                if ( model.col2.value?.isNotEmpty() == true) add( model.col2.value.toInt()) else return@apply
+                                if ( model.col3.value?.isNotEmpty() == true) add( model.col3.value.toInt()) else return@apply
+                                if ( model.col4.value?.isNotEmpty() == true) add( model.col4.value.toInt()) else return@apply
+                                if ( model.col5.value?.isNotEmpty() == true) add( model.col5.value.toInt()) else return@apply
+                                if ( model.col6.value?.isNotEmpty() == true) add( model.col6.value.toInt()) else return@apply
+                                if ( model.col7.value?.isNotEmpty() == true) add( model.col7.value.toInt()) else return@apply
+                                if ( model.col8.value?.isNotEmpty() == true) add( model.col8.value.toInt()) else return@apply
+                            }
+
                         }
                     }
                     29 -> area.field29 = Field29(
-                       col1Property.value.toInt(),
-                       col2Property.value.toInt(),
-                       col3Property.value.toInt(),
-                       col4Property.value,
-                       col5Property.value.toFloat(),
-                       col6Property.value.toFloat(),
-                       col7Property.value
+                        model.col1.value.toInt(),
+                        model.col2.value.toInt(),
+                        model.col3.value.toInt(),
+                        model.col4.value,
+                        model.col5.value.toFloat(),
+                        model.col6.value.toFloat(),
+                        model.col7.value
                     )
                 }
-                model = dopFieldViewModels[i]
             }
-        }
+
 
     }
 
