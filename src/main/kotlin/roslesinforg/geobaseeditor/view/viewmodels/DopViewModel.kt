@@ -9,7 +9,7 @@ import roslesinforg.porokhin.areatypes.fields.Field
 import tornadofx.*
 import kotlin.text.toFloat as originalToFloat
 
-@Suppress("UNCHECKED_CAST") //todo refactoring with lists? //fixme not saving
+@Suppress("UNCHECKED_CAST") //todo refactoring with lists?
 class DopViewModel(area: Area): ItemViewModel<Area>(area) {
     val dopFieldViewModels = listOf(
         DopFieldViewModel(Field23.Empty23),
@@ -36,8 +36,7 @@ class DopViewModel(area: Area): ItemViewModel<Area>(area) {
             for(i in dopFieldViewModels.indices){
                 val model = dopFieldViewModels[i]
                 model.commit()
-                //if (!dopFieldViewModels[i].isBounds) continue
-                when(model.number.value){ //todo refactoring
+                when(model.number.value){
                     0 -> continue
                     11 -> area.field11 = Field11(
                         model.col1.value.toInt(),
@@ -169,16 +168,6 @@ class DopViewModel(area: Area): ItemViewModel<Area>(area) {
                 col7.value = ""
                 col8.value = ""
                 it.item = null
-
-                /*numberProperty.value = 0
-                col1Property.value = ""
-                col2Property.value = ""
-                col3Property.value = ""
-                col4Property.value = ""
-                col5Property.value = ""
-                col6Property.value = ""
-                col7Property.value = ""
-                col8Property.value = ""*/
             }
         }
     }
