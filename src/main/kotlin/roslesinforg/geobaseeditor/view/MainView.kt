@@ -422,9 +422,13 @@ class MainView : View("My View") {
                 bottomAnchor = 0
             }
             prefWidth = 100.0
-            shortcut(KeyCombination.keyCombination(KeyCode.DELETE.name)){
+            shortcut(KeyCodeCombination(KeyCode.DELETE)){
                 val selected = kv_list.selectionModel.selectedItem
                 kv_list.items.remove(selected)
+            }
+            shortcut(KeyCodeCombination(KeyCode.ADD)){
+                if (kv_list.selectedItem == null) return@shortcut
+                controller.copyArea(kv_list.selectedItem!!)
             }
             readonlyColumn("Kv", Area::kv)
             column<Area, Int>("Выд"){
@@ -560,17 +564,6 @@ class MainView : View("My View") {
             f31_element2.bindDirty(dirtyStateFor(Field31ViewModel::element2Property))
         }
         val dops = model.dopViewModel.dopFieldViewModels
-        with(dops[0]){
-            fDop1_n.bindDirty(dirtyStateFor(DopViewModel.DopFieldViewModel::numberProperty))
-            fDop1_1.bindDirty(dirtyStateFor(DopViewModel.DopFieldViewModel::col1Property))
-            fDop1_2.bindDirty(dirtyStateFor(DopViewModel.DopFieldViewModel::col2Property))
-            fDop1_3.bindDirty(dirtyStateFor(DopViewModel.DopFieldViewModel::col3Property))
-            fDop1_4.bindDirty(dirtyStateFor(DopViewModel.DopFieldViewModel::col4Property))
-            fDop1_5.bindDirty(dirtyStateFor(DopViewModel.DopFieldViewModel::col5Property))
-            fDop1_6.bindDirty(dirtyStateFor(DopViewModel.DopFieldViewModel::col6Property))
-            fDop1_7.bindDirty(dirtyStateFor(DopViewModel.DopFieldViewModel::col7Property))
-            fDop1_8.bindDirty(dirtyStateFor(DopViewModel.DopFieldViewModel::col8Property))
-        }
         bindDirtyDop(dops[0], fDop1_n, fDop1_1, fDop1_2, fDop1_3, fDop1_4, fDop1_5, fDop1_6, fDop1_7, fDop1_8)
         bindDirtyDop(dops[1], fDop2_n, fDop2_1, fDop2_2, fDop2_3, fDop2_4, fDop2_5, fDop2_6, fDop2_7, fDop2_8)
         bindDirtyDop(dops[2], fDop3_n, fDop3_1, fDop3_2, fDop3_3, fDop3_4, fDop3_5, fDop3_6, fDop3_7, fDop3_8)

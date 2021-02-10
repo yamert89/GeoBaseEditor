@@ -9,7 +9,7 @@ import roslesinforg.porokhin.areatypes.fields.Field
 import tornadofx.*
 import kotlin.text.toFloat as originalToFloat
 
-@Suppress("UNCHECKED_CAST") //todo refactoring with lists?
+@Suppress("UNCHECKED_CAST") //todo refactoring with lists? //fixme not saving
 class DopViewModel(area: Area): ItemViewModel<Area>(area) {
     val dopFieldViewModels = listOf(
         DopFieldViewModel(Field23.Empty23),
@@ -34,8 +34,8 @@ class DopViewModel(area: Area): ItemViewModel<Area>(area) {
         val area = item
         var model: DopFieldViewModel = dopFieldViewModels[0]
         with(model){
-            while (model.isBounds){
-                isBounds = true
+            for(i in dopFieldViewModels.indices){
+                if (!dopFieldViewModels[i].isBounds) continue
                 println(numberProperty.value)
                 when(numberProperty.value){ //todo refactoring
                     11 -> area.field11 = Field11(
@@ -104,7 +104,7 @@ class DopViewModel(area: Area): ItemViewModel<Area>(area) {
                        col7Property.value
                     )
                 }
-                model = changeDopFieldViewModel()
+                model = dopFieldViewModels[i]
             }
         }
 
@@ -116,30 +116,37 @@ class DopViewModel(area: Area): ItemViewModel<Area>(area) {
             if (field11.isNotEmpty()) {
                 val model = changeDopFieldViewModel()
                 model.item = field11
+                model.isBounds = true
             }
             if (field12.isNotEmpty()) {
                 val model = changeDopFieldViewModel()
                 model.item = field12
+                model.isBounds = true
             }
             if (field13.isNotEmpty()) {
                 val model = changeDopFieldViewModel()
                 model.item = field13
+                model.isBounds = true
             }
             if (field19.isNotEmpty()) {
                 val model = changeDopFieldViewModel()
                 model.item = field19
+                model.isBounds = true
             }
             if (field21.isNotEmpty()) {
                 val model = changeDopFieldViewModel()
                 model.item = field21
+                model.isBounds = true
             }
             if (field23.isNotEmpty()) {
                 val model = changeDopFieldViewModel()
                 model.item = field23
+                model.isBounds = true
             }
             if (field29.isNotEmpty()) {
                 val model = changeDopFieldViewModel()
                 model.item = field29
+                model.isBounds = true
             }
         }
     }
@@ -149,7 +156,18 @@ class DopViewModel(area: Area): ItemViewModel<Area>(area) {
         dopFieldViewModels.forEach {
             it.apply {
                 isBounds = false
-                numberProperty.value = 0
+                number.value = 0
+                col1.value = ""
+                col2.value = ""
+                col3.value = ""
+                col4.value = ""
+                col5.value = ""
+                col6.value = ""
+                col7.value = ""
+                col8.value = ""
+                it.item = null
+
+                /*numberProperty.value = 0
                 col1Property.value = ""
                 col2Property.value = ""
                 col3Property.value = ""
@@ -157,7 +175,7 @@ class DopViewModel(area: Area): ItemViewModel<Area>(area) {
                 col5Property.value = ""
                 col6Property.value = ""
                 col7Property.value = ""
-                col8Property.value = ""
+                col8Property.value = ""*/
             }
         }
     }
@@ -191,6 +209,7 @@ class DopViewModel(area: Area): ItemViewModel<Area>(area) {
         init {
 
             itemProperty.onChange {
+                if (it == null) return@onChange
                 println("dop field model changed")
                 when(it){
                     is Field11 -> with(it){
@@ -210,17 +229,17 @@ class DopViewModel(area: Area): ItemViewModel<Area>(area) {
                         health, antropoElements)
                     }
                     is Field23 -> {
-                        numberProperty.value = 23
                         if (it.info.isEmpty()) return@onChange
+                        number.value = 23
                         var idx = 0
-                        col1Property.value = it.info[idx++].prepare()
-                        if (it.info.size > idx) col2Property.value = it.info[idx++].prepare()
-                        if (it.info.size > idx) col3Property.value = it.info[idx++].prepare()
-                        if (it.info.size > idx) col4Property.value = it.info[idx++].prepare()
-                        if (it.info.size > idx) col5Property.value = it.info[idx++].prepare()
-                        if (it.info.size > idx) col6Property.value = it.info[idx++].prepare()
-                        if (it.info.size > idx) col7Property.value = it.info[idx++].prepare()
-                        if (it.info.size > idx) col8Property.value = it.info[idx].prepare()
+                        col1.value = it.info[idx++].prepare()
+                        if (it.info.size > idx) col2.value = it.info[idx++].prepare()
+                        if (it.info.size > idx) col3.value = it.info[idx++].prepare()
+                        if (it.info.size > idx) col4.value = it.info[idx++].prepare()
+                        if (it.info.size > idx) col5.value = it.info[idx++].prepare()
+                        if (it.info.size > idx) col6.value = it.info[idx++].prepare()
+                        if (it.info.size > idx) col7.value = it.info[idx++].prepare()
+                        if (it.info.size > idx) col8.value = it.info[idx].prepare()
                     }
                     is Field29 -> with(it){
                         updateProperties(29, type, year, categoryBefore, speciesBefore, lengthBefore, lengthBetween, bon)
