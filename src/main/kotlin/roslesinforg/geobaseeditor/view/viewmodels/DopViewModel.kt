@@ -84,14 +84,14 @@ class DopViewModel(area: Area): ItemViewModel<Area>(area) {
                     23 -> {
                         area.field23.info.apply {
                             clear()
-                            if (col1Property.value.isNotEmpty()) add(col1Property.value.toInt()) else return@apply
-                            if (col2Property.value.isNotEmpty()) add(col2Property.value.toInt()) else return@apply
-                            if (col3Property.value.isNotEmpty()) add(col3Property.value.toInt()) else return@apply
-                            if (col4Property.value.isNotEmpty()) add(col4Property.value.toInt()) else return@apply
-                            if (col5Property.value.isNotEmpty()) add(col5Property.value.toInt()) else return@apply
-                            if (col6Property.value.isNotEmpty()) add(col6Property.value.toInt()) else return@apply
-                            if (col7Property.value.isNotEmpty()) add(col7Property.value.toInt()) else return@apply
-                            if (col8Property.value.isNotEmpty()) add(col8Property.value.toInt()) else return@apply
+                            if (col1Property.value?.isNotEmpty() == true) add(col1Property.value.toInt()) else return@apply
+                            if (col2Property.value?.isNotEmpty() == true) add(col2Property.value.toInt()) else return@apply
+                            if (col3Property.value?.isNotEmpty() == true) add(col3Property.value.toInt()) else return@apply
+                            if (col4Property.value?.isNotEmpty() == true) add(col4Property.value.toInt()) else return@apply
+                            if (col5Property.value?.isNotEmpty() == true) add(col5Property.value.toInt()) else return@apply
+                            if (col6Property.value?.isNotEmpty() == true) add(col6Property.value.toInt()) else return@apply
+                            if (col7Property.value?.isNotEmpty() == true) add(col7Property.value.toInt()) else return@apply
+                            if (col8Property.value?.isNotEmpty() == true) add(col8Property.value.toInt()) else return@apply
                         }
                     }
                     29 -> area.field29 = Field29(

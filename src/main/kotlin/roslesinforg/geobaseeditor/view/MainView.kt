@@ -422,9 +422,10 @@ class MainView : View("My View") {
                 bottomAnchor = 0
             }
             prefWidth = 100.0
-                shortcut(KeyCombination.keyCombination(KeyCode.DELETE.name)){
-                    println("hi") //todo
-                }
+            shortcut(KeyCombination.keyCombination(KeyCode.DELETE.name)){
+                val selected = kv_list.selectionModel.selectedItem
+                kv_list.items.remove(selected)
+            }
             readonlyColumn("Kv", Area::kv)
             column<Area, Int>("Выд"){
                 SimpleIntegerProperty(it.value.field1.number) as Property<Int>
