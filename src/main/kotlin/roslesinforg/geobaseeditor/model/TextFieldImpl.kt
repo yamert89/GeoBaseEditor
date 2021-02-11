@@ -9,6 +9,7 @@ import tornadofx.style
 
 class TextFieldImpl: TextField() {
     private val isDirty = SimpleBooleanProperty(false)
+
     init {
         isDirty.onChange {
             if (it){
@@ -22,10 +23,16 @@ class TextFieldImpl: TextField() {
             }
 
         }
+
+        hoverProperty().onChange {
+            requestFocus()
+            selectAll()
+        }
     }
     fun bindDirty(binding: BooleanBinding){
         isDirty.bind(binding)
     }
+
 
 
 }

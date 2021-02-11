@@ -9,7 +9,7 @@ import roslesinforg.porokhin.areatypes.fields.Field
 import tornadofx.*
 import kotlin.text.toFloat as originalToFloat
 
-@Suppress("UNCHECKED_CAST") //todo refactoring with lists?
+@Suppress("UNCHECKED_CAST")
 class DopViewModel(area: Area): ItemViewModel<Area>(area) {
     val dopFieldViewModels = listOf(
         DopFieldViewModel(Field23.Empty23),

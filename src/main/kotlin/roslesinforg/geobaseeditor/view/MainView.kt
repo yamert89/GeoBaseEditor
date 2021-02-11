@@ -1,6 +1,8 @@
 package roslesinforg.geobaseeditor.view
 
+import com.sun.glass.events.MouseEvent
 import javafx.beans.property.*
+import javafx.event.ActionEvent
 import javafx.event.Event
 import javafx.event.EventType
 import javafx.scene.control.*
