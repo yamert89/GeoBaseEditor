@@ -24,10 +24,13 @@ class TextFieldImpl: TextField() {
 
         }
 
-        hoverProperty().onChange {
+
+       /* hoverProperty().onChange { //todo uncomment in production
             requestFocus()
             selectAll()
-        }
+        }*/
+
+
     }
     fun bindDirty(binding: BooleanBinding){
         isDirty.bind(binding)

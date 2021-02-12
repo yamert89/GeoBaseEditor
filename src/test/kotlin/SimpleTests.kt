@@ -1,6 +1,6 @@
-
+import tornadofx.isFloat
 
 fun main() {
-    val str = "2.5"
-    str.toDouble().toFloat()
+    val str = "2.5f"
+    print(str.isFloat())
 }

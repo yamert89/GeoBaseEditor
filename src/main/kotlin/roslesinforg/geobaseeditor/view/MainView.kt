@@ -19,6 +19,7 @@ import java.nio.file.Path
 import java.nio.file.Paths
 import roslesinforg.geobaseeditor.GeoBaseEditorController
 import roslesinforg.geobaseeditor.model.*
+import roslesinforg.geobaseeditor.model.validation.FilteringHelper
 import roslesinforg.geobaseeditor.model.validation.ValidationHelper
 import roslesinforg.geobaseeditor.model.validation.ValidatorFactory
 import roslesinforg.geobaseeditor.model.validation.ValidatorFactory.*
@@ -229,6 +230,7 @@ class MainView : View("My View") {
     val validationContext = ValidationContext()
     val factory = ValidatorFactory(validationContext)
     val validationHelper = ValidationHelper(validationContext, factory)
+    val filteringHelper = FilteringHelper()
 
     
     var model: AreaModel
@@ -258,19 +260,54 @@ class MainView : View("My View") {
 
         controller.read(input.toFile())
 
-
-        primaryStage.setOnCloseRequest {
-            model.commit()
-            val out = Json.encodeToString(model.area)
-            println(out)
-            Files.write(path, out.toByteArray(UTF_8))
+        with(filteringHelper){ //todo as option
+            filter(fSpecies, fSpecies1, fSpecies2, fSpecies3, fSpecies4, fSpecies5, fSpecies6, fSpecies7, fSpecies8, fSpecies9,
+                f31_element1, f31_element2){
+                it.controlNewText.isEmpty() || it.controlNewText.matches("[ЕБСЛПОА\\s]{1,4}".toRegex())
+            }
+            filter(fHrang1, fHrang2, fHrang3, fHrang4,fHrang5, fHrang6, fHrang7, fHrang8, fHrang9, fHrang10){ formatter ->
+                formatter.controlNewText.let { it.isEmpty() || it.isInt() && it.length == 1 }
+            }
+            filter(fProportion1, fProportion2, fProportion3, fProportion4, fProportion5, fProportion6, fProportion7,
+                fProportion8, fProportion9, fProportion10, f31_proportion1, f31_proportion2){ formatter ->
+                formatter.controlNewText.let { it.isInt() && it.toInt() < 11 }
+            }
+            filter(fAge1, fAge2, fAge3, fAge4, fAge5, fAge6, fAge7, fAge8, fAge9, fAge10, f31_age){ f ->
+                f.controlNewText.let { it.isInt() && it.toInt() in 1..400 }
+            }
+            filter(fTradeClass1, fTradeClass2, fTradeClass3, fTradeClass4, fTradeClass5, fTradeClass6, fTradeClass7, fTradeClass8,
+                fTradeClass9, fTradeClass10){ f ->
+                f.controlNewText.let { it.isInt() && it.toInt() in 1..4 } //todo origin
+            }
+            //todo weight
+            filter(fSumOfTimber1, fSumOfTimber2, fSumOfTimber3, fSumOfTimber4, fSumOfTimber5, fSumOfTimber6, fSumOfTimber7, fSumOfTimber8,
+                fSumOfTimber9, fSumOfTimber10){ f ->
+                f.controlNewText.let { it.isInt() && it.toInt() in 5..900 }
+            }
+            filter(fAreaNumber, fCategoryArea, fDP, fOzu, fAction1, fAction2, fAction3, fDop1_n, fDop2_n, fDop3_n, fDop4_n,
+                fDop5_n, fDop6_n){ f ->
+                f.controlNewText.isInt()
+            }
+            filter(fH1, fH2, fH3, fH4, fH5, fH6, fH7, fH8, fH9, fH10, f31_count, f31_h){ f ->
+                f.controlNewText.let {
+                    val fl = it.replace(",", ".") + "f"
+                    fl.isFloat()
+                }
+            }
+            fBon.filterInput { it.controlNewText.matches("[1-5АБ]{1,2}".toRegex()) }
+            fType.filterInput { it.controlNewText.matches("[А-Яа-я\\s]{1,5}".toRegex()) }
+            fSubType.filterInput { it.controlNewText.matches("[А-Я]{2}".toRegex()) }
         }
 
 
+        //"[а-яА-Я\\s]{1,5}"
 
+
+        /*
         validationHelper.stringValidatorFor(fSpecies, fType, fSubType, fTypeDeforest,
           fSpecies1, fSpecies2, fSpecies3, fSpecies4, fSpecies5, fSpecies6, fSpecies7, fSpecies8, fSpecies9,
           f31_element1, f31_element2)
+
 
         validationHelper.numberValidatorFor(fAreaNumber, fCategoryArea, fOzu, fDP, fYearOfDeforest, fCountOfStump,
         fCountOfPinusStump, fStumpDiameter, fDisorder, fValidDisorder, fDryTimber, fAction1, fAction2, fAction3,
@@ -282,7 +319,14 @@ class MainView : View("My View") {
         fOrigin1, fOrigin2, fOrigin3, fOrigin4, fOrigin5, fOrigin6, fOrigin7, fOrigin8, fOrigin9, fOrigin10, fWeight1,
         fWeight2, fWeight3, fWeight4, fWeight5, fWeight6, fWeight7, fWeight8, fWeight9, fWeight10, fSumOfTimber1,
         fSumOfTimber2, fSumOfTimber3, fSumOfTimber4, fSumOfTimber5, fSumOfTimber6, fSumOfTimber7, fSumOfTimber8,
-        fSumOfTimber9, fSumOfTimber10, f31_count, f31_h, f31_age, f31_proportion1, f31_proportion2)
+        fSumOfTimber9, fSumOfTimber10, f31_count, f31_h, f31_age, f31_proportion1, f31_proportion2)*/
+
+        primaryStage.setOnCloseRequest {
+            model.commit()
+            val out = Json.encodeToString(model.area)
+            println(out)
+            Files.write(path, out.toByteArray(UTF_8))
+        }
 
     }
 
@@ -413,7 +457,15 @@ class MainView : View("My View") {
                             }
                         }
                     }
-                    //fKvNumber.inputMethodRequests = InputMethodRequests()
+                }
+
+                shortcut(KeyCodeCombination(KeyCode.SUBTRACT)){
+                    val selected = kv_list.selectionModel.selectedItem
+                    kv_list.items.remove(selected)
+                }
+                shortcut(KeyCodeCombination(KeyCode.ADD)){
+                    if (kv_list.selectedItem == null) return@shortcut
+                    controller.copyArea(kv_list.selectedItem!!)
                 }
             model.rebindOnChange(this){ model ->
                 if (model == null) return@rebindOnChange
@@ -427,14 +479,7 @@ class MainView : View("My View") {
                 bottomAnchor = 0
             }
             prefWidth = 100.0
-            shortcut(KeyCodeCombination(KeyCode.DELETE)){
-                val selected = kv_list.selectionModel.selectedItem
-                kv_list.items.remove(selected)
-            }
-            shortcut(KeyCodeCombination(KeyCode.ADD)){
-                if (kv_list.selectedItem == null) return@shortcut
-                controller.copyArea(kv_list.selectedItem!!)
-            }
+
             readonlyColumn("Kv", Area::kv)
             column<Area, Int>("Выд"){
                 SimpleIntegerProperty(it.value.field1.number) as Property<Int>
@@ -498,6 +543,7 @@ class MainView : View("My View") {
                     return@action
                 }
                 controller.read(files[0])
+
             }
             tooltip("Открыть")
         }
