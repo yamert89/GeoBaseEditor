@@ -24,6 +24,7 @@ import roslesinforg.geobaseeditor.model.validation.ValidationHelper
 import roslesinforg.geobaseeditor.model.validation.ValidatorFactory
 import roslesinforg.geobaseeditor.model.validation.ValidatorFactory.*
 import roslesinforg.geobaseeditor.view.viewmodels.*
+import java.lang.reflect.Modifier
 
 
 fun main() {
@@ -466,6 +467,12 @@ class MainView : View("My View") {
                 shortcut(KeyCodeCombination(KeyCode.ADD)){
                     if (kv_list.selectedItem == null) return@shortcut
                     controller.copyArea(kv_list.selectedItem!!)
+                    kv_list.selectionModel.select(kv_list.selectionModel.selectedIndex + 1)
+                }
+                shortcut(KeyCodeCombination(KeyCode.ADD, KeyCombination.SHIFT_ANY)){
+                    if (kv_list.selectedItem == null) return@shortcut
+                    controller.newEmptyArea(kv_list.selectedItem!!)
+                    kv_list.selectionModel.select(kv_list.selectionModel.selectedIndex + 1)
                 }
             model.rebindOnChange(this){ model ->
                 if (model == null) return@rebindOnChange

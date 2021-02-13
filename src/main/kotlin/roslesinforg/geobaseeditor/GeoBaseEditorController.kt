@@ -35,15 +35,15 @@ class GeoBaseEditorController: Controller() {
         writer.writeAreas(areas)
     }
 
-    fun newEmptyArea(idx: Int, kv: Int){
+    fun newEmptyArea(selected: Area){
         val proto = areas[0]
-        areas.add(idx, Area(proto.region, kv))
+        areas.add(areas.indexOf(selected) + 1, Area(proto.region, proto.kv))
     }
 
     fun copyArea(selected: Area){
         val idx = areas.indexOf(selected)
         with(selected.field1){
-            areas.add(idx, selected.copy(field1 = Field1(number, area, category, dp, typeOfProtection)))
+            areas.add(idx + 1, selected.copy(field1 = Field1(number, area, category, dp, typeOfProtection)))
         }
 
     }
