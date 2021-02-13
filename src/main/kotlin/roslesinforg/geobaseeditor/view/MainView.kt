@@ -8,6 +8,7 @@ import javafx.event.EventType
 import javafx.scene.control.*
 import javafx.scene.input.*
 import javafx.scene.layout.*
+import javafx.scene.text.TextAlignment
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import roslesinforg.porokhin.areatypes.Area
@@ -485,12 +486,21 @@ class MainView : View("My View") {
                 leftAnchor = 0
                 bottomAnchor = 0
             }
-            prefWidth = 100.0
+            prefWidth = 130.0
 
-            readonlyColumn("Kv", Area::kv)
+            readonlyColumn("Kv", Area::kv){
+                style{
+                    textAlignment = TextAlignment.CENTER
+                }
+            }
             column<Area, Int>("Выд"){
+
                 SimpleIntegerProperty(it.value.field1.number) as Property<Int>
             }.makeEditable()
+            column("ЦНЛ", Area::categoryProtection){
+                style{ textAlignment = TextAlignment.CENTER}
+            }.makeEditable()
+
             setRowFactory {
                 val row = TableRow<Area>()
                 row.setOnDragDetected {
