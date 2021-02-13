@@ -31,8 +31,9 @@ class FieldFloatConverter: FloatStringConverter(){
 
 class FieldStringConverter: StringConverter<String>(){ //fixme not running
     override fun toString(s: String?): String {
-        return when(s){
-            "0", "0.0", null -> ""
+        return when{
+            s == "0" || s == "0.0" || s == null -> ""
+            s.endsWith(".0") -> s.replace(".0", "")
             else -> s
         }
     }

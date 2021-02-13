@@ -269,8 +269,9 @@ class DopViewModel(area: Area): ItemViewModel<Area>(area) {
                 is Float, is Int -> this.toString()
                 else -> this as String
             }
-            return when(str){
-                "0", "0.0" -> ""
+            return when{
+                str == "0" || str == "0.0" -> ""
+                str.endsWith(".0") -> str.replace(".0", "")
                 else -> str
             }
         }
