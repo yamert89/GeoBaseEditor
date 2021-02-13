@@ -25,6 +25,7 @@ import roslesinforg.geobaseeditor.model.validation.ValidationHelper
 import roslesinforg.geobaseeditor.model.validation.ValidatorFactory
 import roslesinforg.geobaseeditor.model.validation.ValidatorFactory.*
 import roslesinforg.geobaseeditor.view.viewmodels.*
+import roslesinforg.porokhin.areatypes.GeneralTypes
 import java.lang.reflect.Modifier
 
 
@@ -488,17 +489,22 @@ class MainView : View("My View") {
             }
             prefWidth = 130.0
 
-            readonlyColumn("Kv", Area::kv){
+            readonlyColumn("Кв", Area::kv){
                 style{
                     textAlignment = TextAlignment.CENTER
                 }
             }
             column<Area, Int>("Выд"){
-
                 SimpleIntegerProperty(it.value.field1.number) as Property<Int>
             }.makeEditable()
             column("ЦНЛ", Area::categoryProtection){
                 style{ textAlignment = TextAlignment.CENTER}
+                setOnEditCommit {
+                    if (GeneralTypes.categoryProtection(it.newValue) == it.newValue.toString()) {
+                        error(header = "Ошибка", content = "Некорректное значение")
+                        editModel.rollbackSelected()
+                    }
+                }
             }.makeEditable()
 
             setRowFactory {
