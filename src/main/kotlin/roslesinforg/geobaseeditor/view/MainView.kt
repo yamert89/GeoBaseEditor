@@ -1,7 +1,10 @@
 package roslesinforg.geobaseeditor.view
 
 import com.sun.glass.events.MouseEvent
+import com.sun.imageio.plugins.common.ImageUtil
+import com.sun.imageio.plugins.jpeg.JPEG
 import javafx.beans.property.*
+import javafx.embed.swing.SwingFXUtils
 import javafx.event.ActionEvent
 import javafx.event.Event
 import javafx.event.EventType
@@ -26,7 +29,12 @@ import roslesinforg.geobaseeditor.model.validation.ValidatorFactory
 import roslesinforg.geobaseeditor.model.validation.ValidatorFactory.*
 import roslesinforg.geobaseeditor.view.viewmodels.*
 import roslesinforg.porokhin.areatypes.GeneralTypes
+import java.awt.image.BufferedImage
+import java.awt.image.ColorModel
+import java.awt.image.RenderedImage
+import java.io.File
 import java.lang.reflect.Modifier
+import javax.imageio.ImageIO
 
 
 fun main() {
@@ -37,6 +45,7 @@ class GeoBaseEditorApp: App(MainView::class)
 
 class MainView : View("My View") {
     override val root: AnchorPane by fxml("/gui/MainView.fxml")
+    val cardLayout: AnchorPane by fxid()
     val fGir: TextFieldImpl by fxid()
     val fKvNumber: TextFieldImpl by fxid()
     val fAreaNumber: TextFieldImpl by fxid()
@@ -226,6 +235,7 @@ class MainView : View("My View") {
     lateinit var kv_list: TableView<Area>
     val btnOpen: Button by fxid()
     val btnSave: Button by fxid()
+    val screen: Button by fxid()
 
     var path: Path
     var input: Path //todo for test
@@ -302,9 +312,7 @@ class MainView : View("My View") {
             fSubType.filterInput { it.controlNewText.matches("[А-Я]{2}".toRegex()) }
         }
 
-
-        //"[а-яА-Я\\s]{1,5}"
-
+        //todo add smart validators
 
         /*
         validationHelper.stringValidatorFor(fSpecies, fType, fSubType, fTypeDeforest,
@@ -330,6 +338,7 @@ class MainView : View("My View") {
             println(out)
             Files.write(path, out.toByteArray(UTF_8))
         }
+        primaryStage.isResizable = false
 
     }
 
@@ -581,6 +590,12 @@ class MainView : View("My View") {
             }
             tooltip("Сохранить")
 
+        }
+        screen.apply {
+            action {
+                val image = cardLayout.snapshot(null, null)
+                ImageIO.write(SwingFXUtils.fromFXImage(image, null), "GIF", path.resolve(Paths.get("/out.gif")).toFile())
+            }
         }
     }
 
