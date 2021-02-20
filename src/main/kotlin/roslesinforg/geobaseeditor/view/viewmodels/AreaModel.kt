@@ -33,6 +33,9 @@ class AreaModel(var area: Area) : ItemViewModel<Area>(area) {
             for (i in it.field10.forestElements.indices){
                 f10Elements[i].item = it.field10.forestElements[i]
             }
+            for (i in it.field10.forestElements.lastIndex + 1 .. f10Elements.lastIndex){
+                f10Elements[i].item = null
+            }
             dopViewModel.item = it
         }
     }
