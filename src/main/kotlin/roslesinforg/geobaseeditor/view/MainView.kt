@@ -236,6 +236,7 @@ class MainView : View("My View") {
     val btnOpen: Button by fxid()
     val btnSave: Button by fxid()
     val screen: Button by fxid()
+    val btnChanges: Button by fxid()
 
     var path: Path
     var input: Path //todo for test
@@ -599,6 +600,12 @@ class MainView : View("My View") {
             action {
                 val image = cardLayout.snapshot(null, null)
                 ImageIO.write(SwingFXUtils.fromFXImage(image, null), "GIF", path.resolve(Paths.get("/out.gif")).toFile())
+            }
+        }
+
+        btnChanges.apply {
+            action {
+                openInternalWindow(ChangesView::class)
             }
         }
     }
