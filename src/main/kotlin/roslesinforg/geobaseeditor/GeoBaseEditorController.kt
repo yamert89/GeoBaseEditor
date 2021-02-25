@@ -2,24 +2,33 @@ package roslesinforg.geobaseeditor
 
 import javafx.beans.property.SimpleIntegerProperty
 import javafx.beans.property.SimpleListProperty
+import javafx.collections.ObservableList
 import roslesinforg.geobaseeditor.model.DataReader
 import roslesinforg.geobaseeditor.model.RawDataReader
 import roslesinforg.porokhin.areatypes.Area
 import roslesinforg.porokhin.areatypes.fields.Field1
 import roslesinforg.porokhin.areawriter.RawSoliAreaWriter
+import roslesinforg.porokhin.filecomparator.FileComparator
+import roslesinforg.porokhin.filecomparator.service.ComparedLine
 import roslesinforg.porokhin.filecomparator.service.ComparedPair
 import roslesinforg.porokhin.filecomparator.service.LineType
 import tornadofx.Controller
 import tornadofx.toObservable
 import java.io.File
+import java.io.FileOutputStream
+import java.io.OutputStreamWriter
+import java.nio.charset.Charset
+import java.nio.file.Files
 
 class GeoBaseEditorController: Controller() {
     var areas: SimpleListProperty<Area> = SimpleListProperty()
     var updateCounter = SimpleIntegerProperty(0)
     private val dataReader: DataReader = RawDataReader()
+    private var inputFilePath = ""
     fun read(file: File){
         areas.set(dataReader.read(file).toObservable())
         updateCounter.set(updateCounter.value++)
+        inputFilePath = file.path
         println("areas loaded")
     }
 
@@ -50,11 +59,12 @@ class GeoBaseEditorController: Controller() {
 
     }
 
-    fun diff(): List<ComparedPair>{
-        return listOf(
-            ComparedPair("1111111", LineType.CHANGED, "11112222"),
-            ComparedPair("333333333", LineType.CHANGED, "333333334")
-        )
+    fun diff(): ObservableList<ComparedPair>{
+        val inputFile = File(inputFilePath)
+        //val current = Files.createTempFile("", "").toFile() //todo uncomment in prod
+        val current = File("D:/my/rawTest")
+        writeToRawFile(current)
+        return FileComparator(inputFile, current, Charset.forName("Cp866")).compare().toObservable()
     }
 
     private fun prepareForSaving(){
