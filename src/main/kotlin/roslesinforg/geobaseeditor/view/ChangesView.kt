@@ -1,15 +1,15 @@
 package roslesinforg.geobaseeditor.view
 
+import com.sun.javafx.property.adapter.PropertyDescriptor
 import javafx.beans.property.Property
 import javafx.geometry.Insets
 import javafx.geometry.Pos
 import javafx.scene.control.ContentDisplay
 import javafx.scene.control.TableCell
 import javafx.scene.control.TableColumn
-import javafx.scene.layout.Background
-import javafx.scene.layout.BackgroundFill
-import javafx.scene.layout.Border
-import javafx.scene.layout.BorderStroke
+import javafx.scene.control.TableView
+import javafx.scene.layout.*
+import javafx.scene.paint.Color
 import javafx.scene.paint.Paint
 import javafx.scene.text.Font
 import javafx.scene.text.Font.font
@@ -24,49 +24,36 @@ import roslesinforg.porokhin.filecomparator.service.ComparedLine
 import roslesinforg.porokhin.filecomparator.service.ComparedPair
 import roslesinforg.porokhin.filecomparator.service.LineType
 import tornadofx.*
-import java.awt.Color
-import java.awt.Dimension
-import javax.swing.UIManager.getFont
+import tornadofx.adapters.toTornadoFXFeatures
 
 class ChangesView : View("My View") {
     val controller = find(GeoBaseEditorController::class)
     override val root = flowpane {
         useMaxSize = true
         tableview(controller.diff()){
-            //prefWidth = this.width
+            prefWidth = 400.0
             column<ComparedPair, String>("<>"){
+                it.tableColumn.maxWidth = 40.0
                 it.value.first.type.toToken().toProperty()
             }
             column("До", ComparedLine::class){
                 cellValueFactory = Callback { it.value.first.toProperty() }
-                cellFactory = ChangingCellFactory()
+                cellFactory = ChangingCellFactory(16.0) //todo calculate rowHeight
             }
             column<ComparedPair, String>("<>"){
+                it.tableColumn.maxWidth = 40.0
                 it.value.second.type.toToken().toProperty()
             }
             column("После", ComparedLine::class){
                 cellValueFactory = Callback { it.value.second.toProperty() }
-                cellFactory = ChangingCellFactory()
+                cellFactory = ChangingCellFactory(16.0)  //todo calculate rowHeight
+
+
             }
         }
-       /* text("text"){
-            maxHeight = 30.0
-            background = Background(BackgroundFill(Paint.valueOf("#ff9f15"), null, null))
-            *//*style { backgroundColor += c(333, 222, 444)
-                borderWidth += box(tornadofx.Dimension(4.0, tornadofx.Dimension.LinearUnits.px))
-            }*//*
-        }
-        textflow{
-            maxHeight = 30.0
-            background = Background(BackgroundFill(Paint.valueOf("#5f5f5f"), null, null))
-            text("1")
-            text("2")
-            text("3")
-        }*/
-
     }
 
-    class ChangingCellFactory: Callback<TableColumn<ComparedPair, ComparedLine>, TableCell<ComparedPair, ComparedLine>>{
+    class ChangingCellFactory(private val rowHeight: Double): Callback<TableColumn<ComparedPair, ComparedLine>, TableCell<ComparedPair, ComparedLine>>{
         override fun call(param: TableColumn<ComparedPair, ComparedLine>?): TableCell<ComparedPair, ComparedLine> {
            return object : TableCell<ComparedPair, ComparedLine>(){
                 override fun updateItem(item: ComparedLine?, empty: Boolean) {
@@ -77,7 +64,6 @@ class ChangesView : View("My View") {
                         return
                     }
                     val value = item.value
-                    // val changedTexts = item.changedIndexes.map { pair -> Text(value.substring(pair.first, pair.second)) }
                     if (item.changedIndexes.isEmpty()){
                         contentDisplay = ContentDisplay.TEXT_ONLY
                         text = item.value
@@ -86,31 +72,32 @@ class ChangesView : View("My View") {
                     val texts = mutableListOf<Text>()
                     val sb = StringBuilder()
                     val valueArr = value.toCharArray()
+                    var lastOperatedIdx = 0
                     item.changedIndexes.forEach { pair ->
-                        valueArr.forEachIndexed{ index, char ->
-                            if (index !in pair.first..pair.second) sb.append(char)
+                        for (index in lastOperatedIdx..valueArr.lastIndex){
+                            if (index !in pair.first..pair.second) sb.append(valueArr[index])
+                            else{
+                                lastOperatedIdx = index
+                                break
+                            }
                         }
-                        if (sb.isNotEmpty()) texts.add(Text(sb.toString()).apply { maxHeight = tableRow?.height ?: 15.0  })
+                        if (sb.isNotEmpty()) texts.add(Text(sb.toString()))
                         sb.clear()
                         texts.add(Text(value.substring(pair.first, pair.second)).apply {
-                            fill = c(230, 145, 124)
+                            fill = Color.RED
                             font = font("Verdana")
-                            stroke  = javafx.scene.paint.Color.GREEN
-                            style = "-fx-border-width: 2; -fx-border-color: #000;"
-                            /*style(true){
-                                borderWidth += box(tornadofx.Dimension(3.0, tornadofx.Dimension.LinearUnits.px))
-                                borderColor += box(javafx.scene.paint.Color.RED)
-                            }*/
-                            //prefHeight = 10.0
-                            //maxHeight = tableRow?.height ?: 15.0
                         })
                     }
                     graphic = TextFlow(*texts.toTypedArray()).apply {
-                       /* height = tableRow?.height ?: 15.0*/ //fixme - illegal access exc
+                        style {
+                            prefHeight = Dimension(rowHeight, tornadofx.Dimension.LinearUnits.px)
+                        }
+                        onHover {
+                            println("${this.height} | ${this.prefHeight} | ${this.maxHeight} || ${this.minHeight}")
+                        }
                     }
-                    //text = item.value
                     contentDisplay = ContentDisplay.GRAPHIC_ONLY
-                    maxHeight = tableRow?.height ?: 15.0
+
                 }
             }
         }
