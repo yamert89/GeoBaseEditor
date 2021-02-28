@@ -31,24 +31,25 @@ class ChangesView : View("My View") {
     override val root = flowpane {
         useMaxSize = true
         tableview(controller.diff()){
-            prefWidth = 400.0
+            prefWidth = 450.0
+            smartResize()
             column<ComparedPair, String>("<>"){
-                it.tableColumn.maxWidth = 40.0
+                it.tableColumn.maxWidth = 36.0
                 it.value.first.type.toToken().toProperty()
             }
             column("До", ComparedLine::class){
+                useMaxSize = true
                 cellValueFactory = Callback { it.value.first.toProperty() }
                 cellFactory = ChangingCellFactory(16.0) //todo calculate rowHeight
             }
             column<ComparedPair, String>("<>"){
-                it.tableColumn.maxWidth = 40.0
+                it.tableColumn.maxWidth = 36.0
                 it.value.second.type.toToken().toProperty()
             }
             column("После", ComparedLine::class){
+                useMaxSize = true
                 cellValueFactory = Callback { it.value.second.toProperty() }
                 cellFactory = ChangingCellFactory(16.0)  //todo calculate rowHeight
-
-
             }
         }
     }
@@ -91,9 +92,6 @@ class ChangesView : View("My View") {
                     graphic = TextFlow(*texts.toTypedArray()).apply {
                         style {
                             prefHeight = Dimension(rowHeight, tornadofx.Dimension.LinearUnits.px)
-                        }
-                        onHover {
-                            println("${this.height} | ${this.prefHeight} | ${this.maxHeight} || ${this.minHeight}")
                         }
                     }
                     contentDisplay = ContentDisplay.GRAPHIC_ONLY
