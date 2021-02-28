@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration dest="out">
+<Configuration>
     <Appenders>
         <Console name="Console" target="SYSTEM_OUT">
             <PatternLayout pattern="%d{HH:mm:ss.SSS} %-5level %logger{3} - %msg%n"/>
         </Console>
     </Appenders>
     <Loggers>
-        <Logger name="roslesinforg.porokhin" level="TRACE">
+        <Logger name="roslesinforg.porokhin.filecomparator.FileComparator" level="error">
+            <AppenderRef ref="Console"/>
+        </Logger>
+        <Logger name="roslesinforg.porokhin.filecomparator.service.StringComparator" level="TRACE">
             <AppenderRef ref="Console"/>
         </Logger>
         <Root level="error">
