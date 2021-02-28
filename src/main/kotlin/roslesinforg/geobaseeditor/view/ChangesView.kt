@@ -73,8 +73,8 @@ class ChangesView : View("My View") {
                     val texts = mutableListOf<Text>()
                     val sb = StringBuilder()
                     val valueArr = value.toCharArray()
-                    var lastOperatedIdx = 0
-                    item.changedIndexes.forEach { pair ->
+                    var lastOperatedIdx = -1
+                   /* item.changedIndexes.forEach { pair ->
                         for (index in lastOperatedIdx..valueArr.lastIndex){
                             if (index !in pair.first..pair.second) sb.append(valueArr[index])
                             else{
@@ -88,7 +88,28 @@ class ChangesView : View("My View") {
                             fill = Color.RED
                             font = font("Verdana")
                         })
+                    }*/
+
+                    valueArr.forEachIndexed { index, c ->
+                        if (index > lastOperatedIdx){
+                            val cIdx = item.changedIndexes.find { index in it.first..it.second }
+                            if (cIdx == null){
+                                sb.append(c)
+                            }else{
+                                if (sb.isNotEmpty()) texts.add(Text(sb.toString()))
+                                sb.clear()
+                                texts.add(Text(value.substring(cIdx.first, cIdx.second + 1)).apply {
+                                    fill = Color.RED
+                                    font = font("Verdana")
+                                })
+                                lastOperatedIdx = cIdx.second
+                            }
+                        }
+
                     }
+                    if (sb.isNotEmpty()) texts.add(Text(sb.toString()))
+
+
                     graphic = TextFlow(*texts.toTypedArray()).apply {
                         style {
                             prefHeight = Dimension(rowHeight, tornadofx.Dimension.LinearUnits.px)
