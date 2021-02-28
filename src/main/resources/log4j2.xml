@@ -6,10 +6,10 @@
         </Console>
     </Appenders>
     <Loggers>
-        <Logger name="roslesinforg.porokhin.filecomparator.FileComparator" level="error">
+        <Logger name="roslesinforg.porokhin.filecomparator.FileComparator" level="error" additivity="false">
             <AppenderRef ref="Console"/>
         </Logger>
-        <Logger name="roslesinforg.porokhin.filecomparator.service.StringComparator" level="TRACE">
+        <Logger name="roslesinforg.porokhin.filecomparator.service.StringComparator" level="TRACE" additivity="false">
             <AppenderRef ref="Console"/>
         </Logger>
         <Root level="error">
