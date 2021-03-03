@@ -63,7 +63,7 @@ class GeoBaseEditorController: Controller() {
         val inputFile = File(inputFilePath)
         //val current = Files.createTempFile("", "").toFile() //todo uncomment in prod
         //val current = File("D:/my/rawTest")
-        val current = File("J:/rawTest")
+        val current = File("D:/rawTest")
         writeToRawFile(current)
         return FileComparator(inputFile, current, Charset.forName("Cp866")).compare().toObservable()
     }

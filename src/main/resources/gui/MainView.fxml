@@ -4,19 +4,15 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.FlowPane?>
 <?import roslesinforg.geobaseeditor.model.TextFieldImpl?>
 
 <AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="523.0" prefWidth="810.0" stylesheets="main.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <ButtonBar buttonMinWidth="50.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="18.0" prefWidth="800.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-        <buttons>
-          <Button fx:id="btnSave" mnemonicParsing="false" text="Сохранить" />
-            <Button fx:id="btnOpen" mnemonicParsing="false" text="Открыть" />
-            <Button fx:id="screen" mnemonicParsing="false" text="Screen" />
-            <Button fx:id="btnChanges" mnemonicParsing="false" text="Изменения" />
-        </buttons>
+      <ButtonBar fx:id="buttonBar" buttonMinWidth="20.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="18.0" prefWidth="800.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <padding>
             <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
          </padding>

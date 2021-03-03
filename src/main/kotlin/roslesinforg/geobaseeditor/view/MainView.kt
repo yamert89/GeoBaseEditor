@@ -11,6 +11,7 @@ import javafx.event.EventType
 import javafx.scene.control.*
 import javafx.scene.input.*
 import javafx.scene.layout.*
+import javafx.scene.paint.Color
 import javafx.scene.text.TextAlignment
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -35,6 +36,7 @@ import java.awt.image.RenderedImage
 import java.io.File
 import java.lang.reflect.Modifier
 import javax.imageio.ImageIO
+import javax.swing.text.html.ImageView
 
 
 fun main() {
@@ -233,10 +235,12 @@ class MainView : View("My View") {
     val fDop5_8: TextFieldImpl by fxid()
     val fDop6_8: TextFieldImpl by fxid()
     lateinit var kv_list: TableView<Area>
-    val btnOpen: Button by fxid()
-    val btnSave: Button by fxid()
-    val screen: Button by fxid()
-    val btnChanges: Button by fxid()
+   /* val btnOpen: Button by fxid()*/
+    lateinit var btnOpen: Button
+    lateinit var btnSave: Button
+    lateinit var screen: Button
+    lateinit var btnChanges: Button
+    val buttonBar: ButtonBar by fxid()
 
     var path: Path
     var input: Path //todo for test
@@ -565,47 +569,58 @@ class MainView : View("My View") {
     }
 
     private fun applyButtons(){
-        btnOpen.apply {
-            action {
+        buttonBar.apply {
+            addNewButton("New Document.png", "fuck"){
                 val files = chooseFile(
                     "Выберите файл",
                     owner = primaryStage,
                     mode = FileChooserMode.Single,
                     filters = arrayOf()
                 )
-
                 if (files.isEmpty()) {
                     controller.read() //todo for test
                     println(controller.areas.size)
-                    return@action
+                    return@addNewButton
                 }
                 controller.read(files[0])
-
             }
-            tooltip("Открыть")
-        }
-
-        btnSave.apply {
-            action {
+            addNewButton("CD.png", "Сохранить"){
                 val dir = chooseDirectory(
                     "Сохранить",
                     owner = primaryStage
-                ) ?: return@action
+                ) ?: return@addNewButton
                 controller.writeToRawFile(dir)
             }
-            tooltip("Сохранить")
-
-        }
-        screen.apply {
-            action {
+            addNewButton("Coherence.png", "Изменения"){
+                openInternalWindow(ChangesView::class)
+            }
+            addNewButton("Export To Picture Document.png", "Сохранить в PNG"){
                 val image = cardLayout.snapshot(null, null)
                 ImageIO.write(SwingFXUtils.fromFXImage(image, null), "GIF", path.resolve(Paths.get("/out.gif")).toFile())
             }
         }
+    }
 
-        btnChanges.apply {
+    private fun ButtonBar.addNewButton(picture: String, tooltip: String, action: () -> Unit){
+        ButtonBar.setButtonUniformSize(this, false)
+        button{
             action {
-                openInternalWindow(ChangesView::class)
+                action()
+            }
+            style{
+                background = null
+                maxWidth = Dimension(26.0, Dimension.LinearUnits.px)
+            }
+            onHover {
+                background = Background(BackgroundFill(c(0, 0, 0, 0.3), CornerRadii(4.0), null))
+            }
+            setOnMouseExited {
+                background = null
+            }
+            tooltip(tooltip)
+            graphic = resources.imageview("/gui/$picture").apply {
+                fitHeight = 20.0
+                fitWidth = 20.0
             }
         }
     }
