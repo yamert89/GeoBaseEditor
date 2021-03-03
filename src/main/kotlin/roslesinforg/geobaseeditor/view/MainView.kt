@@ -570,7 +570,21 @@ class MainView : View("My View") {
 
     private fun applyButtons(){
         buttonBar.apply {
-            addNewButton("New Document.png", "fuck"){
+            addNewButton("Export To Picture Document.png", "Сохранить в GIF"){
+                val image = cardLayout.snapshot(null, null)
+                ImageIO.write(SwingFXUtils.fromFXImage(image, null), "GIF", path.resolve(Paths.get("/out.gif")).toFile())
+            }
+            addNewButton("Coherence.png", "Изменения"){
+                openInternalWindow(ChangesView::class)
+            }
+            addNewButton("CD.png", "Сохранить"){
+                val dir = chooseDirectory(
+                    "Сохранить",
+                    owner = primaryStage
+                ) ?: return@addNewButton
+                controller.writeToRawFile(dir)
+            }
+            addNewButton("New Document.png", "Открыть"){
                 val files = chooseFile(
                     "Выберите файл",
                     owner = primaryStage,
@@ -583,20 +597,6 @@ class MainView : View("My View") {
                     return@addNewButton
                 }
                 controller.read(files[0])
-            }
-            addNewButton("CD.png", "Сохранить"){
-                val dir = chooseDirectory(
-                    "Сохранить",
-                    owner = primaryStage
-                ) ?: return@addNewButton
-                controller.writeToRawFile(dir)
-            }
-            addNewButton("Coherence.png", "Изменения"){
-                openInternalWindow(ChangesView::class)
-            }
-            addNewButton("Export To Picture Document.png", "Сохранить в PNG"){
-                val image = cardLayout.snapshot(null, null)
-                ImageIO.write(SwingFXUtils.fromFXImage(image, null), "GIF", path.resolve(Paths.get("/out.gif")).toFile())
             }
         }
     }

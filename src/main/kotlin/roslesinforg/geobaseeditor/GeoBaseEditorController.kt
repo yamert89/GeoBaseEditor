@@ -6,6 +6,7 @@ import javafx.collections.ObservableList
 import roslesinforg.geobaseeditor.model.DataReader
 import roslesinforg.geobaseeditor.model.RawDataReader
 import roslesinforg.porokhin.areatypes.Area
+import roslesinforg.porokhin.areatypes.Location
 import roslesinforg.porokhin.areatypes.fields.Field1
 import roslesinforg.porokhin.areawriter.RawSoliAreaWriter
 import roslesinforg.porokhin.filecomparator.FileComparator
@@ -22,14 +23,16 @@ import java.nio.file.Files
 
 class GeoBaseEditorController: Controller() {
     var areas: SimpleListProperty<Area> = SimpleListProperty()
+    var location: Location? = null
     var updateCounter = SimpleIntegerProperty(0)
     private val dataReader: DataReader = RawDataReader()
     private var inputFilePath = ""
     fun read(file: File){
-        areas.set(dataReader.read(file).toObservable())
+        val data = dataReader.read(file)
+        location = data.first
+        areas.set(data.second.toObservable())
         updateCounter.set(updateCounter.value++)
         inputFilePath = file.path
-        println("areas loaded")
     }
 
     fun read(){
@@ -43,7 +46,7 @@ class GeoBaseEditorController: Controller() {
     fun writeToRawFile(file: File){
         prepareForSaving()
         val writer = RawSoliAreaWriter(file)
-        writer.writeAreas(areas)
+        writer.writeAreas(location!!, areas)
     }
 
     fun newEmptyArea(selected: Area){
@@ -63,7 +66,7 @@ class GeoBaseEditorController: Controller() {
         val inputFile = File(inputFilePath)
         //val current = Files.createTempFile("", "").toFile() //todo uncomment in prod
         //val current = File("D:/my/rawTest")
-        val current = File("D:/rawTest")
+        val current = File("J:/rawTest")
         writeToRawFile(current)
         return FileComparator(inputFile, current, Charset.forName("Cp866")).compare().toObservable()
     }
