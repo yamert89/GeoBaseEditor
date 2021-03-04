@@ -598,6 +598,9 @@ class MainView : View("My View") {
                 }
                 controller.read(files[0])
             }
+            onHover {
+                print(height)
+            }
         }
     }
 

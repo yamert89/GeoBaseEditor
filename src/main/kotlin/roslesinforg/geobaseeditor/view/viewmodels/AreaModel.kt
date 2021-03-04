@@ -42,8 +42,6 @@ class AreaModel(var area: Area) : ItemViewModel<Area>(area) {
 
     override fun onCommit() {
         super.onCommit()
-        println("commit ${area.kv}")
-
         field1Model.commit()
         field2ViewModel.commit()
         field3ViewModel.commit()

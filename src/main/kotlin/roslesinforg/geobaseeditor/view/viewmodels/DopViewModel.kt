@@ -22,7 +22,6 @@ class DopViewModel(area: Area): ItemViewModel<Area>(area) {
 
     init {
         itemProperty.onChange {
-            println("dopviewmodel item changed")
             if (it == null) return@onChange
             //commit()
             invalidateViewModels()
@@ -31,7 +30,6 @@ class DopViewModel(area: Area): ItemViewModel<Area>(area) {
     }
 
     override fun onCommit() {
-        println("commit dop model")
         val area = item
             for(i in dopFieldViewModels.indices){
                 val model = dopFieldViewModels[i]
@@ -113,7 +111,6 @@ class DopViewModel(area: Area): ItemViewModel<Area>(area) {
     }
 
     private fun updateDopFields(area: Area){
-        println("update dop fields")
         with(area){
             if (field11.isNotEmpty()) {
                 val model = changeDopFieldViewModel()
@@ -154,7 +151,6 @@ class DopViewModel(area: Area): ItemViewModel<Area>(area) {
     }
 
     private fun invalidateViewModels(){
-        println("dop models invalidated")
         dopFieldViewModels.forEach {
             it.apply {
                 isBounds = false
@@ -202,7 +198,6 @@ class DopViewModel(area: Area): ItemViewModel<Area>(area) {
 
             itemProperty.onChange {
                 if (it == null) return@onChange
-                println("dop field model changed")
                 when(it){
                     is Field11 -> with(it){
                         updateProperties(11, birthYear, prepareType, createType, inLine, betweenRows, count, state, reazonOfDeath)
