@@ -64,6 +64,16 @@ class DopViewModel(area: Area): ItemViewModel<Area>(area) {
                          model.col6.value.toInt(),
                          model.col7.value.toInt()
                     )
+                    15 -> area.field15 = Field15(
+                        model.col1.value.toInt(),
+                        model.col2.value.toInt(),
+                        model.col3.value,
+                        model.col4.value.toInt(),
+                        model.col5.value.toInt(),
+                        model.col6.value.toInt(),
+                        model.col7.value.toInt(),
+                        model.col8.value.toFloat()
+                    )
                     19 -> area.field19 = Field19(
                          model.col1.value.toInt(),
                          model.col2.value.toInt(),
@@ -125,6 +135,11 @@ class DopViewModel(area: Area): ItemViewModel<Area>(area) {
             if (field13.isNotEmpty()) {
                 val model = changeDopFieldViewModel()
                 model.item = field13
+                model.isBounds = true
+            }
+            if (field15.isNotEmpty()){
+                val model = changeDopFieldViewModel()
+                model.item = field15
                 model.isBounds = true
             }
             if (field19.isNotEmpty()) {
