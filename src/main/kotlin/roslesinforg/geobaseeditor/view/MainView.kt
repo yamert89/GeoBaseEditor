@@ -591,11 +591,11 @@ class MainView : View("My View") {
                     mode = FileChooserMode.Single,
                     filters = arrayOf()
                 )
-                if (files.isEmpty()) {
+                /*if (files.isEmpty()) {
                     controller.read() //todo for test
                     println(controller.areas.size)
                     return@addNewButton
-                }
+                }*/
                 controller.read(files[0])
             }
             onHover {

@@ -35,13 +35,13 @@ class GeoBaseEditorController: Controller() {
         inputFilePath = file.path
     }
 
-    fun read(){
+    /*fun read(){
         areas.set(
             listOf<Area>(Area(),
                 Area(1, 2, 2, Field1(2, 2f, 2, 0, 0)),
                 Area(3, 3, 3, Field1(3, 3f, 3))).toObservable())
         updateCounter.set(updateCounter.value++)
-    }
+    }*/
 
     fun writeToRawFile(file: File){
         prepareForSaving()
