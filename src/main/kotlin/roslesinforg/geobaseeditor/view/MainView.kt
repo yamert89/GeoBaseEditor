@@ -280,7 +280,7 @@ class MainView : View("My View") {
         applyButtons()
 
         controller.read(input.toFile())
-        val applyFilters = false//todo as option
+        val applyFilters = true//todo as option
         if (applyFilters){
             with(filteringHelper){
                 filter(fSpecies, fSpecies1, fSpecies2, fSpecies3, fSpecies4, fSpecies5, fSpecies6, fSpecies7, fSpecies8, fSpecies9,
@@ -311,9 +311,14 @@ class MainView : View("My View") {
                     f.controlNewText.isInt()
                 }
                 filter(fH1, fH2, fH3, fH4, fH5, fH6, fH7, fH8, fH9, fH10, f31_count, f31_h){ f ->
-                    f.controlNewText.let {
-                        val fl = it.replace(",", ".") + "f"
-                        fl.isFloat()
+                    f.controlNewText.let { str ->
+                        val fl = str.replace(",", ".") + "f"
+                        fl.isFloat() && fl.toFloat().let { it in 0f..50f }
+                    }
+                }
+                filter(fD1, fD2, fD3, fD4, fD5, fD6, fD7, fD8, fD9, fD10){ f ->
+                    f.controlNewText.let { d ->
+                        d.isInt() && d.toInt().let { it in 1..80 && it % 2 == 0 } // fixme wrong for 30, 50
                     }
                 }
                 fBon.filterInput { it.controlNewText.matches("[1-5АБ]{1,2}".toRegex()) }
