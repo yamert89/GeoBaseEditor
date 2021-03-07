@@ -252,7 +252,8 @@ class MainView : View("My View") {
 
     
     var model: AreaModel
-    val controller = find(GeoBaseEditorController::class)
+    object AppScope: Scope()
+    val controller : GeoBaseEditorController by inject(AppScope)
 
     val text: StringProperty = SimpleStringProperty("dd")
     init {
@@ -575,7 +576,7 @@ class MainView : View("My View") {
                 ImageIO.write(SwingFXUtils.fromFXImage(image, null), "GIF", path.resolve(Paths.get("/out.gif")).toFile())
             }
             addNewButton("Coherence.png", "Изменения"){
-                openInternalWindow(ChangesView::class)
+                openInternalWindow(ChangesView::class, Scope())
             }
             addNewButton("CD.png", "Сохранить"){
                 val dir = chooseDirectory(

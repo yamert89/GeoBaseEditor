@@ -27,7 +27,7 @@ import tornadofx.*
 import tornadofx.adapters.toTornadoFXFeatures
 
 class ChangesView : View("My View") {
-    val controller = find(GeoBaseEditorController::class)
+    val controller = find(GeoBaseEditorController::class, MainView.AppScope)
     override val root = flowpane {
         useMaxSize = true
         tableview(controller.diff()){

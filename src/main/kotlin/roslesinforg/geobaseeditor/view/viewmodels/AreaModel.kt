@@ -22,6 +22,7 @@ class AreaModel(var area: Area) : ItemViewModel<Area>(area) {
             while (size < 10) add(ElementOfForest())
             forEach { f10Elements.add(ElementOfForestViewModel(it)) }
         }
+
         itemProperty.onChange {
             commit()
             if (it == null) return@onChange

@@ -20,6 +20,7 @@ import java.io.FileOutputStream
 import java.io.OutputStreamWriter
 import java.nio.charset.Charset
 import java.nio.file.Files
+import java.nio.file.Paths
 
 class GeoBaseEditorController: Controller() {
     var areas: SimpleListProperty<Area> = SimpleListProperty()
@@ -46,6 +47,8 @@ class GeoBaseEditorController: Controller() {
     fun writeToRawFile(file: File){
         prepareForSaving()
         val writer = RawSoliAreaWriter(file)
+
+       // val writer = RawSoliAreaWriter(file.toPath().resolve(Paths.get("/saved")).toFile())
         writer.writeAreas(location!!, areas)
     }
 
