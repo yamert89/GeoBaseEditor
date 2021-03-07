@@ -9,7 +9,9 @@ class Field31ViewModel(field31: Field31) : ItemViewModel<Field31>(field31) {
     val ageProperty = bind(Field31::age)
     val proportion1Property = bind(Field31::proportion1)
     val proportion2Property = bind(Field31::proportion2)
+    val proportion3Property = bind(Field31::proportion3)
     val element1Property = bind(Field31::element1)
     val element2Property = bind(Field31::element2)
+    val element3Property = bind(Field31::element3)
 
 }

@@ -180,6 +180,8 @@ class MainView : View("My View") {
     val f31_element1: TextFieldImpl by fxid()
     val f31_proportion2: TextFieldImpl by fxid()
     val f31_element2: TextFieldImpl by fxid()
+    val f31_proportion3: TextFieldImpl by fxid()
+    val f31_element3: TextFieldImpl by fxid()
     val fDop1_n: TextFieldImpl by fxid()
     val fDop2_n: TextFieldImpl by fxid()
     val fDop3_n: TextFieldImpl by fxid()
@@ -282,14 +284,14 @@ class MainView : View("My View") {
         if (applyFilters){
             with(filteringHelper){
                 filter(fSpecies, fSpecies1, fSpecies2, fSpecies3, fSpecies4, fSpecies5, fSpecies6, fSpecies7, fSpecies8, fSpecies9,
-                    f31_element1, f31_element2){
+                    f31_element1, f31_element2, f31_element3){
                     it.controlNewText.isEmpty() || it.controlNewText.matches("[ЕБСЛПОА\\s]{1,4}".toRegex())
                 }
                 filter(fHrang1, fHrang2, fHrang3, fHrang4,fHrang5, fHrang6, fHrang7, fHrang8, fHrang9, fHrang10){ formatter ->
                     formatter.controlNewText.let { it.isEmpty() || it.isInt() && it.length == 1 }
                 }
                 filter(fProportion1, fProportion2, fProportion3, fProportion4, fProportion5, fProportion6, fProportion7,
-                    fProportion8, fProportion9, fProportion10, f31_proportion1, f31_proportion2){ formatter ->
+                    fProportion8, fProportion9, fProportion10, f31_proportion1, f31_proportion2, f31_proportion3){ formatter ->
                     formatter.controlNewText.let { it.isInt() && it.toInt() < 11 }
                 }
                 filter(fAge1, fAge2, fAge3, fAge4, fAge5, fAge6, fAge7, fAge8, fAge9, fAge10, f31_age){ f ->
@@ -413,6 +415,8 @@ class MainView : View("My View") {
                 f31_element1 bystr element1Property
                 f31_proportion2 byint proportion2Property
                 f31_element2 bystr element2Property
+                f31_proportion3 byint proportion3Property
+                f31_element3 bystr element3Property
             }
 
             bindDop()

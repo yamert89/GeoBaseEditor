@@ -520,7 +520,7 @@
                   <TextFieldImpl fx:id="fOzu" prefWidth="34.0" styleClass="field" stylesheets="@main.css" />
                </children>
             </FlowPane>
-            <FlowPane layoutX="65.0" layoutY="321.0" prefHeight="18.0" prefWidth="299.0">
+            <FlowPane layoutX="65.0" layoutY="321.0" prefHeight="16.0" prefWidth="376.0">
                <children>
                   <TextFieldImpl fx:id="f31_count" prefHeight="13.0" prefWidth="67.0" stylesheets="@main.css">
                      <styleClass>
@@ -559,6 +559,18 @@
                      </styleClass>
                   </TextFieldImpl>
                   <TextFieldImpl fx:id="f31_element2" prefHeight="13.0" prefWidth="37.0" stylesheets="@main.css">
+                     <styleClass>
+                        <String fx:value="field" />
+                        <String fx:value="smallField" />
+                     </styleClass>
+                  </TextFieldImpl>
+                  <TextFieldImpl fx:id="f31_proportion3" prefHeight="13.0" prefWidth="37.0" stylesheets="@main.css">
+                     <styleClass>
+                        <String fx:value="field" />
+                        <String fx:value="smallField" />
+                     </styleClass>
+                  </TextFieldImpl>
+                  <TextFieldImpl fx:id="f31_element3" prefHeight="13.0" prefWidth="37.0" stylesheets="@main.css">
                      <styleClass>
                         <String fx:value="field" />
                         <String fx:value="smallField" />
