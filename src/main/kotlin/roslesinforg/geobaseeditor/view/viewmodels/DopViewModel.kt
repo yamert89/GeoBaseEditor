@@ -189,15 +189,15 @@ class DopViewModel(area: Area): ItemViewModel<Area>(area) {
 
 
     class DopFieldViewModel(field: Field) : ItemViewModel<Field>(field){
-        var number = SimpleIntegerProperty() as Property<Int> //todo replace with val
-        var col1 = SimpleStringProperty()
-        var col2 = SimpleStringProperty()
-        var col3 = SimpleStringProperty()
-        var col4 = SimpleStringProperty()
-        var col5 = SimpleStringProperty()
-        var col6 = SimpleStringProperty()
-        var col7 = SimpleStringProperty()
-        var col8 = SimpleStringProperty()
+        val number = SimpleIntegerProperty() as Property<Int>
+        val col1 = SimpleStringProperty()
+        val col2 = SimpleStringProperty()
+        val col3 = SimpleStringProperty()
+        val col4 = SimpleStringProperty()
+        val col5 = SimpleStringProperty()
+        val col6 = SimpleStringProperty()
+        val col7 = SimpleStringProperty()
+        val col8 = SimpleStringProperty()
         var numberProperty = bind{number}
         var col1Property = bind{col1}
         var col2Property = bind{col2}

@@ -9,7 +9,7 @@ import tornadofx.observable
 import kotlin.reflect.KMutableProperty1
 
 class Field1ViewModel(val field1: Field1): ItemViewModel<Field1>(field1) {
-    var numberProperty = bind( Field1::number)
+    val numberProperty = bind( Field1::number)
     val areaProperty = bind(Field1::area)
     val categoryProperty = bind(Field1::category)
     val dpProperty = bind(Field1::dp)

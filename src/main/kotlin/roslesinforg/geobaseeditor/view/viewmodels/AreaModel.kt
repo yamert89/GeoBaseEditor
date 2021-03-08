@@ -7,7 +7,6 @@ import tornadofx.*
 
 class AreaModel(var area: Area) : ItemViewModel<Area>(area) {
     val kvProperty = bind (Area::kv)
-    val categoryProtectionProperty = bind(Area::categoryProtection) //todo
     val field1Model = Field1ViewModel(area.field1)
     val field2ViewModel = Field2ViewModel(area.field2)
     val field3ViewModel = Field3ViewModel(area.field3)
