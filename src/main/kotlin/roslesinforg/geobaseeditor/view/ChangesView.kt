@@ -33,6 +33,9 @@ class ChangesView : View("My View") {
         tableview(controller.diff()){
             prefWidth = 450.0
             smartResize()
+            column("строка", ComparedPair::lineNumber){
+
+            }
             column<ComparedPair, String>("<>"){
                 it.tableColumn.maxWidth = 36.0
                 it.value.first.type.toToken().toProperty()
