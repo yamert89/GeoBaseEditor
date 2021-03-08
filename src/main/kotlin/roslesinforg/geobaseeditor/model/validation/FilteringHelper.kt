@@ -21,6 +21,10 @@ class FilteringHelper {
         }
     }
 
+    fun clearFiltering(vararg fields: TextFieldImpl){
+        fields.forEach { f -> f.textFormatter = null }
+    }
+
     class MyTextFilter(private val discriminator: (TextFormatter.Change) -> Boolean) : UnaryOperator<TextFormatter.Change> {
         override fun apply(c: TextFormatter.Change): TextFormatter.Change =
             if (discriminator(c)) c else c.clone().apply {

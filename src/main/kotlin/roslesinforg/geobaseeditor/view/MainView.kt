@@ -280,8 +280,7 @@ class MainView : View("My View") {
         applyButtons()
 
         controller.read(input.toFile())
-        val applyFilters = true//todo as option
-        if (applyFilters){
+        if (Preferences.filtering.value){
             with(filteringHelper){
                 filter(fSpecies, fSpecies1, fSpecies2, fSpecies3, fSpecies4, fSpecies5, fSpecies6, fSpecies7, fSpecies8, fSpecies9,
                     f31_element1, f31_element2, f31_element3){
@@ -329,6 +328,8 @@ class MainView : View("My View") {
 
 
 
+
+
         //todo add smart validators
 
         /*
@@ -354,9 +355,14 @@ class MainView : View("My View") {
             val out = Json.encodeToString(model.area)
             println(out)
             Files.write(path, out.toByteArray(UTF_8))
+            Preferences.savePrefs()
         }
         primaryStage.isResizable = false
 
+    }
+
+    fun clearFilters(){
+        //todo
     }
 
     private fun bindModel(){
@@ -580,6 +586,9 @@ class MainView : View("My View") {
 
     private fun applyButtons(){
         buttonBar.apply {
+            addNewButton("Run.png", "Настройки"){
+                openInternalWindow(PreferenceView::class)
+            }
             addNewButton("Export To Picture Document.png", "Сохранить в GIF"){
                 val image = cardLayout.snapshot(null, null)
                 ImageIO.write(SwingFXUtils.fromFXImage(image, null), "GIF", path.resolve(Paths.get("/out.gif")).toFile())
