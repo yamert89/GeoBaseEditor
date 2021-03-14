@@ -6,10 +6,13 @@
         </Console>
     </Appenders>
     <Loggers>
-        <Logger name="roslesinforg.porokhin.filecomparator.FileComparator" level="debug" additivity="false">
+        <Logger name="roslesinforg.porokhin.filecomparator.FileComparator" level="error" additivity="false">
             <AppenderRef ref="Console"/>
         </Logger>
-        <Logger name="roslesinforg.porokhin.filecomparator.service.StringComparator" level="TRACE" additivity="false">
+        <Logger name="roslesinforg.porokhin.filecomparator.service.StringComparator" level="error" additivity="false">
+            <AppenderRef ref="Console"/>
+        </Logger>
+        <Logger name="roslesinforg.porokhin.geobaseeditor" level="debug" additivity="false">
             <AppenderRef ref="Console"/>
         </Logger>
         <Root level="error">

@@ -1,4 +1,4 @@
-package roslesinforg.geobaseeditor.view.viewmodels
+package roslesinforg.porokhin.geobaseeditor.view.viewmodels
 
 import javafx.beans.property.FloatProperty
 import javafx.beans.property.IntegerProperty

@@ -1,8 +1,8 @@
-package roslesinforg.geobaseeditor.view
+package roslesinforg.porokhin.geobaseeditor.view
 
 import javafx.geometry.Insets
 import javafx.scene.Parent
-import roslesinforg.geobaseeditor.model.Preferences
+import roslesinforg.porokhin.geobaseeditor.model.Preferences
 import tornadofx.*
 
 class PreferenceView() : View("Настройки") {

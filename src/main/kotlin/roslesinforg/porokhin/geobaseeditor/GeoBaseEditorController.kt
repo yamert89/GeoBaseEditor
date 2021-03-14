@@ -1,10 +1,10 @@
-package roslesinforg.geobaseeditor
+package roslesinforg.porokhin.geobaseeditor
 
 import javafx.beans.property.SimpleIntegerProperty
 import javafx.beans.property.SimpleListProperty
 import javafx.collections.ObservableList
-import roslesinforg.geobaseeditor.model.DataReader
-import roslesinforg.geobaseeditor.model.RawDataReader
+import roslesinforg.porokhin.geobaseeditor.model.DataReader
+import roslesinforg.porokhin.geobaseeditor.model.RawDataReader
 import roslesinforg.porokhin.areatypes.Area
 import roslesinforg.porokhin.areatypes.Location
 import roslesinforg.porokhin.areatypes.fields.Field1
@@ -68,8 +68,8 @@ class GeoBaseEditorController: Controller() {
     fun diff(): ObservableList<ComparedPair>{
         val inputFile = File(inputFilePath)
         //val current = Files.createTempFile("", "").toFile() //todo uncomment in prod
-        val current = File("D:/my/rawTest")
-        //val current = File("J:/rawTest")
+        //val current = File("D:/my/rawTest")
+        val current = File("J:/rawTest")
         writeToRawFile(current)
         return FileComparator(inputFile, current, Charset.forName("Cp866")).compare().toObservable()
     }

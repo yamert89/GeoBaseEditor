@@ -1,4 +1,4 @@
-package roslesinforg.geobaseeditor.model.validation
+package roslesinforg.porokhin.geobaseeditor.model.validation
 
 import javafx.scene.control.TextField
 import tornadofx.ValidationContext

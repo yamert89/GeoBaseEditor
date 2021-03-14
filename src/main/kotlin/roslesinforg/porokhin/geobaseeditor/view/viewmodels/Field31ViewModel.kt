@@ -1,4 +1,4 @@
-package roslesinforg.geobaseeditor.view.viewmodels
+package roslesinforg.porokhin.geobaseeditor.view.viewmodels
 
 import roslesinforg.porokhin.areatypes.fields.Field31
 import tornadofx.ItemViewModel

@@ -1,4 +1,4 @@
-package roslesinforg.geobaseeditor.model
+package roslesinforg.porokhin.geobaseeditor.model
 
 import javafx.util.StringConverter
 import javafx.util.converter.FloatStringConverter

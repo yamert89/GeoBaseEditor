@@ -1,4 +1,4 @@
-package roslesinforg.geobaseeditor.view
+package roslesinforg.porokhin.geobaseeditor.view
 
 import com.sun.javafx.property.adapter.PropertyDescriptor
 import javafx.beans.property.Property
@@ -17,30 +17,52 @@ import javafx.scene.text.Text
 import javafx.scene.text.TextFlow
 import javafx.util.Callback
 import javafx.util.StringConverter
-import roslesinforg.geobaseeditor.GeoBaseEditorController
-import roslesinforg.geobaseeditor.view.viewmodels.AreaModel
-import roslesinforg.porokhin.filecomparator.StringResult.Companion.toToken
+import roslesinforg.porokhin.geobaseeditor.GeoBaseEditorController
+import roslesinforg.porokhin.geobaseeditor.view.viewmodels.AreaModel
+import roslesinforg.porokhin.filecomparator.ComparingResult.Companion.toToken
+import roslesinforg.porokhin.filecomparator.FileComparator
+import roslesinforg.porokhin.filecomparator.MSWordResult
 import roslesinforg.porokhin.filecomparator.service.ComparedLine
 import roslesinforg.porokhin.filecomparator.service.ComparedPair
 import roslesinforg.porokhin.filecomparator.service.LineType
 import tornadofx.*
 import tornadofx.adapters.toTornadoFXFeatures
+import java.io.File
+import java.io.FileOutputStream
+import org.apache.logging.log4j.kotlin.logger
 
 class ChangesView : View("My View") {
-    val controller = find(GeoBaseEditorController::class, MainView.AppScope)
+    private val logger = logger()
+    val controller = find(roslesinforg.porokhin.geobaseeditor.GeoBaseEditorController::class, MainView.AppScope)
     override val root = flowpane {
         useMaxSize = true
+        val lines = controller.diff()
+        val tNumber = "Строка"
+        val tBefore = "До"
+        val tAfter = "После"
+        toolbar{
+            button("to Word"){
+                action {
+                    val title = "Лесничество: ${controller.location?.forestry},  участок: ${controller.location?.subForestry}" //todo mapping
+                    val fos = FileOutputStream("J:/wordout.docx")
+                    MSWordResult(lines, title, tableColLineNumber = tNumber, tableColLine1 = tBefore, tableColLine2 = tAfter).get().write(fos)
+                    fos.flush()
+                    fos.close()
+                    logger.debug("docx file created")
+                }
+            }
+        }
         tableview(controller.diff()){
             prefWidth = 450.0
             smartResize()
-            column("строка", ComparedPair::lineNumber){
+            column(tNumber, ComparedPair::lineNumber){
 
             }
             column<ComparedPair, String>("<>"){
                 it.tableColumn.maxWidth = 36.0
                 it.value.first.type.toToken().toProperty()
             }
-            column("До", ComparedLine::class){
+            column(tBefore, ComparedLine::class){
                 useMaxSize = true
                 cellValueFactory = Callback { it.value.first.toProperty() }
                 cellFactory = ChangingCellFactory(16.0) //todo calculate rowHeight
@@ -49,7 +71,7 @@ class ChangesView : View("My View") {
                 it.tableColumn.maxWidth = 36.0
                 it.value.second.type.toToken().toProperty()
             }
-            column("После", ComparedLine::class){
+            column(tAfter, ComparedLine::class){
                 useMaxSize = true
                 cellValueFactory = Callback { it.value.second.toProperty() }
                 cellFactory = ChangingCellFactory(16.0)  //todo calculate rowHeight

@@ -1,8 +1,8 @@
-package roslesinforg.geobaseeditor.model
+package roslesinforg.porokhin.geobaseeditor.model
 
 import FILTERING
 import javafx.beans.property.SimpleBooleanProperty
-import roslesinforg.geobaseeditor.view.MainView
+import roslesinforg.porokhin.geobaseeditor.view.MainView
 import java.io.File
 import java.io.FileReader
 import java.util.*

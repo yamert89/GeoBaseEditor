@@ -1,4 +1,4 @@
-package roslesinforg.geobaseeditor.model
+package roslesinforg.porokhin.geobaseeditor.model
 
 import javafx.beans.binding.BooleanBinding
 import javafx.beans.property.SimpleBooleanProperty

@@ -1,4 +1,4 @@
-package roslesinforg.geobaseeditor.view.viewmodels
+package roslesinforg.porokhin.geobaseeditor.view.viewmodels
 
 import javafx.beans.property.*
 import roslesinforg.porokhin.areatypes.Area

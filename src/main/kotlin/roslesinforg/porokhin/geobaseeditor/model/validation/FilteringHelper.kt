@@ -1,9 +1,9 @@
-package roslesinforg.geobaseeditor.model.validation
+package roslesinforg.porokhin.geobaseeditor.model.validation
 
 import javafx.scene.control.TextField
 import javafx.scene.control.TextFormatter
 import javafx.util.StringConverter
-import roslesinforg.geobaseeditor.model.TextFieldImpl
+import roslesinforg.porokhin.geobaseeditor.model.TextFieldImpl
 import tornadofx.CustomTextFilter
 import tornadofx.filterInput
 import java.util.function.UnaryOperator

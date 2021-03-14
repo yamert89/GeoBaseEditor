@@ -1,4 +1,4 @@
-package roslesinforg.geobaseeditor.model
+package roslesinforg.porokhin.geobaseeditor.model
 
 import roslesinforg.porokhin.areatypes.Area
 import roslesinforg.porokhin.areatypes.Location

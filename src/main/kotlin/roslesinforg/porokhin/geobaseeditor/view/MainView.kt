@@ -1,4 +1,4 @@
-package roslesinforg.geobaseeditor.view
+package roslesinforg.porokhin.geobaseeditor.view
 
 import com.sun.glass.events.MouseEvent
 import com.sun.imageio.plugins.common.ImageUtil
@@ -22,13 +22,13 @@ import java.nio.charset.StandardCharsets.UTF_8
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
-import roslesinforg.geobaseeditor.GeoBaseEditorController
-import roslesinforg.geobaseeditor.model.*
-import roslesinforg.geobaseeditor.model.validation.FilteringHelper
-import roslesinforg.geobaseeditor.model.validation.ValidationHelper
-import roslesinforg.geobaseeditor.model.validation.ValidatorFactory
-import roslesinforg.geobaseeditor.model.validation.ValidatorFactory.*
-import roslesinforg.geobaseeditor.view.viewmodels.*
+import roslesinforg.porokhin.geobaseeditor.GeoBaseEditorController
+import roslesinforg.porokhin.geobaseeditor.model.*
+import roslesinforg.porokhin.geobaseeditor.model.validation.FilteringHelper
+import roslesinforg.porokhin.geobaseeditor.model.validation.ValidationHelper
+import roslesinforg.porokhin.geobaseeditor.model.validation.ValidatorFactory
+import roslesinforg.porokhin.geobaseeditor.model.validation.ValidatorFactory.*
+import roslesinforg.porokhin.geobaseeditor.view.viewmodels.*
 import roslesinforg.porokhin.areatypes.GeneralTypes
 import java.awt.image.BufferedImage
 import java.awt.image.ColorModel
@@ -255,7 +255,7 @@ class MainView : View("My View") {
     
     var model: AreaModel
     object AppScope: Scope()
-    val controller : GeoBaseEditorController by inject(AppScope)
+    val controller : roslesinforg.porokhin.geobaseeditor.GeoBaseEditorController by inject(AppScope)
 
     val text: StringProperty = SimpleStringProperty("dd")
     init {
