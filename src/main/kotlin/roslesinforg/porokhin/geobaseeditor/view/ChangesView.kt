@@ -44,7 +44,9 @@ class ChangesView : View("My View") {
             button("to Word"){
                 action {
                     val title = "Лесничество: ${controller.location?.forestry},  участок: ${controller.location?.subForestry}" //todo mapping
-                    val fos = FileOutputStream("J:/wordout.docx")
+                    val path = "D:/my/wordout.docx"
+                    //val path = "J:/wordout.docx"
+                    val fos = FileOutputStream(path)
                     MSWordResult(lines, title, tableColLineNumber = tNumber, tableColLine1 = tBefore, tableColLine2 = tAfter).get().write(fos)
                     fos.flush()
                     fos.close()
@@ -55,9 +57,7 @@ class ChangesView : View("My View") {
         tableview(controller.diff()){
             prefWidth = 450.0
             smartResize()
-            column(tNumber, ComparedPair::lineNumber){
-
-            }
+            column(tNumber, ComparedPair::lineNumber)
             column<ComparedPair, String>("<>"){
                 it.tableColumn.maxWidth = 36.0
                 it.value.first.type.toToken().toProperty()

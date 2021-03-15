@@ -28,6 +28,7 @@ dependencies {
     implementation(project(":nab_parser"))
     implementation(project(":area-writer"))
     implementation(project(":fileComparator"))
+    implementation(project(":RawToXlsConverter"))
 }
 
 tasks {

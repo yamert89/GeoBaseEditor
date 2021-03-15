@@ -30,6 +30,7 @@ import roslesinforg.porokhin.geobaseeditor.model.validation.ValidatorFactory
 import roslesinforg.porokhin.geobaseeditor.model.validation.ValidatorFactory.*
 import roslesinforg.porokhin.geobaseeditor.view.viewmodels.*
 import roslesinforg.porokhin.areatypes.GeneralTypes
+import roslesinforg.porokhin.rawxlsconverter.RootView
 import java.awt.image.BufferedImage
 import java.awt.image.ColorModel
 import java.awt.image.RenderedImage
@@ -602,6 +603,9 @@ class MainView : View("My View") {
         buttonBar.apply {
             addNewButton("Run.png", "Настройки"){
                 openInternalWindow(PreferenceView::class)
+            }
+            addNewButton("Export to Document.png", "Сохранить в MS Excel"){
+                openInternalWindow(RootView::class)
             }
             addNewButton("Export To Picture Document.png", "Сохранить в GIF"){
                 val image = cardLayout.snapshot(null, null)
