@@ -27,7 +27,7 @@ class GeoBaseEditorController: Controller() {
     var location: Location? = null
     var updateCounter = SimpleIntegerProperty(0)
     private val dataReader: DataReader = RawDataReader()
-    private var inputFilePath = ""
+    var inputFilePath = ""
     fun read(file: File){
         val data = dataReader.read(file)
         location = data.first

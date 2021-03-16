@@ -605,7 +605,9 @@ class MainView : View("My View") {
                 openInternalWindow(PreferenceView::class)
             }
             addNewButton("Export to Document.png", "Сохранить в MS Excel"){
-                openInternalWindow(RootView::class)
+                openInternalWindow(RootView::class, Scope(), params = mapOf(
+                    "initAreas" to controller.areas.value,
+                    "initOutputPath" to controller.inputFilePath))
             }
             addNewButton("Export To Picture Document.png", "Сохранить в GIF"){
                 val image = cardLayout.snapshot(null, null)
