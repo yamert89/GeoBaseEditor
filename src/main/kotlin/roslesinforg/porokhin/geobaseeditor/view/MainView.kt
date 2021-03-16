@@ -8,6 +8,7 @@ import javafx.embed.swing.SwingFXUtils
 import javafx.event.ActionEvent
 import javafx.event.Event
 import javafx.event.EventType
+import javafx.scene.Scene
 import javafx.scene.control.*
 import javafx.scene.input.*
 import javafx.scene.layout.*
@@ -256,7 +257,7 @@ class MainView : View("My View") {
     
     var model: AreaModel
     object AppScope: Scope()
-    val controller : roslesinforg.porokhin.geobaseeditor.GeoBaseEditorController by inject(AppScope)
+    val controller : GeoBaseEditorController by inject(AppScope)
 
     val text: StringProperty = SimpleStringProperty("dd")
     init {
@@ -605,9 +606,12 @@ class MainView : View("My View") {
                 openInternalWindow(PreferenceView::class)
             }
             addNewButton("Export to Document.png", "Сохранить в MS Excel"){
-                openInternalWindow(RootView::class, Scope(), params = mapOf(
+                find<RootView>(params = mapOf(
                     "initAreas" to controller.areas.value,
-                    "initOutputPath" to controller.inputFilePath))
+                    "initOutputPath" to controller.inputFilePath)).openWindow(owner = null)
+                /*openInternalWindow(RootView::class, Scope(), params = mapOf(
+                    "initAreas" to controller.areas.value,
+                    "initOutputPath" to controller.inputFilePath))*/
             }
             addNewButton("Export To Picture Document.png", "Сохранить в GIF"){
                 val image = cardLayout.snapshot(null, null)
