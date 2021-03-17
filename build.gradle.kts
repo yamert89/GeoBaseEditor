@@ -6,6 +6,11 @@ plugins {
 
 group = "roslesinforg"
 version = "0.3"
+repositories {
+    flatDir {
+        dirs("c:\\localrepo\\", "libs")
+    }
+}
 
 java{
     sourceCompatibility = JavaVersion.VERSION_1_8
@@ -24,11 +29,15 @@ dependencies {
     implementation("org.apache.logging.log4j:log4j-api:2.14.0")
     implementation("org.apache.logging.log4j:log4j-core:2.14.0")
     implementation("org.apache.logging.log4j:log4j-api-kotlin:1.0.0")
+    //implementation("pretty-tools-JDDE-2.1.0")
     implementation(project(":areatypes2"))
     implementation(project(":nab_parser"))
     implementation(project(":area-writer"))
     implementation(project(":fileComparator"))
     implementation(project(":RawToXlsConverter"))
+    implementation("com.javaparts:dde")
+    compile(files("pretty-tools-JDDE-2.1.0.jar"))
+    compile(files("c:/localrepo/dde.jar"))
 }
 
 tasks {
