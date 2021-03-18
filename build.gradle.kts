@@ -8,7 +8,7 @@ group = "roslesinforg"
 version = "0.3"
 repositories {
     flatDir {
-        dirs("c:\\localrepo\\", "libs")
+        dirs("c:/localrepo")
     }
 }
 
@@ -29,17 +29,18 @@ dependencies {
     implementation("org.apache.logging.log4j:log4j-api:2.14.0")
     implementation("org.apache.logging.log4j:log4j-core:2.14.0")
     implementation("org.apache.logging.log4j:log4j-api-kotlin:1.0.0")
-    //implementation("pretty-tools-JDDE-2.1.0")
+    //implementation(files("pretty-tools-JDDE-2.1.0"))
     implementation(project(":areatypes2"))
     implementation(project(":nab_parser"))
     implementation(project(":area-writer"))
     implementation(project(":fileComparator"))
     implementation(project(":RawToXlsConverter"))
-    implementation("com.javaparts:dde")
-    compile(files("pretty-tools-JDDE-2.1.0.jar"))
-    compile(files("c:/localrepo/dde.jar"))
+    implementation("com.pretty_tools:pretty-tools-JDDE-2.1.0")
 }
+sourceSets{
 
+}
+project.configurations.implementation.isCanBeResolved = true
 tasks {
     compileKotlin {
         kotlinOptions.jvmTarget = "1.8"
@@ -50,13 +51,19 @@ tasks {
     val archieveN = "GeoBaseEditor-${project.version}.jar"
 
     val fatJar = register("fatJar", Jar::class){
+        dependsOn(compileKotlin)
         manifest{
-            attributes["Main-Class"] = "roslesinforg.porokhin.rawxlsconverter.ViewKt"//todo fix path
+            attributes["Main-Class"] = "roslesinforg.porokhin.geobaseeditor.view.MainViewKt"//todo fix path
         }
-        archiveFileName.set(archieveN)
-        from(configurations.runtimeClasspath.get()/*.filter { it.name.startsWith("poi") }*/.map { if(it.isDirectory) it else zipTree(it) })
-        with(jar.get() as CopySpec)
 
+        exclude("META-INF/*.RSA", "META-INF/*.SF","META-INF/*.DSA")
+        archiveFileName.set(archieveN)
+        //from(configurations.runtimeClasspath.get()/*.filter { it.name.startsWith("poi") }*/.map { if(it.isDirectory) it else zipTree(it) })
+        //with(jar.get() as CopySpec)
+
+        from(configurations.implementation.get().files.map{ if(it.isDirectory) it else zipTree(it)})
+        //with(jar.get() as CopySpec)
+        //from(file("${System.getProperty("pathRepo")}/JavaDDEx64.dll"))
     }
 
     val startFolder = file("${System.getProperty("pathJars")}GeoBaseEditor\\")

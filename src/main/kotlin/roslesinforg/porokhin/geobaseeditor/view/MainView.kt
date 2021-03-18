@@ -3,6 +3,7 @@ package roslesinforg.porokhin.geobaseeditor.view
 import com.sun.glass.events.MouseEvent
 import com.sun.imageio.plugins.common.ImageUtil
 import com.sun.imageio.plugins.jpeg.JPEG
+import com.sun.javaws.Launcher
 import javafx.beans.property.*
 import javafx.embed.swing.SwingFXUtils
 import javafx.event.ActionEvent
@@ -10,6 +11,7 @@ import javafx.event.Event
 import javafx.event.EventType
 import javafx.scene.Scene
 import javafx.scene.control.*
+import javafx.scene.image.Image
 import javafx.scene.input.*
 import javafx.scene.layout.*
 import javafx.scene.paint.Color
@@ -37,8 +39,11 @@ import java.awt.image.ColorModel
 import java.awt.image.RenderedImage
 import java.io.File
 import java.lang.reflect.Modifier
+import java.net.URLClassLoader
 import javax.imageio.ImageIO
 import javax.swing.text.html.ImageView
+import org.apache.logging.log4j.kotlin.logger
+import roslesinforg.porokhin.nabparser.Parser
 
 
 fun main() {
@@ -48,7 +53,10 @@ fun main() {
 class GeoBaseEditorApp: App(MainView::class)
 
 class MainView : View("My View") {
+    private val logger = logger()
     override val root: AnchorPane by fxml("/gui/MainView.fxml")
+    val format = DataFormat.lookupMimeType("application/x-java-serialized-object")
+    //val format = DataFormat("application/x-java-serialized-object")
     val cardLayout: AnchorPane by fxid()
     val fGir: TextFieldImpl by fxid()
     val fKvNumber: TextFieldImpl by fxid()
@@ -497,7 +505,7 @@ class MainView : View("My View") {
     private fun buildKvList(){
 
         root.apply { //todo table view with row expander
-            val format = DataFormat("application/x-java-serialized-object")
+
 
             kv_list = tableview(controller.areas){
 
@@ -641,9 +649,6 @@ class MainView : View("My View") {
                 }*/
                 controller.read(files[0])
             }
-            onHover {
-                print(height)
-            }
         }
     }
 
@@ -664,7 +669,11 @@ class MainView : View("My View") {
                 background = null
             }
             tooltip(tooltip)
-            graphic = resources.imageview("/gui/$picture").apply {
+            val urls = (this::class.java.classLoader as URLClassLoader).urLs
+            println(urls.size)
+            println(urls.joinToString{"${it.file}\n"})
+            Thread.sleep(300)
+            graphic = this@MainView.resources.imageview("/$picture").apply {
                 fitHeight = 20.0
                 fitWidth = 20.0
             }

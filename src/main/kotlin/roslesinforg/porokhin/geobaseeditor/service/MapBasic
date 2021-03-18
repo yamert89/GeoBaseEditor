@@ -1,0 +1,11 @@
+Declare Sub SelChangedHandler
+declare sub main
+sub main
+ddeinitiate("GeoBaseEditor", "AreaSelection")
+end sub
+sub selchangedhandler
+if	commandinfo(1) = 1 then
+print selection.id
+
+end if
+end sub

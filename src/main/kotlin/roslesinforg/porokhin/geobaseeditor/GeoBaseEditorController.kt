@@ -13,6 +13,7 @@ import roslesinforg.porokhin.filecomparator.FileComparator
 import roslesinforg.porokhin.filecomparator.service.ComparedLine
 import roslesinforg.porokhin.filecomparator.service.ComparedPair
 import roslesinforg.porokhin.filecomparator.service.LineType
+import roslesinforg.porokhin.geobaseeditor.service.DDEClient
 import tornadofx.Controller
 import tornadofx.toObservable
 import java.io.File
@@ -28,6 +29,11 @@ class GeoBaseEditorController: Controller() {
     var updateCounter = SimpleIntegerProperty(0)
     private val dataReader: DataReader = RawDataReader()
     var inputFilePath = ""
+
+    init {
+        //DDEClient().initiate()
+    }
+
     fun read(file: File){
         val data = dataReader.read(file)
         location = data.first
