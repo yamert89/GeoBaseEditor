@@ -62,7 +62,7 @@ tasks {
         //with(jar.get() as CopySpec)
 
         from(configurations.implementation.get().files.map{ if(it.isDirectory) it else zipTree(it)})
-        //with(jar.get() as CopySpec)
+        with(jar.get() as CopySpec)
         //from(file("${System.getProperty("pathRepo")}/JavaDDEx64.dll"))
     }
 
@@ -78,6 +78,6 @@ tasks {
         val buildD = "$projectDir/build/libs/"
         from(file("$buildD/$archieveN"))
         into(startFolder)
-        println("GeoBaseEditor built with version $version")
+        println("GeoBaseEditor built with version $version to $startFolder")
     }
 }

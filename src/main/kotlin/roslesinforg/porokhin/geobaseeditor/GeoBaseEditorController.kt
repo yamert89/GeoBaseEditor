@@ -31,7 +31,7 @@ class GeoBaseEditorController: Controller() {
     var inputFilePath = ""
 
     init {
-        //DDEClient().initiate()
+        DDEClient().initiate()
     }
 
     fun read(file: File){

@@ -25,8 +25,8 @@ class DDEClient {
 
             override fun start() {
                 super.start()
-                logger.debug("DDE Server started")
             }
         }
+        logger.debug("DDE Server started")
     }
 }

@@ -613,7 +613,7 @@ class MainView : View("My View") {
             addNewButton("Run.png", "Настройки"){
                 openInternalWindow(PreferenceView::class)
             }
-            addNewButton("Export to Document.png", "Сохранить в MS Excel"){
+            addNewButton("Export To Document.png", "Сохранить в MS Excel"){
                 find<RootView>(params = mapOf(
                     "initAreas" to controller.areas.value,
                     "initOutputPath" to controller.inputFilePath)).openWindow(owner = null)
@@ -669,10 +669,6 @@ class MainView : View("My View") {
                 background = null
             }
             tooltip(tooltip)
-            val urls = (this::class.java.classLoader as URLClassLoader).urLs
-            println(urls.size)
-            println(urls.joinToString{"${it.file}\n"})
-            Thread.sleep(300)
             graphic = this@MainView.resources.imageview("/$picture").apply {
                 fitHeight = 20.0
                 fitWidth = 20.0
