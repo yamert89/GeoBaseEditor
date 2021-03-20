@@ -6,13 +6,13 @@ import org.apache.logging.log4j.kotlin.logger
 
 class DDEClient {
     private val logger = logger()
+    var server: DDEServer? = null
 
     fun initiate(){
-        val server = object : DDEServer("GeoBaseEditor"){
+        server = object : DDEServer("geobaseeditor"){
             override fun onPoke(topic: String?, item: String?, data: String?): Boolean {
                 when(topic){
-                    "AreaSelection" -> {
-
+                    "areaselection" -> {
                         when(item){
                             "selection" -> logger.debug("$data area selected")
                             else -> logger.debug("unknown item")
@@ -23,10 +23,17 @@ class DDEClient {
                 return true
             }
 
+            override fun onConnected(topic: String?, hconv: Long) {
+                logger.debug("connected")
+                super.onConnected(topic, hconv)
+            }
+
             override fun start() {
+                logger.debug("start")
                 super.start()
             }
         }
+        server!!.start()
         logger.debug("DDE Server started")
     }
 }

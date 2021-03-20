@@ -1,11 +1,14 @@
 Declare Sub SelChangedHandler
-declare sub main
-sub main
-ddeinitiate("GeoBaseEditor", "AreaSelection")
-end sub
+Dim ar As Integer
+Dim num As Integer
+print ar
+print num
+num = ddeinitiate("geobaseeditor", "areaselection")
+print num
 sub selchangedhandler
-if	commandinfo(1) = 1 then
-print selection.id
-
+ar = selection.id
+print ar
+if commandinfo(1) = 1 then
+ddepoke num, "selection", STR$(ar)
 end if
 end sub
