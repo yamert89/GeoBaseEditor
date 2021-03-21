@@ -340,25 +340,25 @@ class MainView : View("My View") {
             }
             filter(fProportion1, fProportion2, fProportion3, fProportion4, fProportion5, fProportion6, fProportion7,
                 fProportion8, fProportion9, fProportion10, f31_proportion1, f31_proportion2, f31_proportion3){ formatter ->
-                formatter.controlNewText.let { it.isInt() && it.toInt() < 11 }
+                formatter.controlNewText.let { it.isEmpty() || it.isInt() && it.toInt() < 11 }
             }
             filter(fAge1, fAge2, fAge3, fAge4, fAge5, fAge6, fAge7, fAge8, fAge9, fAge10, f31_age){ f ->
-                f.controlNewText.let { it.isInt() && it.toInt() in 1..400 }
+                f.controlNewText.let { it.isEmpty() || it.isInt() && it.toInt() in 1..400 }
             }
             filter(fTradeClass1, fTradeClass2, fTradeClass3, fTradeClass4, fTradeClass5, fTradeClass6, fTradeClass7, fTradeClass8,
                 fTradeClass9, fTradeClass10){ f ->
-                f.controlNewText.let { it.isInt() && it.toInt() in 1..4 } //todo origin
+                f.controlNewText.let { it.isEmpty() || it.isInt() && it.toInt() in 1..4 } //todo origin
             }
             filter(fWeight1, fWeight2, fWeight3, fWeight4, fWeight5, fWeight6, fWeight7, fWeight8, fWeight9, fWeight10){ f ->
-                f.controlNewText.let { it.isInt() && it.toInt() in 0..150 }
+                f.controlNewText.let { it.isEmpty() || it.isInt() && it.toInt() in 0..150 }
             }
             filter(fSumOfTimber1, fSumOfTimber2, fSumOfTimber3, fSumOfTimber4, fSumOfTimber5, fSumOfTimber6, fSumOfTimber7, fSumOfTimber8,
                 fSumOfTimber9, fSumOfTimber10){ f ->
-                f.controlNewText.let { it.isInt() && it.toInt() in 5..900 }
+                f.controlNewText.let { it.isEmpty() || it.isInt() && it.toInt() in 5..900 }
             }
             filter(fAreaNumber, fCategoryArea, fDP, fOzu, fAction1, fAction2, fAction3, fDop1_n, fDop2_n, fDop3_n, fDop4_n,
                 fDop5_n, fDop6_n){ f ->
-                f.controlNewText.isInt()
+                f.controlNewText.let {  it.isEmpty() || it.isInt() }
             }
             filter(fH1, fH2, fH3, fH4, fH5, fH6, fH7, fH8, fH9, fH10, f31_count, f31_h){ f ->
                 f.controlNewText.let { str ->
@@ -394,6 +394,7 @@ class MainView : View("My View") {
     }
 
     private fun bindModel(){
+        logger.debug("build model")
         with(model){
             fKvNumber byint kvProperty
             field1Model.apply {
