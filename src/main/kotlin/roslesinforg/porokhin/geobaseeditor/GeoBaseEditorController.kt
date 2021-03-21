@@ -14,6 +14,7 @@ import roslesinforg.porokhin.filecomparator.service.ComparedLine
 import roslesinforg.porokhin.filecomparator.service.ComparedPair
 import roslesinforg.porokhin.filecomparator.service.LineType
 import roslesinforg.porokhin.geobaseeditor.service.DDEClient
+import roslesinforg.porokhin.geobaseeditor.view.MainView
 import tornadofx.Controller
 import tornadofx.toObservable
 import java.io.File
@@ -22,17 +23,40 @@ import java.io.OutputStreamWriter
 import java.nio.charset.Charset
 import java.nio.file.Files
 import java.nio.file.Paths
+import org.apache.logging.log4j.kotlin.logger
+import tornadofx.find
+import tornadofx.selectedItem
 
 class GeoBaseEditorController: Controller() {
+    private val logger = logger()
     var areas: SimpleListProperty<Area> = SimpleListProperty()
     var location: Location? = null
     var updateCounter = SimpleIntegerProperty(0)
     private val dataReader: DataReader = RawDataReader()
     var inputFilePath = ""
+    var view: MainView? = null
+    var ddeSession: DDEClient = DDEClient(this)
 
-    init {
-        DDEClient().initiate()
+    fun setMainView(mainView: MainView) {
+        view = mainView
     }
+
+    fun selectArea(id: Int) {
+        try {
+            val ar = areas.find { it.id == id }
+            logger.debug("selection = ${view!!.kv_list.selectedItem}")
+            if (ar != null) view!!.kv_list.selectionModel.select(areas.indexOf(ar))
+            else logger.debug("Area with id = $id not found")
+            logger.debug("selection = ${view!!.kv_list.selectedItem}")
+        }catch (e: Exception){
+            logger.error(e)
+        }
+
+    }
+
+    fun startDDESession() = ddeSession.initiate()
+
+    fun stopDDESession() = ddeSession.close()
 
     fun read(file: File){
         val data = dataReader.read(file)

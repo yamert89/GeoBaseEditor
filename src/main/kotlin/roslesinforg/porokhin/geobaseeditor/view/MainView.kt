@@ -4,11 +4,13 @@ import com.sun.glass.events.MouseEvent
 import com.sun.imageio.plugins.common.ImageUtil
 import com.sun.imageio.plugins.jpeg.JPEG
 import com.sun.javaws.Launcher
+import javafx.application.Platform
 import javafx.beans.property.*
 import javafx.embed.swing.SwingFXUtils
 import javafx.event.ActionEvent
 import javafx.event.Event
 import javafx.event.EventType
+import javafx.geometry.NodeOrientation
 import javafx.scene.Scene
 import javafx.scene.control.*
 import javafx.scene.image.Image
@@ -253,6 +255,7 @@ class MainView : View("My View") {
     lateinit var screen: Button
     lateinit var btnChanges: Button
     val buttonBar: ButtonBar by fxid()
+    val topPane: HBox by fxid()
 
     var path: Path
     var input: Path //todo for test
@@ -322,6 +325,7 @@ class MainView : View("My View") {
             Preferences.savePrefs()
         }
         primaryStage.isResizable = false
+        controller.setMainView(this)
 
     }
 
@@ -518,6 +522,7 @@ class MainView : View("My View") {
                             }
                         }
                     }
+                    Platform.runLater { kv_list.scrollTo(it) }
                 }
 
                 shortcut(KeyCodeCombination(KeyCode.SUBTRACT)){
@@ -613,6 +618,7 @@ class MainView : View("My View") {
             addNewButton("Run.png", "Настройки"){
                 openInternalWindow(PreferenceView::class)
             }
+
             addNewButton("Export To Document.png", "Сохранить в MS Excel"){
                 find<RootView>(params = mapOf(
                     "initAreas" to controller.areas.value,
@@ -648,6 +654,20 @@ class MainView : View("My View") {
                     return@addNewButton
                 }*/
                 controller.read(files[0])
+            }
+        }
+        topPane.apply {
+            togglebutton("Связь с MapInfo", selectFirst = false){
+                maxHeight = 20.0
+                action {
+                    logger.debug("click")
+                    if (this.isSelected) {
+                        controller.startDDESession()
+                    }
+                    else {
+                        controller.stopDDESession()
+                    }
+                }
             }
         }
     }
