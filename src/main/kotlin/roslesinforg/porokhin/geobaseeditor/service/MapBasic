@@ -1,14 +1,25 @@
 Declare Sub SelChangedHandler
+declare sub connect
+declare sub disconnect
 Dim ar As Integer
 Dim num As Integer
-print ar
-print num
-num = ddeinitiate("geobaseeditor", "areaselection")
-print num
+create menu "Редактор базы" as
+"&Подключиться" calling connect,
+"&Отключиться" calling disconnect
 sub selchangedhandler
+onerror goto ex
 ar = selection.id
-print ar
 if commandinfo(1) = 1 then
 ddepoke num, "selection", STR$(ar)
 end if
+ex:
+print err()
+end sub
+sub connect
+num = ddeinitiate("geobaseeditor", "areaselection")
+print "Редактор базы подключен"
+end sub
+sub disconnect
+ddeterminateall
+print "Редактор базы отключен"
 end sub
