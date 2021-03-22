@@ -18,7 +18,7 @@
             <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
          </padding>
       </HBox>
-      <AnchorPane fx:id="cardLayout" layoutX="100.0" prefHeight="490.0" prefWidth="670.0" styleClass="back" stylesheets="@main.css" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
+      <AnchorPane fx:id="cardLayout" prefHeight="490.0" prefWidth="670.0" styleClass="back" stylesheets="@main.css" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
             <FlowPane layoutX="33.0" layoutY="141.0" prefHeight="17.0" prefWidth="527.0">
                <children>
