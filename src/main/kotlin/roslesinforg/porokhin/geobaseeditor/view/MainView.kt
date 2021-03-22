@@ -503,8 +503,9 @@ class MainView : View("My View") {
                     "initOutputPath" to controller.inputFilePath))*/
             }
             addNewButton("Export To Picture Document.png", "Сохранить в GIF"){
+                val dir = chooseDirectory("Сохарнить GIF", owner = primaryStage) ?: return@addNewButton
                 val image = cardLayout.snapshot(null, null)
-                ImageIO.write(SwingFXUtils.fromFXImage(image, null), "GIF", path.resolve(Paths.get("/out.gif")).toFile())
+                ImageIO.write(SwingFXUtils.fromFXImage(image, null), "GIF", dir.toPath().resolve(Paths.get("${kv_list.selectionModel.selectedItem.id}.gif")).toFile())
             }
             addNewButton("Coherence.png", "Изменения"){
                 openInternalWindow(ChangesView::class, Scope())
