@@ -4,6 +4,7 @@ import FILTERING
 import javafx.beans.property.SimpleBooleanProperty
 import roslesinforg.porokhin.geobaseeditor.view.MainView
 import java.io.File
+import java.io.FileOutputStream
 import java.io.FileReader
 import java.util.*
 
@@ -24,5 +25,6 @@ object Preferences { //todo replace to jar
 
     fun savePrefs(){
         props[FILTERING] = filtering.toString()
+        props.store(FileOutputStream(file), "GeoBaseEditor user preferences")
     }
 }
