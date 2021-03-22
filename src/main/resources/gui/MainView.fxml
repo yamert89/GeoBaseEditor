@@ -4,13 +4,15 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
 <?import roslesinforg.porokhin.geobaseeditor.model.TextFieldImpl?>
 
-<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="517.0" prefWidth="810.0" stylesheets="main.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <HBox fx:id="topPane" maxHeight="20.0" prefHeight="34.0" prefWidth="800.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+
+<BorderPane xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <top>
+      <HBox fx:id="topPane" maxHeight="20.0" prefHeight="34.0" prefWidth="800.0" BorderPane.alignment="CENTER">
          <children>
             <ButtonBar fx:id="buttonBar" buttonMinWidth="20.0" maxHeight="20.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="34.0" prefWidth="700.0" />
          </children>
@@ -18,7 +20,9 @@
             <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
          </padding>
       </HBox>
-      <AnchorPane fx:id="cardLayout" prefHeight="490.0" prefWidth="670.0" styleClass="back" stylesheets="@main.css" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
+   </top>
+   <center>
+      <AnchorPane fx:id="cardLayout" prefHeight="490.0" prefWidth="670.0" styleClass="back" stylesheets="@main.css" BorderPane.alignment="CENTER">
          <children>
             <FlowPane layoutX="33.0" layoutY="141.0" prefHeight="17.0" prefWidth="527.0">
                <children>
@@ -128,7 +132,8 @@
                   <TextFieldImpl fx:id="fSumOfTimber1" layoutX="21.0" layoutY="56.0" prefHeight="13.0" prefWidth="33.0" styleClass="field" stylesheets="@main.css">
                      <FlowPane.margin>
                         <Insets left="17.0" />
-                     </FlowPane.margin></TextFieldImpl>
+                     </FlowPane.margin>
+                  </TextFieldImpl>
                   <TextFieldImpl fx:id="fHrang2" layoutX="53.0" prefHeight="13.0" prefWidth="25.0" styleClass="field" stylesheets="@main.css" />
                   <TextFieldImpl fx:id="fProportion2" layoutX="52.0" layoutY="15.0" prefHeight="13.0" prefWidth="40.0" styleClass="field" stylesheets="@main.css" />
                   <TextFieldImpl fx:id="fSpecies2" layoutX="54.0" layoutY="27.0" prefHeight="13.0" prefWidth="38.0" styleClass="field" stylesheets="@main.css" />
@@ -141,7 +146,8 @@
                   <TextFieldImpl fx:id="fSumOfTimber2" layoutX="85.0" layoutY="55.0" prefHeight="13.0" prefWidth="33.0" styleClass="field" stylesheets="@main.css">
                      <FlowPane.margin>
                         <Insets left="17.0" />
-                     </FlowPane.margin></TextFieldImpl>
+                     </FlowPane.margin>
+                  </TextFieldImpl>
                   <TextFieldImpl fx:id="fHrang3" layoutX="102.0" layoutY="-1.0" prefHeight="13.0" prefWidth="25.0" styleClass="field" stylesheets="@main.css" />
                   <TextFieldImpl fx:id="fProportion3" layoutX="101.0" layoutY="13.0" prefHeight="13.0" prefWidth="40.0" styleClass="field" stylesheets="@main.css" />
                   <TextFieldImpl fx:id="fSpecies3" layoutX="102.0" layoutY="28.0" prefHeight="13.0" prefWidth="38.0" styleClass="field" stylesheets="@main.css" />
@@ -154,7 +160,8 @@
                   <TextFieldImpl fx:id="fSumOfTimber3" layoutX="121.0" layoutY="55.0" prefHeight="13.0" prefWidth="33.0" styleClass="field" stylesheets="@main.css">
                      <FlowPane.margin>
                         <Insets left="17.0" />
-                     </FlowPane.margin></TextFieldImpl>
+                     </FlowPane.margin>
+                  </TextFieldImpl>
                   <TextFieldImpl fx:id="fHrang4" layoutX="137.0" layoutY="-2.0" prefHeight="13.0" prefWidth="25.0" styleClass="field" stylesheets="@main.css" />
                   <TextFieldImpl fx:id="fProportion4" layoutX="136.0" layoutY="13.0" prefHeight="13.0" prefWidth="40.0" styleClass="field" stylesheets="@main.css" />
                   <TextFieldImpl fx:id="fSpecies4" layoutX="138.0" layoutY="27.0" prefHeight="13.0" prefWidth="38.0" styleClass="field" stylesheets="@main.css" />
@@ -167,7 +174,8 @@
                   <TextFieldImpl fx:id="fSumOfTimber4" layoutX="163.0" layoutY="55.0" prefHeight="13.0" prefWidth="33.0" styleClass="field" stylesheets="@main.css">
                      <FlowPane.margin>
                         <Insets left="17.0" />
-                     </FlowPane.margin></TextFieldImpl>
+                     </FlowPane.margin>
+                  </TextFieldImpl>
                   <TextFieldImpl fx:id="fHrang5" layoutX="228.0" prefHeight="13.0" prefWidth="25.0" styleClass="field" stylesheets="@main.css" AnchorPane.topAnchor="0.0" />
                   <TextFieldImpl fx:id="fProportion5" layoutX="228.0" layoutY="17.0" prefHeight="13.0" prefWidth="40.0" styleClass="field" stylesheets="@main.css" />
                   <TextFieldImpl fx:id="fSpecies5" layoutX="229.0" layoutY="34.0" prefHeight="13.0" prefWidth="38.0" styleClass="field" stylesheets="@main.css" />
@@ -180,7 +188,8 @@
                   <TextFieldImpl fx:id="fSumOfTimber5" layoutX="271.0" layoutY="69.0" prefHeight="13.0" prefWidth="33.0" styleClass="field" stylesheets="@main.css" AnchorPane.rightAnchor="0.0">
                      <FlowPane.margin>
                         <Insets left="17.0" />
-                     </FlowPane.margin></TextFieldImpl>
+                     </FlowPane.margin>
+                  </TextFieldImpl>
                </children>
             </FlowPane>
             <FlowPane fx:id="container_23_2" layoutX="240.0" layoutY="365.0" prefHeight="47.0" prefWidth="225.0">
@@ -599,8 +608,5 @@
             <TextFieldImpl fx:id="fAction1" layoutX="398.0" layoutY="77.0" prefHeight="20.0" prefWidth="28.0" styleClass="field" stylesheets="@main.css" />
          </children>
       </AnchorPane>
-   </children>
-   <padding>
-      <Insets bottom="5.0" />
-   </padding>
-</AnchorPane>
+   </center>
+</BorderPane>

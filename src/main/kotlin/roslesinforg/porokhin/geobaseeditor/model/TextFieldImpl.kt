@@ -1,9 +1,13 @@
 package roslesinforg.porokhin.geobaseeditor.model
 
 import javafx.beans.binding.BooleanBinding
+import javafx.beans.property.Property
 import javafx.beans.property.SimpleBooleanProperty
+import javafx.beans.value.ObservableBooleanValue
+import javafx.beans.value.ObservableValue
 import javafx.scene.control.TextField
 import tornadofx.c
+import tornadofx.enableWhen
 import tornadofx.onChange
 import tornadofx.style
 
@@ -25,6 +29,9 @@ class TextFieldImpl: TextField() {
         }
 
 
+
+
+
        /* hoverProperty().onChange { //todo uncomment in production
             requestFocus()
             selectAll()
@@ -32,7 +39,8 @@ class TextFieldImpl: TextField() {
 
 
     }
-    fun bindDirty(binding: BooleanBinding){
+    fun configure(enableTrigger: SimpleBooleanProperty, binding: BooleanBinding){
+        enableWhen(enableTrigger as ObservableValue<Boolean>)
         isDirty.bind(binding)
     }
 

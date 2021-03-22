@@ -1,22 +1,11 @@
 package roslesinforg.porokhin.geobaseeditor.view
 
-import com.sun.glass.events.MouseEvent
-import com.sun.imageio.plugins.common.ImageUtil
-import com.sun.imageio.plugins.jpeg.JPEG
-import com.sun.javaws.Launcher
 import javafx.application.Platform
 import javafx.beans.property.*
 import javafx.embed.swing.SwingFXUtils
-import javafx.event.ActionEvent
-import javafx.event.Event
-import javafx.event.EventType
-import javafx.geometry.NodeOrientation
-import javafx.scene.Scene
 import javafx.scene.control.*
-import javafx.scene.image.Image
 import javafx.scene.input.*
 import javafx.scene.layout.*
-import javafx.scene.paint.Color
 import javafx.scene.text.TextAlignment
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -36,16 +25,8 @@ import roslesinforg.porokhin.geobaseeditor.model.validation.ValidatorFactory.*
 import roslesinforg.porokhin.geobaseeditor.view.viewmodels.*
 import roslesinforg.porokhin.areatypes.GeneralTypes
 import roslesinforg.porokhin.rawxlsconverter.RootView
-import java.awt.image.BufferedImage
-import java.awt.image.ColorModel
-import java.awt.image.RenderedImage
-import java.io.File
-import java.lang.reflect.Modifier
-import java.net.URLClassLoader
 import javax.imageio.ImageIO
-import javax.swing.text.html.ImageView
 import org.apache.logging.log4j.kotlin.logger
-import roslesinforg.porokhin.nabparser.Parser
 
 
 fun main() {
@@ -56,7 +37,7 @@ class GeoBaseEditorApp: App(MainView::class)
 
 class MainView : View("My View") {
     private val logger = logger()
-    override val root: AnchorPane by fxml("/gui/MainView.fxml")
+    override val root: BorderPane by fxml("/gui/MainView.fxml")
     val format = DataFormat.lookupMimeType("application/x-java-serialized-object")
     //val format = DataFormat("application/x-java-serialized-object")
     val cardLayout: AnchorPane by fxid()
@@ -264,6 +245,7 @@ class MainView : View("My View") {
     val factory = ValidatorFactory(validationContext)
     val validationHelper = ValidationHelper(validationContext, factory)
     val filteringHelper = FilteringHelper()
+    val enableFieldsTrigger = SimpleBooleanProperty()
 
     
     var model: AreaModel
@@ -291,6 +273,7 @@ class MainView : View("My View") {
         bindModel()
         buildKvList() //todo load list
         applyButtons()
+
 
         controller.read(input.toFile())
         if (Preferences.filtering.value) applyFilters()
@@ -391,6 +374,201 @@ class MainView : View("My View") {
             fWeight2, fWeight3, fWeight4, fWeight5, fWeight6, fWeight7, fWeight8, fWeight9, fWeight10, fSumOfTimber1,
             fSumOfTimber2, fSumOfTimber3, fSumOfTimber4, fSumOfTimber5, fSumOfTimber6, fSumOfTimber7, fSumOfTimber8,
             fSumOfTimber9, fSumOfTimber10, f31_count, f31_h, f31_age, f31_proportion1, f31_proportion2)
+    }
+
+
+
+    private fun buildKvList(){
+
+        root.apply { //todo table view with row expander
+            left {
+                kv_list = tableview(controller.areas){
+                    onSelectionChange {
+                        if (!enableFieldsTrigger.value) enableFieldsTrigger.value = true
+                        if (!this@MainView.validationContext.validate()){
+                            error("Внимание", "Имеются некорректно заполненные поля, сохранить их?", ButtonType.OK, ButtonType.NO, title = "Ошибка"){
+                                if (it == ButtonType.NO){
+                                    model.rollback()
+                                    selectionModel.clearSelection()//fixme IOB exception
+                                }
+                            }
+                        }
+                        Platform.runLater { kv_list.scrollTo(it) }
+                    }
+
+                    shortcut(KeyCodeCombination(KeyCode.SUBTRACT)){
+                        val selected = kv_list.selectionModel.selectedItem
+                        kv_list.items.remove(selected)
+                    }
+                    shortcut(KeyCodeCombination(KeyCode.ADD)){
+                        if (kv_list.selectedItem == null) return@shortcut
+                        controller.copyArea(kv_list.selectedItem!!)
+                        kv_list.selectionModel.select(kv_list.selectionModel.selectedIndex + 1)
+                    }
+                    shortcut(KeyCodeCombination(KeyCode.ADD, KeyCombination.SHIFT_ANY)){
+                        if (kv_list.selectedItem == null) return@shortcut
+                        controller.newEmptyArea(kv_list.selectedItem!!)
+                        kv_list.selectionModel.select(kv_list.selectionModel.selectedIndex + 1)
+                    }
+                    model.rebindOnChange(this){ model ->
+                        if (model == null) return@rebindOnChange
+                        item = model
+                        println("Selection kv: ${item.kv} vid: ${item.field1.number}")
+                    }
+                    isEditable = true
+                    /*anchorpaneConstraints {
+                        topAnchor = 32
+                        leftAnchor = 0
+                        bottomAnchor = 0
+                    }*/
+                    prefWidth = 130.0
+
+                    readonlyColumn("Кв", Area::kv){
+                        style{
+                            textAlignment = TextAlignment.CENTER
+                        }
+                    }
+                    column<Area, Int>("Выд"){
+                        SimpleIntegerProperty(it.value.field1.number) as Property<Int>
+                    }.makeEditable()
+                    column("ЦНЛ", Area::categoryProtection){
+                        style{ textAlignment = TextAlignment.CENTER}
+                        setOnEditCommit {
+                            if (GeneralTypes.categoryProtection(it.newValue) == it.newValue.toString()) {
+                                error(header = "Ошибка", content = "Некорректное значение")
+                                editModel.rollbackSelected()
+                            }
+                        }
+                    }.makeEditable()
+
+                    setRowFactory {
+                        val row = TableRow<Area>()
+                        row.setOnDragDetected {
+                            val index = row.index
+                            if(row.isEmpty) return@setOnDragDetected
+                            val dragboard = row.startDragAndDrop(TransferMode.MOVE)
+                            dragboard.dragView = row.snapshot(null, null)
+                            val cc = ClipboardContent()
+                            cc[format] = index
+                            dragboard.setContent(cc)
+                            it.consume()
+                            println("drag detected")
+                        }
+
+                        row.setOnDragOver {
+                            val db = it.dragboard
+                            if (!db.hasContent(format)) return@setOnDragOver
+                            if (row.index != db.getContent(format) as Int){
+                                it.acceptTransferModes(TransferMode.COPY, TransferMode.MOVE)
+                                it.consume()
+                            }
+                        }
+                        row.setOnDragDropped {
+                            val db = it.dragboard
+                            if(!db.hasContent(format)) return@setOnDragDropped
+                            val dragIndex: Int = db.getContent(format) as Int
+                            //val area = kv_list.items.removeAt(dragIndex)
+                            val area = controller.areas.removeAt(dragIndex)
+                            val dropIndex = if (row.isEmpty) kv_list.items.size else row.index
+                            controller.areas.add(dropIndex, area)
+                            it.isDropCompleted = true
+
+                            selectionModel.select(dropIndex)
+                            it.consume()
+
+                        }
+                        row
+                    }
+                }
+            }
+
+
+
+        }
+
+    }
+
+    private fun applyButtons(){
+        buttonBar.apply {
+            addNewButton("Run.png", "Настройки"){
+                openInternalWindow(PreferenceView::class)
+            }
+
+            addNewButton("Export To Document.png", "Сохранить в MS Excel"){
+                find<RootView>(params = mapOf(
+                    "initAreas" to controller.areas.value,
+                    "initOutputPath" to controller.inputFilePath)).openWindow(owner = null)
+                /*openInternalWindow(RootView::class, Scope(), params = mapOf(
+                    "initAreas" to controller.areas.value,
+                    "initOutputPath" to controller.inputFilePath))*/
+            }
+            addNewButton("Export To Picture Document.png", "Сохранить в GIF"){
+                val image = cardLayout.snapshot(null, null)
+                ImageIO.write(SwingFXUtils.fromFXImage(image, null), "GIF", path.resolve(Paths.get("/out.gif")).toFile())
+            }
+            addNewButton("Coherence.png", "Изменения"){
+                openInternalWindow(ChangesView::class, Scope())
+            }
+            addNewButton("CD.png", "Сохранить"){
+                val dir = chooseDirectory(
+                    "Сохранить",
+                    owner = primaryStage
+                ) ?: return@addNewButton
+                controller.writeToRawFile(dir)
+            }
+            addNewButton("New Document.png", "Открыть"){
+                val files = chooseFile(
+                    "Выберите файл",
+                    owner = primaryStage,
+                    mode = FileChooserMode.Single,
+                    filters = arrayOf()
+                )
+                /*if (files.isEmpty()) {
+                    controller.read() //todo for test
+                    println(controller.areas.size)
+                    return@addNewButton
+                }*/
+                controller.read(files[0])
+            }
+        }
+        topPane.apply {
+            togglebutton("Связь с MapInfo", selectFirst = false){
+                maxHeight = 20.0
+                action {
+                    logger.debug("click")
+                    if (this.isSelected) {
+                        controller.startDDESession()
+                    }
+                    else {
+                        controller.stopDDESession()
+                    }
+                }
+            }
+        }
+    }
+
+    private fun ButtonBar.addNewButton(picture: String, tooltip: String, action: () -> Unit){
+        ButtonBar.setButtonUniformSize(this, false)
+        button{
+            action {
+                action()
+            }
+            style{
+                background = null
+                maxWidth = Dimension(26.0, Dimension.LinearUnits.px)
+            }
+            onHover {
+                background = Background(BackgroundFill(c(0, 0, 0, 0.3), CornerRadii(4.0), null))
+            }
+            setOnMouseExited {
+                background = null
+            }
+            tooltip(tooltip)
+            graphic = this@MainView.resources.imageview("/$picture").apply {
+                fitHeight = 20.0
+                fitWidth = 20.0
+            }
+        }
     }
 
     private fun bindModel(){
@@ -507,225 +685,35 @@ class MainView : View("My View") {
 
     }
 
-    private fun buildKvList(){
-
-        root.apply { //todo table view with row expander
-
-
-            kv_list = tableview(controller.areas){
-
-                onSelectionChange {
-                    if (!this@MainView.validationContext.validate()){
-                        error("Внимание", "Имеются некорректно заполненные поля, сохранить их?", ButtonType.OK, ButtonType.NO, title = "Ошибка"){
-                            if (it == ButtonType.NO){
-                                model.rollback()
-                                selectionModel.clearSelection()//fixme IOB exception
-                            }
-                        }
-                    }
-                    Platform.runLater { kv_list.scrollTo(it) }
-                }
-
-                shortcut(KeyCodeCombination(KeyCode.SUBTRACT)){
-                    val selected = kv_list.selectionModel.selectedItem
-                    kv_list.items.remove(selected)
-                }
-                shortcut(KeyCodeCombination(KeyCode.ADD)){
-                    if (kv_list.selectedItem == null) return@shortcut
-                    controller.copyArea(kv_list.selectedItem!!)
-                    kv_list.selectionModel.select(kv_list.selectionModel.selectedIndex + 1)
-                }
-                shortcut(KeyCodeCombination(KeyCode.ADD, KeyCombination.SHIFT_ANY)){
-                    if (kv_list.selectedItem == null) return@shortcut
-                    controller.newEmptyArea(kv_list.selectedItem!!)
-                    kv_list.selectionModel.select(kv_list.selectionModel.selectedIndex + 1)
-                }
-            model.rebindOnChange(this){ model ->
-                if (model == null) return@rebindOnChange
-                item = model
-                println("Selection kv: ${item.kv} vid: ${item.field1.number}")
-            }
-            isEditable = true
-            anchorpaneConstraints {
-                topAnchor = 32
-                leftAnchor = 0
-                bottomAnchor = 0
-            }
-            prefWidth = 130.0
-
-            readonlyColumn("Кв", Area::kv){
-                style{
-                    textAlignment = TextAlignment.CENTER
-                }
-            }
-            column<Area, Int>("Выд"){
-                SimpleIntegerProperty(it.value.field1.number) as Property<Int>
-            }.makeEditable()
-            column("ЦНЛ", Area::categoryProtection){
-                style{ textAlignment = TextAlignment.CENTER}
-                setOnEditCommit {
-                    if (GeneralTypes.categoryProtection(it.newValue) == it.newValue.toString()) {
-                        error(header = "Ошибка", content = "Некорректное значение")
-                        editModel.rollbackSelected()
-                    }
-                }
-            }.makeEditable()
-
-            setRowFactory {
-                val row = TableRow<Area>()
-                row.setOnDragDetected {
-                    val index = row.index
-                    if(row.isEmpty) return@setOnDragDetected
-                    val dragboard = row.startDragAndDrop(TransferMode.MOVE)
-                    dragboard.dragView = row.snapshot(null, null)
-                    val cc = ClipboardContent()
-                    cc[format] = index
-                    dragboard.setContent(cc)
-                    it.consume()
-                    println("drag detected")
-                }
-
-                row.setOnDragOver {
-                    val db = it.dragboard
-                    if (!db.hasContent(format)) return@setOnDragOver
-                    if (row.index != db.getContent(format) as Int){
-                        it.acceptTransferModes(TransferMode.COPY, TransferMode.MOVE)
-                        it.consume()
-                    }
-                }
-                row.setOnDragDropped {
-                    val db = it.dragboard
-                    if(!db.hasContent(format)) return@setOnDragDropped
-                    val dragIndex: Int = db.getContent(format) as Int
-                    //val area = kv_list.items.removeAt(dragIndex)
-                    val area = controller.areas.removeAt(dragIndex)
-                    val dropIndex = if (row.isEmpty) kv_list.items.size else row.index
-                    controller.areas.add(dropIndex, area)
-                    it.isDropCompleted = true
-
-                    selectionModel.select(dropIndex)
-                    it.consume()
-
-                }
-                row
-            }
-            }
-        }
-
-    }
-
-    private fun applyButtons(){
-        buttonBar.apply {
-            addNewButton("Run.png", "Настройки"){
-                openInternalWindow(PreferenceView::class)
-            }
-
-            addNewButton("Export To Document.png", "Сохранить в MS Excel"){
-                find<RootView>(params = mapOf(
-                    "initAreas" to controller.areas.value,
-                    "initOutputPath" to controller.inputFilePath)).openWindow(owner = null)
-                /*openInternalWindow(RootView::class, Scope(), params = mapOf(
-                    "initAreas" to controller.areas.value,
-                    "initOutputPath" to controller.inputFilePath))*/
-            }
-            addNewButton("Export To Picture Document.png", "Сохранить в GIF"){
-                val image = cardLayout.snapshot(null, null)
-                ImageIO.write(SwingFXUtils.fromFXImage(image, null), "GIF", path.resolve(Paths.get("/out.gif")).toFile())
-            }
-            addNewButton("Coherence.png", "Изменения"){
-                openInternalWindow(ChangesView::class, Scope())
-            }
-            addNewButton("CD.png", "Сохранить"){
-                val dir = chooseDirectory(
-                    "Сохранить",
-                    owner = primaryStage
-                ) ?: return@addNewButton
-                controller.writeToRawFile(dir)
-            }
-            addNewButton("New Document.png", "Открыть"){
-                val files = chooseFile(
-                    "Выберите файл",
-                    owner = primaryStage,
-                    mode = FileChooserMode.Single,
-                    filters = arrayOf()
-                )
-                /*if (files.isEmpty()) {
-                    controller.read() //todo for test
-                    println(controller.areas.size)
-                    return@addNewButton
-                }*/
-                controller.read(files[0])
-            }
-        }
-        topPane.apply {
-            togglebutton("Связь с MapInfo", selectFirst = false){
-                maxHeight = 20.0
-                action {
-                    logger.debug("click")
-                    if (this.isSelected) {
-                        controller.startDDESession()
-                    }
-                    else {
-                        controller.stopDDESession()
-                    }
-                }
-            }
-        }
-    }
-
-    private fun ButtonBar.addNewButton(picture: String, tooltip: String, action: () -> Unit){
-        ButtonBar.setButtonUniformSize(this, false)
-        button{
-            action {
-                action()
-            }
-            style{
-                background = null
-                maxWidth = Dimension(26.0, Dimension.LinearUnits.px)
-            }
-            onHover {
-                background = Background(BackgroundFill(c(0, 0, 0, 0.3), CornerRadii(4.0), null))
-            }
-            setOnMouseExited {
-                background = null
-            }
-            tooltip(tooltip)
-            graphic = this@MainView.resources.imageview("/$picture").apply {
-                fitHeight = 20.0
-                fitWidth = 20.0
-            }
-        }
-    }
-
     private fun stylize(){
-        fKvNumber.bindDirty(model.dirtyStateFor(AreaModel::kvProperty))
+        fKvNumber.configure(enableFieldsTrigger, model.dirtyStateFor(AreaModel::kvProperty))
         with(model.field1Model){
-            fAreaNumber.bindDirty(dirtyStateFor(Field1ViewModel::numberProperty))
-            fArea.bindDirty(dirtyStateFor(Field1ViewModel::areaProperty))
-            fCategoryArea.bindDirty(dirtyStateFor(Field1ViewModel::categoryProperty))
-            fDP.bindDirty(dirtyStateFor(Field1ViewModel::dpProperty))
-            fOzu.bindDirty(dirtyStateFor(Field1ViewModel::typeOfProtectionProperty))
+            fAreaNumber.configure(enableFieldsTrigger, dirtyStateFor(Field1ViewModel::numberProperty))
+            fArea.configure(enableFieldsTrigger, dirtyStateFor(Field1ViewModel::areaProperty))
+            fCategoryArea.configure(enableFieldsTrigger, dirtyStateFor(Field1ViewModel::categoryProperty))
+            fDP.configure(enableFieldsTrigger, dirtyStateFor(Field1ViewModel::dpProperty))
+            fOzu.configure(enableFieldsTrigger, dirtyStateFor(Field1ViewModel::typeOfProtectionProperty))
         }
         with(model.field2ViewModel){
-            fAction1.bindDirty(dirtyStateFor(Field2ViewModel::firstActionProperty))
-            fAction2.bindDirty(dirtyStateFor(Field2ViewModel::secondActionProperty))
-            fAction3.bindDirty(dirtyStateFor(Field2ViewModel::thirdActionProperty))
+            fAction1.configure(enableFieldsTrigger, dirtyStateFor(Field2ViewModel::firstActionProperty))
+            fAction2.configure(enableFieldsTrigger, dirtyStateFor(Field2ViewModel::secondActionProperty))
+            fAction3.configure(enableFieldsTrigger, dirtyStateFor(Field2ViewModel::thirdActionProperty))
         }
         with(model.field3ViewModel){
-            fSpecies.bindDirty(dirtyStateFor(Field3ViewModel::speciesProperty))
-            fBon.bindDirty(dirtyStateFor(Field3ViewModel::bonProperty))
-            fType.bindDirty(dirtyStateFor(Field3ViewModel::typeProperty))
-            fSubType.bindDirty(dirtyStateFor(Field3ViewModel::subTypeProperty))
-            fYearOfDeforest.bindDirty(dirtyStateFor(Field3ViewModel::yearOfDeforestationProperty))
-            fCountOfStump.bindDirty(dirtyStateFor(Field3ViewModel::countOfStumpProperty))
-            fCountOfPinusStump.bindDirty(dirtyStateFor(Field3ViewModel::countOfPinusStumpProperty))
-            fStumpDiameter.bindDirty(dirtyStateFor(Field3ViewModel::stumpDiameterProperty))
-            fTypeDeforest.bindDirty(dirtyStateFor(Field3ViewModel::typeOfDeforestationProperty))
+            fSpecies.configure(enableFieldsTrigger, dirtyStateFor(Field3ViewModel::speciesProperty))
+            fBon.configure(enableFieldsTrigger, dirtyStateFor(Field3ViewModel::bonProperty))
+            fType.configure(enableFieldsTrigger, dirtyStateFor(Field3ViewModel::typeProperty))
+            fSubType.configure(enableFieldsTrigger, dirtyStateFor(Field3ViewModel::subTypeProperty))
+            fYearOfDeforest.configure(enableFieldsTrigger, dirtyStateFor(Field3ViewModel::yearOfDeforestationProperty))
+            fCountOfStump.configure(enableFieldsTrigger, dirtyStateFor(Field3ViewModel::countOfStumpProperty))
+            fCountOfPinusStump.configure(enableFieldsTrigger, dirtyStateFor(Field3ViewModel::countOfPinusStumpProperty))
+            fStumpDiameter.configure(enableFieldsTrigger, dirtyStateFor(Field3ViewModel::stumpDiameterProperty))
+            fTypeDeforest.configure(enableFieldsTrigger, dirtyStateFor(Field3ViewModel::typeOfDeforestationProperty))
         }
         with(model.field4ViewModel){
-            fDisorder.bindDirty(dirtyStateFor(Field4ViewModel::disorderProperty))
-            fValidDisorder.bindDirty(dirtyStateFor(Field4ViewModel::validDisorderProperty))
-            fDryTimber.bindDirty(dirtyStateFor(Field4ViewModel::dryTimberProperty))
+            fDisorder.configure(enableFieldsTrigger, dirtyStateFor(Field4ViewModel::disorderProperty))
+            fValidDisorder.configure(enableFieldsTrigger, dirtyStateFor(Field4ViewModel::validDisorderProperty))
+            fDryTimber.configure(enableFieldsTrigger, dirtyStateFor(Field4ViewModel::dryTimberProperty))
         }
 
         with(model.f10Elements){
@@ -742,13 +730,13 @@ class MainView : View("My View") {
         }
 
         with(model.field31ViewModel){
-            f31_count.bindDirty(dirtyStateFor(Field31ViewModel::countProperty))
-            f31_h.bindDirty(dirtyStateFor(Field31ViewModel::hProperty))
-            f31_age.bindDirty(dirtyStateFor(Field31ViewModel::ageProperty))
-            f31_proportion1.bindDirty(dirtyStateFor(Field31ViewModel::proportion1Property))
-            f31_proportion2.bindDirty(dirtyStateFor(Field31ViewModel::proportion2Property))
-            f31_element1.bindDirty(dirtyStateFor(Field31ViewModel::element1Property))
-            f31_element2.bindDirty(dirtyStateFor(Field31ViewModel::element2Property))
+            f31_count.configure(enableFieldsTrigger, dirtyStateFor(Field31ViewModel::countProperty))
+            f31_h.configure(enableFieldsTrigger, dirtyStateFor(Field31ViewModel::hProperty))
+            f31_age.configure(enableFieldsTrigger, dirtyStateFor(Field31ViewModel::ageProperty))
+            f31_proportion1.configure(enableFieldsTrigger, dirtyStateFor(Field31ViewModel::proportion1Property))
+            f31_proportion2.configure(enableFieldsTrigger, dirtyStateFor(Field31ViewModel::proportion2Property))
+            f31_element1.configure(enableFieldsTrigger, dirtyStateFor(Field31ViewModel::element1Property))
+            f31_element2.configure(enableFieldsTrigger, dirtyStateFor(Field31ViewModel::element2Property))
         }
         val dops = model.dopViewModel.dopFieldViewModels
         bindDirtyDop(dops[0], fDop1_n, fDop1_1, fDop1_2, fDop1_3, fDop1_4, fDop1_5, fDop1_6, fDop1_7, fDop1_8)
@@ -773,15 +761,15 @@ class MainView : View("My View") {
         f7: TextFieldImpl,
         f8: TextFieldImpl){
         with(model){
-            fn.bindDirty(dirtyStateFor(DopViewModel.DopFieldViewModel::numberProperty))
-            f1.bindDirty(dirtyStateFor(DopViewModel.DopFieldViewModel::col1Property))
-            f2.bindDirty(dirtyStateFor(DopViewModel.DopFieldViewModel::col2Property))
-            f3.bindDirty(dirtyStateFor(DopViewModel.DopFieldViewModel::col3Property))
-            f4.bindDirty(dirtyStateFor(DopViewModel.DopFieldViewModel::col4Property))
-            f5.bindDirty(dirtyStateFor(DopViewModel.DopFieldViewModel::col5Property))
-            f6.bindDirty(dirtyStateFor(DopViewModel.DopFieldViewModel::col6Property))
-            f7.bindDirty(dirtyStateFor(DopViewModel.DopFieldViewModel::col7Property))
-            f8.bindDirty(dirtyStateFor(DopViewModel.DopFieldViewModel::col8Property))
+            fn.configure(enableFieldsTrigger, dirtyStateFor(DopViewModel.DopFieldViewModel::numberProperty))
+            f1.configure(enableFieldsTrigger, dirtyStateFor(DopViewModel.DopFieldViewModel::col1Property))
+            f2.configure(enableFieldsTrigger, dirtyStateFor(DopViewModel.DopFieldViewModel::col2Property))
+            f3.configure(enableFieldsTrigger, dirtyStateFor(DopViewModel.DopFieldViewModel::col3Property))
+            f4.configure(enableFieldsTrigger, dirtyStateFor(DopViewModel.DopFieldViewModel::col4Property))
+            f5.configure(enableFieldsTrigger, dirtyStateFor(DopViewModel.DopFieldViewModel::col5Property))
+            f6.configure(enableFieldsTrigger, dirtyStateFor(DopViewModel.DopFieldViewModel::col6Property))
+            f7.configure(enableFieldsTrigger, dirtyStateFor(DopViewModel.DopFieldViewModel::col7Property))
+            f8.configure(enableFieldsTrigger, dirtyStateFor(DopViewModel.DopFieldViewModel::col8Property))
         }
     }
 
@@ -799,16 +787,16 @@ class MainView : View("My View") {
         fSumOfT: TextFieldImpl
         ){
         with(model){
-            fHrang.bindDirty(dirtyStateFor(ElementOfForestViewModel::hRangProperty))
-            fProp.bindDirty(dirtyStateFor(ElementOfForestViewModel::proportionProperty))
-            fSpec.bindDirty(dirtyStateFor(ElementOfForestViewModel::speciesProperty))
-            fAge.bindDirty(dirtyStateFor(ElementOfForestViewModel::ageProperty))
-            fH.bindDirty(dirtyStateFor(ElementOfForestViewModel::hProperty))
-            fD.bindDirty(dirtyStateFor(ElementOfForestViewModel::dProperty))
-            fTrade.bindDirty(dirtyStateFor(ElementOfForestViewModel::tradeClassProperty))
-            fOrig.bindDirty(dirtyStateFor(ElementOfForestViewModel::generationProperty))
-            fWeight.bindDirty(dirtyStateFor(ElementOfForestViewModel::weightProperty))
-            fSumOfT.bindDirty(dirtyStateFor(ElementOfForestViewModel::sumOfTimberProperty))
+            fHrang.configure(enableFieldsTrigger, dirtyStateFor(ElementOfForestViewModel::hRangProperty))
+            fProp.configure(enableFieldsTrigger, dirtyStateFor(ElementOfForestViewModel::proportionProperty))
+            fSpec.configure(enableFieldsTrigger, dirtyStateFor(ElementOfForestViewModel::speciesProperty))
+            fAge.configure(enableFieldsTrigger, dirtyStateFor(ElementOfForestViewModel::ageProperty))
+            fH.configure(enableFieldsTrigger, dirtyStateFor(ElementOfForestViewModel::hProperty))
+            fD.configure(enableFieldsTrigger, dirtyStateFor(ElementOfForestViewModel::dProperty))
+            fTrade.configure(enableFieldsTrigger, dirtyStateFor(ElementOfForestViewModel::tradeClassProperty))
+            fOrig.configure(enableFieldsTrigger, dirtyStateFor(ElementOfForestViewModel::generationProperty))
+            fWeight.configure(enableFieldsTrigger, dirtyStateFor(ElementOfForestViewModel::weightProperty))
+            fSumOfT.configure(enableFieldsTrigger, dirtyStateFor(ElementOfForestViewModel::sumOfTimberProperty))
         }
     }
 
@@ -840,8 +828,4 @@ class MainView : View("My View") {
     private infix fun TextFieldImpl.byint(other: Property<Int>) = this.bind(property = other, readonly = false, converter = FieldIntConverter())
     private infix fun TextFieldImpl.byfloat(other: Property<Float>) = this.bind(property = other, converter = FieldFloatConverter())
 
-
-
 }
-
-
