@@ -1,22 +1,11 @@
 package roslesinforg.porokhin.geobaseeditor.view
 
-import com.sun.glass.events.MouseEvent
-import com.sun.imageio.plugins.common.ImageUtil
-import com.sun.imageio.plugins.jpeg.JPEG
-import com.sun.javaws.Launcher
 import javafx.application.Platform
 import javafx.beans.property.*
 import javafx.embed.swing.SwingFXUtils
-import javafx.event.ActionEvent
-import javafx.event.Event
-import javafx.event.EventType
-import javafx.geometry.NodeOrientation
-import javafx.scene.Scene
 import javafx.scene.control.*
-import javafx.scene.image.Image
 import javafx.scene.input.*
 import javafx.scene.layout.*
-import javafx.scene.paint.Color
 import javafx.scene.text.TextAlignment
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -36,16 +25,8 @@ import roslesinforg.porokhin.geobaseeditor.model.validation.ValidatorFactory.*
 import roslesinforg.porokhin.geobaseeditor.view.viewmodels.*
 import roslesinforg.porokhin.areatypes.GeneralTypes
 import roslesinforg.porokhin.rawxlsconverter.RootView
-import java.awt.image.BufferedImage
-import java.awt.image.ColorModel
-import java.awt.image.RenderedImage
-import java.io.File
-import java.lang.reflect.Modifier
-import java.net.URLClassLoader
 import javax.imageio.ImageIO
-import javax.swing.text.html.ImageView
 import org.apache.logging.log4j.kotlin.logger
-import roslesinforg.porokhin.nabparser.Parser
 
 
 fun main() {
@@ -368,7 +349,9 @@ class MainView : View("My View") {
             }
             filter(fD1, fD2, fD3, fD4, fD5, fD6, fD7, fD8, fD9, fD10){ f ->
                 f.controlNewText.let { d ->
-                    d.isInt() && d.toInt().let { it in 1..80 && it % 2 == 0 } // fixme wrong for 30, 50
+                    d.isInt() &&  d.toInt() in 2..80 &&
+                            d.let { it.endsWith("0") || it.endsWith("2") || it.endsWith("4") ||
+                            it.endsWith("6") || it.endsWith("8")}
                 }
             }
             fBon.filterInput { it.controlNewText.matches("[1-5АБ]{1,2}".toRegex()) }
@@ -649,24 +632,26 @@ class MainView : View("My View") {
                     mode = FileChooserMode.Single,
                     filters = arrayOf()
                 )
-                /*if (files.isEmpty()) {
-                    controller.read() //todo for test
-                    println(controller.areas.size)
-                    return@addNewButton
-                }*/
+                if (files.isEmpty()) return@addNewButton
                 controller.read(files[0])
             }
         }
         topPane.apply {
-            togglebutton("Связь с MapInfo", selectFirst = false){
+            togglebutton(selectFirst = false){
+                tooltip("Связь с MapInfo")
                 maxHeight = 20.0
+                background = null
+                contentDisplay = ContentDisplay.GRAPHIC_ONLY
+                graphic = getImageResource(20.0, 40.0, "toggle-off.png")
                 action {
                     logger.debug("click")
                     if (this.isSelected) {
                         controller.startDDESession()
+                        graphic = getImageResource(20.0, 40.0, "toggle-on.png")
                     }
                     else {
                         controller.stopDDESession()
+                        graphic = getImageResource(20.0, 40.0, "toggle-off.png")
                     }
                 }
             }
@@ -690,11 +675,13 @@ class MainView : View("My View") {
                 background = null
             }
             tooltip(tooltip)
-            graphic = this@MainView.resources.imageview("/$picture").apply {
-                fitHeight = 20.0
-                fitWidth = 20.0
-            }
+            graphic = getImageResource(20.0, 20.0, picture)
         }
+    }
+
+    private fun getImageResource(height: Double, width: Double, path: String): javafx.scene.image.ImageView = this.resources.imageview("/gui/$path").apply {
+        fitHeight = height
+        fitWidth = width
     }
 
     private fun stylize(){

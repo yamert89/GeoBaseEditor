@@ -53,7 +53,7 @@ tasks {
     val fatJar = register("fatJar", Jar::class){
         dependsOn(compileKotlin)
         manifest{
-            attributes["Main-Class"] = "roslesinforg.porokhin.geobaseeditor.view.MainViewKt"//todo fix path
+            attributes["Main-Class"] = "roslesinforg.porokhin.geobaseeditor.view.MainViewKt"
         }
 
         exclude("META-INF/*.RSA", "META-INF/*.SF","META-INF/*.DSA")
