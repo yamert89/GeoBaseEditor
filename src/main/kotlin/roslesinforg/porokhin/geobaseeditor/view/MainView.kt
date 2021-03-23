@@ -274,7 +274,6 @@ class MainView : View("My View") {
         buildKvList() //todo load list
         applyButtons()
 
-
         controller.read(input.toFile())
         if (Preferences.filtering.value) applyFilters()
 
@@ -351,7 +350,9 @@ class MainView : View("My View") {
             }
             filter(fD1, fD2, fD3, fD4, fD5, fD6, fD7, fD8, fD9, fD10){ f ->
                 f.controlNewText.let { d ->
-                    d.isInt() && d.toInt().let { it in 1..80 && it % 2 == 0 } // fixme wrong for 30, 50
+                    d.isInt() &&  d.toInt() in 2..80 &&
+                            d.let { it.endsWith("0") || it.endsWith("2") || it.endsWith("4") ||
+                            it.endsWith("6") || it.endsWith("8")}
                 }
             }
             fBon.filterInput { it.controlNewText.matches("[1-5АБ]{1,2}".toRegex()) }
@@ -524,24 +525,26 @@ class MainView : View("My View") {
                     mode = FileChooserMode.Single,
                     filters = arrayOf()
                 )
-                /*if (files.isEmpty()) {
-                    controller.read() //todo for test
-                    println(controller.areas.size)
-                    return@addNewButton
-                }*/
+                if (files.isEmpty()) return@addNewButton
                 controller.read(files[0])
             }
         }
         topPane.apply {
-            togglebutton("Связь с MapInfo", selectFirst = false){
+            togglebutton(selectFirst = false){
+                tooltip("Связь с MapInfo")
                 maxHeight = 20.0
+                background = null
+                contentDisplay = ContentDisplay.GRAPHIC_ONLY
+                graphic = getImageResource(20.0, 40.0, "toggle-off.png")
                 action {
                     logger.debug("click")
                     if (this.isSelected) {
                         controller.startDDESession()
+                        graphic = getImageResource(20.0, 40.0, "toggle-on.png")
                     }
                     else {
                         controller.stopDDESession()
+                        graphic = getImageResource(20.0, 40.0, "toggle-off.png")
                     }
                 }
             }
@@ -565,11 +568,13 @@ class MainView : View("My View") {
                 background = null
             }
             tooltip(tooltip)
-            graphic = this@MainView.resources.imageview("/$picture").apply {
-                fitHeight = 20.0
-                fitWidth = 20.0
-            }
+            graphic = getImageResource(20.0, 20.0, picture)
         }
+    }
+
+    private fun getImageResource(height: Double, width: Double, path: String): javafx.scene.image.ImageView = this.resources.imageview("/gui/$path").apply {
+        fitHeight = height
+        fitWidth = width
     }
 
     private fun bindModel(){
