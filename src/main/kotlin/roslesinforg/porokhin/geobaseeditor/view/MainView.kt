@@ -229,6 +229,7 @@ class MainView : View("My View") {
     val fDop4_8: TextFieldImpl by fxid()
     val fDop5_8: TextFieldImpl by fxid()
     val fDop6_8: TextFieldImpl by fxid()
+    val fLog: Label by fxid()
     lateinit var kv_list: TableView<Area>
    /* val btnOpen: Button by fxid()*/
     lateinit var btnOpen: Button
@@ -497,11 +498,11 @@ class MainView : View("My View") {
 
     private fun applyButtons(){
         buttonBar.apply {
-            addNewButton("Run.png", "Настройки"){
+            addNewButton("prefs.png", "Настройки"){
                 openInternalWindow(PreferenceView::class)
             }
 
-            addNewButton("Export To Document.png", "Сохранить в MS Excel"){
+            addNewButton("Excel.png", "Сохранить в MS Excel"){
                 find<RootView>(params = mapOf(
                     "initAreas" to controller.areas.value,
                     "initOutputPath" to controller.inputFilePath)).openWindow(owner = null)
@@ -509,22 +510,25 @@ class MainView : View("My View") {
                     "initAreas" to controller.areas.value,
                     "initOutputPath" to controller.inputFilePath))*/
             }
-            addNewButton("Export To Picture Document.png", "Сохранить в GIF"){
+            addNewButton("screen.png", "Сохранить в GIF"){
                 val dir = chooseDirectory("Сохарнить GIF", owner = primaryStage) ?: return@addNewButton
                 val image = cardLayout.snapshot(null, null)
-                ImageIO.write(SwingFXUtils.fromFXImage(image, null), "GIF", dir.toPath().resolve(Paths.get("${kv_list.selectionModel.selectedItem.id}.gif")).toFile())
+                val path = dir.toPath().resolve(Paths.get("${kv_list.selectionModel.selectedItem.id}.gif"))
+                ImageIO.write(SwingFXUtils.fromFXImage(image, null), "GIF", path.toFile())
+                flog("Скриншот сохранен в $path")
             }
-            addNewButton("Coherence.png", "Изменения"){
+            addNewButton("change.png", "Изменения"){
                 openInternalWindow(ChangesView::class, Scope())
             }
-            addNewButton("CD.png", "Сохранить"){
+            addNewButton("save.png", "Сохранить"){
                 val dir = chooseDirectory(
                     "Сохранить",
                     owner = primaryStage
                 ) ?: return@addNewButton
                 controller.writeToRawFile(dir)
+                flog("Файл сохранен: $dir")
             }
-            addNewButton("New Document.png", "Открыть"){
+            addNewButton("add.png", "Открыть"){
                 val files = chooseFile(
                     "Выберите файл",
                     owner = primaryStage,
@@ -533,6 +537,7 @@ class MainView : View("My View") {
                 )
                 if (files.isEmpty()) return@addNewButton
                 controller.read(files[0])
+                flog("Открыт файл ${files[0].absolutePath}")
             }
         }
         topPane.apply {
@@ -540,6 +545,9 @@ class MainView : View("My View") {
                 tooltip("Связь с MapInfo")
                 maxHeight = 20.0
                 background = null
+                hboxConstraints {
+                    marginLeft = 300.0
+                }
                 contentDisplay = ContentDisplay.GRAPHIC_ONLY
                 graphic = getImageResource(20.0, 40.0, "toggle-off.png")
                 action {
@@ -547,10 +555,12 @@ class MainView : View("My View") {
                     if (this.isSelected) {
                         controller.startDDESession()
                         graphic = getImageResource(20.0, 40.0, "toggle-on.png")
+                        flog("Открыт канал связи с MapInfo")
                     }
                     else {
                         controller.stopDDESession()
                         graphic = getImageResource(20.0, 40.0, "toggle-off.png")
+                        flog("Канал связи с MapInfo закрыт")
                     }
                 }
             }
@@ -841,5 +851,8 @@ class MainView : View("My View") {
     private infix fun TextFieldImpl.bystr(other: Property<String>) = this.bind(property = other, readonly = false, converter = FieldStringConverter())
     private infix fun TextFieldImpl.byint(other: Property<Int>) = this.bind(property = other, readonly = false, converter = FieldIntConverter())
     private infix fun TextFieldImpl.byfloat(other: Property<Float>) = this.bind(property = other, converter = FieldFloatConverter())
+    fun flog(message: String) {
+        fLog.text = "> $message"
+    }
 
 }
