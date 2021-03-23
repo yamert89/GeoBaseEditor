@@ -41,7 +41,7 @@ class MainView : View("My View") {
     val format = DataFormat.lookupMimeType("application/x-java-serialized-object")
     //val format = DataFormat("application/x-java-serialized-object")
     val cardLayout: AnchorPane by fxid()
-    val fGir: TextFieldImpl by fxid()
+    val fGir: TextField by fxid()
     val fKvNumber: TextFieldImpl by fxid()
     val fAreaNumber: TextFieldImpl by fxid()
     val fArea: TextFieldImpl by fxid()
@@ -275,6 +275,12 @@ class MainView : View("My View") {
         applyButtons()
 
         controller.read(input.toFile())
+        with(controller.location!!){
+            fGir.apply {
+                text = GeneralTypes.forestries[forestry.toInt()]?.sub?.get(subForestry.toInt()) ?: ""
+                isEditable = false
+            }
+        }
         if (Preferences.filtering.value) applyFilters()
 
 
@@ -741,8 +747,10 @@ class MainView : View("My View") {
             f31_age.configure(enableFieldsTrigger, dirtyStateFor(Field31ViewModel::ageProperty))
             f31_proportion1.configure(enableFieldsTrigger, dirtyStateFor(Field31ViewModel::proportion1Property))
             f31_proportion2.configure(enableFieldsTrigger, dirtyStateFor(Field31ViewModel::proportion2Property))
+            f31_proportion3.configure(enableFieldsTrigger, dirtyStateFor(Field31ViewModel::proportion3Property))
             f31_element1.configure(enableFieldsTrigger, dirtyStateFor(Field31ViewModel::element1Property))
             f31_element2.configure(enableFieldsTrigger, dirtyStateFor(Field31ViewModel::element2Property))
+            f31_element3.configure(enableFieldsTrigger, dirtyStateFor(Field31ViewModel::element3Property))
         }
         val dops = model.dopViewModel.dopFieldViewModels
         bindDirtyDop(dops[0], fDop1_n, fDop1_1, fDop1_2, fDop1_3, fDop1_4, fDop1_5, fDop1_6, fDop1_7, fDop1_8)
