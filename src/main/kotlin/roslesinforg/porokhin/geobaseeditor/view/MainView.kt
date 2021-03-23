@@ -424,11 +424,6 @@ class MainView : View("My View") {
                         println("Selection kv: ${item.kv} vid: ${item.field1.number}")
                     }
                     isEditable = true
-                    /*anchorpaneConstraints {
-                        topAnchor = 32
-                        leftAnchor = 0
-                        bottomAnchor = 0
-                    }*/
                     prefWidth = 130.0
 
                     readonlyColumn("Кв", Area::kv){
@@ -541,6 +536,9 @@ class MainView : View("My View") {
             }
         }
         topPane.apply {
+            style{
+                backgroundColor += c("#696966")
+            }
             togglebutton(selectFirst = false){
                 tooltip("Связь с MapInfo")
                 maxHeight = 20.0
@@ -578,7 +576,7 @@ class MainView : View("My View") {
                 maxWidth = Dimension(26.0, Dimension.LinearUnits.px)
             }
             onHover {
-                background = Background(BackgroundFill(c(0, 0, 0, 0.3), CornerRadii(4.0), null))
+                background = Background(BackgroundFill(c(250, 250, 0, 0.3), CornerRadii(4.0), null))
             }
             setOnMouseExited {
                 background = null
