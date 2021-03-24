@@ -27,6 +27,7 @@ import roslesinforg.porokhin.areatypes.GeneralTypes
 import roslesinforg.porokhin.rawxlsconverter.RootView
 import javax.imageio.ImageIO
 import org.apache.logging.log4j.kotlin.logger
+import java.io.File
 
 
 fun main() {
@@ -506,22 +507,26 @@ class MainView : GeoBaseEditorView("My View") {
                     "initOutputPath" to controller.inputFilePath))*/
             }
             addNewButton("screen.png", "Сохранить в GIF"){
-                val dir = chooseDirectory("Сохарнить GIF", owner = primaryStage) ?: return@addNewButton
+                val file = chooseFile("Сохарнить GIF", emptyArray(), mode = FileChooserMode.Save, owner = primaryStage)
+                if (file.isEmpty()) return@addNewButton
                 val image = cardLayout.snapshot(null, null)
-                val path = dir.toPath().resolve(Paths.get("${kv_list.selectionModel.selectedItem.id}.gif"))
-                ImageIO.write(SwingFXUtils.fromFXImage(image, null), "GIF", path.toFile())
+                val path = "${kv_list.selectionModel.selectedItem.id}.gif"
+                ImageIO.write(SwingFXUtils.fromFXImage(image, null), "GIF", File(path))
                 flog("Скриншот сохранен в $path")
             }
             addNewButton("change.png", "Изменения"){
                 openInternalWindow(ChangesView::class, Scope())
             }
             addNewButton("save.png", "Сохранить"){
-                val dir = chooseDirectory(
+                val file = chooseFile(
                     "Сохранить",
+                    emptyArray(),
+                    mode = FileChooserMode.Save,
                     owner = primaryStage
-                ) ?: return@addNewButton
-                controller.writeToRawFile(dir)
-                flog("Файл сохранен: $dir")
+                )
+                if (file.isEmpty()) return@addNewButton
+                controller.writeToRawFile(file[0])
+                flog("Файл сохранен: ${file[0].absolutePath}")
             }
             addNewButton("add.png", "Открыть"){
                 val files = chooseFile(
