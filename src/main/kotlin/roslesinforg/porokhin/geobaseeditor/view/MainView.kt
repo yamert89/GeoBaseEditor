@@ -35,7 +35,7 @@ fun main() {
 
 class GeoBaseEditorApp: App(MainView::class)
 
-class MainView : View("My View") {
+class MainView : GeoBaseEditorView("My View") {
     private val logger = logger()
     override val root: BorderPane by fxml("/gui/MainView.fxml")
     val format = DataFormat.lookupMimeType("application/x-java-serialized-object")
@@ -547,17 +547,17 @@ class MainView : View("My View") {
                     marginLeft = 300.0
                 }
                 contentDisplay = ContentDisplay.GRAPHIC_ONLY
-                graphic = getImageResource(20.0, 40.0, "toggle-off.png")
+                graphic = getImageResource(20.0, 40.0, "toggle-off_s.png")
                 action {
                     logger.debug("click")
                     if (this.isSelected) {
                         controller.startDDESession()
-                        graphic = getImageResource(20.0, 40.0, "toggle-on.png")
+                        graphic = getImageResource(20.0, 40.0, "toggle-on_s.png")
                         flog("Открыт канал связи с MapInfo")
                     }
                     else {
                         controller.stopDDESession()
-                        graphic = getImageResource(20.0, 40.0, "toggle-off.png")
+                        graphic = getImageResource(20.0, 40.0, "toggle-off_s.png")
                         flog("Канал связи с MapInfo закрыт")
                     }
                 }
@@ -565,31 +565,7 @@ class MainView : View("My View") {
         }
     }
 
-    private fun ButtonBar.addNewButton(picture: String, tooltip: String, action: () -> Unit){
-        ButtonBar.setButtonUniformSize(this, false)
-        button{
-            action {
-                action()
-            }
-            style{
-                background = null
-                maxWidth = Dimension(26.0, Dimension.LinearUnits.px)
-            }
-            onHover {
-                background = Background(BackgroundFill(c(250, 250, 0, 0.3), CornerRadii(4.0), null))
-            }
-            setOnMouseExited {
-                background = null
-            }
-            tooltip(tooltip)
-            graphic = getImageResource(20.0, 20.0, picture)
-        }
-    }
 
-    private fun getImageResource(height: Double, width: Double, path: String): javafx.scene.image.ImageView = this.resources.imageview("/gui/$path").apply {
-        fitHeight = height
-        fitWidth = width
-    }
 
     private fun bindModel(){
         logger.debug("build model")

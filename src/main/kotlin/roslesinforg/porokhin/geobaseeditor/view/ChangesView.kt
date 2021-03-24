@@ -3,6 +3,7 @@ package roslesinforg.porokhin.geobaseeditor.view
 import com.sun.javafx.property.adapter.PropertyDescriptor
 import javafx.beans.property.Property
 import javafx.geometry.Insets
+import javafx.geometry.NodeOrientation
 import javafx.geometry.Pos
 import javafx.scene.control.ContentDisplay
 import javafx.scene.control.TableCell
@@ -31,28 +32,36 @@ import java.io.File
 import java.io.FileOutputStream
 import org.apache.logging.log4j.kotlin.logger
 
-class ChangesView : View("My View") {
+class ChangesView : GeoBaseEditorView("My View") {
     private val logger = logger()
     val controller = find(roslesinforg.porokhin.geobaseeditor.GeoBaseEditorController::class, MainView.AppScope)
     override val root = flowpane {
         useMaxSize = true
+        padding = Insets(3.0, 0.0, 3.0, 0.0)
         val lines = controller.diff()
         val tNumber = "Строка"
         val tBefore = "До"
         val tAfter = "После"
-        toolbar{
-            button("to Word"){
-                action {
-                    val title = "Лесничество: ${controller.location?.forestry},  участок: ${controller.location?.subForestry}" //todo mapping
-                    val path = "D:/my/wordout.docx"
-                    //val path = "J:/wordout.docx"
-                    val fos = FileOutputStream(path)
-                    MSWordResult(lines, title, tableColLineNumber = tNumber, tableColLine1 = tBefore, tableColLine2 = tAfter).get().write(fos)
-                    fos.flush()
-                    fos.close()
-                    logger.debug("docx file created")
-                }
+        buttonbar{
+
+            maxHeight = 20.0
+            buttonMinWidth = 26.0
+            prefWidth = 450.0
+            nodeOrientation = NodeOrientation.RIGHT_TO_LEFT
+            style{
+                backgroundColor += c("#696966")
             }
+            addNewButton("Word.png", "Экспортировать в MS Word"){
+                val title = "Лесничество: ${controller.location?.forestry},  участок: ${controller.location?.subForestry}" //todo mapping
+                val path = "D:/my/wordout.docx"
+                //val path = "J:/wordout.docx"
+                val fos = FileOutputStream(path)
+                MSWordResult(lines, title, tableColLineNumber = tNumber, tableColLine1 = tBefore, tableColLine2 = tAfter).get().write(fos)
+                fos.flush()
+                fos.close()
+                logger.debug("docx file created")
+            }
+
         }
         tableview(controller.diff()){
             prefWidth = 450.0
