@@ -50,7 +50,7 @@ class ChangesView : GeoBaseEditorView("My View") {
             val word = addNewButton("Word.png", "Экспортировать в MS Word"){
                 val file = chooseFile("Сохранение", filters = emptyArray(), mode = FileChooserMode.Save)
                 if (file.isEmpty()) return@addNewButton
-                val title = "Лесничество: ${controller.location?.forestry},  участок: ${controller.location?.subForestry}" //todo mapping
+                val title = "Лесничество: ${controller.location?.forestry},  участок: ${controller.location?.subForestry}"
                 //val path = "D:/my/wordout.docx"
                 val path = file[0].path + ".docx"
                 val fos = FileOutputStream(path)
