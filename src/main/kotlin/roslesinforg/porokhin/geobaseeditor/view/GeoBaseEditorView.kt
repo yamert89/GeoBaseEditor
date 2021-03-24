@@ -1,6 +1,7 @@
 package roslesinforg.porokhin.geobaseeditor.view
 
 import javafx.scene.Parent
+import javafx.scene.control.Button
 import javafx.scene.control.ButtonBar
 import javafx.scene.layout.Background
 import javafx.scene.layout.BackgroundFill
@@ -9,9 +10,9 @@ import tornadofx.*
 
 abstract class GeoBaseEditorView(title: String): View(title) {
 
-    fun ButtonBar.addNewButton(picture: String, tooltip: String, action: () -> Unit){
+    fun ButtonBar.addNewButton(picture: String, tooltip: String, action: () -> Unit): Button {
         ButtonBar.setButtonUniformSize(this, false)
-        button{
+        val btn = button{
             action {
                 action()
             }
@@ -28,6 +29,7 @@ abstract class GeoBaseEditorView(title: String): View(title) {
             tooltip(tooltip)
             graphic = getImageResource(20.0, 20.0, picture)
         }
+        return btn
     }
 
     fun getImageResource(height: Double, width: Double, path: String): javafx.scene.image.ImageView = this.resources.imageview("/gui/$path").apply {

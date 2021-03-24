@@ -5,10 +5,7 @@ import javafx.beans.property.Property
 import javafx.geometry.Insets
 import javafx.geometry.NodeOrientation
 import javafx.geometry.Pos
-import javafx.scene.control.ContentDisplay
-import javafx.scene.control.TableCell
-import javafx.scene.control.TableColumn
-import javafx.scene.control.TableView
+import javafx.scene.control.*
 import javafx.scene.layout.*
 import javafx.scene.paint.Color
 import javafx.scene.paint.Paint
@@ -43,7 +40,6 @@ class ChangesView : GeoBaseEditorView("My View") {
         val tBefore = "До"
         val tAfter = "После"
         buttonbar{
-
             maxHeight = 20.0
             buttonMinWidth = 26.0
             prefWidth = 450.0
@@ -51,19 +47,25 @@ class ChangesView : GeoBaseEditorView("My View") {
             style{
                 backgroundColor += c("#696966")
             }
-            addNewButton("Word.png", "Экспортировать в MS Word"){
+            val word = addNewButton("Word.png", "Экспортировать в MS Word"){
+                val file = chooseFile("Сохранение", filters = emptyArray(), mode = FileChooserMode.Save)
+                if (file.isEmpty()) return@addNewButton
                 val title = "Лесничество: ${controller.location?.forestry},  участок: ${controller.location?.subForestry}" //todo mapping
-                val path = "D:/my/wordout.docx"
-                //val path = "J:/wordout.docx"
+                //val path = "D:/my/wordout.docx"
+                val path = file[0].path + ".docx"
                 val fos = FileOutputStream(path)
                 MSWordResult(lines, title, tableColLineNumber = tNumber, tableColLine1 = tBefore, tableColLine2 = tAfter).get().write(fos)
                 fos.flush()
                 fos.close()
                 logger.debug("docx file created")
             }
+            word.apply {
+                enableWhen { lines.isNotEmpty().toProperty() }
+            }
 
         }
-        tableview(controller.diff()){
+        if (lines.isEmpty()) information("", "Нет изменений", ButtonType.OK, owner = primaryStage, title = ""){}
+        tableview(lines){
             prefWidth = 450.0
             smartResize()
             column(tNumber, ComparedPair::lineNumber)
