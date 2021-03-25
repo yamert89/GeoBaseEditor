@@ -27,15 +27,14 @@ class TextFieldImpl: TextField() {
             }
 
         }
+        hoverProperty().onChange {
+            if (GeoBaseEditorPreferences.autoSelect.value) {
+                requestFocus()
+                selectAll()
+            }
+        }
 
 
-
-
-
-       /* hoverProperty().onChange { //todo uncomment in production
-            requestFocus()
-            selectAll()
-        }*/
 
 
     }

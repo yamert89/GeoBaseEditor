@@ -5,5 +5,5 @@ import javafx.scene.layout.CornerRadii
 import tornadofx.*
 
 const val FILTERING = "filtering"
-const val ENCODEVALUES = "encodevalues"
+const val AUTOSELECT = "autoselect"
 
