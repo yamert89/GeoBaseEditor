@@ -45,7 +45,7 @@ class GeoBaseEditorController: Controller() {
         try {
             val ar = areas.find { it.id == id }
             logger.debug("selection = ${view!!.kv_list.selectedItem}")
-            if (ar != null) view!!.kv_list.selectionModel.select(areas.indexOf(ar))
+            if (ar != null) view!!.selectItem(areas.indexOf(ar))
             else logger.debug("Area with id = $id not found")
             logger.debug("selection = ${view!!.kv_list.selectedItem}")
         }catch (e: Exception){

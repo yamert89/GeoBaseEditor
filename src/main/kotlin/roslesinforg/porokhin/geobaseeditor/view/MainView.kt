@@ -358,9 +358,9 @@ class MainView : GeoBaseEditorView("My View") {
             }
             filter(fD1, fD2, fD3, fD4, fD5, fD6, fD7, fD8, fD9, fD10){ f ->
                 f.controlNewText.let { d ->
-                    d.isInt() &&  d.toInt() in 2..80 &&
+                    d.isInt() &&  d.toInt() in 2..80/* &&
                             d.let { it.endsWith("0") || it.endsWith("2") || it.endsWith("4") ||
-                            it.endsWith("6") || it.endsWith("8")}
+                            it.endsWith("6") || it.endsWith("8")}*/
                 }
             }
             fBon.filterInput { it.controlNewText.matches("[1-5АБ]{1,2}".toRegex()) }
@@ -385,6 +385,11 @@ class MainView : GeoBaseEditorView("My View") {
             fSumOfTimber9, fSumOfTimber10, f31_count, f31_h, f31_age, f31_proportion1, f31_proportion2)
     }
 
+    fun selectItem(idx: Int){
+        kv_list.selectionModel.select(idx)
+        Platform.runLater { kv_list.scrollTo(idx - 10) }
+    }
+
 
 
     private fun buildKvList(){
@@ -402,7 +407,7 @@ class MainView : GeoBaseEditorView("My View") {
                                 }
                             }
                         }
-                        Platform.runLater { kv_list.scrollTo(it) }
+
                     }
 
                     shortcut(KeyCodeCombination(KeyCode.SUBTRACT)){
