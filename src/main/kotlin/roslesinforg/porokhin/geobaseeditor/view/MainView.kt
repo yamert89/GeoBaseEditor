@@ -24,7 +24,7 @@ import roslesinforg.porokhin.geobaseeditor.model.validation.ValidatorFactory
 import roslesinforg.porokhin.geobaseeditor.model.validation.ValidatorFactory.*
 import roslesinforg.porokhin.geobaseeditor.view.viewmodels.*
 import roslesinforg.porokhin.areatypes.GeneralTypes
-import roslesinforg.porokhin.rawxlsconverter.RootView
+import roslesinforg.porokhin.rawxlsconverter.RawToXLSConverterView
 import javax.imageio.ImageIO
 import org.apache.logging.log4j.kotlin.logger
 import java.io.File
@@ -283,7 +283,7 @@ class MainView : GeoBaseEditorView("My View") {
                 isEditable = false
             }
         }
-        if (Preferences.filtering.value) applyFilters()
+        if (GeoBaseEditorPreferences.filtering.value) applyFilters()
 
 
 
@@ -312,7 +312,7 @@ class MainView : GeoBaseEditorView("My View") {
             val out = Json.encodeToString(model.area)
             println(out)
             Files.write(path, out.toByteArray(UTF_8))
-            Preferences.savePrefs()
+            GeoBaseEditorPreferences.savePrefs()
         }
         primaryStage.isResizable = false
         controller.setMainView(this)
@@ -499,12 +499,9 @@ class MainView : GeoBaseEditorView("My View") {
             }
 
             addNewButton("Excel.png", "Сохранить в MS Excel"){
-                find<RootView>(params = mapOf(
+                find<RawToXLSConverterView>(params = mapOf(
                     "initAreas" to controller.areas.value,
                     "initOutputPath" to controller.inputFilePath)).openWindow(owner = null)
-                /*openInternalWindow(RootView::class, Scope(), params = mapOf(
-                    "initAreas" to controller.areas.value,
-                    "initOutputPath" to controller.inputFilePath))*/
             }
             addNewButton("screen.png", "Сохранить в GIF"){
                 val file = chooseFile("Сохарнить GIF", emptyArray(), mode = FileChooserMode.Save, owner = primaryStage)

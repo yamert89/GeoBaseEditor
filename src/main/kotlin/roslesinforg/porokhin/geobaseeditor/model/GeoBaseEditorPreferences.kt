@@ -1,5 +1,6 @@
 package roslesinforg.porokhin.geobaseeditor.model
 
+import ENCODEVALUES
 import FILTERING
 import javafx.beans.property.SimpleBooleanProperty
 import roslesinforg.porokhin.geobaseeditor.view.MainView
@@ -8,7 +9,7 @@ import java.io.FileOutputStream
 import java.io.FileReader
 import java.util.*
 
-object Preferences { //todo replace to jar
+object GeoBaseEditorPreferences {
     private val file = File("${System.getProperty("user.home")}/geobaseeditor.prefs")
     private val props = Properties()
     val filtering = SimpleBooleanProperty()
