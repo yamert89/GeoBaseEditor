@@ -272,17 +272,19 @@ class MainView : GeoBaseEditorView("My View") {
            // model.area = Json.decodeFromString<Area>(str)
         } else
             AreaModel(Area())*/
+        controller.read(input.toFile())
         bindModel()
         buildKvList() //todo load list
         applyButtons()
 
-        controller.read(input.toFile())
+
         with(controller.location!!){
             fGir.apply {
                 text = GeneralTypes.forestries[forestry.toInt()]?.sub?.get(subForestry.toInt()) ?: ""
                 isEditable = false
             }
         }
+        fKvNumber.isEditable = false
         if (GeoBaseEditorPreferences.filtering.value) applyFilters()
 
 
@@ -407,7 +409,15 @@ class MainView : GeoBaseEditorView("My View") {
                                 }
                             }
                         }
+                    }
+                    model.rebindOnChange(this){
+                        logger.debug("rebind on change - $it")
+                    }
 
+                    onEditCommit {
+                        logger.debug("cont.areas.1 - ${controller.areas[0].field1.number}")
+                        logger.debug("kv_l.items.1 - ${kv_list.items[0].field1.number}")
+                        logger.debug("item in model - ${kv_list.selectionModel.selectedItem.field1.number}")
                     }
 
                     shortcut(KeyCodeCombination(KeyCode.SUBTRACT)){
@@ -438,8 +448,12 @@ class MainView : GeoBaseEditorView("My View") {
                         }
                     }
                     column<Area, Int>("Выд"){
-                        SimpleIntegerProperty(it.value.field1.number) as Property<Int>
-                    }.makeEditable()
+                        it.value.field1.number.toProperty() as Property<Int>
+                    }.makeEditable().apply {
+                        this.setOnEditCommit {
+                            model.field1Model.numberProperty.value = it.newValue
+                        }
+                    }
                     column("ЦНЛ", Area::categoryProtection){
                         style{ textAlignment = TextAlignment.CENTER}
                         setOnEditCommit {
@@ -499,13 +513,22 @@ class MainView : GeoBaseEditorView("My View") {
 
     private fun applyButtons(){
         buttonBar.apply {
+            addNewButton("info.png", "О программе"){
+                information("Редкатор Базы v. 1.0.0", """
+                    Добавить выдел - NUM+
+                    Скопировать выдел - CTRL + NUM+
+                    Удалить выдел - NUM-
+                    
+                    Порохин А. А. 2021 г.
+                """.trimIndent(), ButtonType.OK, title = "О программе" )
+            }
             addNewButton("prefs.png", "Настройки"){
                 openInternalWindow(PreferenceView::class)
             }
 
             addNewButton("Excel.png", "Сохранить в MS Excel"){
                 find<RawToXLSConverterView>(params = mapOf(
-                    "initAreas" to controller.areas.value,
+                    "initAreas" to controller.areas,
                     "initOutputPath" to controller.inputFilePath)).openWindow(owner = null)
             }
             addNewButton("screen.png", "Сохранить в GIF"){

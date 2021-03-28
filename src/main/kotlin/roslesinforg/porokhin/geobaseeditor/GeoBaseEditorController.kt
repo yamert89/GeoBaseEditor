@@ -15,8 +15,6 @@ import roslesinforg.porokhin.filecomparator.service.ComparedPair
 import roslesinforg.porokhin.filecomparator.service.LineType
 import roslesinforg.porokhin.geobaseeditor.service.DDEClient
 import roslesinforg.porokhin.geobaseeditor.view.MainView
-import tornadofx.Controller
-import tornadofx.toObservable
 import java.io.File
 import java.io.FileOutputStream
 import java.io.OutputStreamWriter
@@ -24,12 +22,11 @@ import java.nio.charset.Charset
 import java.nio.file.Files
 import java.nio.file.Paths
 import org.apache.logging.log4j.kotlin.logger
-import tornadofx.find
-import tornadofx.selectedItem
+import tornadofx.*
 
 class GeoBaseEditorController: Controller() {
     private val logger = logger()
-    var areas: SimpleListProperty<Area> = SimpleListProperty()
+    var areas: ObservableList<Area> = SimpleListProperty()
     var location: Location? = null
     var updateCounter = SimpleIntegerProperty(0)
     private val dataReader: DataReader = RawDataReader()
@@ -61,7 +58,7 @@ class GeoBaseEditorController: Controller() {
     fun read(file: File){
         val data = dataReader.read(file)
         location = data.first
-        areas.set(data.second.toObservable())
+        areas = data.second.asObservable()
         updateCounter.set(updateCounter.value++)
         inputFilePath = file.path
     }
