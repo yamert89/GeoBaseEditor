@@ -20,12 +20,18 @@ class ValidatorFactory(private val context: ValidationContext) {
             }
         }
     }
+    fun dValidator(textField: TextField): ValidationContext.Validator<String>{
+        return textFieldValidatorError(textField, "Неправильный диаметр"){
+            it!!.isNotEmpty() && !it.matches("\\d[24680]".toRegex())
+        }
+    }
 
     private fun textFieldValidatorError(textField: TextField, message: String, condition: (String?) -> Boolean): ValidationContext.Validator<String>{
         return context.Validator(textField, textField.textProperty(), ValidationTrigger.OnChange(300)){
             if(condition(it)) error(message) else null
         }
     }
+
 
 
 }

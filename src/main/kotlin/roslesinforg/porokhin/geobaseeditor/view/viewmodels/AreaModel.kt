@@ -53,6 +53,18 @@ class AreaModel(var area: Area) : ItemViewModel<Area>(area) {
 
 
 
+   /* override fun roolback(){
+        field1Model.rollback()
+        field2ViewModel.rollback()
+        field3ViewModel.rollback()
+        field4ViewModel.rollback()
+        field31ViewModel.rollback()
+        dopViewModel.rollback()
+        f10Elements.forEach { it.rollback() }
+    }*/
+
+
+
 
 }
 

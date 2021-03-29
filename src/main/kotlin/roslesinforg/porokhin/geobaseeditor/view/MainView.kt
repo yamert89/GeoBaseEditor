@@ -282,16 +282,12 @@ class MainView : GeoBaseEditorView("My View") {
             fGir.apply {
                 text = GeneralTypes.forestries[forestry.toInt()]?.sub?.get(subForestry.toInt()) ?: ""
                 isEditable = false
+                enableWhen { enableFieldsTrigger }
             }
         }
         fKvNumber.isEditable = false
         if (GeoBaseEditorPreferences.filtering.value) applyFilters()
 
-
-
-        //todo add smart validators
-
-        /*
         validationHelper.stringValidatorFor(fSpecies, fType, fSubType, fTypeDeforest,
           fSpecies1, fSpecies2, fSpecies3, fSpecies4, fSpecies5, fSpecies6, fSpecies7, fSpecies8, fSpecies9,
           f31_element1, f31_element2)
@@ -307,7 +303,8 @@ class MainView : GeoBaseEditorView("My View") {
         fOrigin1, fOrigin2, fOrigin3, fOrigin4, fOrigin5, fOrigin6, fOrigin7, fOrigin8, fOrigin9, fOrigin10, fWeight1,
         fWeight2, fWeight3, fWeight4, fWeight5, fWeight6, fWeight7, fWeight8, fWeight9, fWeight10, fSumOfTimber1,
         fSumOfTimber2, fSumOfTimber3, fSumOfTimber4, fSumOfTimber5, fSumOfTimber6, fSumOfTimber7, fSumOfTimber8,
-        fSumOfTimber9, fSumOfTimber10, f31_count, f31_h, f31_age, f31_proportion1, f31_proportion2)*/
+        fSumOfTimber9, fSumOfTimber10, f31_count, f31_h, f31_age, f31_proportion1, f31_proportion2)
+        validationHelper.dValidatorFor(fD1, fD2, fD3, fD4, fD5, fD6, fD7, fD8, fD9, fD10)
 
         primaryStage.setOnCloseRequest {
             model.commit()
@@ -400,24 +397,26 @@ class MainView : GeoBaseEditorView("My View") {
             left {
                 kv_list = tableview(controller.areas){
                     onSelectionChange {
-                        if (!enableFieldsTrigger.value) enableFieldsTrigger.value = true
-                        if (!this@MainView.validationContext.validate()){
-                            error("Внимание", "Имеются некорректно заполненные поля, сохранить их?", ButtonType.OK, ButtonType.NO, title = "Ошибка"){
-                                if (it == ButtonType.NO){
-                                    model.rollback()
-                                    selectionModel.clearSelection()//fixme IOB exception
-                                }
-                            }
-                        }
+                        print("dd")
                     }
                     model.rebindOnChange(this){
-                        logger.debug("rebind on change - $it")
-                    }
+                        if (!enableFieldsTrigger.value) {
+                            enableFieldsTrigger.value = true
+                            return@rebindOnChange
+                        }
 
-                    onEditCommit {
-                        logger.debug("cont.areas.1 - ${controller.areas[0].field1.number}")
-                        logger.debug("kv_l.items.1 - ${kv_list.items[0].field1.number}")
-                        logger.debug("item in model - ${kv_list.selectionModel.selectedItem.field1.number}")
+                        val message = validationHelper.generalChecking(
+                            listOf(fProportion1, fProportion2, fProportion3, fProportion4, fProportion5,
+                            fProportion6, fProportion7, fProportion8, fProportion9, fProportion10),
+                            listOf(fHrang1, fHrang2, fHrang3, fHrang4, fHrang5, fHrang6, fHrang7, fHrang8,
+                            fHrang9, fHrang10))
+                        var notice = ""
+                        if (!validationContext.validate()) notice += "Имеются некорректно заполненные поля"
+                        if (message.isNotEmpty()) notice += "\n$message"
+                        if (notice.isNotEmpty()) {
+                            error("Внимание", notice, ButtonType.OK, title = "Ошибка")
+                            validationHelper.failedAreas.add(item.id)
+                        } else validationHelper.failedAreas.remove(item.id)
                     }
 
                     shortcut(KeyCodeCombination(KeyCode.SUBTRACT)){
@@ -543,15 +542,20 @@ class MainView : GeoBaseEditorView("My View") {
                 openInternalWindow(ChangesView::class, Scope())
             }
             addNewButton("save.png", "Сохранить"){
-                val file = chooseFile(
-                    "Сохранить",
-                    emptyArray(),
-                    mode = FileChooserMode.Save,
-                    owner = primaryStage
-                )
-                if (file.isEmpty()) return@addNewButton
-                controller.writeToRawFile(file[0])
-                flog("Файл сохранен: ${file[0].absolutePath}")
+                with(validationHelper.failedAreas){
+                    if (isNotEmpty()) error("Внимание", "Найдены ошибки в выделах ${this.joinToString()}")
+                    else {
+                        val file = chooseFile(
+                            "Сохранить",
+                            emptyArray(),
+                            mode = FileChooserMode.Save,
+                            owner = primaryStage
+                        )
+                        if (file.isEmpty()) return@addNewButton
+                        controller.writeToRawFile(file[0])
+                        flog("Файл сохранен: ${file[0].absolutePath}")
+                    }
+                }
             }
             addNewButton("add.png", "Открыть"){
                 val files = chooseFile(
