@@ -591,7 +591,10 @@ class MainView : GeoBaseEditorView("Редактор базы") {
                 )
                 if (files.isEmpty()) return@addNewButton
                 controller.read(files[0])
-                flog("Открыт файл ${files[0].absolutePath}")
+                val loc = controller.location!!
+                val forestry = GeneralTypes.forestries[loc.forestry.toInt()]
+                val path = files[0].absolutePath.let { if (it.length > 50) "...${it.substring(it.lastIndex - 10, it.length)}" else it}
+                flog("Открыт файл ${path}.  Лесничество: ${forestry?.name ?: loc.forestry} , Участок: ${forestry?.sub?.get(loc.subForestry.toInt()) ?: loc.subForestry}")
             }
         }
         topPane.apply {
