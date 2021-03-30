@@ -19,16 +19,14 @@ class ValidationHelper(private val validationContext: ValidationContext, private
         fields.forEach { validationContext.addValidator(validationFactory.dValidator(it)) }
     }
 
-    fun generalChecking(proportions: List<TextField>, hRangs: List<TextField>): String{
+    fun generalChecking(hRangsAndProportions: List<Pair<TextField, TextField>>): String{ //todo other hRangs
         val messages =  StringBuilder()
-        if (proportions.filter { it.text.isNotEmpty() }
-                .sumBy { it.text.toInt() } != 10) messages.append("Сумма коэффициентов запаса не равна 10")
-        for (i in 0..9) {
-            if (hRangs[i].text.isEmpty() && proportions[i].text.isNotEmpty()) {
-                messages.append("\nЯрус должен быть заполнен")
-                break
-            }
-        }
+        val elements = hRangsAndProportions.filter { it.second.text.isNotEmpty() }
+        val hR1 = elements.filter { it.first.text == "1" }
+        val hR9 = elements.filter { it.first.text == "9" }
+        if (hR1.isNotEmpty() && hR1.sumBy { it.second.text.toInt() } != 10 ||
+            hR9.isNotEmpty() && hR9.sumBy { it.second.text.toInt() } != 10) messages.append("Сумма коэффициентов запаса не равна 10")
+        if (hRangsAndProportions.any { it.first.text.isEmpty() && it.second.text.isNotEmpty() }) messages.append("\nЯрус должен быть заполнен")
         return messages.toString()
     }
 

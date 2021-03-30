@@ -36,11 +36,10 @@ fun main() {
 
 class GeoBaseEditorApp: App(MainView::class)
 
-class MainView : GeoBaseEditorView("My View") {
+class MainView : GeoBaseEditorView("Редактор базы") {
     private val logger = logger()
-    override val root: BorderPane by fxml("/gui/MainView.fxml")
-    val format = DataFormat.lookupMimeType("application/x-java-serialized-object")
-    //val format = DataFormat("application/x-java-serialized-object")
+    override val root: TabPane by fxml("/gui/MainView.fxml")
+    val borderPane: BorderPane by fxid()
     val cardLayout: AnchorPane by fxid()
     val fGir: TextField by fxid()
     val fKvNumber: TextFieldImpl by fxid()
@@ -248,6 +247,7 @@ class MainView : GeoBaseEditorView("My View") {
     val validationHelper = ValidationHelper(validationContext, factory)
     val filteringHelper = FilteringHelper()
     val enableFieldsTrigger = SimpleBooleanProperty()
+    var isDragged = false
 
     
     var model: AreaModel
@@ -314,6 +314,7 @@ class MainView : GeoBaseEditorView("My View") {
             GeoBaseEditorPreferences.savePrefs()
         }
         primaryStage.isResizable = false
+        primaryStage.icons.add(resources.image("/gui/Desktop.png"))
         controller.setMainView(this)
 
     }
@@ -393,7 +394,7 @@ class MainView : GeoBaseEditorView("My View") {
 
     private fun buildKvList(){
 
-        root.apply { //todo table view with row expander
+        borderPane.apply { //todo table view with row expander
             left {
                 kv_list = tableview(controller.areas){
                     onSelectionChange {
@@ -405,11 +406,18 @@ class MainView : GeoBaseEditorView("My View") {
                             return@rebindOnChange
                         }
 
-                        val message = validationHelper.generalChecking(
-                            listOf(fProportion1, fProportion2, fProportion3, fProportion4, fProportion5,
-                            fProportion6, fProportion7, fProportion8, fProportion9, fProportion10),
-                            listOf(fHrang1, fHrang2, fHrang3, fHrang4, fHrang5, fHrang6, fHrang7, fHrang8,
-                            fHrang9, fHrang10))
+                        val message = validationHelper.generalChecking( listOf(
+                            fHrang1 to fProportion1,
+                            fHrang2 to fProportion2,
+                            fHrang3 to fProportion3,
+                            fHrang4 to fProportion4,
+                            fHrang5 to fProportion5,
+                            fHrang6 to fProportion6,
+                            fHrang7 to fProportion7,
+                            fHrang8 to fProportion8,
+                            fHrang9 to fProportion9,
+                            fHrang10 to fProportion10)
+                        )
                         var notice = ""
                         if (!validationContext.validate()) notice += "Имеются некорректно заполненные поля"
                         if (message.isNotEmpty()) notice += "\n$message"
@@ -465,7 +473,13 @@ class MainView : GeoBaseEditorView("My View") {
 
                     setRowFactory {
                         val row = TableRow<Area>()
+                        val format = DataFormat.lookupMimeType("application/x-java-serialized-object") ?: DataFormat("application/x-java-serialized-object")
+                        //val format = DataFormat("application/x-java-serialized-object")
+                        var draggedRow: TableRow<Area> = TableRow()
+
                         row.setOnDragDetected {
+                            draggedRow = row
+                            isDragged = true
                             val index = row.index
                             if(row.isEmpty) return@setOnDragDetected
                             val dragboard = row.startDragAndDrop(TransferMode.MOVE)
@@ -486,6 +500,7 @@ class MainView : GeoBaseEditorView("My View") {
                             }
                         }
                         row.setOnDragDropped {
+                            isDragged = false
                             val db = it.dragboard
                             if(!db.hasContent(format)) return@setOnDragDropped
                             val dragIndex: Int = db.getContent(format) as Int
@@ -498,6 +513,16 @@ class MainView : GeoBaseEditorView("My View") {
                             selectionModel.select(dropIndex)
                             it.consume()
 
+                        }
+                        val defBackground = row.background
+                        row.setOnDragEntered {
+                            if (row == draggedRow) return@setOnDragEntered
+                            row.background = Background(BackgroundFill(c(0, 0, 0, 0.2), null, null))
+
+                        }
+                        row.setOnDragExited {
+                            if (row == draggedRow) return@setOnDragExited
+                            row.background = defBackground
                         }
                         row
                     }

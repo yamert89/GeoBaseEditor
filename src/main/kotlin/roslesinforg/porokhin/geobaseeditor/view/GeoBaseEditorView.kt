@@ -1,5 +1,6 @@
 package roslesinforg.porokhin.geobaseeditor.view
 
+import javafx.scene.Node
 import javafx.scene.Parent
 import javafx.scene.control.Button
 import javafx.scene.control.ButtonBar
