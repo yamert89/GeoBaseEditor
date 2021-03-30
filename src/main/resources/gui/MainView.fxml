@@ -13,6 +13,7 @@
 <?import roslesinforg.porokhin.geobaseeditor.model.TextFieldImpl?>
 
 
+<?import javafx.scene.control.TextField?>
 <TabPane xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <tabs>
       <Tab closable="false" text="Редактор">

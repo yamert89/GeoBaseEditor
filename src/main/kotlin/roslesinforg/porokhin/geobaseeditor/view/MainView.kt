@@ -41,7 +41,7 @@ class MainView : GeoBaseEditorView("Редактор базы") {
     override val root: TabPane by fxml("/gui/MainView.fxml")
     val borderPane: BorderPane by fxid()
     val cardLayout: AnchorPane by fxid()
-    val fGir: TextField by fxid()
+    val fGir: TextFieldImpl by fxid()
     val fKvNumber: TextFieldImpl by fxid()
     val fAreaNumber: TextFieldImpl by fxid()
     val fArea: TextFieldImpl by fxid()
@@ -256,7 +256,7 @@ class MainView : GeoBaseEditorView("Редактор базы") {
 
     val text: StringProperty = SimpleStringProperty("dd")
     init {
-        model = AreaModel(Area())
+        model = AreaModel(Area(field10 = Field10(ArrayList<ElementOfForest>().apply { fill(ElementOfForest()) })))
         path = Paths.get("D:/my/json")
         input = Paths.get("D:/my/0309")
         if (Files.notExists(Paths.get("D:/my"))) {
@@ -283,9 +283,17 @@ class MainView : GeoBaseEditorView("Редактор базы") {
                 text = GeneralTypes.forestries[forestry.toInt()]?.sub?.get(subForestry.toInt()) ?: ""
                 isEditable = false
                 enableWhen { enableFieldsTrigger }
+                style{
+                    backgroundColor += c(0, 0, 0, 0.0)
+                }
             }
         }
-        fKvNumber.isEditable = false
+        fKvNumber.apply {
+            isEditable = false
+            style{
+                backgroundColor += c(0, 0, 0, 0.0)
+            }
+        }
         if (GeoBaseEditorPreferences.filtering.value) applyFilters()
 
         validationHelper.stringValidatorFor(fSpecies, fType, fSubType, fTypeDeforest,
@@ -570,6 +578,7 @@ class MainView : GeoBaseEditorView("Редактор базы") {
                 with(validationHelper.failedAreas){
                     if (isNotEmpty()) error("Внимание", "Найдены ошибки в выделах ${this.joinToString()}")
                     else {
+                        kv_list.editModel.commit()
                         val file = chooseFile(
                             "Сохранить",
                             emptyArray(),
