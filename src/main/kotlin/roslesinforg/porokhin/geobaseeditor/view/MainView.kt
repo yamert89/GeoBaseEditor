@@ -472,7 +472,7 @@ class MainView : GeoBaseEditorView("Редактор базы") {
                     column("ЦНЛ", Area::categoryProtection){
                         style{ textAlignment = TextAlignment.CENTER}
                         setOnEditCommit {
-                            if (GeneralTypes.categoryProtection(it.newValue) == it.newValue.toString()) {
+                            if (GeneralTypes.typesOfProtection[it.newValue] == it.newValue.toString()) {
                                 error(header = "Ошибка", content = "Некорректное значение")
                                 editModel.rollbackSelected()
                             }
