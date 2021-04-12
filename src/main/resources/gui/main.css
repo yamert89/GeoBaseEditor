@@ -18,5 +18,17 @@
     -fx-pref-height: 13;
 }
 .back{
-    -fx-background-image: url('back_670_с2.jpg');
+    -fx-background-image: url('back_670.jpg');
+}
+.selection{
+    -fx-background-color: rgba(0, 250, 0, 0.2);
+    -fx-effect: dropshadow(gaussian , #000, 8, 0.2, 0, 0);
+}
+.selectBtn{
+    -fx-background-color: rgba(230, 0, 0, 0.2);
+}
+.selectBtnActive{
+    -fx-background-color: rgba(230, 0, 0, 0.3);
+    -fx-border-width: 2px;
+    -fx-border-color: black;
 }

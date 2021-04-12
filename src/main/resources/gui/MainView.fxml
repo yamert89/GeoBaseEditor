@@ -10,10 +10,9 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import roslesinforg.porokhin.geobaseeditor.model.TextFieldImpl?>
 
-
-<?import javafx.scene.control.TextField?>
 <TabPane xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <tabs>
       <Tab closable="false" text="Редактор">
@@ -614,6 +613,26 @@
                         <TextFieldImpl fx:id="fAction2" layoutX="479.0" layoutY="78.0" prefHeight="17.0" prefWidth="34.0" styleClass="field" stylesheets="@main.css" />
                         <TextFieldImpl fx:id="fAction3" layoutX="547.0" layoutY="78.0" prefHeight="17.0" prefWidth="33.0" styleClass="field" stylesheets="@main.css" />
                         <TextFieldImpl fx:id="fAction1" layoutX="398.0" layoutY="77.0" prefHeight="20.0" prefWidth="28.0" styleClass="field" stylesheets="@main.css" />
+                        <Pane fx:id="selection1" layoutX="34.0" layoutY="203.0" prefHeight="14.0" prefWidth="305.0" styleClass="selection" stylesheets="@main.css" visible="false" />
+                        <Pane fx:id="selection2" layoutX="34.0" layoutY="220.0" prefHeight="14.0" prefWidth="305.0" styleClass="selection" stylesheets="@main.css" visible="false" />
+                        <Pane fx:id="selection3" layoutX="34.0" layoutY="237.0" prefHeight="14.0" prefWidth="305.0" styleClass="selection" stylesheets="@main.css" visible="false" />
+                        <Pane fx:id="selection4" layoutX="34.0" layoutY="255.0" prefHeight="14.0" prefWidth="305.0" styleClass="selection" stylesheets="@main.css" visible="false" />
+                        <Pane fx:id="selection5" layoutX="34.0" layoutY="273.0" prefHeight="14.0" prefWidth="305.0" styleClass="selection" stylesheets="@main.css" visible="false" />
+                        <Pane fx:id="selection6" layoutX="353.0" layoutY="203.0" prefHeight="14.0" prefWidth="305.0" styleClass="selection" stylesheets="@main.css" visible="false" />
+                        <Pane fx:id="selection7" layoutX="353.0" layoutY="220.0" prefHeight="14.0" prefWidth="305.0" styleClass="selection" stylesheets="@main.css" visible="false" />
+                        <Pane fx:id="selection8" layoutX="353.0" layoutY="237.0" prefHeight="14.0" prefWidth="305.0" styleClass="selection" stylesheets="@main.css" visible="false" />
+                        <Pane fx:id="selection9" layoutX="353.0" layoutY="255.0" prefHeight="14.0" prefWidth="305.0" styleClass="selection" stylesheets="@main.css" visible="false" />
+                        <Pane fx:id="selection10" layoutX="353.0" layoutY="273.0" prefHeight="14.0" prefWidth="305.0" styleClass="selection" stylesheets="@main.css" visible="false" />
+                        <Pane fx:id="selectBtn1" layoutX="16.0" layoutY="202.0" prefHeight="16.0" prefWidth="18.0" styleClass="selectBtn" stylesheets="@main.css" visible="false" />
+                        <Pane fx:id="selectBtn2" layoutX="16.0" layoutY="220.0" prefHeight="15.0" prefWidth="18.0" styleClass="selectBtn" stylesheets="@main.css" visible="false" />
+                        <Pane fx:id="selectBtn3" layoutX="16.0" layoutY="237.0" prefHeight="15.0" prefWidth="18.0" styleClass="selectBtn" stylesheets="@main.css" visible="false" />
+                        <Pane fx:id="selectBtn4" layoutX="16.0" layoutY="255.0" prefHeight="15.0" prefWidth="18.0" styleClass="selectBtn" stylesheets="@main.css" visible="false" />
+                        <Pane fx:id="selectBtn5" layoutX="16.0" layoutY="272.0" prefHeight="15.0" prefWidth="18.0" styleClass="selectBtn" stylesheets="@main.css" visible="false" />
+                        <Pane fx:id="selectBtn6" layoutX="336.0" layoutY="202.0" prefHeight="15.0" prefWidth="18.0" styleClass="selectBtn" stylesheets="@main.css" visible="false" />
+                        <Pane fx:id="selectBtn7" layoutX="336.0" layoutY="219.0" prefHeight="15.0" prefWidth="18.0" styleClass="selectBtn" stylesheets="@main.css" visible="false" />
+                        <Pane fx:id="selectBtn8" layoutX="336.0" layoutY="237.0" prefHeight="15.0" prefWidth="18.0" styleClass="selectBtn" stylesheets="@main.css" visible="false" />
+                        <Pane fx:id="selectBtn9" layoutX="336.0" layoutY="254.0" prefHeight="15.0" prefWidth="18.0" styleClass="selectBtn" stylesheets="@main.css" visible="false" />
+                        <Pane fx:id="selectBtn10" layoutX="336.0" layoutY="271.0" prefHeight="15.0" prefWidth="18.0" styleClass="selectBtn" stylesheets="@main.css" visible="false" />
                      </children>
                   </AnchorPane>
                </center>
