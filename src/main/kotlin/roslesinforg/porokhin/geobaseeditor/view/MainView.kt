@@ -258,10 +258,8 @@ class MainView : GeoBaseEditorView("Редактор базы") {
     private lateinit var btnChanges: Button
     private val buttonBar: ButtonBar by fxid()
     private val topPane: HBox by fxid()
-
     private var path: Path
     private var input: Path //todo for test
-
     private val validationContext = ValidationContext()
     private val factory = ValidatorFactory(validationContext)
     private val validationHelper = ValidationHelper(validationContext, factory)
@@ -269,13 +267,10 @@ class MainView : GeoBaseEditorView("Редактор базы") {
     private val enableFieldsTrigger = SimpleBooleanProperty()
     private var isDragged = false
     lateinit var kv_list: TableView<Area>
-
-    
     var model: AreaModel
     object AppScope: Scope()
     val controller : GeoBaseEditorController by inject(AppScope)
 
-    val text: StringProperty = SimpleStringProperty("dd")
     init {
         selectionButtons.addAll(listOf(
             selectBtn1,
@@ -309,14 +304,6 @@ class MainView : GeoBaseEditorView("Редактор базы") {
             input = Paths.get("J:/0309")
         }
 
-        /*
-        model = if(Files.exists(path)) {
-            val str = Files.readAllLines(path, UTF_8).joinToString()
-            println("json loaded: $str")
-            AreaModel(Json.decodeFromString<Area>(str))
-           // model.area = Json.decodeFromString<Area>(str)
-        } else
-            AreaModel(Area())*/
         controller.read(input.toFile())
         bindModel()
         buildKvList() //todo load list
@@ -357,6 +344,7 @@ class MainView : GeoBaseEditorView("Редактор базы") {
         fWeight2, fWeight3, fWeight4, fWeight5, fWeight6, fWeight7, fWeight8, fWeight9, fWeight10, fSumOfTimber1,
         fSumOfTimber2, fSumOfTimber3, fSumOfTimber4, fSumOfTimber5, fSumOfTimber6, fSumOfTimber7, fSumOfTimber8,
         fSumOfTimber9, fSumOfTimber10, f31_count, f31_h, f31_age, f31_proportion1, f31_proportion2)
+
         validationHelper.dValidatorFor(fD1, fD2, fD3, fD4, fD5, fD6, fD7, fD8, fD9, fD10)
 
         primaryStage.setOnCloseRequest {
@@ -527,7 +515,6 @@ class MainView : GeoBaseEditorView("Редактор базы") {
                     setRowFactory {
                         val row = TableRow<Area>()
                         val format = DataFormat.lookupMimeType("application/x-java-serialized-object") ?: DataFormat("application/x-java-serialized-object")
-                        //val format = DataFormat("application/x-java-serialized-object")
                         var draggedRow: TableRow<Area> = TableRow()
 
                         row.setOnDragDetected {
@@ -581,9 +568,6 @@ class MainView : GeoBaseEditorView("Редактор базы") {
                     }
                 }
             }
-
-
-
         }
 
     }
@@ -708,11 +692,8 @@ class MainView : GeoBaseEditorView("Редактор базы") {
                 styleClass.remove(selClass)
             }
         }
-
         enableWhen { enableFieldsTrigger }
     }
-
-
 
     private fun bindModel(){
         logger.debug("build model")
@@ -890,8 +871,6 @@ class MainView : GeoBaseEditorView("Редактор базы") {
         bindDirtyDop(dops[3], fDop4_n, fDop4_1, fDop4_2, fDop4_3, fDop4_4, fDop4_5, fDop4_6, fDop4_7, fDop4_8)
         bindDirtyDop(dops[4], fDop5_n, fDop5_1, fDop5_2, fDop5_3, fDop5_4, fDop5_5, fDop5_6, fDop5_7, fDop5_8)
         bindDirtyDop(dops[5], fDop6_n, fDop6_1, fDop6_2, fDop6_3, fDop6_4, fDop6_5, fDop6_6, fDop6_7, fDop6_8)
-
-
     }
 
     private fun bindDirtyDop(
@@ -972,6 +951,7 @@ class MainView : GeoBaseEditorView("Редактор базы") {
     private infix fun TextFieldImpl.bystr(other: Property<String>) = this.bind(property = other, readonly = false, converter = FieldStringConverter())
     private infix fun TextFieldImpl.byint(other: Property<Int>) = this.bind(property = other, readonly = false, converter = FieldIntConverter())
     private infix fun TextFieldImpl.byfloat(other: Property<Float>) = this.bind(property = other, converter = FieldFloatConverter())
+
     fun flog(message: String) {
         fLog.text = "> $message"
     }
