@@ -6,4 +6,5 @@ import tornadofx.*
 
 const val FILTERING = "filtering"
 const val AUTOSELECT = "autoselect"
+const val CLASS_SELECT_BTN_ACTIVE = "selectBtnActive"
 

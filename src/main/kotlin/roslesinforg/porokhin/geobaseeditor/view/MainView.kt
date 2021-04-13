@@ -1,5 +1,6 @@
 package roslesinforg.porokhin.geobaseeditor.view
 
+import CLASS_SELECT_BTN_ACTIVE
 import javafx.application.Platform
 import javafx.beans.property.*
 import javafx.embed.swing.SwingFXUtils
@@ -21,7 +22,6 @@ import roslesinforg.porokhin.geobaseeditor.model.*
 import roslesinforg.porokhin.geobaseeditor.model.validation.FilteringHelper
 import roslesinforg.porokhin.geobaseeditor.model.validation.ValidationHelper
 import roslesinforg.porokhin.geobaseeditor.model.validation.ValidatorFactory
-import roslesinforg.porokhin.geobaseeditor.model.validation.ValidatorFactory.*
 import roslesinforg.porokhin.geobaseeditor.view.viewmodels.*
 import roslesinforg.porokhin.areatypes.GeneralTypes
 import roslesinforg.porokhin.rawxlsconverter.RawToXLSConverterView
@@ -438,9 +438,7 @@ class MainView : GeoBaseEditorView("Редактор базы") {
         borderPane.apply { //todo table view with row expander
             left {
                 kv_list = tableview(controller.areas){
-                    onSelectionChange {
-                        print("dd")
-                    }
+
                     model.rebindOnChange(this){
                         if (!enableFieldsTrigger.value) {
                             enableFieldsTrigger.value = true
@@ -466,6 +464,9 @@ class MainView : GeoBaseEditorView("Редактор базы") {
                             error("Внимание", notice, ButtonType.OK, title = "Ошибка")
                             validationHelper.failedAreas.add(item.id)
                         } else validationHelper.failedAreas.remove(item.id)
+
+                        selections.forEach { it.isVisible = false }
+                        selectionButtons.forEach { it.styleClass.remove(CLASS_SELECT_BTN_ACTIVE) }
                     }
 
                     shortcut(KeyCodeCombination(KeyCode.SUBTRACT)){
@@ -674,25 +675,29 @@ class MainView : GeoBaseEditorView("Редактор базы") {
         selectBtn8 bindSelection selection8
         selectBtn9 bindSelection selection9
         selectBtn10 bindSelection selection10
+        selectionButtons.forEach {
+            it.enableWhen { enableFieldsTrigger }
+        }
     }
 
     private infix fun ToggleButton.bindSelection(pane: Pane){
-        val selClass = "selectBtnActive"
+
         action {
             if (isSelected){
                 pane.isVisible = true
-                styleClass.add(selClass)
+                styleClass.add(CLASS_SELECT_BTN_ACTIVE)
                 selectionButtons.forEach { if(it != this) {
                     it.isSelected = false
-                    it.styleClass.remove(selClass)
+                    it.styleClass.remove(CLASS_SELECT_BTN_ACTIVE)
                 }}
                 selections.forEach{ if (it != pane) it.isVisible = false }
+
+
             } else{
                 pane.isVisible = false
-                styleClass.remove(selClass)
+                styleClass.remove(CLASS_SELECT_BTN_ACTIVE)
             }
         }
-        enableWhen { enableFieldsTrigger }
     }
 
     private fun bindModel(){
@@ -749,6 +754,23 @@ class MainView : GeoBaseEditorView("Редактор базы") {
             f10Elements[9].bind10(fHrang10, fProportion10, fSpecies10, fAge10, fH10, fD10,
                 fTradeClass10, fOrigin10, fWeight10, fSumOfTimber10)
 
+            shortcut(KeyCodeCombination(KeyCode.DELETE)){
+                val selected = selections.find { it.isVisible } ?: return@shortcut
+                val idx = selections.indexOf(selected)
+                f10Elements[idx].rebind { item.apply {
+                    hRang = 0
+                    proportion = 0
+                    species = ""
+                    age = 0
+                    h = 0f
+                    d = 0
+                    classOfTrade = 0
+                    weight = 0f
+                    sumOfTimber = 0
+                } }
+                f10Elements[idx].commit()
+            }
+
             field31ViewModel.apply {
                 f31_count byfloat countProperty
                 f31_age byint ageProperty
@@ -764,6 +786,30 @@ class MainView : GeoBaseEditorView("Редактор базы") {
             bindDop()
             stylize()
         }
+    }
+
+    private fun ElementOfForestViewModel.bind10(
+        hRang: TextFieldImpl,
+        proportion: TextFieldImpl,
+        species: TextFieldImpl,
+        age: TextFieldImpl,
+        h: TextFieldImpl,
+        d: TextFieldImpl,
+        tradeClass: TextFieldImpl,
+        origin: TextFieldImpl,
+        weight: TextFieldImpl,
+        sumOfT: TextFieldImpl
+    ){
+        hRang byint hRangProperty
+        proportion byint proportionProperty
+        species bystr speciesProperty
+        age byint ageProperty
+        h byfloat hProperty
+        d byint dProperty
+        tradeClass byint tradeClassProperty
+        origin byint generationProperty
+        weight byfloat weightProperty
+        sumOfT byint sumOfTimberProperty
     }
 
     private fun bindDop(){
@@ -924,29 +970,7 @@ class MainView : GeoBaseEditorView("Редактор базы") {
         }
     }
 
-    private fun ElementOfForestViewModel.bind10(
-        hRang: TextFieldImpl,
-        proportion: TextFieldImpl,
-        species: TextFieldImpl,
-        age: TextFieldImpl,
-        h: TextFieldImpl,
-        d: TextFieldImpl,
-        tradeClass: TextFieldImpl,
-        origin: TextFieldImpl,
-        weight: TextFieldImpl,
-        sumOfT: TextFieldImpl
-    ){
-        hRang byint hRangProperty
-        proportion byint proportionProperty
-        species bystr speciesProperty
-        age byint ageProperty
-        h byfloat hProperty
-        d byint dProperty
-        tradeClass byint tradeClassProperty
-        origin byint generationProperty
-        weight byfloat weightProperty
-        sumOfT byint sumOfTimberProperty
-    }
+
 
     private infix fun TextFieldImpl.bystr(other: Property<String>) = this.bind(property = other, readonly = false, converter = FieldStringConverter())
     private infix fun TextFieldImpl.byint(other: Property<Int>) = this.bind(property = other, readonly = false, converter = FieldIntConverter())
