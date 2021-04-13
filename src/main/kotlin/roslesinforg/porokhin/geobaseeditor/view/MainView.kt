@@ -239,16 +239,18 @@ class MainView : GeoBaseEditorView("Редактор базы") {
     private val selection8: Pane by fxid()
     private val selection9: Pane by fxid()
     private val selection10: Pane by fxid()
-    private val selectBtn1: Pane by fxid()
-    private val selectBtn2: Pane by fxid()
-    private val selectBtn3: Pane by fxid()
-    private val selectBtn4: Pane by fxid()
-    private val selectBtn5: Pane by fxid()
-    private val selectBtn6: Pane by fxid()
-    private val selectBtn7: Pane by fxid()
-    private val selectBtn8: Pane by fxid()
-    private val selectBtn9: Pane by fxid()
-    private val selectBtn10: Pane by fxid()
+    private val selections = mutableListOf<Pane>()
+    private val selectBtn1: ToggleButton by fxid()
+    private val selectBtn2: ToggleButton by fxid()
+    private val selectBtn3: ToggleButton by fxid()
+    private val selectBtn4: ToggleButton by fxid()
+    private val selectBtn5: ToggleButton by fxid()
+    private val selectBtn6: ToggleButton by fxid()
+    private val selectBtn7: ToggleButton by fxid()
+    private val selectBtn8: ToggleButton by fxid()
+    private val selectBtn9: ToggleButton by fxid()
+    private val selectBtn10: ToggleButton by fxid()
+    private val selectionButtons = mutableListOf<ToggleButton>()
     private val fLog: Label by fxid()
     private lateinit var btnOpen: Button
     private lateinit var btnSave: Button
@@ -275,6 +277,30 @@ class MainView : GeoBaseEditorView("Редактор базы") {
 
     val text: StringProperty = SimpleStringProperty("dd")
     init {
+        selectionButtons.addAll(listOf(
+            selectBtn1,
+            selectBtn2,
+            selectBtn3,
+            selectBtn4,
+            selectBtn5,
+            selectBtn6,
+            selectBtn7,
+            selectBtn8,
+            selectBtn9,
+            selectBtn10,
+        ))
+        selections.addAll(listOf(
+            selection1,
+            selection2,
+            selection3,
+            selection4,
+            selection5,
+            selection6,
+            selection7,
+            selection8,
+            selection9,
+            selection10,
+        ))
         model = AreaModel(Area(field10 = Field10(ArrayList<ElementOfForest>().apply { fill(ElementOfForest()) })))
         path = Paths.get("D:/my/json")
         input = Paths.get("D:/my/0309")
@@ -654,16 +680,36 @@ class MainView : GeoBaseEditorView("Редактор базы") {
             }
         }
 
-        selectBtn1.apply {
-            onLeftClick {
-                selection1.isVisible = true
-                this.styleClass.add("selectBtnActive")
-            }
-        }
+        selectBtn1 bindSelection selection1
+        selectBtn2 bindSelection selection2
+        selectBtn3 bindSelection selection3
+        selectBtn4 bindSelection selection4
+        selectBtn5 bindSelection selection5
+        selectBtn6 bindSelection selection6
+        selectBtn7 bindSelection selection7
+        selectBtn8 bindSelection selection8
+        selectBtn9 bindSelection selection9
+        selectBtn10 bindSelection selection10
     }
 
-    private fun applySelectBtn(){
+    private infix fun ToggleButton.bindSelection(pane: Pane){
+        val selClass = "selectBtnActive"
+        action {
+            if (isSelected){
+                pane.isVisible = true
+                styleClass.add(selClass)
+                selectionButtons.forEach { if(it != this) {
+                    it.isSelected = false
+                    it.styleClass.remove(selClass)
+                }}
+                selections.forEach{ if (it != pane) it.isVisible = false }
+            } else{
+                pane.isVisible = false
+                styleClass.remove(selClass)
+            }
+        }
 
+        enableWhen { enableFieldsTrigger }
     }
 
 
