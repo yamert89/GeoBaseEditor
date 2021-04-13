@@ -428,13 +428,8 @@ class MainView : GeoBaseEditorView("Редактор базы") {
 
                     model.rebindOnChange(this){ area ->
                         if (area == null) return@rebindOnChange
-                        commit()
-                        item = area
-                        println("Selection kv: ${item.kv} vid: ${item.field1.number}")
-
                         if (!enableFieldsTrigger.value) {
                             enableFieldsTrigger.value = true
-                            return@rebindOnChange
                         }
 
                         val message = validationHelper.generalChecking( listOf(
@@ -461,6 +456,10 @@ class MainView : GeoBaseEditorView("Редактор базы") {
                             it.second.isVisible = false
                             it.first.styleClass.remove(CLASS_SELECT_BTN_ACTIVE)
                         }
+
+                        commit()
+                        item = area
+                        println("Selection kv: ${item.kv} vid: ${item.field1.number}")
 
                     }
 
