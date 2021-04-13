@@ -25,7 +25,10 @@
     -fx-effect: dropshadow(gaussian , #000, 8, 0.2, 0, 0);
 }
 .selectBtn{
-    -fx-background-color: rgba(230, 0, 0, 0.2);
+    -fx-background-color: rgba(230, 0, 0, 0.05);
+}
+.selectBtn:hover{
+    -fx-background-color: rgba(230, 0, 0, 0.3);
 }
 .selectBtnActive{
     -fx-background-color: rgba(230, 0, 0, 0.3);

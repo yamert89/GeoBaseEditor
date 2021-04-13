@@ -229,6 +229,26 @@ class MainView : GeoBaseEditorView("Редактор базы") {
     private val fDop4_8: TextFieldImpl by fxid()
     private val fDop5_8: TextFieldImpl by fxid()
     private val fDop6_8: TextFieldImpl by fxid()
+    private val selection1: Pane by fxid()
+    private val selection2: Pane by fxid()
+    private val selection3: Pane by fxid()
+    private val selection4: Pane by fxid()
+    private val selection5: Pane by fxid()
+    private val selection6: Pane by fxid()
+    private val selection7: Pane by fxid()
+    private val selection8: Pane by fxid()
+    private val selection9: Pane by fxid()
+    private val selection10: Pane by fxid()
+    private val selectBtn1: Pane by fxid()
+    private val selectBtn2: Pane by fxid()
+    private val selectBtn3: Pane by fxid()
+    private val selectBtn4: Pane by fxid()
+    private val selectBtn5: Pane by fxid()
+    private val selectBtn6: Pane by fxid()
+    private val selectBtn7: Pane by fxid()
+    private val selectBtn8: Pane by fxid()
+    private val selectBtn9: Pane by fxid()
+    private val selectBtn10: Pane by fxid()
     private val fLog: Label by fxid()
     private lateinit var btnOpen: Button
     private lateinit var btnSave: Button
@@ -633,6 +653,17 @@ class MainView : GeoBaseEditorView("Редактор базы") {
                 }
             }
         }
+
+        selectBtn1.apply {
+            onLeftClick {
+                selection1.isVisible = true
+                this.styleClass.add("selectBtnActive")
+            }
+        }
+    }
+
+    private fun applySelectBtn(){
+
     }
 
 
