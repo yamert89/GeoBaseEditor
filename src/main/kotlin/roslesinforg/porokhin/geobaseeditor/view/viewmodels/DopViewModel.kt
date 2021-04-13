@@ -93,14 +93,14 @@ class DopViewModel(area: Area): ItemViewModel<Area>(area) {
                         area.field23 = Field23().apply {
                             with(info){
                                 clear()
-                                if ( model.col1.value?.isNotEmpty() == true) add( model.col1.value.toInt()) else return@apply
-                                if ( model.col2.value?.isNotEmpty() == true) add( model.col2.value.toInt()) else return@apply
-                                if ( model.col3.value?.isNotEmpty() == true) add( model.col3.value.toInt()) else return@apply
-                                if ( model.col4.value?.isNotEmpty() == true) add( model.col4.value.toInt()) else return@apply
-                                if ( model.col5.value?.isNotEmpty() == true) add( model.col5.value.toInt()) else return@apply
-                                if ( model.col6.value?.isNotEmpty() == true) add( model.col6.value.toInt()) else return@apply
-                                if ( model.col7.value?.isNotEmpty() == true) add( model.col7.value.toInt()) else return@apply
-                                if ( model.col8.value?.isNotEmpty() == true) add( model.col8.value.toInt()) else return@apply
+                                if ( model.col1.value?.isNotEmpty() == true) add( model.col1.value.toInt())
+                                if ( model.col2.value?.isNotEmpty() == true) add( model.col2.value.toInt())
+                                if ( model.col3.value?.isNotEmpty() == true) add( model.col3.value.toInt())
+                                if ( model.col4.value?.isNotEmpty() == true) add( model.col4.value.toInt())
+                                if ( model.col5.value?.isNotEmpty() == true) add( model.col5.value.toInt())
+                                if ( model.col6.value?.isNotEmpty() == true) add( model.col6.value.toInt())
+                                if ( model.col7.value?.isNotEmpty() == true) add( model.col7.value.toInt())
+                                if ( model.col8.value?.isNotEmpty() == true) add( model.col8.value.toInt())
                             }
 
                         }
