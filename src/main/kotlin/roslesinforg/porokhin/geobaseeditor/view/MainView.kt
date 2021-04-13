@@ -426,7 +426,12 @@ class MainView : GeoBaseEditorView("Редактор базы") {
             left {
                 kv_list = tableview(controller.areas){
 
-                    model.rebindOnChange(this){
+                    model.rebindOnChange(this){ area ->
+                        if (area == null) return@rebindOnChange
+                        commit()
+                        item = area
+                        println("Selection kv: ${item.kv} vid: ${item.field1.number}")
+
                         if (!enableFieldsTrigger.value) {
                             enableFieldsTrigger.value = true
                             return@rebindOnChange
@@ -456,6 +461,7 @@ class MainView : GeoBaseEditorView("Редактор базы") {
                             it.second.isVisible = false
                             it.first.styleClass.remove(CLASS_SELECT_BTN_ACTIVE)
                         }
+
                     }
 
                     shortcut(KeyCodeCombination(KeyCode.SUBTRACT)){
@@ -472,11 +478,7 @@ class MainView : GeoBaseEditorView("Редактор базы") {
                         controller.newEmptyArea(kv_list.selectedItem!!)
                         kv_list.selectionModel.select(kv_list.selectionModel.selectedIndex + 1)
                     }
-                    model.rebindOnChange(this){ model ->
-                        if (model == null) return@rebindOnChange
-                        item = model
-                        println("Selection kv: ${item.kv} vid: ${item.field1.number}")
-                    }
+
                     isEditable = true
                     prefWidth = 130.0
 
@@ -605,6 +607,7 @@ class MainView : GeoBaseEditorView("Редактор базы") {
                             owner = primaryStage
                         )
                         if (file.isEmpty()) return@addNewButton
+                        model.replaceEmptyFields(model.item)
                         controller.writeToRawFile(file[0])
                         flog("Файл сохранен: ${file[0].absolutePath}")
                     }
