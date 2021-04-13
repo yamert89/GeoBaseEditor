@@ -239,7 +239,7 @@ class MainView : GeoBaseEditorView("Редактор базы") {
     private val selection8: Pane by fxid()
     private val selection9: Pane by fxid()
     private val selection10: Pane by fxid()
-    private val selections = mutableListOf<Pane>()
+    private val selectionsF10 = mutableListOf<Pair<ToggleButton, Pane>>()
     private val selectBtn1: ToggleButton by fxid()
     private val selectBtn2: ToggleButton by fxid()
     private val selectBtn3: ToggleButton by fxid()
@@ -250,7 +250,6 @@ class MainView : GeoBaseEditorView("Редактор базы") {
     private val selectBtn8: ToggleButton by fxid()
     private val selectBtn9: ToggleButton by fxid()
     private val selectBtn10: ToggleButton by fxid()
-    private val selectionButtons = mutableListOf<ToggleButton>()
     private val fLog: Label by fxid()
     private lateinit var btnOpen: Button
     private lateinit var btnSave: Button
@@ -272,29 +271,17 @@ class MainView : GeoBaseEditorView("Редактор базы") {
     val controller : GeoBaseEditorController by inject(AppScope)
 
     init {
-        selectionButtons.addAll(listOf(
-            selectBtn1,
-            selectBtn2,
-            selectBtn3,
-            selectBtn4,
-            selectBtn5,
-            selectBtn6,
-            selectBtn7,
-            selectBtn8,
-            selectBtn9,
-            selectBtn10,
-        ))
-        selections.addAll(listOf(
-            selection1,
-            selection2,
-            selection3,
-            selection4,
-            selection5,
-            selection6,
-            selection7,
-            selection8,
-            selection9,
-            selection10,
+        selectionsF10.addAll(listOf(
+            selectBtn1 to selection1,
+            selectBtn2 to selection2,
+            selectBtn3 to selection3,
+            selectBtn4 to selection4,
+            selectBtn5 to selection5,
+            selectBtn6 to selection6,
+            selectBtn7 to selection7,
+            selectBtn8 to selection8,
+            selectBtn9 to selection9,
+            selectBtn10 to selection10,
         ))
         model = AreaModel(Area(field10 = Field10(ArrayList<ElementOfForest>().apply { fill(ElementOfForest()) })))
         path = Paths.get("D:/my/json")
@@ -465,8 +452,10 @@ class MainView : GeoBaseEditorView("Редактор базы") {
                             validationHelper.failedAreas.add(item.id)
                         } else validationHelper.failedAreas.remove(item.id)
 
-                        selections.forEach { it.isVisible = false }
-                        selectionButtons.forEach { it.styleClass.remove(CLASS_SELECT_BTN_ACTIVE) }
+                        selectionsF10.forEach {
+                            it.second.isVisible = false
+                            it.first.styleClass.remove(CLASS_SELECT_BTN_ACTIVE)
+                        }
                     }
 
                     shortcut(KeyCodeCombination(KeyCode.SUBTRACT)){
@@ -665,38 +654,24 @@ class MainView : GeoBaseEditorView("Редактор базы") {
             }
         }
 
-        selectBtn1 bindSelection selection1
-        selectBtn2 bindSelection selection2
-        selectBtn3 bindSelection selection3
-        selectBtn4 bindSelection selection4
-        selectBtn5 bindSelection selection5
-        selectBtn6 bindSelection selection6
-        selectBtn7 bindSelection selection7
-        selectBtn8 bindSelection selection8
-        selectBtn9 bindSelection selection9
-        selectBtn10 bindSelection selection10
-        selectionButtons.forEach {
-            it.enableWhen { enableFieldsTrigger }
-        }
-    }
-
-    private infix fun ToggleButton.bindSelection(pane: Pane){
-
-        action {
-            if (isSelected){
-                pane.isVisible = true
-                styleClass.add(CLASS_SELECT_BTN_ACTIVE)
-                selectionButtons.forEach { if(it != this) {
-                    it.isSelected = false
-                    it.styleClass.remove(CLASS_SELECT_BTN_ACTIVE)
-                }}
-                selections.forEach{ if (it != pane) it.isVisible = false }
-
-
-            } else{
-                pane.isVisible = false
-                styleClass.remove(CLASS_SELECT_BTN_ACTIVE)
+        selectionsF10.forEach { pair ->
+            pair.first.apply {
+                action {
+                    if (isSelected){
+                        pair.second.isVisible = true
+                        pair.first.styleClass.add(CLASS_SELECT_BTN_ACTIVE)
+                        selectionsF10.forEach { if(it.first != pair.first) {
+                            it.first.isSelected = false
+                            it.first.styleClass.remove(CLASS_SELECT_BTN_ACTIVE)
+                            if (it.second != pair.second) it.second.isVisible = false
+                        }}
+                    } else{
+                        pair.second.isVisible = false
+                        pair.first.styleClass.remove(CLASS_SELECT_BTN_ACTIVE)
+                    }
+                }
             }
+            pair.first.enableWhen { enableFieldsTrigger }
         }
     }
 
@@ -755,8 +730,8 @@ class MainView : GeoBaseEditorView("Редактор базы") {
                 fTradeClass10, fOrigin10, fWeight10, fSumOfTimber10)
 
             shortcut(KeyCodeCombination(KeyCode.DELETE)){
-                val selected = selections.find { it.isVisible } ?: return@shortcut
-                val idx = selections.indexOf(selected)
+                val selected = selectionsF10.find { it.second.isVisible } ?: return@shortcut
+                val idx = selectionsF10.indexOf(selected)
                 f10Elements[idx].rebind { item.apply {
                     hRang = 0
                     proportion = 0
@@ -769,6 +744,8 @@ class MainView : GeoBaseEditorView("Редактор базы") {
                     sumOfTimber = 0
                 } }
                 f10Elements[idx].commit()
+                selected.second.isVisible = false
+                selected.first.styleClass.remove(CLASS_SELECT_BTN_ACTIVE)
             }
 
             field31ViewModel.apply {

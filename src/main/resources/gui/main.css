@@ -18,21 +18,19 @@
     -fx-pref-height: 13;
 }
 .back{
-    -fx-background-image: url('back_670.jpg');
+    -fx-background-image: url('back_670_c2.jpg');
 }
 .selection{
     -fx-background-color: rgba(0, 250, 0, 0.2);
     -fx-effect: dropshadow(gaussian , #000, 8, 0.2, 0, 0);
 }
 .selectBtn{
-    -fx-background-color: rgba(230, 0, 0, 0.05);
+    -fx-background-color: rgba(0, 250, 0, 0.05);
 }
 .selectBtn:hover{
-    -fx-background-color: rgba(230, 0, 0, 0.3);
+    -fx-background-color: rgba(0, 250, 0, 0.2);
 }
 .selectBtnActive{
-    -fx-background-color: rgba(230, 0, 0, 0.3);
-    -fx-border-width: 1px;
-    -fx-border-radius: 3px;
-    -fx-border-color: black;
+    -fx-background-color: rgba(0, 250, 0, 0.2);
+    -fx-effect: dropshadow(gaussian , #000, 8, 0.3, 0, 0);
 }
