@@ -33,7 +33,9 @@ class TextFieldImpl: TextField() {
                 selectAll()
             }
         }
-
+        /*textProperty().onChange {
+            text = it?.toUpperCase()
+        }*/
 
 
 

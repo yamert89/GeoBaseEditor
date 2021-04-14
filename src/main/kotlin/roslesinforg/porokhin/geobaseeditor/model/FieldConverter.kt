@@ -3,6 +3,9 @@ package roslesinforg.porokhin.geobaseeditor.model
 import javafx.util.StringConverter
 import javafx.util.converter.FloatStringConverter
 import javafx.util.converter.IntegerStringConverter
+import java.text.FieldPosition
+import java.text.Format
+import java.text.ParsePosition
 
 class FieldIntConverter: IntegerStringConverter() {
 
@@ -31,15 +34,29 @@ class FieldFloatConverter: FloatStringConverter(){
 
 class FieldStringConverter: StringConverter<String>(){ //fixme not running
     override fun toString(s: String?): String {
-        return when{
+        return s?.toUpperCase()?.trim().let {
+            println("Converted value $it")
+        it} ?: ""/*when{
             s == "0" || s == "0.0" || s == null -> ""
             s.endsWith(".0") -> s.replace(".0", "")
             else -> s
-        }
+        }*/
     }
 
     override fun fromString(string: String?): String {
         return string ?: ""
+    }
+
+}
+
+class StringFormat : Format() {
+    override fun format(obj: Any?, toAppendTo: StringBuffer, pos: FieldPosition): StringBuffer {
+        println(obj)
+        return StringBuffer((obj as String).toUpperCase().trim())
+    }
+
+    override fun parseObject(source: String?, pos: ParsePosition): Any {
+        TODO("Not yet implemented")
     }
 
 }

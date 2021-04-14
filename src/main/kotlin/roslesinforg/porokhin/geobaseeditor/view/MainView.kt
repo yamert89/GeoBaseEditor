@@ -391,9 +391,9 @@ class MainView : GeoBaseEditorView("Редактор базы") {
                             it.endsWith("6") || it.endsWith("8")}*/
                 }
             }
-            fBon.filterInput { it.controlNewText.matches("[1-5АБ]{1,2}".toRegex()) }
+            fBon.filterInput { it.controlNewText.matches("[1-5АБаб]{1,2}".toRegex()) }
             fType.filterInput { it.controlNewText.matches("[А-Яа-я\\s]{1,5}".toRegex()) }
-            fSubType.filterInput { it.controlNewText.matches("[А-Я]{2}".toRegex()) }
+            fSubType.filterInput { it.controlNewText.matches("[А-Яа-я]{2}".toRegex()) }
         }
     }
 
@@ -951,7 +951,7 @@ class MainView : GeoBaseEditorView("Редактор базы") {
 
 
 
-    private infix fun TextFieldImpl.bystr(other: Property<String>) = this.bind(property = other, readonly = false, converter = FieldStringConverter())
+    private infix fun TextFieldImpl.bystr(other: Property<String>) = this.bind(property = other, readonly = false, format = StringFormat())
     private infix fun TextFieldImpl.byint(other: Property<Int>) = this.bind(property = other, readonly = false, converter = FieldIntConverter())
     private infix fun TextFieldImpl.byfloat(other: Property<Float>) = this.bind(property = other, converter = FieldFloatConverter())
 
