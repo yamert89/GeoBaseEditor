@@ -4,8 +4,10 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.FlowPane?>
@@ -13,7 +15,6 @@
 <?import javafx.scene.layout.Pane?>
 <?import roslesinforg.porokhin.geobaseeditor.model.TextFieldImpl?>
 
-<?import javafx.scene.control.ToggleButton?>
 <TabPane xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <tabs>
       <Tab closable="false" text="Редактор">
@@ -624,25 +625,26 @@
                         <Pane fx:id="selection8" layoutX="353.0" layoutY="237.0" prefHeight="14.0" prefWidth="305.0" styleClass="selection" stylesheets="@main.css" visible="false" />
                         <Pane fx:id="selection9" layoutX="353.0" layoutY="255.0" prefHeight="14.0" prefWidth="305.0" styleClass="selection" stylesheets="@main.css" visible="false" />
                         <Pane fx:id="selection10" layoutX="353.0" layoutY="273.0" prefHeight="14.0" prefWidth="305.0" styleClass="selection" stylesheets="@main.css" visible="false" />
-                        <ToggleButton fx:id="selectBtn1" layoutX="16.0" layoutY="202.0" prefHeight="16.0" prefWidth="18.0" styleClass="selectBtn" stylesheets="@main.css"  minHeight="15.0"/>
-                        <ToggleButton fx:id="selectBtn2" layoutX="16.0" layoutY="220.0" prefHeight="15.0" prefWidth="18.0" styleClass="selectBtn" stylesheets="@main.css"  minHeight="15.0"/>
-                        <ToggleButton fx:id="selectBtn3" layoutX="16.0" layoutY="237.0" prefHeight="15.0" prefWidth="18.0" styleClass="selectBtn" stylesheets="@main.css"  minHeight="15.0"/>
-                        <ToggleButton fx:id="selectBtn4" layoutX="16.0" layoutY="255.0" prefHeight="15.0" prefWidth="18.0" styleClass="selectBtn" stylesheets="@main.css"  minHeight="15.0"/>
-                        <ToggleButton fx:id="selectBtn5" layoutX="16.0" layoutY="272.0" prefHeight="15.0" prefWidth="18.0" styleClass="selectBtn" stylesheets="@main.css"  minHeight="15.0"/>
-                        <ToggleButton fx:id="selectBtn6" layoutX="336.0" layoutY="202.0" prefHeight="15.0" prefWidth="18.0" styleClass="selectBtn" stylesheets="@main.css" minHeight="15.0" />
-                        <ToggleButton fx:id="selectBtn7" layoutX="336.0" layoutY="219.0" prefHeight="15.0" prefWidth="18.0" styleClass="selectBtn" stylesheets="@main.css" minHeight="15.0" />
-                        <ToggleButton fx:id="selectBtn8" layoutX="336.0" layoutY="237.0" prefHeight="15.0" prefWidth="18.0" styleClass="selectBtn" stylesheets="@main.css" minHeight="15.0" />
-                        <ToggleButton fx:id="selectBtn9" layoutX="336.0" layoutY="254.0" prefHeight="15.0" prefWidth="18.0" styleClass="selectBtn" stylesheets="@main.css" minHeight="15.0" />
-                        <ToggleButton fx:id="selectBtn10" layoutX="336.0" layoutY="271.0" prefHeight="15.0" prefWidth="18.0" styleClass="selectBtn" stylesheets="@main.css" minHeight="15.0"/>
+                        <ToggleButton fx:id="selectBtn1" layoutX="16.0" layoutY="202.0" minHeight="15.0" prefHeight="16.0" prefWidth="18.0" styleClass="selectBtn" stylesheets="@main.css" />
+                        <ToggleButton fx:id="selectBtn2" layoutX="16.0" layoutY="220.0" minHeight="15.0" prefHeight="15.0" prefWidth="18.0" styleClass="selectBtn" stylesheets="@main.css" />
+                        <ToggleButton fx:id="selectBtn3" layoutX="16.0" layoutY="237.0" minHeight="15.0" prefHeight="15.0" prefWidth="18.0" styleClass="selectBtn" stylesheets="@main.css" />
+                        <ToggleButton fx:id="selectBtn4" layoutX="16.0" layoutY="255.0" minHeight="15.0" prefHeight="15.0" prefWidth="18.0" styleClass="selectBtn" stylesheets="@main.css" />
+                        <ToggleButton fx:id="selectBtn5" layoutX="16.0" layoutY="272.0" minHeight="15.0" prefHeight="15.0" prefWidth="18.0" styleClass="selectBtn" stylesheets="@main.css" />
+                        <ToggleButton fx:id="selectBtn6" layoutX="336.0" layoutY="202.0" minHeight="15.0" prefHeight="15.0" prefWidth="18.0" styleClass="selectBtn" stylesheets="@main.css" />
+                        <ToggleButton fx:id="selectBtn7" layoutX="336.0" layoutY="219.0" minHeight="15.0" prefHeight="15.0" prefWidth="18.0" styleClass="selectBtn" stylesheets="@main.css" />
+                        <ToggleButton fx:id="selectBtn8" layoutX="336.0" layoutY="237.0" minHeight="15.0" prefHeight="15.0" prefWidth="18.0" styleClass="selectBtn" stylesheets="@main.css" />
+                        <ToggleButton fx:id="selectBtn9" layoutX="336.0" layoutY="254.0" minHeight="15.0" prefHeight="15.0" prefWidth="18.0" styleClass="selectBtn" stylesheets="@main.css" />
+                        <ToggleButton fx:id="selectBtn10" layoutX="336.0" layoutY="271.0" minHeight="15.0" prefHeight="15.0" prefWidth="18.0" styleClass="selectBtn" stylesheets="@main.css" />
                      </children>
                   </AnchorPane>
                </center>
                <bottom>
-                  <Label fx:id="fLog" nodeOrientation="LEFT_TO_RIGHT" textFill="#1f04a4" BorderPane.alignment="CENTER_LEFT">
-                     <BorderPane.margin>
-                        <Insets left="20.0" />
-                     </BorderPane.margin>
-                  </Label>
+                  <AnchorPane fx:id="fFooter" prefHeight="17.0" prefWidth="800.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <Label fx:id="fLog" nodeOrientation="LEFT_TO_RIGHT" textFill="#1f04a4" AnchorPane.leftAnchor="0.0" />
+                        <ProgressBar fx:id="fProgress" prefWidth="200.0" progress="1.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="0.0" />
+                     </children>
+                  </AnchorPane>
                </bottom>
             </BorderPane>
          </content>

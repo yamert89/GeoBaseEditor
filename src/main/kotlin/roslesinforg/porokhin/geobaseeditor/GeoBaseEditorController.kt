@@ -1,5 +1,6 @@
 package roslesinforg.porokhin.geobaseeditor
 
+import javafx.beans.property.SimpleDoubleProperty
 import javafx.beans.property.SimpleIntegerProperty
 import javafx.beans.property.SimpleListProperty
 import javafx.collections.ObservableList
@@ -29,10 +30,12 @@ class GeoBaseEditorController: Controller() {
     var areas: ObservableList<Area> = SimpleListProperty()
     var location: Location? = null
     var updateCounter = SimpleIntegerProperty(0)
-    private val dataReader: DataReader = RawDataReader()
+    val progressStatusProperty = SimpleDoubleProperty()
+    private val dataReader: DataReader = RawDataReader(progressStatusProperty)
     var inputFilePath = ""
     var view: MainView? = null
     var ddeSession: DDEClient = DDEClient(this)
+
 
     fun setMainView(mainView: MainView) {
         view = mainView
@@ -56,8 +59,10 @@ class GeoBaseEditorController: Controller() {
     fun stopDDESession() = ddeSession.close()
 
     fun read(file: File){
+
         val data = dataReader.read(file)
         location = data.first
+        //areas.addAll(data.second)
         areas = data.second.asObservable()
         updateCounter.set(updateCounter.value++)
         inputFilePath = file.path
@@ -94,9 +99,9 @@ class GeoBaseEditorController: Controller() {
 
     fun diff(): ObservableList<ComparedPair>{
         val inputFile = File(inputFilePath)
-        //val current = Files.createTempFile("", "").toFile() //todo uncomment in prod
+        val current = Files.createTempFile("", "").toFile()
         //val current = File("D:/my/rawTest")
-        val current = File("J:/rawTest")
+        //val current = File("J:/rawTest")
         writeToRawFile(current)
         return FileComparator(inputFile, current, Charset.forName("Cp866")).compare().toObservable()
     }

@@ -106,10 +106,7 @@ class ChangesView : GeoBaseEditorView("My View") {
             }
             logger.debug("End construct")
         }
-        progress = imageview(Image("/gui/loading.gif")){
-            fitHeight = 50.0
-            fitWidth = 50.0
-        }
+        progress = this.loadProgressBar()
     }
 
     private fun fillTable(difResult: ObservableList<ComparedPair>){

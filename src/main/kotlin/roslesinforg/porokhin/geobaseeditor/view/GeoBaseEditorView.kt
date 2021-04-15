@@ -1,9 +1,12 @@
 package roslesinforg.porokhin.geobaseeditor.view
 
+import javafx.event.EventTarget
 import javafx.scene.Node
 import javafx.scene.Parent
 import javafx.scene.control.Button
 import javafx.scene.control.ButtonBar
+import javafx.scene.image.Image
+import javafx.scene.image.ImageView
 import javafx.scene.layout.Background
 import javafx.scene.layout.BackgroundFill
 import javafx.scene.layout.CornerRadii
@@ -36,5 +39,12 @@ abstract class GeoBaseEditorView(title: String): View(title) {
     fun getImageResource(height: Double, width: Double, path: String): javafx.scene.image.ImageView = this.resources.imageview("/gui/$path").apply {
         fitHeight = height
         fitWidth = width
+    }
+
+    fun EventTarget.loadProgressBar(width: Double = 50.0, height: Double = 50.0): ImageView {
+        return imageview(Image("/gui/loading.gif")){
+            fitHeight = height
+            fitWidth = width
+        }
     }
 }

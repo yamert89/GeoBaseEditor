@@ -9,6 +9,7 @@ import javafx.scene.effect.BlurType
 import javafx.scene.effect.DropShadow
 import javafx.scene.effect.Effect
 import javafx.scene.effect.Shadow
+import javafx.scene.image.ImageView
 import javafx.scene.input.*
 import javafx.scene.layout.*
 import javafx.scene.text.TextAlignment
@@ -262,6 +263,7 @@ class MainView : GeoBaseEditorView("Редактор базы") {
     private lateinit var btnChanges: Button
     private val buttonBar: ButtonBar by fxid()
     private val topPane: HBox by fxid()
+    private val fProgress: ProgressBar by fxid()
     private var path: Path
     private var input: Path //todo for test
     private val validationContext = ValidationContext()
@@ -296,22 +298,13 @@ class MainView : GeoBaseEditorView("Редактор базы") {
             input = Paths.get("J:/0309")
         }
 
-        controller.read(input.toFile())
+        //controller.read(input.toFile())
         bindModel()
-        buildKvList() //todo load list
+        buildKvList()
         applyButtons()
 
 
-        with(controller.location!!){
-            fGir.apply {
-                text = GeneralTypes.forestries[forestry.toInt()]?.sub?.get(subForestry.toInt()) ?: ""
-                isEditable = false
-                enableWhen { enableFieldsTrigger }
-                style{
-                    backgroundColor += c(0, 0, 0, 0.0)
-                }
-            }
-        }
+
         fKvNumber.apply {
             isEditable = false
             style{
@@ -349,6 +342,18 @@ class MainView : GeoBaseEditorView("Редактор базы") {
         primaryStage.isResizable = false
         primaryStage.icons.add(resources.image("/gui/Desktop.png"))
         controller.setMainView(this)
+        fProgress.bind(controller.progressStatusProperty)
+        /*cardLayout.apply {
+            progress = this.loadProgressBar(100.0, 100.0).apply {
+                anchorpaneConstraints {
+                    bottomAnchor = 100
+                    topAnchor = 0
+                    leftAnchor = 100
+                    rightAnchor = 0
+                }
+            }
+        }*/
+
 
     }
 
@@ -429,6 +434,7 @@ class MainView : GeoBaseEditorView("Редактор базы") {
 
         borderPane.apply { //todo table view with row expander
             left {
+
                 kv_list = tableview(controller.areas){
 
                     model.rebindOnChange(this){ area ->
@@ -563,7 +569,9 @@ class MainView : GeoBaseEditorView("Редактор базы") {
                         }
                         row
                     }
+                    smartResize()
                 }
+
             }
         }
 
@@ -626,11 +634,35 @@ class MainView : GeoBaseEditorView("Редактор базы") {
                     filters = arrayOf()
                 )
                 if (files.isEmpty()) return@addNewButton
-                controller.read(files[0])
-                val loc = controller.location!!
-                val forestry = GeneralTypes.forestries[loc.forestry.toInt()]
-                val path = files[0].absolutePath.let { if (it.length > 50) "...${it.substring(it.lastIndex - 10, it.length)}" else it}
-                flog("Открыт файл ${path}.  Лесничество: ${forestry?.name ?: loc.forestry} , Участок: ${forestry?.sub?.get(loc.subForestry.toInt()) ?: loc.subForestry}")
+                fProgress.isVisible = true
+                runAsync {
+                    controller.read(files[0])
+                    fProgress.isVisible = false
+                } ui{
+                    val loc = controller.location!!
+                    val forestry = GeneralTypes.forestries[loc.forestry.toInt()]
+                    with(loc){
+                        fGir.apply {
+                            text = forestry?.sub?.get(subForestry.toInt()) ?: ""
+                            isEditable = false
+                            enableWhen { enableFieldsTrigger }
+                            style{
+                                backgroundColor += c(0, 0, 0, 0.0)
+                            }
+                        }
+                    }
+
+                    kv_list.items = controller.areas
+                    kv_list.smartResize()
+
+                    val path = files[0].absolutePath.let { if (it.length > 50) "...${it.substring(it.lastIndex - 10, it.length)}" else it}
+                    flog("Открыт файл ${path}.  Лесничество: ${forestry?.name ?: loc.forestry} , Участок: ${forestry?.sub?.get(loc.subForestry.toInt()) ?: loc.subForestry}")
+                }
+
+
+
+
+
             }
         }
         topPane.apply {
@@ -963,7 +995,7 @@ class MainView : GeoBaseEditorView("Редактор базы") {
 
 
 
-    private infix fun TextFieldImpl.bystr(other: Property<String>) = this.bind(property = other, readonly = false, format = StringFormat())
+    private infix fun TextFieldImpl.bystr(other: Property<String>) = this.bind(property = other)
     private infix fun TextFieldImpl.byint(other: Property<Int>) = this.bind(property = other, readonly = false, converter = FieldIntConverter())
     private infix fun TextFieldImpl.byfloat(other: Property<Float>) = this.bind(property = other, converter = FieldFloatConverter())
 
