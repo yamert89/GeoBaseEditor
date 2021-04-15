@@ -5,6 +5,10 @@ import javafx.application.Platform
 import javafx.beans.property.*
 import javafx.embed.swing.SwingFXUtils
 import javafx.scene.control.*
+import javafx.scene.effect.BlurType
+import javafx.scene.effect.DropShadow
+import javafx.scene.effect.Effect
+import javafx.scene.effect.Shadow
 import javafx.scene.input.*
 import javafx.scene.layout.*
 import javafx.scene.text.TextAlignment
@@ -506,9 +510,10 @@ class MainView : GeoBaseEditorView("Редактор базы") {
 
                     setRowFactory {
                         val row = TableRow<Area>()
+                        val selectableEffect = DropShadow(3.0,  0.0, 0.4, c("#000", 0.9))
+                        val fakeEffect = DropShadow(0.0, c("#000", 0.0))
                         val format = DataFormat.lookupMimeType("application/x-java-serialized-object") ?: DataFormat("application/x-java-serialized-object")
                         var draggedRow: TableRow<Area> = TableRow()
-
                         row.setOnDragDetected {
                             draggedRow = row
                             isDragged = true
@@ -536,9 +541,9 @@ class MainView : GeoBaseEditorView("Редактор базы") {
                             val db = it.dragboard
                             if(!db.hasContent(format)) return@setOnDragDropped
                             val dragIndex: Int = db.getContent(format) as Int
-                            //val area = kv_list.items.removeAt(dragIndex)
                             val area = controller.areas.removeAt(dragIndex)
-                            val dropIndex = if (row.isEmpty) kv_list.items.size else row.index
+                            val dropIndex = if (row.isEmpty) kv_list.items.size else
+                                if (row.index < dragIndex) row.index else row.index - 1
                             controller.areas.add(dropIndex, area)
                             it.isDropCompleted = true
 
@@ -546,15 +551,15 @@ class MainView : GeoBaseEditorView("Редактор базы") {
                             it.consume()
 
                         }
-                        val defBackground = row.background
                         row.setOnDragEntered {
-                            if (row == draggedRow) return@setOnDragEntered
-                            row.background = Background(BackgroundFill(c(0, 0, 0, 0.2), null, null))
-
+                            row.style {
+                                effect = selectableEffect
+                            }
                         }
                         row.setOnDragExited {
-                            if (row == draggedRow) return@setOnDragExited
-                            row.background = defBackground
+                            row.style {
+                                effect = fakeEffect
+                            }
                         }
                         row
                     }

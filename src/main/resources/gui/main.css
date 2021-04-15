@@ -34,3 +34,6 @@
     -fx-background-color: rgba(0, 250, 0, 0.2);
     -fx-effect: dropshadow(gaussian , #000, 8, 0.3, 0, 0);
 }
+.selectRow{
+    -fx-effect: dropshadow(gaussian , #000, 8, 0.3, 0, 0);
+}
