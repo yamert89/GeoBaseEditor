@@ -6,10 +6,7 @@ import javafx.beans.property.SimpleBooleanProperty
 import javafx.beans.value.ObservableBooleanValue
 import javafx.beans.value.ObservableValue
 import javafx.scene.control.TextField
-import tornadofx.c
-import tornadofx.enableWhen
-import tornadofx.onChange
-import tornadofx.style
+import tornadofx.*
 
 class TextFieldImpl: TextField() {
     private val isDirty = SimpleBooleanProperty(false)
@@ -33,17 +30,14 @@ class TextFieldImpl: TextField() {
                 selectAll()
             }
         }
-        /*textProperty().onChange {
-            text = it?.toUpperCase()
-        }*/
-
-
 
     }
     fun configure(enableTrigger: SimpleBooleanProperty, binding: BooleanBinding){
         enableWhen(enableTrigger as ObservableValue<Boolean>)
         isDirty.bind(binding)
     }
+
+
 
 
 

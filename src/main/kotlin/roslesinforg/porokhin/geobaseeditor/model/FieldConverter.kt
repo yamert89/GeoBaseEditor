@@ -32,15 +32,9 @@ class FieldFloatConverter: FloatStringConverter(){
     }
 }
 
-class FieldStringConverter: StringConverter<String>(){ //fixme not running
+class FieldStringConverter: StringConverter<String>(){
     override fun toString(s: String?): String {
-        return s?.toUpperCase()?.trim().let {
-            println("Converted value $it")
-        it} ?: ""/*when{
-            s == "0" || s == "0.0" || s == null -> ""
-            s.endsWith(".0") -> s.replace(".0", "")
-            else -> s
-        }*/
+        return s?.toUpperCase()?.trim() ?: ""
     }
 
     override fun fromString(string: String?): String {
@@ -51,8 +45,7 @@ class FieldStringConverter: StringConverter<String>(){ //fixme not running
 
 class StringFormat : Format() {
     override fun format(obj: Any?, toAppendTo: StringBuffer, pos: FieldPosition): StringBuffer {
-        println(obj)
-        return StringBuffer((obj as String).toUpperCase().trim())
+        return StringBuffer((obj as String) + "?")
     }
 
     override fun parseObject(source: String?, pos: ParsePosition): Any {

@@ -27,6 +27,7 @@ import roslesinforg.porokhin.areatypes.GeneralTypes
 import roslesinforg.porokhin.rawxlsconverter.RawToXLSConverterView
 import javax.imageio.ImageIO
 import org.apache.logging.log4j.kotlin.logger
+import tornadofx.controlsfx.bindAutoCompletion
 import java.io.File
 
 
@@ -351,7 +352,7 @@ class MainView : GeoBaseEditorView("Редактор базы") {
         with(filteringHelper){
             filter(fSpecies, fSpecies1, fSpecies2, fSpecies3, fSpecies4, fSpecies5, fSpecies6, fSpecies7, fSpecies8, fSpecies9,
                 f31_element1, f31_element2, f31_element3){
-                it.controlNewText.isEmpty() || it.controlNewText.matches("[ЕБСЛПОА\\s]{1,4}".toRegex())
+                it.controlNewText.isEmpty() || it.controlNewText.matches("[ЕБСЛПОАаебслпо\\s]{1,4}".toRegex())
             }
             filter(fHrang1, fHrang2, fHrang3, fHrang4,fHrang5, fHrang6, fHrang7, fHrang8, fHrang9, fHrang10){ formatter ->
                 formatter.controlNewText.let { it.isEmpty() || it.isInt() && it.length == 1 }
@@ -391,9 +392,9 @@ class MainView : GeoBaseEditorView("Редактор базы") {
                             it.endsWith("6") || it.endsWith("8")}*/
                 }
             }
-            fBon.filterInput { it.controlNewText.matches("[1-5АБаб]{1,2}".toRegex()) }
-            fType.filterInput { it.controlNewText.matches("[А-Яа-я\\s]{1,5}".toRegex()) }
-            fSubType.filterInput { it.controlNewText.matches("[А-Яа-я]{2}".toRegex()) }
+            filter(fBon){ it.controlNewText.matches("[1-5АБаб]{1,2}".toRegex()) }
+            filter(fType){ it.controlNewText.matches("[А-Яа-я\\s]{1,5}".toRegex()) }
+            filter(fSubType){ it.controlNewText.matches("[А-Яа-я]{1,2}".toRegex()) }
         }
     }
 
@@ -683,7 +684,6 @@ class MainView : GeoBaseEditorView("Редактор базы") {
             fKvNumber byint kvProperty
             field1Model.apply {
                 fAreaNumber byint numberProperty
-
                 fArea byfloat areaProperty
                 fCategoryArea byint categoryProperty
                 fDP byint dpProperty
@@ -764,6 +764,13 @@ class MainView : GeoBaseEditorView("Редактор базы") {
 
             bindDop()
             stylize()
+            tuneFields()
+        }
+    }
+
+    private fun tuneFields(){
+        fType.apply {
+            bindAutoCompletion(GeneralTypes.typesOfForest.map { it.name })
         }
     }
 

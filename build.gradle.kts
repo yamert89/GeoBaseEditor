@@ -29,6 +29,7 @@ dependencies {
     implementation("org.apache.logging.log4j:log4j-api:2.14.0")
     implementation("org.apache.logging.log4j:log4j-core:2.14.0")
     implementation("org.apache.logging.log4j:log4j-api-kotlin:1.0.0")
+    implementation("no.tornado:tornadofx-controlsfx:0.1")
     //implementation(files("pretty-tools-JDDE-2.1.0"))
     implementation(project(":areatypes2"))
     implementation(project(":nab_parser"))
