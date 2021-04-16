@@ -55,6 +55,8 @@ class GeoBaseEditorController: Controller() {
 
     }
 
+    fun paint() = ddeSession.paint()
+
     fun log(message: String) = Platform.runLater { view!!.flog(message) }
 
     fun startDDESession() = ddeSession.initiate()

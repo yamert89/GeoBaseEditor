@@ -430,9 +430,11 @@ class MainView : GeoBaseEditorView("Редактор базы") {
 
                     model.rebindOnChange(this){ area ->
                         if (area == null) return@rebindOnChange
+
                         if (!enableFieldsTrigger.value) {
                             enableFieldsTrigger.value = true
-                        }
+                        } else controller.paint()
+
 
                         val message = validationHelper.generalChecking( listOf(
                             fHrang1 to fProportion1,

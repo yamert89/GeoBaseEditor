@@ -3,6 +3,7 @@ declare sub connect
 declare sub disconnect
 declare sub selectionlistener
 declare sub errorhandler
+Declare sub RemoteMsgHandler
 Dim ar As Integer
 Dim num As Integer
 dim activated as logical
@@ -22,6 +23,7 @@ end sub
 
 sub connect
 	num = ddeinitiate("geobaseeditor", "areaselection")
+
 	print "Редактор базы подключен"
 	activated =1
 end sub
@@ -59,6 +61,13 @@ sub errorhandler
 	if code = 696 then call disconnect
 	end if
 end sub
+
+sub RemoteMsgHandler()
+	Dim data As String
+	data = CommandInfo()
+	print "requested data : " + data
+End sub
+
 
 
 
