@@ -22,7 +22,7 @@ class ValidatorFactory(private val context: ValidationContext) {
     }
     fun dValidator(textField: TextField): ValidationContext.Validator<String>{
         return textFieldValidatorError(textField, "Неправильный диаметр"){
-            it!!.isNotEmpty() && !it.matches("[24680]{1,2}".toRegex())
+            it!!.isNotEmpty() && !it.matches("[1-9][24680]".toRegex())
         }
     }
 

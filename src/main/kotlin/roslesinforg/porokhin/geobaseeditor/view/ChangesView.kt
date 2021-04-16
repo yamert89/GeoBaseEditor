@@ -32,7 +32,7 @@ import java.io.File
 import java.io.FileOutputStream
 import org.apache.logging.log4j.kotlin.logger
 
-class ChangesView : GeoBaseEditorView("My View") {
+class ChangesView : GeoBaseEditorView("My View") { //todo test after replace areas
     private val logger = logger()
     val controller = find(roslesinforg.porokhin.geobaseeditor.GeoBaseEditorController::class, MainView.AppScope)
     var table: TableView<ComparedPair>? = null

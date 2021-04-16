@@ -606,6 +606,7 @@ class MainView : GeoBaseEditorView("Редактор базы") {
                 flog("Скриншот сохранен в $path")
             }
             addNewButton("change.png", "Изменения"){
+                model.replaceEmptyFields(model.item)
                 openInternalWindow(ChangesView::class, Scope())
             }
             addNewButton("save.png", "Сохранить"){
@@ -657,6 +658,7 @@ class MainView : GeoBaseEditorView("Редактор базы") {
 
                     val path = files[0].absolutePath.let { if (it.length > 50) "...${it.substring(it.lastIndex - 10, it.length)}" else it}
                     flog("Открыт файл ${path}.  Лесничество: ${forestry?.name ?: loc.forestry} , Участок: ${forestry?.sub?.get(loc.subForestry.toInt()) ?: loc.subForestry}")
+                    kv_list.selectionModel.select(0)
                 }
 
 
