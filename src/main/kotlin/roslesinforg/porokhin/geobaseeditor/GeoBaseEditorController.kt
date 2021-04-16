@@ -1,5 +1,6 @@
 package roslesinforg.porokhin.geobaseeditor
 
+import javafx.application.Platform
 import javafx.beans.property.SimpleDoubleProperty
 import javafx.beans.property.SimpleIntegerProperty
 import javafx.beans.property.SimpleListProperty
@@ -54,7 +55,7 @@ class GeoBaseEditorController: Controller() {
 
     }
 
-    fun log(message: String) = view!!.flog(message)
+    fun log(message: String) = Platform.runLater { view!!.flog(message) }
 
     fun startDDESession() = ddeSession.initiate()
 

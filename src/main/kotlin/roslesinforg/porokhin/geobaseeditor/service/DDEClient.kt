@@ -22,7 +22,7 @@ class DDEClient(private val controller: GeoBaseEditorController) {
                             "selection_with_area" -> {
                                 val arr = data!!.split("|")
                                 controller.selectArea(arr[0].toInt())
-                                controller.log("Выд. $data, картографическая площадь: ${arr[1].toFloat()}")
+                                controller.log("Выд. ${arr[0]}, картографическая площадь: ${arr[1].toFloat()}")
                             }
                             else -> logger.debug("unknown item")
                         }

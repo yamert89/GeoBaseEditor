@@ -6,6 +6,7 @@ declare sub errorhandler
 Dim ar As Integer
 Dim num As Integer
 dim activated as logical
+
 activated = 0
 print "Base Editror loaded"
 create menu "Редактор базы" as
@@ -14,40 +15,51 @@ create menu "Редактор базы" as
 alter menu bar add "Редактор базы"
 
 sub selchangedhandler
-    if activated = 1 then
-        call selectionlistener
-    end if
+	if activated = 1 then
+		call selectionlistener
+	end if
 end sub
 
 sub connect
-    num = ddeinitiate("geobaseeditor", "areaselection")
-    print "Редактор базы подключен"
-    activated =1
+	num = ddeinitiate("geobaseeditor", "areaselection")
+	print "Редактор базы подключен"
+	activated =1
 end sub
 
 sub disconnect
-    ddeterminateall
-    print "Редактор базы отключен"
-    activated = 0
+	ddeterminateall
+	print "Редактор базы отключен"
+	activated = 0
 end sub
 
 sub selectionlistener
-    onerror goto ex
-    ar = selection.id
-    print commandinfo(1)
-    if commandinfo(1) = 1 then
-        ddepoke num, "selection", STR$(ar)
-    end if
-    exit sub
+	onerror goto ex
+	ar = selection.id
+	print commandinfo(1)
+	if commandinfo(1) = 1 then
+		dim sq as Float
+		sq = CartesianArea(selection.obj, "hectare")
+		if sq = 0 then
+			ddepoke num, "selection", STR$(ar)
+		else
+			ddepoke num, "selection_with_area", STR$(ar) + "|" + STR$(sq)
+		end if
+		print "end"
+	end if
+	exit sub
 ex:
-call errorhandler
+	call errorhandler
 end sub
 
 sub errorhandler
-    dim code as Integer
-    code = err()
-    print "error " + code
-    activated = 0
-    if code = 696 then call disconnect
-    end if
+	dim code as Integer
+	code = err()
+	print "error " + code
+	activated = 0
+	if code = 696 then call disconnect
+	end if
 end sub
+
+
+
+
