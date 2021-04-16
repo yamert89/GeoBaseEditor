@@ -396,7 +396,7 @@ class MainView : GeoBaseEditorView("Редактор базы") {
             }
             filter(fD1, fD2, fD3, fD4, fD5, fD6, fD7, fD8, fD9, fD10){ f ->
                 f.controlNewText.let { d ->
-                    d.isInt() &&  d.toInt() in 2..80/* &&
+                    d.isInt() && d.toInt() in 2..80/* &&
                             d.let { it.endsWith("0") || it.endsWith("2") || it.endsWith("4") ||
                             it.endsWith("6") || it.endsWith("8")}*/
                 }

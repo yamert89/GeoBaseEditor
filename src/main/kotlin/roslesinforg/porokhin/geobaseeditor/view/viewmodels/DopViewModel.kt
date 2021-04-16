@@ -77,7 +77,9 @@ class DopViewModel(area: Area): ItemViewModel<Area>(area) {
                     19 -> area.field19 = Field19(
                          model.col1.value.toInt(),
                          model.col2.value.toInt(),
-                         model.col3.value.toFloat()
+                         model.col3.value.toFloat(),
+                         model.col4.value.toString(),
+                         model.col5.value.toInt()
                     )
                     21 -> area.field21 = Field21(
                          model.col1.value.toInt(),
@@ -224,7 +226,7 @@ class DopViewModel(area: Area): ItemViewModel<Area>(area) {
                         updateProperties(13, width, length, state, purpose, typeOfRoadSurface, widthOfRoad, seasonality)
                     }
                     is Field19 -> with(it){
-                        updateProperties(19, typeSwamp, typePlants, weightOfPeat)
+                        updateProperties(19, typeSwamp, typePlants, weightOfPeat, species, percentage)
                     }
                     is Field21 -> with(it){
                         updateProperties(21, landscape, ethetic, sanytary, stability, freeSpace, visualDistance,
