@@ -54,6 +54,8 @@ class GeoBaseEditorController: Controller() {
 
     }
 
+    fun log(message: String) = view!!.flog(message)
+
     fun startDDESession() = ddeSession.initiate()
 
     fun stopDDESession() = ddeSession.close()
@@ -115,5 +117,6 @@ class GeoBaseEditorController: Controller() {
             }
         }
     }
+
 
 }

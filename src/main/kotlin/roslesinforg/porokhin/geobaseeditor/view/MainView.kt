@@ -343,16 +343,7 @@ class MainView : GeoBaseEditorView("Редактор базы") {
         primaryStage.icons.add(resources.image("/gui/Desktop.png"))
         controller.setMainView(this)
         fProgress.bind(controller.progressStatusProperty)
-        /*cardLayout.apply {
-            progress = this.loadProgressBar(100.0, 100.0).apply {
-                anchorpaneConstraints {
-                    bottomAnchor = 100
-                    topAnchor = 0
-                    leftAnchor = 100
-                    rightAnchor = 0
-                }
-            }
-        }*/
+        fGir.enableWhen { enableFieldsTrigger }
 
 
     }
@@ -646,7 +637,6 @@ class MainView : GeoBaseEditorView("Редактор базы") {
                         fGir.apply {
                             text = forestry?.sub?.get(subForestry.toInt()) ?: ""
                             isEditable = false
-                            enableWhen { enableFieldsTrigger }
                             style{
                                 backgroundColor += c(0, 0, 0, 0.0)
                             }
@@ -942,6 +932,7 @@ class MainView : GeoBaseEditorView("Редактор базы") {
         bindDirtyDop(dops[3], fDop4_n, fDop4_1, fDop4_2, fDop4_3, fDop4_4, fDop4_5, fDop4_6, fDop4_7, fDop4_8)
         bindDirtyDop(dops[4], fDop5_n, fDop5_1, fDop5_2, fDop5_3, fDop5_4, fDop5_5, fDop5_6, fDop5_7, fDop5_8)
         bindDirtyDop(dops[5], fDop6_n, fDop6_1, fDop6_2, fDop6_3, fDop6_4, fDop6_5, fDop6_6, fDop6_7, fDop6_8)
+        fGir
     }
 
     private fun bindDirtyDop(
