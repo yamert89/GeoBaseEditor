@@ -264,8 +264,6 @@ class MainView : GeoBaseEditorView("Редактор базы") {
     private val buttonBar: ButtonBar by fxid()
     private val topPane: HBox by fxid()
     private val fProgress: ProgressBar by fxid()
-    private var path: Path
-    private var input: Path //todo for test
     private val validationContext = ValidationContext()
     private val factory = ValidatorFactory(validationContext)
     private val validationHelper = ValidationHelper(validationContext, factory)
@@ -291,12 +289,6 @@ class MainView : GeoBaseEditorView("Редактор базы") {
             selectBtn10 to selection10,
         ))
         model = AreaModel(Area(field10 = Field10(ArrayList<ElementOfForest>().apply { fill(ElementOfForest()) })))
-        path = Paths.get("D:/my/json")
-        input = Paths.get("D:/my/0309")
-        if (Files.notExists(Paths.get("D:/my"))) {
-            path = Paths.get("J:/json")
-            input = Paths.get("J:/0309")
-        }
 
         //controller.read(input.toFile())
         bindModel()
@@ -333,10 +325,6 @@ class MainView : GeoBaseEditorView("Редактор базы") {
         validationHelper.dValidatorFor(fD1, fD2, fD3, fD4, fD5, fD6, fD7, fD8, fD9, fD10)
 
         primaryStage.setOnCloseRequest {
-            model.commit()
-            val out = Json.encodeToString(model.area)
-            println(out)
-            Files.write(path, out.toByteArray(UTF_8))
             GeoBaseEditorPreferences.savePrefs()
         }
         primaryStage.isResizable = false
@@ -600,6 +588,7 @@ class MainView : GeoBaseEditorView("Редактор базы") {
             }
             addNewButton("change.png", "Изменения"){
                 model.replaceEmptyFields(model.item)
+                model.commit()
                 openInternalWindow(ChangesView::class, Scope())
             }
             addNewButton("save.png", "Сохранить"){

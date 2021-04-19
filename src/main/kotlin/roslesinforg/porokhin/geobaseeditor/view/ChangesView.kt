@@ -2,6 +2,7 @@ package roslesinforg.porokhin.geobaseeditor.view
 
 import com.sun.javafx.property.adapter.PropertyDescriptor
 import javafx.beans.property.Property
+import javafx.beans.property.SimpleBooleanProperty
 import javafx.collections.ObservableList
 import javafx.geometry.Insets
 import javafx.geometry.NodeOrientation
@@ -32,23 +33,28 @@ import java.io.File
 import java.io.FileOutputStream
 import org.apache.logging.log4j.kotlin.logger
 
-class ChangesView : GeoBaseEditorView("My View") { //todo test after replace areas
+class ChangesView : GeoBaseEditorView("Изменения") {
     private val logger = logger()
-    val controller = find(roslesinforg.porokhin.geobaseeditor.GeoBaseEditorController::class, MainView.AppScope)
+    val controller = find(GeoBaseEditorController::class, MainView.AppScope)
     var table: TableView<ComparedPair>? = null
-    val difResult: MutableList<ComparedPair> = mutableListOf()
+    val difResult: ObservableList<ComparedPair> = mutableListOf<ComparedPair>().asObservable()
+    val filledProperty = SimpleBooleanProperty(difResult.isNotEmpty())
     var progress: ImageView? = null
+    var word: Button? = null
+    init {
+        difResult.sizeProperty.booleanBinding(filledProperty){ n -> n != 0 }
+    }
     val task = runAsync {
         val res = controller.diff()
         logger.debug("End task")
         res
     } ui{
         fillTable(it)
-        progress!!.isVisible = false
+        word?.disableProperty()?.value = false
+        progress?.isVisible = false
     }
 
     override val root = stackpane {
-
         flowpane {
             useMaxSize = true
             padding = Insets(3.0, 0.0, 3.0, 0.0)
@@ -63,7 +69,7 @@ class ChangesView : GeoBaseEditorView("My View") { //todo test after replace are
                 style{
                     backgroundColor += c("#696966")
                 }
-                val word = addNewButton("Word.png", "Экспортировать в MS Word"){
+                word = addNewButton("Word.png", "Экспортировать в MS Word"){
                     val file = chooseFile("Сохранение", filters = emptyArray(), mode = FileChooserMode.Save)
                     if (file.isEmpty()) return@addNewButton
                     val title = "Лесничество: ${controller.location?.forestry},  участок: ${controller.location?.subForestry}"
@@ -75,9 +81,9 @@ class ChangesView : GeoBaseEditorView("My View") { //todo test after replace are
                     fos.close()
                     logger.debug("docx file created")
                 }
-                word.apply {
-                    enableWhen { difResult.isNotEmpty().toProperty() }
-                }
+                /*word.apply {
+                    enableWhen { filledProperty }
+                }*/
 
             }
             //if (difResult.isEmpty()) information("", "Нет изменений", ButtonType.OK, owner = primaryStage, title = ""){}

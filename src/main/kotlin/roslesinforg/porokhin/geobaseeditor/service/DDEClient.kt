@@ -61,6 +61,7 @@ class DDEClient(private val controller: GeoBaseEditorController) {
     }
 
     fun paint(){
+        if (client == null) return
         client!!.execute("1001")
         logger.debug("paint 1001")
     }
