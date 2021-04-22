@@ -26,12 +26,19 @@ class DDEClient(private val controller: GeoBaseEditorController) {
                                 controller.selectArea(arr[0].toInt())
                                 controller.log("Выд. ${arr[0]}, картографическая площадь: ${arr[1].toFloat()}")
                             }
+                            "paint" -> {
+
+                            }
                             else -> logger.debug("unknown item")
                         }
                     }
                     else -> logger.debug("unknown topic")
                 }
                 return true
+            }
+
+            override fun onRequest(topic: String?, item: String?): String {
+                return "1001"
             }
 
             override fun onConnected(topic: String?, hconv: Long) {
