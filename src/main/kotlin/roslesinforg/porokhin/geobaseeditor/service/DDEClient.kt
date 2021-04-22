@@ -36,14 +36,19 @@ class DDEClient(private val controller: GeoBaseEditorController) {
 
             override fun onConnected(topic: String?, hconv: Long) {
                 logger.debug("DDE input connection with number = $hconv")
-                client = DDEClientConversation()
-                client!!.connect("MapInfo", "BaseEditor.MBX")
-                logger.debug("DDE client connected")
+                /*client = DDEClientConversation()
+                try {
+                    client!!.connect("MapInfo", "System")
+                    print(client!!.request("Version"))
+                }catch (e: Exception){
+                    logger.error(e)
+                }
+                logger.debug("DDE client connected")*/
 
                 //client!!.request("1001")
                 //client!!.poke("paint", "1001")
                 //client!!.p
-                super.onConnected(topic, hconv)
+
             }
 
             override fun start() {
