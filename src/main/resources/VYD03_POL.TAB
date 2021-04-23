@@ -1,0 +1,23 @@
+!table
+!version 1000
+!charset WindowsCyrillic
+
+Definition Table
+  Type LINKED Charset "WindowsCyrillic"
+  Fields 8
+    Gir Decimal (5, 0) ;
+    Kv Decimal (6, 0) ;
+    Sknr Decimal (5, 0) ;
+    Id Integer ReadOnly ;
+    Аренда Integer ;
+    Статус Integer ;
+    Примечание Integer ;
+    MI_PRINX Integer ReadOnly ;
+begin_metadata
+"\IsReadOnly" = "FALSE"
+"\MapInfo" = ""
+"\MapInfo\TableID" = "28bd3810-4faf-4c57-82e8-b5c7c0026a0b"
+"\DATALINK" = ""
+"\DATALINK\ConnectionString" = "DSN=server_242;UID=porohin;APP=MapInfo® Pro;WSID=POROHIN;DATABASE=arhlespro;LANGUAGE=русский;MARS_Connection=yes"
+"\DATALINK\Query" = "select ""Gir"", ""Kv"", ""Sknr"", ""Id"", ""Аренда"", ""Статус"", ""Примечание"", ""MI_STYLE"", ""MI_PRINX"", ""OBJECT"" from ""arhlespro"".""Вельское"".""VYD03_POL""  where (""Gir"" = 9)"
+end_metadata
