@@ -4,6 +4,7 @@ declare sub disconnect
 declare sub selectionlistener
 declare sub errorhandler
 Declare sub RemoteMsgHandler
+declare sub paint
 Dim ar As Integer
 Dim num As Integer
 dim activated as logical
@@ -12,7 +13,8 @@ activated = 0
 print "Base Editror loaded"
 create menu "Редактор базы" as
 "&Подключиться" calling connect,
-"&Отключиться" calling disconnect
+"&Отключиться" calling disconnect,
+"@text" calling
 alter menu bar add "Редактор базы"
 
 sub selchangedhandler
@@ -32,6 +34,21 @@ sub disconnect
 	ddeterminateall
 	print "Редактор базы отключен"
 	activated = 0
+end sub
+
+sub paint
+    dim response as Integer
+    response = Val(ddeRequest$(num, "paint"))
+
+   // =MapperInfo(idWinMap,MAPPER_INFO_LAYERS)
+    LayerInfo(idWinMap , j,LAYER_INFO_NAME)
+    https://mapbasic.ru/doc/programming4mapinfo.pdf
+
+     select * from ??? where ???.id = response
+
+     set map selection global Brush MakeBrush(64, CYAN, BLUE)
+
+
 end sub
 
 sub selectionlistener
