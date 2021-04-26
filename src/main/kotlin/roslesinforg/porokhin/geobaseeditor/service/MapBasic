@@ -1,3 +1,5 @@
+Include "MAPBASIC.DEF"
+Include  "GET_TAB.MB"
 Declare Sub SelChangedHandler
 declare sub connect
 declare sub disconnect
@@ -14,7 +16,7 @@ print "Base Editror loaded"
 create menu "Редактор базы" as
 "&Подключиться" calling connect,
 "&Отключиться" calling disconnect,
-"@text" calling
+"&test" calling paint
 alter menu bar add "Редактор базы"
 
 sub selchangedhandler
@@ -39,14 +41,18 @@ end sub
 sub paint
     dim response as Integer
     response = Val(ddeRequest$(num, "paint"))
+	print response
 
-   // =MapperInfo(idWinMap,MAPPER_INFO_LAYERS)
-    LayerInfo(idWinMap , j,LAYER_INFO_NAME)
-    https://mapbasic.ru/doc/programming4mapinfo.pdf
+     '= MapperInfo(idWinMap, MAPPER_INFO_LAYERS)
+    'LayerInfo(idWinMap , j,LAYER_INFO_NAME)
+	dim table as String
+	table = GetTableName("Выберите слой", 0, 0)
 
-     select * from ??? where ???.id = response
+     'select * from table where table.id = response
 
-     set map selection global Brush MakeBrush(64, CYAN, BLUE)
+     'set map layer 1 Display Global Brush MakeBrush(64, CYAN, BLUE)
+	shade table with Id values 1001 Brush MakeBrush(64, CYAN, BLUE)style replace off
+
 
 
 end sub
@@ -80,10 +86,11 @@ sub errorhandler
 end sub
 
 sub RemoteMsgHandler()
-	Dim data As String
-	data = CommandInfo()
-	print "requested data : " + data
+	'Dim data As String
+	'data = CommandInfo()
+	'print "requested data : " + data
 End sub
+
 
 
 
