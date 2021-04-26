@@ -40,17 +40,28 @@ end sub
 
 sub paint
     dim response as Integer
-    response = Val(ddeRequest$(num, "paint"))
-	print response
 
-     '= MapperInfo(idWinMap, MAPPER_INFO_LAYERS)
-    'LayerInfo(idWinMap , j,LAYER_INFO_NAME)
-	dim table as String
+
+   	dim table as String
 	table = GetTableName("Выберите слой", 0, 0)
+	dim selectedType as SmallInt
+	dim types(10) as String
+	types(1) = "ОЗУ"
+	types(2) = "ЦНЛ"
+ 	types(3) = "порода"
+	types(4) = "бонитет"
+	types(5) = "полнота"
+	types(6) = "запас"
+	types(7) = "23 макет"
+	types(8) = "категория земель"
 
-     'select * from table where table.id = response
-
-     'set map layer 1 Display Global Brush MakeBrush(64, CYAN, BLUE)
+	dialog
+		control popupmenu
+			title from variable types into selectedType
+		control OKButton
+		Control CancelButton
+	print selectedType
+	response = Val(ddeRequest$(num, "paint"))
 	shade table with Id values 1001 Brush MakeBrush(64, CYAN, BLUE)style replace off
 
 
