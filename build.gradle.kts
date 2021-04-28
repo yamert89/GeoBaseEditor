@@ -39,6 +39,7 @@ dependencies {
     implementation(project(":fileComparator"))
     implementation(project(":RawToXlsConverter"))
     implementation("com.pretty_tools:pretty-tools-JDDE-2.1.0")
+    testImplementation("junit:junit:4.13.2")
 }
 sourceSets{
 
