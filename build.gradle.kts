@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
     java
     kotlin("jvm") version "1.4.20"
@@ -81,4 +83,9 @@ tasks {
         into(startFolder)
         println("GeoBaseEditor built with version $version to $startFolder")
     }
+}
+val compileKotlin: KotlinCompile by tasks
+
+compileKotlin.kotlinOptions {
+    freeCompilerArgs = listOf("-Xinline-classes")
 }
