@@ -14,33 +14,43 @@ class Selector(private val data: List<Area>) {
     private fun <R, T>List<Area>.filterByParam(parameter: Parameter<R, T>): List<Area>{
         return this.filter {
             with(parameter){
+                var f10False = false
+                var f23False = false
                 val v = when(parameter){
+                    is Element10Parameter -> if (it.field10.forestElements.isEmpty()) {
+                        f10False = true
+                        Any() as T
+                    } else areaProperty.get(it.field10.forestElements[0] as R)
                     is AreaParameter -> areaProperty.get(it as R)
                     is Field1Parameter -> areaProperty.get(it.field1 as R)
-                    is Field2Parameter -> areaProperty.get(it.field1 as R)
-                    is Field3Parameter -> areaProperty.get(it.field1 as R)
-                    is Field4Parameter -> areaProperty.get(it.field1 as R)
-                    is Field10Parameter -> areaProperty.get(it.field1 as R)
-                    is Field11Parameter -> areaProperty.get(it.field1 as R)
-                    is Field12Parameter -> areaProperty.get(it.field1 as R)
-                    is Field13Parameter -> areaProperty.get(it.field1 as R)
-                    is Field15Parameter -> areaProperty.get(it.field1 as R)
-                    is Field19Parameter -> areaProperty.get(it.field1 as R)
-                    is Field21Parameter -> areaProperty.get(it.field1 as R)
-                    is Field23Parameter -> areaProperty.get(it.field1 as R)
-                    is Field27Parameter -> areaProperty.get(it.field1 as R)
-                    is Field29Parameter -> areaProperty.get(it.field1 as R)
+                    is Field2Parameter -> areaProperty.get(it.field2 as R)
+                    is Field3Parameter -> areaProperty.get(it.field3 as R)
+                    is Field4Parameter -> areaProperty.get(it.field4 as R)
+                    is Field11Parameter -> areaProperty.get(it.field11 as R)
+                    is Field12Parameter -> areaProperty.get(it.field12 as R)
+                    is Field13Parameter -> areaProperty.get(it.field13 as R)
+                    is Field15Parameter -> areaProperty.get(it.field15 as R)
+                    is Field19Parameter -> areaProperty.get(it.field19 as R)
+                    is Field21Parameter -> areaProperty.get(it.field21 as R)
+                    is Field23Parameter -> if (it.field23.info.isEmpty()){
+                        f23False = true
+                        Any() as T
+                        TODO()
+                    } else areaProperty.get(it.field23.info as R)
+                    is Field27Parameter -> areaProperty.get(it.field27 as R)
+                    is Field29Parameter -> areaProperty.get(it.field29 as R)
                     else -> throw IllegalArgumentException("Unsupported FieldParameter")
                 }
                 kotlin.run {
-                    when(v){
-                        is String -> (v as String) == value.toString()
-                        is Int -> when(condition){
+                    when{
+                        f10False || f23False -> false
+                        v is String -> (v as String) == value.toString()
+                        v is Int -> when(condition){
                             Condition.EQUAL -> v == value as Int
                             Condition.LESS -> v < value as Int
                             Condition.MORE -> v > value as Int
                         }
-                        is Float -> when(condition){
+                        v is Float -> when(condition){
                             Condition.EQUAL -> v == value as Float
                             Condition.LESS -> v < value as Float
                             Condition.MORE -> v > value as Float
@@ -77,8 +87,8 @@ open class Parameter<R, T>{
 }
 
 class AreaParameter<T> : Parameter<Area, T>{
-    constructor(areaProperty: KMutableProperty1<Area, T>, value: T, condition: Condition) : super(areaProperty, condition, value)
-    constructor(areaProperty: KMutableProperty1<Area, T>, value: T, condition: String) : super(areaProperty, condition, value)
+    constructor(areaProperty: KMutableProperty1<Area, T>, condition: Condition, value: T) : super(areaProperty, condition, value)
+    constructor(areaProperty: KMutableProperty1<Area, T>, condition: String, value: T) : super(areaProperty, condition, value)
 }
 
 open class FieldParameter<F: Field, T> : Parameter<F, T>{
@@ -140,6 +150,10 @@ class Field27Parameter<T>: FieldParameter<Field2, T>{
 class Field29Parameter<T>: FieldParameter<Field2, T>{
     constructor(areaProperty: KMutableProperty1<Field2, T>, condition: Condition, value: T): super(areaProperty, condition, value)
     constructor(areaProperty: KMutableProperty1<Field2, T>, condition: String, value: T): super(areaProperty, condition, value)
+}
+class Element10Parameter<T>: Parameter<ElementOfForest, T>{
+    constructor(areaProperty: KMutableProperty1<ElementOfForest, T>, condition: Condition, value: T): super(areaProperty, condition, value)
+    constructor(areaProperty: KMutableProperty1<ElementOfForest, T>, condition: String, value: T): super(areaProperty, condition, value)
 }
 
 fun String.parseCondition(): Condition{

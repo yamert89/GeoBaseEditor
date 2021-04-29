@@ -3,7 +3,10 @@ package roslesinforg.porokhin.geobaseeditor.service
 import com.pretty_tools.dde.client.DDEClientConversation
 import com.pretty_tools.dde.server.DDEServer
 import org.apache.logging.log4j.kotlin.logger
+import roslesinforg.porokhin.areatypes.Area
+import roslesinforg.porokhin.areatypes.fields.*
 import roslesinforg.porokhin.geobaseeditor.GeoBaseEditorController
+import roslesinforg.porokhin.geobaseeditor.model.Parameter
 
 
 class DDEClient(private val controller: GeoBaseEditorController) {
@@ -38,7 +41,29 @@ class DDEClient(private val controller: GeoBaseEditorController) {
             }
 
             override fun onRequest(topic: String?, item: String?): String {
-                return "1001"
+                return when(topic){
+                    "paint" -> {
+                        val params = mutableListOf<Parameter<*, *>>()
+                        val arr = item!!.split("|")
+                        arr.forEach {
+                            val p = it.split("?")
+                            val param = when(p[0].toInt()){
+                                1 -> Field1::typeOfProtection
+                                2 -> Area::categoryProtection
+                                3 -> ElementOfForest::species
+                                4 -> Field3::bon
+                                5 -> ElementOfForest::weight
+                                6 -> ElementOfForest::sumOfTimber
+                                7 -> TODO()
+                                9 -> Field1::category
+                                else -> throw IllegalArgumentException("unknown param $p")
+                            }
+                        }
+
+                        ""
+                    }
+                    else -> throw IllegalArgumentException("Unknown topic $topic")
+                }
             }
 
             override fun onConnected(topic: String?, hconv: Long) {
