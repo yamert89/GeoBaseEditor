@@ -1,10 +1,7 @@
 package roslesinforg.porokhin.geobaseeditor.model
 
 import roslesinforg.porokhin.areatypes.Area
-import roslesinforg.porokhin.areatypes.fields.Field
-import roslesinforg.porokhin.areatypes.fields.Field1
-import kotlin.reflect.KMutableProperty
-import kotlin.reflect.KMutableProperty0
+import roslesinforg.porokhin.areatypes.fields.*
 import kotlin.reflect.KMutableProperty1
 
 class Selector(private val data: List<Area>) {
@@ -13,7 +10,7 @@ class Selector(private val data: List<Area>) {
         parameters.forEach { list = list.filterByParam(it) }
         return list
     }
-
+    @Suppress("unchecked_cast")
     private fun <R, T>List<Area>.filterByParam(parameter: Parameter<R, T>): List<Area>{
         return this.filter {
             with(parameter){
@@ -66,35 +63,84 @@ class Selector(private val data: List<Area>) {
 
 }
 
-open class Parameter<R, T>(val areaProperty: KMutableProperty1<R, T>, val value: T, val condition: Condition){
+open class Parameter<R, T>{
+    val areaProperty: KMutableProperty1<R, T>
+    val condition: Condition
+    val value: T
 
-    constructor(areaProperty: KMutableProperty1<R, T>, value: T, condition: String): this(areaProperty, value, condition.parseCondition())
-}
-
-class AreaParameter<T>(areaProperty: KMutableProperty1<Area, T>, value: T, condition: Condition)
-    : Parameter<Area, T>(areaProperty, value, condition)
-
-open class FieldParameter<T>(areaProperty: KMutableProperty1<out Field, T>, value: T, condition: Condition)
-    : Parameter<Field, T>(areaProperty, value, condition){
-
+    protected constructor(areaProperty: KMutableProperty1<R, T>, condition: Condition, value: T){
+        this.areaProperty = areaProperty
+        this.value = value
+        this.condition = condition
     }
-class Field1Parameter<T>(areaProperty: KMutableProperty1<Field1, T>, value: T, condition: Condition): FieldParameter<T>(areaProperty, value, condition){
-    constructor(areaProperty: KMutableProperty1<Field1, T>, value: T, condition: String) : this(areaProperty, value, condition.parseCondition())
-
+    constructor(areaProperty: KMutableProperty1<R, T>, condition: String, value: T): this(areaProperty, condition.parseCondition(), value)
 }
-class Field2Parameter<T>(areaProperty: KMutableProperty1<Field, T>, value: T, condition: Condition): FieldParameter<T>(areaProperty, value, condition)
-class Field3Parameter<T>(areaProperty: KMutableProperty1<Field, T>, value: T, condition: Condition): FieldParameter<T>(areaProperty, value, condition)
-class Field4Parameter<T>(areaProperty: KMutableProperty1<Field, T>, value: T, condition: Condition): FieldParameter<T>(areaProperty, value, condition)
-class Field10Parameter<T>(areaProperty: KMutableProperty1<Field, T>, value: T, condition: Condition): FieldParameter<T>(areaProperty, value, condition)
-class Field11Parameter<T>(areaProperty: KMutableProperty1<Field, T>, value: T, condition: Condition): FieldParameter<T>(areaProperty, value, condition)
-class Field12Parameter<T>(areaProperty: KMutableProperty1<Field, T>, value: T, condition: Condition): FieldParameter<T>(areaProperty, value, condition)
-class Field13Parameter<T>(areaProperty: KMutableProperty1<Field, T>, value: T, condition: Condition): FieldParameter<T>(areaProperty, value, condition)
-class Field15Parameter<T>(areaProperty: KMutableProperty1<Field, T>, value: T, condition: Condition): FieldParameter<T>(areaProperty, value, condition)
-class Field19Parameter<T>(areaProperty: KMutableProperty1<Field, T>, value: T, condition: Condition): FieldParameter<T>(areaProperty, value, condition)
-class Field21Parameter<T>(areaProperty: KMutableProperty1<Field, T>, value: T, condition: Condition): FieldParameter<T>(areaProperty, value, condition)
-class Field23Parameter<T>(areaProperty: KMutableProperty1<Field, T>, value: T, condition: Condition): FieldParameter<T>(areaProperty, value, condition)
-class Field27Parameter<T>(areaProperty: KMutableProperty1<Field, T>, value: T, condition: Condition): FieldParameter<T>(areaProperty, value, condition)
-class Field29Parameter<T>(areaProperty: KMutableProperty1<Field, T>, value: T, condition: Condition): FieldParameter<T>(areaProperty, value, condition)
+
+class AreaParameter<T> : Parameter<Area, T>{
+    constructor(areaProperty: KMutableProperty1<Area, T>, value: T, condition: Condition) : super(areaProperty, condition, value)
+    constructor(areaProperty: KMutableProperty1<Area, T>, value: T, condition: String) : super(areaProperty, condition, value)
+}
+
+open class FieldParameter<F: Field, T> : Parameter<F, T>{
+    constructor(areaProperty: KMutableProperty1<F, T>, condition: Condition, value: T): super(areaProperty, condition, value)
+    constructor(areaProperty: KMutableProperty1<F, T>, condition: String, value: T): super(areaProperty, condition, value)
+}
+class Field1Parameter<T>: FieldParameter<Field1, T>{
+    constructor(areaProperty: KMutableProperty1<Field1, T>, condition: Condition, value: T): super(areaProperty, condition, value)
+    constructor(areaProperty: KMutableProperty1<Field1, T>, condition: String, value: T): super(areaProperty, condition, value)
+}
+class Field2Parameter<T>: FieldParameter<Field2, T>{
+    constructor(areaProperty: KMutableProperty1<Field2, T>, condition: Condition, value: T): super(areaProperty, condition, value)
+    constructor(areaProperty: KMutableProperty1<Field2, T>, condition: String, value: T): super(areaProperty, condition, value)
+}
+class Field3Parameter<T>: FieldParameter<Field3, T>{
+    constructor(areaProperty: KMutableProperty1<Field3, T>, condition: Condition, value: T): super(areaProperty, condition, value)
+    constructor(areaProperty: KMutableProperty1<Field3, T>, condition: String, value: T): super(areaProperty, condition, value)
+}
+class Field4Parameter<T>: FieldParameter<Field2, T>{
+    constructor(areaProperty: KMutableProperty1<Field2, T>, condition: Condition, value: T): super(areaProperty, condition, value)
+    constructor(areaProperty: KMutableProperty1<Field2, T>, condition: String, value: T): super(areaProperty, condition, value)
+}
+class Field10Parameter<T>: FieldParameter<Field2, T>{
+    constructor(areaProperty: KMutableProperty1<Field2, T>, condition: Condition, value: T): super(areaProperty, condition, value)
+    constructor(areaProperty: KMutableProperty1<Field2, T>, condition: String, value: T): super(areaProperty, condition, value)
+}
+class Field11Parameter<T>: FieldParameter<Field2, T>{
+    constructor(areaProperty: KMutableProperty1<Field2, T>, condition: Condition, value: T): super(areaProperty, condition, value)
+    constructor(areaProperty: KMutableProperty1<Field2, T>, condition: String, value: T): super(areaProperty, condition, value)
+}
+class Field12Parameter<T>: FieldParameter<Field2, T>{
+    constructor(areaProperty: KMutableProperty1<Field2, T>, condition: Condition, value: T): super(areaProperty, condition, value)
+    constructor(areaProperty: KMutableProperty1<Field2, T>, condition: String, value: T): super(areaProperty, condition, value)
+}
+class Field13Parameter<T>: FieldParameter<Field2, T>{
+    constructor(areaProperty: KMutableProperty1<Field2, T>, condition: Condition, value: T): super(areaProperty, condition, value)
+    constructor(areaProperty: KMutableProperty1<Field2, T>, condition: String, value: T): super(areaProperty, condition, value)
+}
+class Field15Parameter<T>: FieldParameter<Field2, T>{
+    constructor(areaProperty: KMutableProperty1<Field2, T>, condition: Condition, value: T): super(areaProperty, condition, value)
+    constructor(areaProperty: KMutableProperty1<Field2, T>, condition: String, value: T): super(areaProperty, condition, value)
+}
+class Field19Parameter<T>: FieldParameter<Field2, T>{
+    constructor(areaProperty: KMutableProperty1<Field2, T>, condition: Condition, value: T): super(areaProperty, condition, value)
+    constructor(areaProperty: KMutableProperty1<Field2, T>, condition: String, value: T): super(areaProperty, condition, value)
+}
+class Field21Parameter<T>: FieldParameter<Field2, T>{
+    constructor(areaProperty: KMutableProperty1<Field2, T>, condition: Condition, value: T): super(areaProperty, condition, value)
+    constructor(areaProperty: KMutableProperty1<Field2, T>, condition: String, value: T): super(areaProperty, condition, value)
+}
+class Field23Parameter<T>: FieldParameter<Field2, T>{
+    constructor(areaProperty: KMutableProperty1<Field2, T>, condition: Condition, value: T): super(areaProperty, condition, value)
+    constructor(areaProperty: KMutableProperty1<Field2, T>, condition: String, value: T): super(areaProperty, condition, value)
+}
+class Field27Parameter<T>: FieldParameter<Field2, T>{
+    constructor(areaProperty: KMutableProperty1<Field2, T>, condition: Condition, value: T): super(areaProperty, condition, value)
+    constructor(areaProperty: KMutableProperty1<Field2, T>, condition: String, value: T): super(areaProperty, condition, value)
+}
+class Field29Parameter<T>: FieldParameter<Field2, T>{
+    constructor(areaProperty: KMutableProperty1<Field2, T>, condition: Condition, value: T): super(areaProperty, condition, value)
+    constructor(areaProperty: KMutableProperty1<Field2, T>, condition: String, value: T): super(areaProperty, condition, value)
+}
 
 fun String.parseCondition(): Condition{
     return when(this) {
