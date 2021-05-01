@@ -6,13 +6,17 @@ import org.apache.logging.log4j.kotlin.logger
 import roslesinforg.porokhin.areatypes.Area
 import roslesinforg.porokhin.areatypes.fields.*
 import roslesinforg.porokhin.geobaseeditor.GeoBaseEditorController
+import roslesinforg.porokhin.geobaseeditor.model.Attribute
 import roslesinforg.porokhin.geobaseeditor.model.Parameter
+import roslesinforg.porokhin.geobaseeditor.model.ParameterFactory
+import roslesinforg.porokhin.geobaseeditor.model.Selector
 
 
 class DDEClient(private val controller: GeoBaseEditorController) {
     private val logger = logger()
     var server: DDEServer? = null
     var client: DDEClientConversation? = null
+    var selector: Selector? = null
 
     fun initiate(){
         server = object : DDEServer("geobaseeditor"){
@@ -43,24 +47,29 @@ class DDEClient(private val controller: GeoBaseEditorController) {
             override fun onRequest(topic: String?, item: String?): String {
                 return when(topic){
                     "paint" -> {
+                        if (selector == null) selector = Selector(controller.areas)
                         val params = mutableListOf<Parameter<*, *>>()
                         val arr = item!!.split("|")
                         arr.forEach {
                             val p = it.split("?")
-                            val param = when(p[0].toInt()){
-                                1 -> Field1::typeOfProtection
-                                2 -> Area::categoryProtection
-                                3 -> ElementOfForest::species
-                                4 -> Field3::bon
-                                5 -> ElementOfForest::weight
-                                6 -> ElementOfForest::sumOfTimber
-                                7 -> TODO()
-                                9 -> Field1::category
+                            val condition = p[1]
+                            val value = p[2]
+                            val f = ParameterFactory
+                            val param: Parameter<*, *> = when(p[0].toInt()){
+                                1 -> f.createParameter<Field1, Int>(Attribute.OZU, condition, value.toInt())
+                                2 -> f.createParameter<Field1, Int>(Attribute.CATEGORY_PROTECTION, condition, value.toInt())
+                                3 -> f.createParameter<ElementOfForest, String>(Attribute.SPECIES, condition, value)
+                                4 -> f.createParameter<Field3, String>(Attribute.BON, condition, value)
+                                5 -> f.createParameter<ElementOfForest, Float>(Attribute.WEIGHT, condition, value.toFloat())
+                                6 -> f.createParameter<ElementOfForest, Int>(Attribute.SUM_OF_TIMBER, condition, value.toInt())
+                                7 -> f.createParameter<Field1.Empty1, Int>(Attribute.INFO, "", value.toInt())
+                                8 -> f.createParameter<Field1, Int>(Attribute.CATEGORY, condition, value.toInt())
                                 else -> throw IllegalArgumentException("unknown param $p")
                             }
+                            params.add(param)
                         }
 
-                        ""
+                        selector!!.selectForId(*params.toTypedArray()).joinToString()
                     }
                     else -> throw IllegalArgumentException("Unknown topic $topic")
                 }

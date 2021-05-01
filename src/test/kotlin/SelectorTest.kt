@@ -35,6 +35,7 @@ class SelectorTest {
             Element10Parameter(ElementOfForest::age, ">", 100),
         )
         Assert.assertEquals(3, res4.size)
+
     }
 
 }

@@ -35,8 +35,7 @@ class Selector(private val data: List<Area>) {
                     is Field23Parameter -> if (it.field23.info.isEmpty()){
                         f23False = true
                         Any() as T
-                        TODO()
-                    } else areaProperty.get(it.field23.info as R)
+                    } else value
                     is Field27Parameter -> areaProperty.get(it.field27 as R)
                     is Field29Parameter -> areaProperty.get(it.field29 as R)
                     else -> throw IllegalArgumentException("Unsupported FieldParameter")
@@ -139,9 +138,8 @@ class Field21Parameter<T>: FieldParameter<Field2, T>{
     constructor(areaProperty: KMutableProperty1<Field2, T>, condition: Condition, value: T): super(areaProperty, condition, value)
     constructor(areaProperty: KMutableProperty1<Field2, T>, condition: String, value: T): super(areaProperty, condition, value)
 }
-class Field23Parameter<T>: FieldParameter<Field2, T>{
-    constructor(areaProperty: KMutableProperty1<Field2, T>, condition: Condition, value: T): super(areaProperty, condition, value)
-    constructor(areaProperty: KMutableProperty1<Field2, T>, condition: String, value: T): super(areaProperty, condition, value)
+class Field23Parameter<T>(areaProperty: KMutableProperty1<Field1, T>, value: T) :
+    FieldParameter<Field1, T>(areaProperty, Condition.EQUAL, value) {
 }
 class Field27Parameter<T>: FieldParameter<Field2, T>{
     constructor(areaProperty: KMutableProperty1<Field2, T>, condition: Condition, value: T): super(areaProperty, condition, value)
