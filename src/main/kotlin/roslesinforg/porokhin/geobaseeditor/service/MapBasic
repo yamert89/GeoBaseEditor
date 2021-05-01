@@ -39,7 +39,7 @@ sub disconnect
 end sub
 
 sub paint
-    dim response as Integer
+    dim response as String
 
 
    	dim table as String
@@ -61,8 +61,35 @@ sub paint
 		control OKButton
 		Control CancelButton
 	print selectedType
-	response = Val(ddeRequest$(num, "paint"))
-	shade table with Id values 1001 Brush MakeBrush(64, CYAN, BLUE)style replace off
+	response = ddeRequest$(num, "paint")
+	dim startIdx, curIdsIdx, vId as Integer
+	dim subStr as String
+	dim ids, styles as Float(0)
+	curIdsIdx = 1
+
+
+	while startIdx < Len(response)
+	    subStr = Mid$(response, startIdx, 6)
+	    startIdx = startIdx + 7
+	    vId = Val(subStr)
+	    cur_size = UBound(ids)
+        ReDim ids(cur_size + 2)
+        ReDim styles(cur_size + 2)
+        ids(curIdsIdx) = vId
+        ids(curIdsIdx + 1) = vId
+        styles(curIdxIdx) = MakeBrush(64, CYAN, BLUE)
+        styles(curIdxIdx + 1) = MakeBrush(64, CYAN, BLUE)
+        curIdsIdx = curIdsIdx + 2
+	wend
+
+
+	shade table with Id Ranges from variable ids style variable styles
+
+
+'shade table with Id values 1001 Brush MakeBrush(64, CYAN, BLUE)style replace off
+'Mid$( string_expr, position, length )
+'Alter Object obj_variable_name Info OBJ_INFO_BRUSH, MakeBrush(64, CYAN, BLUE)
+
 
 
 

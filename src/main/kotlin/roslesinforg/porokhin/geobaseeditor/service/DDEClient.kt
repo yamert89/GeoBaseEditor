@@ -69,7 +69,11 @@ class DDEClient(private val controller: GeoBaseEditorController) {
                             params.add(param)
                         }
 
-                        selector!!.selectForId(*params.toTypedArray()).joinToString()
+                        selector!!.selectForId(*params.toTypedArray()).joinToString{
+                            val s = StringBuilder(it)
+                            while (s.length < 6) s.append(" ")
+                            s.toString()
+                        }
                     }
                     else -> throw IllegalArgumentException("Unknown topic $topic")
                 }
