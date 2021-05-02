@@ -50,12 +50,11 @@ class DDEClient(private val controller: GeoBaseEditorController) {
                         if (selector == null) selector = Selector(controller.areas)
                         val params = mutableListOf<Parameter<*, *>>()
                         val arr = item!!.split("|")
-                        arr.forEach {
-                            val p = it.split("?")
-                            val condition = p[1]
-                            val value = p[2]
+                        for (it in arr) {
+                            val (p, condition, value) = it.split("?", limit = 3)
+                            if (p.isEmpty() || condition.isEmpty() || value.isEmpty()) continue
                             val f = ParameterFactory
-                            val param: Parameter<*, *> = when(p[0].toInt()){
+                            val param: Parameter<*, *> = when(p.toInt()){
                                 1 -> f.createParameter<Field1, Int>(Attribute.OZU, condition, value.toInt())
                                 2 -> f.createParameter<Field1, Int>(Attribute.CATEGORY_PROTECTION, condition, value.toInt())
                                 3 -> f.createParameter<ElementOfForest, String>(Attribute.SPECIES, condition, value)

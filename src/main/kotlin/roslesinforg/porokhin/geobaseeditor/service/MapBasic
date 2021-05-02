@@ -1,5 +1,6 @@
-Include "MAPBASIC.DEF"
+'Include "MAPBASIC.DEF"
 Include  "GET_TAB.MB"
+Declare Sub Main
 Declare Sub SelChangedHandler
 declare sub connect
 declare sub disconnect
@@ -7,17 +8,20 @@ declare sub selectionlistener
 declare sub errorhandler
 Declare sub RemoteMsgHandler
 declare sub paint
+declare sub paintrequest(req as String)
+
 Dim ar As Integer
 Dim num As Integer
-dim activated as logical
-
-activated = 0
-print "Base Editror loaded"
-create menu "Редактор базы" as
-"&Подключиться" calling connect,
-"&Отключиться" calling disconnect,
-"&test" calling paint
-alter menu bar add "Редактор базы"
+Dim activated as logical
+sub Main
+	activated = 0
+	print "Base Editror loaded"
+	create menu "Редактор базы" as
+	"&Подключиться" calling connect,
+	"&Отключиться" calling disconnect,
+	"&test" calling paint
+	alter menu bar add "Редактор базы"
+end sub
 
 sub selchangedhandler
 	if activated = 1 then
@@ -39,13 +43,11 @@ sub disconnect
 end sub
 
 sub paint
-    dim response as String
-
-
    	dim table as String
 	table = GetTableName("Выберите слой", 0, 0)
-	dim selectedType as SmallInt
+	dim selectedType1, selectedType2, selectedType3 as SmallInt
 	dim types(10) as String
+	dim value1, value2, value3, condition1, condition2, condition3 as String
 	types(1) = "ОЗУ"
 	types(2) = "ЦНЛ"
  	types(3) = "порода"
@@ -55,24 +57,60 @@ sub paint
 	types(7) = "23 макет"
 	types(8) = "категория земель"
 
-	dialog
+	dialog title "Оформление"
+	    control statictext
+	        title "Праметр 1"
 		control popupmenu
-			title from variable types into selectedType
+			title from variable types into selectedType1
+		control popupmenu
+		    title ">;<;="
+		    into condition1
+		control edittext
+		    into value1
+        control statictext
+            title "Праметр 2"
+        control popupmenu
+            title from variable types into selectedType2
+        control popupmenu
+            title ">;<;="
+            into condition2
+        control edittext
+            into value2
+        control statictext
+        	title "Праметр 3"
+        control popupmenu
+            title from variable types into selectedType3
+        control popupmenu
+            title ">;<;="
+            into condition3
+        control edittext
+        	into value3
 		control OKButton
 		Control CancelButton
-	print selectedType
-	response = ddeRequest$(num, "paint")
-	dim startIdx, curIdsIdx, vId as Integer
-	dim subStr as String
-	dim ids, styles as Float(0)
-	curIdsIdx = 1
+
+	dim request as String
+	request = selectedType1 + "?" + condition1 + "?" + value1 + "|" + selectedType2 + "?" + condition2 + "?" +
+	    value2 + "|" + selectedType3 + "?" + condition3 + "?" + value3
+	call paintrequest(request)
+
+end sub
 
 
-	while startIdx < Len(response)
-	    subStr = Mid$(response, startIdx, 6)
-	    startIdx = startIdx + 7
-	    vId = Val(subStr)
-	    cur_size = UBound(ids)
+
+sub paintrequest(req as String)
+    dim response as String
+    response = ddeRequest$(num, "paint")
+    dim startIdx, curIdsIdx, vId, cur_size as Integer
+    dim subStr as String
+    dim ids(0) as Float
+	dim styles(0) as Brush
+    curIdsIdx = 1
+
+    while startIdx < Len(response)
+        subStr = Mid$(response, startIdx, 6)
+        startIdx = startIdx + 7
+        vId = Val(subStr)
+        cur_size = UBound(ids)
         ReDim ids(cur_size + 2)
         ReDim styles(cur_size + 2)
         ids(curIdsIdx) = vId
@@ -80,18 +118,8 @@ sub paint
         styles(curIdxIdx) = MakeBrush(64, CYAN, BLUE)
         styles(curIdxIdx + 1) = MakeBrush(64, CYAN, BLUE)
         curIdsIdx = curIdsIdx + 2
-	wend
-
-
-	shade table with Id Ranges from variable ids style variable styles
-
-
-'shade table with Id values 1001 Brush MakeBrush(64, CYAN, BLUE)style replace off
-'Mid$( string_expr, position, length )
-'Alter Object obj_variable_name Info OBJ_INFO_BRUSH, MakeBrush(64, CYAN, BLUE)
-
-
-
+    wend
+    shade table with Id Ranges from variable ids style variable styles style replace off
 
 end sub
 
@@ -128,6 +156,7 @@ sub RemoteMsgHandler()
 	'data = CommandInfo()
 	'print "requested data : " + data
 End sub
+
 
 
 
