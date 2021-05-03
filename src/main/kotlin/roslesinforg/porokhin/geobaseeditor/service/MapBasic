@@ -46,47 +46,65 @@ sub paint
    	dim table as String
 	table = GetTableName("Выберите слой", 0, 0)
 	dim selectedType1, selectedType2, selectedType3 as SmallInt
-	dim types(10) as String
-	dim value1, value2, value3, condition1, condition2, condition3 as String
-	types(1) = "ОЗУ"
-	types(2) = "ЦНЛ"
- 	types(3) = "порода"
-	types(4) = "бонитет"
-	types(5) = "полнота"
-	types(6) = "запас"
-	types(7) = "23 макет"
-	types(8) = "категория земель"
+    	dim types(10) as String
+    	dim value1, value2, value3, condition1, condition2, condition3 as String
+    	dim selectedStyle as Brush
+    	types(1) = "ОЗУ"
+    	types(2) = "ЦНЛ"
+     	types(3) = "порода"
+    	types(4) = "бонитет"
+    	types(5) = "полнота"
+    	types(6) = "запас"
+    	types(7) = "23 макет"
+    	types(8) = "категория земель"
 
-	dialog title "Оформление"
-	    control statictext
-	        title "Праметр 1"
-		control popupmenu
-			title from variable types into selectedType1
-		control popupmenu
-		    title ">;<;="
-		    into condition1
-		control edittext
-		    into value1
-        control statictext
-            title "Праметр 2"
-        control popupmenu
-            title from variable types into selectedType2
-        control popupmenu
-            title ">;<;="
-            into condition2
-        control edittext
-            into value2
-        control statictext
-        	title "Праметр 3"
-        control popupmenu
-            title from variable types into selectedType3
-        control popupmenu
-            title ">;<;="
-            into condition3
-        control edittext
-        	into value3
-		control OKButton
-		Control CancelButton
+    	dialog title "Оформление"
+    	    control statictext
+    	        title "Параметр 1"
+    		position 6, 7
+    		control popupmenu
+    			title from variable types into selectedType1
+    			position 49, 5
+    		control popupmenu
+    		    title ">;<;="
+    			position 136, 5
+    		    into condition1
+    		control edittext
+    			position 164, 5
+    		    into value1
+            control statictext
+                title "Параметр 2"
+    		position 6, 27
+            control popupmenu
+                title from variable types into selectedType2
+    		position 49, 25
+            control popupmenu
+                title ">;<;="
+    		position 136, 25
+                into condition2
+            control edittext
+    		position 164, 25
+                into value2
+            control statictext
+            	title "Параметр 3"
+    		position 6, 47
+            control popupmenu
+                title from variable types into selectedType3
+    		position 49, 45
+            control popupmenu
+                title ">;<;="
+    		position 136,45
+                into condition3
+            control edittext
+    		position 164, 45
+            	into value3
+    	control statictext
+    		title "Выберите стиль"
+    	control BrushPicker
+    		into selectedStyle
+    		control OKButton
+    		Control CancelButton
+
 
 	dim request as String
 	request = selectedType1 + "?" + condition1 + "?" + value1 + "|" + selectedType2 + "?" + condition2 + "?" +
