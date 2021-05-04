@@ -1,4 +1,4 @@
-'Include "MAPBASIC.DEF"
+Include "MAPBASIC.DEF"
 Include  "GET_TAB.MB"
 Declare Sub Main
 Declare Sub SelChangedHandler
@@ -9,10 +9,12 @@ declare sub errorhandler
 Declare sub RemoteMsgHandler
 declare sub paint
 declare sub paintrequest(req as String)
+declare function parseCondition(value as String) as String
 
 Dim ar As Integer
 Dim num As Integer
 Dim activated as logical
+dim table as String
 sub Main
 	activated = 0
 	print "Base Editror loaded"
@@ -43,7 +45,7 @@ sub disconnect
 end sub
 
 sub paint
-   	dim table as String
+
 	table = GetTableName("Выберите слой", 0, 0)
 	dim selectedType1, selectedType2, selectedType3 as SmallInt
     	dim types(10) as String
@@ -66,7 +68,7 @@ sub paint
     			title from variable types into selectedType1
     			position 49, 5
     		control popupmenu
-    		    title ">;<;="
+    		    title "=;<;>"
     			position 136, 5
     		    into condition1
     		control edittext
@@ -79,7 +81,7 @@ sub paint
                 title from variable types into selectedType2
     		position 49, 25
             control popupmenu
-                title ">;<;="
+                title "=;<;>"
     		position 136, 25
                 into condition2
             control edittext
@@ -92,7 +94,7 @@ sub paint
                 title from variable types into selectedType3
     		position 49, 45
             control popupmenu
-                title ">;<;="
+                title "=;<;>"
     		position 136,45
                 into condition3
             control edittext
@@ -106,18 +108,29 @@ sub paint
     		Control CancelButton
 
 
+
+
 	dim request as String
-	request = selectedType1 + "?" + condition1 + "?" + value1 + "|" + selectedType2 + "?" + condition2 + "?" +
-	    value2 + "|" + selectedType3 + "?" + condition3 + "?" + value3
+	request = selectedType1 + "?" + parseCondition(condition1) + "?" + value1 + "|" + selectedType2 + "?" + parseCondition(condition2) + "?" +
+	    value2 + "|" + selectedType3 + "?" + parseCondition(condition3) + "?" + value3
 	call paintrequest(request)
 
 end sub
+
+function parseCondition(value as String) as String
+	do case value
+		case "1" parseCondition = "="
+		case "2" parseCondition = "<"
+		case "3" parseCondition = ">"
+	end case
+end function
 
 
 
 sub paintrequest(req as String)
     dim response as String
-    response = ddeRequest$(num, "paint")
+    response = ddeRequest$(num, req)
+	print "response: " + response
     dim startIdx, curIdsIdx, vId, cur_size as Integer
     dim subStr as String
     dim ids(0) as Float
@@ -174,6 +187,7 @@ sub RemoteMsgHandler()
 	'data = CommandInfo()
 	'print "requested data : " + data
 End sub
+
 
 
 

@@ -33,9 +33,6 @@ class DDEClient(private val controller: GeoBaseEditorController) {
                                 controller.selectArea(arr[0].toInt())
                                 controller.log("Выд. ${arr[0]}, картографическая площадь: ${arr[1].toFloat()}")
                             }
-                            "paint" -> {
-
-                            }
                             else -> logger.debug("unknown item")
                         }
                     }
@@ -45,8 +42,9 @@ class DDEClient(private val controller: GeoBaseEditorController) {
             }
 
             override fun onRequest(topic: String?, item: String?): String {
+                logger.debug("Request with topic: $topic, item: $item")
                 return when(topic){
-                    "paint" -> {
+                    "areaselection" -> {
                         if (selector == null) selector = Selector(controller.areas)
                         val params = mutableListOf<Parameter<*, *>>()
                         val arr = item!!.split("|")
@@ -68,11 +66,15 @@ class DDEClient(private val controller: GeoBaseEditorController) {
                             params.add(param)
                         }
 
-                        selector!!.selectForId(*params.toTypedArray()).joinToString{
+                        val ids = selector!!.selectForId(*params.toTypedArray())
+
+                        val response = ids.joinToString{
                             val s = StringBuilder(it)
                             while (s.length < 6) s.append(" ")
                             s.toString()
                         }
+                        logger.debug("Response : $response")
+                        response
                     }
                     else -> throw IllegalArgumentException("Unknown topic $topic")
                 }
