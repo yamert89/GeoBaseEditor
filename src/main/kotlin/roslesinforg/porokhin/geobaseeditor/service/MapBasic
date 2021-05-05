@@ -47,7 +47,7 @@ end sub
 sub paint
 
 	table = GetTableName("Выберите слой", 0, 0)
-	dim selectedType1, selectedType2, selectedType3 as SmallInt
+	dim selectedType1, selectedType2, selectedType3, logic2, logic3 as SmallInt
     	dim types(10) as String
     	dim value1, value2, value3, condition1, condition2, condition3 as String
     	dim selectedStyle as Brush
@@ -74,6 +74,9 @@ sub paint
     		control edittext
     			position 164, 5
     		    into value1
+    		control popupmenu
+    		    title "И;ИЛИ"
+    		    into logic2
             control statictext
                 title "Параметр 2"
     		position 6, 27
@@ -87,6 +90,9 @@ sub paint
             control edittext
     		position 164, 25
                 into value2
+            control popupmenu
+                title "И;ИЛИ"
+                into logic3
             control statictext
             	title "Параметр 3"
     		position 6, 47
@@ -111,7 +117,7 @@ sub paint
 
 
 	dim request as String
-	request = selectedType1 + "?" + parseCondition(condition1) + "?" + value1 + "|" + selectedType2 + "?" + parseCondition(condition2) + "?" +
+	request = "1"+ "?" + selectedType1 + "?" + parseCondition(condition1) + "?" + value1 + "|" + selectedType2 + "?" + parseCondition(condition2) + "?" +
 	    value2 + "|" + selectedType3 + "?" + parseCondition(condition3) + "?" + value3
 	call paintrequest(request)
 
