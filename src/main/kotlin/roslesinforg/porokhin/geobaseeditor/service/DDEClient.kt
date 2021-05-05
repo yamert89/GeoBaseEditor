@@ -6,10 +6,7 @@ import org.apache.logging.log4j.kotlin.logger
 import roslesinforg.porokhin.areatypes.Area
 import roslesinforg.porokhin.areatypes.fields.*
 import roslesinforg.porokhin.geobaseeditor.GeoBaseEditorController
-import roslesinforg.porokhin.geobaseeditor.model.Attribute
-import roslesinforg.porokhin.geobaseeditor.model.Parameter
-import roslesinforg.porokhin.geobaseeditor.model.ParameterFactory
-import roslesinforg.porokhin.geobaseeditor.model.Selector
+import roslesinforg.porokhin.geobaseeditor.model.*
 
 
 class DDEClient(private val controller: GeoBaseEditorController) {
@@ -49,18 +46,19 @@ class DDEClient(private val controller: GeoBaseEditorController) {
                         val params = mutableListOf<Parameter<*, *>>()
                         val arr = item!!.split("|")
                         for (it in arr) {
-                            val (p, condition, value) = it.split("?", limit = 3)
-                            if (p.isEmpty() || condition.isEmpty() || value.isEmpty()) continue
+                            val (logicCond, p, comparingCondition, value) = it.split("?", limit = 3)
+                            val logicCondition: LogicCondition = if (logicCond == "1") LogicCondition.AND else LogicCondition.OR
+                            if (p.isEmpty() || comparingCondition.isEmpty() || value.isEmpty()) continue
                             val f = ParameterFactory
                             val param: Parameter<*, *> = when(p.toInt()){
-                                1 -> f.createParameter<Field1, Int>(Attribute.OZU, condition, value.toInt())
-                                2 -> f.createParameter<Field1, Int>(Attribute.CATEGORY_PROTECTION, condition, value.toInt())
-                                3 -> f.createParameter<ElementOfForest, String>(Attribute.SPECIES, condition, value)
-                                4 -> f.createParameter<Field3, String>(Attribute.BON, condition, value)
-                                5 -> f.createParameter<ElementOfForest, Float>(Attribute.WEIGHT, condition, value.toFloat())
-                                6 -> f.createParameter<ElementOfForest, Int>(Attribute.SUM_OF_TIMBER, condition, value.toInt())
-                                7 -> f.createParameter<Field1.Empty1, Int>(Attribute.INFO, "", value.toInt())
-                                8 -> f.createParameter<Field1, Int>(Attribute.CATEGORY, condition, value.toInt())
+                                1 -> f.createParameter<Field1, Int>(logicCondition, Attribute.OZU, comparingCondition, value.toInt())
+                                2 -> f.createParameter<Field1, Int>(logicCondition, Attribute.CATEGORY_PROTECTION, comparingCondition, value.toInt())
+                                3 -> f.createParameter<ElementOfForest, String>(logicCondition, Attribute.SPECIES, comparingCondition, value)
+                                4 -> f.createParameter<Field3, String>(logicCondition, Attribute.BON, comparingCondition, value)
+                                5 -> f.createParameter<ElementOfForest, Float>(logicCondition, Attribute.WEIGHT, comparingCondition, value.toFloat())
+                                6 -> f.createParameter<ElementOfForest, Int>(logicCondition, Attribute.SUM_OF_TIMBER, comparingCondition, value.toInt())
+                                7 -> f.createParameter<Field1.Empty1, Int>(logicCondition, Attribute.INFO, "", value.toInt())
+                                8 -> f.createParameter<Field1, Int>(logicCondition, Attribute.CATEGORY, comparingCondition, value.toInt())
                                 else -> throw IllegalArgumentException("unknown param $p")
                             }
                             params.add(param)
@@ -68,8 +66,8 @@ class DDEClient(private val controller: GeoBaseEditorController) {
 
                         val ids = selector!!.selectForId(*params.toTypedArray())
 
-                        val response = ids.joinToString{
-                            val s = StringBuilder(it)
+                        val response = if (ids.isEmpty()) "0" else ids.joinToString(","){
+                            val s = StringBuilder(it.toString())
                             while (s.length < 6) s.append(" ")
                             s.toString()
                         }

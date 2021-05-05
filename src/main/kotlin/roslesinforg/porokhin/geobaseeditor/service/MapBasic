@@ -130,27 +130,32 @@ end function
 sub paintrequest(req as String)
     dim response as String
     response = ddeRequest$(num, req)
-	print "response: " + response
-    dim startIdx, curIdsIdx, vId, cur_size as Integer
-    dim subStr as String
-    dim ids(0) as Float
-	dim styles(0) as Brush
-    curIdsIdx = 1
+    if response = "0" then Note "Искомые выдела не найдены"
+    else
+	    print "response: " + response
+        dim startIdx, curIdsIdx, vId, cur_size as Integer
+        dim subStr as String
+        dim ids(0) as Float
+	    dim styles(0) as Brush
+        curIdsIdx = 1
+        startIdx = 1
 
-    while startIdx < Len(response)
-        subStr = Mid$(response, startIdx, 6)
-        startIdx = startIdx + 7
-        vId = Val(subStr)
-        cur_size = UBound(ids)
-        ReDim ids(cur_size + 2)
-        ReDim styles(cur_size + 2)
-        ids(curIdsIdx) = vId
-        ids(curIdsIdx + 1) = vId
-        styles(curIdxIdx) = MakeBrush(64, CYAN, BLUE)
-        styles(curIdxIdx + 1) = MakeBrush(64, CYAN, BLUE)
-        curIdsIdx = curIdsIdx + 2
-    wend
-    shade table with Id Ranges from variable ids style variable styles style replace off
+        while startIdx < Len(response)
+            subStr = Mid$(response, startIdx, 6)
+            startIdx = startIdx + 7
+            vId = Val(subStr)
+            cur_size = UBound(ids)
+            ReDim ids(cur_size + 2)
+            ReDim styles(cur_size + 2)
+            ids(curIdsIdx) = vId
+            ids(curIdsIdx + 1) = vId
+            styles(curIdsIdx) = MakeBrush(64, CYAN, BLUE)
+            styles(curIdsIdx + 1) = MakeBrush(64, CYAN, BLUE)
+            curIdsIdx = curIdsIdx + 2
+        wend
+        shade table with Id Ranges from variable ids style variable styles style replace off
+        note "Оформлено " + cur_size + " выделов"
+    end if
 
 end sub
 

@@ -16,25 +16,32 @@ class SelectorTest {
         val parser = Parser(file)
         parser.parse()
         val selector = Selector(parser.areas)
-        val res = selector.selectForId(AreaParameter(Area::kv, "=", 1))
+        val res = selector.selectForId(AreaParameter(LogicCondition.AND, Area::kv, "=", 1))
         Assert.assertEquals(21, res.size)
         Assert.assertEquals(1021, res.last())
         val res2 = selector.select(
-            Field1Parameter(Field1::number, ">", 10),
-            Field1Parameter(Field1::number, "<", 22),
-            AreaParameter(Area::kv, "=", 1))
+            Field1Parameter(LogicCondition.AND, Field1::number, ">", 10),
+            Field1Parameter(LogicCondition.AND, Field1::number, "<", 22),
+            AreaParameter(LogicCondition.AND, Area::kv, "=", 1))
         Assert.assertArrayEquals((11..21).toList().toIntArray(), res2.map { it.field1.number }.toIntArray())
         val res3 = selector.selectForId(
-            Field1Parameter(Field1::number, "<", 5),
-            Field1Parameter(Field1::area, ">", 2f),
-            AreaParameter(Area::kv, "=", 1)
+            Field1Parameter(LogicCondition.AND, Field1::number, "<", 5),
+            Field1Parameter(LogicCondition.AND, Field1::area, ">", 2f),
+            AreaParameter(LogicCondition.AND, Area::kv, "=", 1)
         )
         Assert.assertEquals(2, res3.size)
         val res4 = selector.select(
-            AreaParameter(Area::kv, "=", 1),
-            Element10Parameter(ElementOfForest::age, ">", 100),
+            AreaParameter(LogicCondition.AND, Area::kv, "=", 1),
+            Element10Parameter(LogicCondition.AND, ElementOfForest::age, ">", 100),
         )
         Assert.assertEquals(3, res4.size)
+        val res5 = selector.select(
+            AreaParameter(LogicCondition.AND, Area::kv, "=", 1),
+            AreaParameter(LogicCondition.AND, Area::id, "=", 1001),
+            AreaParameter(LogicCondition.OR, Area::id, "=", 1002)
+        ).sortedBy { it.id }
+        Assert.assertEquals(2, res5.size)
+        Assert.assertEquals(1002, res5[1].id)
 
     }
 
