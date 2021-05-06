@@ -376,7 +376,7 @@ class MainView : GeoBaseEditorView("Редактор базы") {
             }
             filter(fD1, fD2, fD3, fD4, fD5, fD6, fD7, fD8, fD9, fD10){ f ->
                 f.controlNewText.let { d ->
-                    d.isInt() && d.toInt() in 2..80/* &&
+                    d.isInt() && d.toInt() in 1..80/* &&
                             d.let { it.endsWith("0") || it.endsWith("2") || it.endsWith("4") ||
                             it.endsWith("6") || it.endsWith("8")}*/
                 }
@@ -578,8 +578,8 @@ class MainView : GeoBaseEditorView("Редактор базы") {
                 find<RawToXLSConverterView>(params = mapOf(
                     "initAreas" to controller.areas,
                     "initOutputPath" to controller.inputFilePath)).openWindow(owner = null)
-            }
-            addNewButton("screen.png", "Сохранить в GIF"){
+            }.apply { enableWhen { enableFieldsTrigger } }
+            addNewButton("screen.png", "Скриншот карточки"){
                 val file = chooseFile("Сохарнить GIF", arrayOf(FileChooser.ExtensionFilter("Файлы изображений", "*.gif", "*.jpg", "*.bmp", "*.tiff")), mode = FileChooserMode.Save, owner = primaryStage)
                 if (file.isEmpty()) return@addNewButton
                 val image = cardLayout.snapshot(null, null)
@@ -588,12 +588,12 @@ class MainView : GeoBaseEditorView("Редактор базы") {
                 val path = "${file[0].path}$ext"
                 ImageIO.write(SwingFXUtils.fromFXImage(image, null), "GIF", File(path))
                 flog("Скриншот сохранен в $path")
-            }
+            }.apply { enableWhen { enableFieldsTrigger } }
             addNewButton("change.png", "Изменения"){
                 model.replaceEmptyFields(model.item)
                 model.commit()
                 openInternalWindow(ChangesView::class, Scope())
-            }
+            }.apply { enableWhen { enableFieldsTrigger } }
             addNewButton("save.png", "Сохранить"){
                 with(validationHelper.failedAreas){
                     if (isNotEmpty()) error("Внимание", "Найдены ошибки в выделах ${this.joinToString()}")
@@ -611,7 +611,7 @@ class MainView : GeoBaseEditorView("Редактор базы") {
                         flog("Файл сохранен: ${file[0].absolutePath}")
                     }
                 }
-            }
+            }.apply { enableWhen { enableFieldsTrigger } }
             addNewButton("add.png", "Открыть"){
                 val files = chooseFile(
                     "Выберите файл",
@@ -677,6 +677,7 @@ class MainView : GeoBaseEditorView("Редактор базы") {
                         flog("Канал связи с MapInfo закрыт")
                     }
                 }
+                enableWhen { enableFieldsTrigger }
             }
         }
 
