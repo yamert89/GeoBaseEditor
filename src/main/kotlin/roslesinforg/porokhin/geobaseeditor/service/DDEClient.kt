@@ -46,7 +46,7 @@ class DDEClient(private val controller: GeoBaseEditorController) {
                         val params = mutableListOf<Parameter<*, *>>()
                         val arr = item!!.split("|")
                         for (it in arr) {
-                            val (logicCond, p, comparingCondition, value) = it.split("?", limit = 3)
+                            val (logicCond, p, comparingCondition, value) = it.split("?", limit = 4)
                             val logicCondition: LogicCondition = if (logicCond == "1") LogicCondition.AND else LogicCondition.OR
                             if (p.isEmpty() || comparingCondition.isEmpty() || value.isEmpty()) continue
                             val f = ParameterFactory

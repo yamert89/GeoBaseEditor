@@ -15,13 +15,13 @@ Dim ar As Integer
 Dim num As Integer
 Dim activated as logical
 dim table as String
+dim selectedStyle as Brush
+
 sub Main
 	activated = 0
-	print "Base Editror loaded"
 	create menu "Редактор базы" as
 	"&Подключиться" calling connect,
-	"&Отключиться" calling disconnect,
-	"&test" calling paint
+	"&Оформить" calling paint
 	alter menu bar add "Редактор базы"
 end sub
 
@@ -33,7 +33,6 @@ end sub
 
 sub connect
 	num = ddeinitiate("geobaseeditor", "areaselection")
-
 	print "Редактор базы подключен"
 	activated =1
 end sub
@@ -50,7 +49,6 @@ sub paint
 	dim selectedType1, selectedType2, selectedType3, logic2, logic3 as SmallInt
     	dim types(10) as String
     	dim value1, value2, value3, condition1, condition2, condition3 as String
-    	dim selectedStyle as Brush
     	types(1) = "ОЗУ"
     	types(2) = "ЦНЛ"
      	types(3) = "порода"
@@ -76,38 +74,41 @@ sub paint
     		    into value1
     		control popupmenu
     		    title "И;ИЛИ"
+    		    position 6, 25
     		    into logic2
             control statictext
                 title "Параметр 2"
-    		position 6, 27
+    		    position 6, 47
             control popupmenu
                 title from variable types into selectedType2
-    		position 49, 25
+    		    position 49, 45
             control popupmenu
                 title "=;<;>"
-    		position 136, 25
+    		    position 136, 45
                 into condition2
             control edittext
-    		position 164, 25
+    		    position 164, 45
                 into value2
             control popupmenu
                 title "И;ИЛИ"
+                position 6, 60
                 into logic3
             control statictext
             	title "Параметр 3"
-    		position 6, 47
+    		position 6, 87
             control popupmenu
                 title from variable types into selectedType3
-    		position 49, 45
+    		position 49, 85
             control popupmenu
                 title "=;<;>"
-    		position 136,45
+    		position 136, 85
                 into condition3
             control edittext
-    		position 164, 45
+    		position 164, 85
             	into value3
     	control statictext
     		title "Выберите стиль"
+    		position 6, 95
     	control BrushPicker
     		into selectedStyle
     		control OKButton
@@ -117,8 +118,8 @@ sub paint
 
 
 	dim request as String
-	request = "1"+ "?" + selectedType1 + "?" + parseCondition(condition1) + "?" + value1 + "|" + selectedType2 + "?" + parseCondition(condition2) + "?" +
-	    value2 + "|" + selectedType3 + "?" + parseCondition(condition3) + "?" + value3
+	request = "1"+ "?" + selectedType1 + "?" + parseCondition(condition1) + "?" + value1 + "|" + logic2 + "?" + selectedType2 + "?" + parseCondition(condition2) + "?" +
+	    value2 + "|" + logic3 + "?" + selectedType3 + "?" + parseCondition(condition3) + "?" + value3
 	call paintrequest(request)
 
 end sub
@@ -155,8 +156,8 @@ sub paintrequest(req as String)
             ReDim styles(cur_size + 2)
             ids(curIdsIdx) = vId
             ids(curIdsIdx + 1) = vId
-            styles(curIdsIdx) = MakeBrush(64, CYAN, BLUE)
-            styles(curIdsIdx + 1) = MakeBrush(64, CYAN, BLUE)
+            styles(curIdsIdx) = selectedStyle
+            styles(curIdsIdx + 1) = selectedStyle
             curIdsIdx = curIdsIdx + 2
         wend
         shade table with Id Ranges from variable ids style variable styles style replace off
@@ -168,7 +169,6 @@ end sub
 sub selectionlistener
 	onerror goto ex
 	ar = selection.id
-	print commandinfo(1)
 	if commandinfo(1) = 1 then
 		dim sq as Float
 		sq = CartesianArea(selection.obj, "hectare")
@@ -177,7 +177,6 @@ sub selectionlistener
 		else
 			ddepoke num, "selection_with_area", STR$(ar) + "|" + STR$(sq)
 		end if
-		print "end"
 	end if
 	exit sub
 ex:
@@ -193,11 +192,11 @@ sub errorhandler
 	end if
 end sub
 
-sub RemoteMsgHandler()
-	'Dim data As String
-	'data = CommandInfo()
-	'print "requested data : " + data
-End sub
+'sub RemoteMsgHandler()
+'	'Dim data As String
+'	'data = CommandInfo()
+'	'print "requested data : " + data
+'End sub
 
 
 

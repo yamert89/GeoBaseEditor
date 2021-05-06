@@ -13,6 +13,7 @@ import javafx.scene.image.ImageView
 import javafx.scene.input.*
 import javafx.scene.layout.*
 import javafx.scene.text.TextAlignment
+import javafx.stage.FileChooser
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import roslesinforg.porokhin.areatypes.Area
@@ -579,10 +580,12 @@ class MainView : GeoBaseEditorView("Редактор базы") {
                     "initOutputPath" to controller.inputFilePath)).openWindow(owner = null)
             }
             addNewButton("screen.png", "Сохранить в GIF"){
-                val file = chooseFile("Сохарнить GIF", emptyArray(), mode = FileChooserMode.Save, owner = primaryStage)
+                val file = chooseFile("Сохарнить GIF", arrayOf(FileChooser.ExtensionFilter("Файлы изображений", "*.gif", "*.jpg", "*.bmp", "*.tiff")), mode = FileChooserMode.Save, owner = primaryStage)
                 if (file.isEmpty()) return@addNewButton
                 val image = cardLayout.snapshot(null, null)
-                val path = "${kv_list.selectionModel.selectedItem.id}.gif"
+                //val path = "${kv_list.selectionModel.selectedItem.id}.gif"
+                val ext = if (!file[0].path.matches(".+\\.gif".toRegex())) ".gif" else ""
+                val path = "${file[0].path}$ext"
                 ImageIO.write(SwingFXUtils.fromFXImage(image, null), "GIF", File(path))
                 flog("Скриншот сохранен в $path")
             }
