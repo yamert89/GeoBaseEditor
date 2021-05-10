@@ -108,7 +108,7 @@ class GeoBaseEditorController: Controller() {
         //val current = File("D:/my/rawTest")
         //val current = File("J:/rawTest")
         writeToRawFile(current)
-        return FileComparator(inputFile, current, Charset.forName("Cp866")).compare().toObservable()
+        return FileComparator(inputFile, current, Charset.forName("Cp866")).compare1().toObservable()
     }
 
     private fun prepareForSaving(){
