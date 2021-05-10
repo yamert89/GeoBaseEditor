@@ -90,11 +90,6 @@ class ChangesView : GeoBaseEditorView("Изменения") {
             table = tableview(emptyList<ComparedPair>().toObservable()){
                 prefWidth = 450.0
                 smartResize()
-                column(tNumber, ComparedPair::lineNumber)
-                column<ComparedPair, String>("<>"){
-                    it.tableColumn.maxWidth = 36.0
-                    it.value.first.type.toToken().toProperty()
-                }
                 column(tBefore, ComparedLine::class){
                     useMaxSize = true
                     cellValueFactory = Callback { it.value.first.toProperty() }
