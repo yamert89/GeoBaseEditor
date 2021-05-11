@@ -73,7 +73,6 @@ class ChangesView : GeoBaseEditorView("Изменения") {
                     val file = chooseFile("Сохранение", filters = emptyArray(), mode = FileChooserMode.Save)
                     if (file.isEmpty()) return@addNewButton
                     val title = "Лесничество: ${controller.location?.forestry},  участок: ${controller.location?.subForestry}"
-                    //val path = "D:/my/wordout.docx"
                     val path = file[0].path + ".docx"
                     val fos = FileOutputStream(path)
                     MSWordResult(difResult, title, tableColLineNumber = tNumber, tableColLine1 = tBefore, tableColLine2 = tAfter).get().write(fos)
@@ -81,12 +80,7 @@ class ChangesView : GeoBaseEditorView("Изменения") {
                     fos.close()
                     logger.debug("docx file created")
                 }
-                /*word.apply {
-                    enableWhen { filledProperty }
-                }*/
-
             }
-            //if (difResult.isEmpty()) information("", "Нет изменений", ButtonType.OK, owner = primaryStage, title = ""){}
             table = tableview(emptyList<ComparedPair>().toObservable()){
                 prefWidth = 450.0
                 smartResize()
@@ -135,21 +129,6 @@ class ChangesView : GeoBaseEditorView("Изменения") {
                     val sb = StringBuilder()
                     val valueArr = value.toCharArray()
                     var lastOperatedIdx = -1
-                   /* item.changedIndexes.forEach { pair ->
-                        for (index in lastOperatedIdx..valueArr.lastIndex){
-                            if (index !in pair.first..pair.second) sb.append(valueArr[index])
-                            else{
-                                lastOperatedIdx = index
-                                break
-                            }
-                        }
-                        if (sb.isNotEmpty()) texts.add(Text(sb.toString()))
-                        sb.clear()
-                        texts.add(Text(value.substring(pair.first, pair.second)).apply {
-                            fill = Color.RED
-                            font = font("Verdana")
-                        })
-                    }*/
 
                     valueArr.forEachIndexed { index, c ->
                         if (index > lastOperatedIdx){

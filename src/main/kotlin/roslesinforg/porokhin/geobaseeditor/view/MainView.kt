@@ -334,7 +334,7 @@ class MainView : GeoBaseEditorView("Редактор базы") {
         fProgress.bind(controller.progressStatusProperty)
         fGir.enableWhen { enableFieldsTrigger }
 
-        if ( app.parameters.raw[0] == "-d"){
+        if ( app.parameters.raw.isNotEmpty() && app.parameters.raw[0] == "-d"){
             val file = File(this.javaClass.classLoader.getResource("0309").toURI())
             runAsync {
                 controller.read(file)
