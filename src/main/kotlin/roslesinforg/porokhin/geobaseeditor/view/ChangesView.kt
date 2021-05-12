@@ -119,10 +119,14 @@ class ChangesView : GeoBaseEditorView("Изменения") {
                         graphic = null
                         return
                     }
+                    if(item.shadow) {
+                        text = ""
+                        return
+                    }
                     val value = item.value
                     if (item.changedIndexes.isEmpty()){
                         contentDisplay = ContentDisplay.TEXT_ONLY
-                        text = item.value
+                        text = value
                         return
                     }
                     val texts = mutableListOf<Text>()
