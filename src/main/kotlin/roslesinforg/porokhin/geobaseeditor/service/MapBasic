@@ -1,5 +1,6 @@
 Include "MAPBASIC.DEF"
 Include  "GET_TAB.MB"
+Include "AbotLib.def"
 Declare Sub Main
 Declare Sub SelChangedHandler
 declare sub connect
@@ -150,6 +151,7 @@ sub paintrequest(req as String)
         while startIdx < Len(response)
             subStr = Mid$(response, startIdx, 6)
             startIdx = startIdx + 7
+
             vId = Val(subStr)
             cur_size = UBound(ids)
             ReDim ids(cur_size + 2)
@@ -168,7 +170,10 @@ end sub
 
 sub selectionlistener
 	onerror goto ex
+	if IsFieldExist("Selection", "Id") = false then exit sub
+	end if
 	ar = selection.id
+	print commandinfo(1)
 	if commandinfo(1) = 1 then
 		dim sq as Float
 		sq = CartesianArea(selection.obj, "hectare")
@@ -197,11 +202,3 @@ end sub
 '	'data = CommandInfo()
 '	'print "requested data : " + data
 'End sub
-
-
-
-
-
-
-
-
