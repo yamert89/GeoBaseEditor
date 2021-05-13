@@ -33,9 +33,13 @@ sub selchangedhandler
 end sub
 
 sub connect
+	onerror goto exc
 	num = ddeinitiate("geobaseeditor", "areaselection")
 	print "Редактор базы подключен"
-	activated =1
+	activated = 1
+	exit sub
+exc:
+	note "Не удалось подключится к редактору"
 end sub
 
 sub disconnect
