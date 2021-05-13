@@ -9,7 +9,7 @@ import tornadofx.ui
 import java.io.File
 
 class RawDataReader(override val progressStatusProperty: SimpleDoubleProperty) : DataReader {
-    override fun read(file: File): Pair<Location, List<Area>> {
+    override fun read(file: File): ReadEntity {
         val parser = Parser(file)
         var running = true
        runAsync {
@@ -22,6 +22,6 @@ class RawDataReader(override val progressStatusProperty: SimpleDoubleProperty) :
             progressStatusProperty.value = parser.byteCounter / length
             Thread.sleep(20)
         }
-        return parser.location!! to parser.areas
+        return ReadEntity(parser.areas, parser.location!!, parser.notOperated)
     }
 }

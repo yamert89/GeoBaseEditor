@@ -7,5 +7,5 @@ import java.io.File
 
 interface DataReader {
     val progressStatusProperty: SimpleDoubleProperty
-    fun read(file: File): Pair<Location, List<Area>>
+    fun read(file: File): ReadEntity
 }

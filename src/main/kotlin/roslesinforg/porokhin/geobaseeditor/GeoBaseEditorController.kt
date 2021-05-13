@@ -59,18 +59,30 @@ class GeoBaseEditorController: Controller() {
 
     fun log(message: String) = Platform.runLater { view!!.flog(message) }
 
+    fun error(message: String) = Platform.runLater { view!!.error(message) }
+
     fun startDDESession() = ddeSession.initiate()
 
     fun stopDDESession() = ddeSession.close()
 
     fun read(file: File){
 
-        val data = dataReader.read(file)
-        location = data.first
+        val readEntity = dataReader.read(file)
+        location = readEntity.location
         //areas.addAll(data.second)
-        areas = data.second.asObservable()
+        areas = readEntity.areas.asObservable()
         updateCounter.set(updateCounter.value++)
         inputFilePath = file.path
+        var text = if (readEntity.notOperatedFields.contains(Int.MAX_VALUE)) {
+            readEntity.notOperatedFields.remove(Int.MAX_VALUE)
+            "Обнаружена неизвестная ошибка при чтении файла.\n"
+        } else ""
+        if (readEntity.notOperatedFields.isNotEmpty()) text += "Неизвестные макеты [${readEntity.notOperatedFields.joinToString()}] были пропущены."
+        if (text.isNotEmpty()) {
+            text += " Сообщите разработчику"
+            error(text)
+        }
+
     }
 
     /*fun read(){

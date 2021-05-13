@@ -1018,4 +1018,8 @@ class MainView : GeoBaseEditorView("Редактор базы") {
         fLog.text = "> $message"
     }
 
+    fun error(message: String){
+        error("Ошибка", message)
+    }
+
 }
