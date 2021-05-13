@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "roslesinforg"
-version = "0.3"
+version = "1.0.0"
 repositories {
     flatDir {
         dirs("c:/localrepo")
