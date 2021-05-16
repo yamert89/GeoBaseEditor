@@ -43,15 +43,20 @@ class AreaModel(var area: Area) : ItemViewModel<Area>(area) {
             with(newArea.field10.forestElements){
                 while (size < 10) add(ElementOfForest())
             }
-            for (i in newArea.field10.forestElements.indices){
-                f10Elements[i].item = newArea.field10.forestElements[i]
-            }
+            bindF10(newArea)
+
             /*for (i in newArea.field10.forestElements.lastIndex + 1 .. f10Elements.lastIndex){
                 f10Elements[i].item = ElementOfForest()
             }*/
             dopViewModel.item = newArea
         }
 
+    }
+
+    fun bindF10(newArea: Area = item){
+        for (i in newArea.field10.forestElements.indices){
+            f10Elements[i].item = newArea.field10.forestElements[i]
+        }
     }
 
     fun replaceEmptyFields(area: Area){

@@ -5,24 +5,14 @@ import javafx.application.Platform
 import javafx.beans.property.*
 import javafx.embed.swing.SwingFXUtils
 import javafx.scene.control.*
-import javafx.scene.effect.BlurType
 import javafx.scene.effect.DropShadow
-import javafx.scene.effect.Effect
-import javafx.scene.effect.Shadow
-import javafx.scene.image.ImageView
 import javafx.scene.input.*
 import javafx.scene.layout.*
 import javafx.scene.text.TextAlignment
 import javafx.stage.FileChooser
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
 import roslesinforg.porokhin.areatypes.Area
 import roslesinforg.porokhin.areatypes.fields.*
 import tornadofx.*
-import java.nio.charset.StandardCharsets.UTF_8
-import java.nio.file.Files
-import java.nio.file.Path
-import java.nio.file.Paths
 import roslesinforg.porokhin.geobaseeditor.GeoBaseEditorController
 import roslesinforg.porokhin.geobaseeditor.model.*
 import roslesinforg.porokhin.geobaseeditor.model.validation.FilteringHelper
@@ -289,6 +279,8 @@ class MainView : GeoBaseEditorView("Редактор базы") {
             selectBtn9 to selection9,
             selectBtn10 to selection10,
         ))
+
+
         model = AreaModel(Area(field10 = Field10(ArrayList<ElementOfForest>().apply { fill(ElementOfForest()) })))
 
         //controller.read(input.toFile())
@@ -709,25 +701,71 @@ class MainView : GeoBaseEditorView("Редактор базы") {
         }
 
         selectionsF10.forEach { pair ->
-            pair.first.apply {
+            val btn = pair.first
+            btn.apply {
                 action {
                     if (isSelected){
                         pair.second.isVisible = true
-                        pair.first.styleClass.add(CLASS_SELECT_BTN_ACTIVE)
-                        selectionsF10.forEach { if(it.first != pair.first) {
+                        btn.styleClass.add(CLASS_SELECT_BTN_ACTIVE)
+                        selectionsF10.forEach { if(it.first != btn) {
                             it.first.isSelected = false
                             it.first.styleClass.remove(CLASS_SELECT_BTN_ACTIVE)
                             if (it.second != pair.second) it.second.isVisible = false
                         }}
                     } else{
                         pair.second.isVisible = false
-                        pair.first.styleClass.remove(CLASS_SELECT_BTN_ACTIVE)
+                        btn.styleClass.remove(CLASS_SELECT_BTN_ACTIVE)
                     }
                 }
+
             }
-            pair.first.enableWhen { enableFieldsTrigger }
+            btn.enableWhen { enableFieldsTrigger }
+
+            btn.setOnDragDetected {
+                logger.debug("dragDetected")
+                btn.startDragAndDrop(TransferMode.MOVE).apply {
+                    dragView = pair.second.snapshot(null, null)
+                    setContent(ClipboardContent().apply { putString(selectionsF10.indexOf(btn).toString()) })
+                }
+
+            }
+            btn.setOnDragDropped {
+                logger.debug("dragDropped")
+                val dragboard = it.dragboard
+                if (!dragboard.hasString()) return@setOnDragDropped
+                val oldIdx = dragboard.string.toInt()
+                val newIdx = selectionsF10.indexOf(btn)
+                val elements = model.item.field10.forestElements
+                val replacingElement = elements[oldIdx]
+                elements.removeAt(oldIdx)
+                elements.add(newIdx, replacingElement)
+                it.isDropCompleted = true
+                it.consume()
+                model.bindF10()
+            }
+            btn.setOnDragOver {
+                logger.debug("dragOver")
+                if (selectionsF10.indexOf(btn) != it.dragboard.string.toInt()){
+                    it.acceptTransferModes(TransferMode.MOVE)
+                    it.consume()
+                }
+
+            }
+            btn.setOnDragEntered {
+                selectionsF10[selectionsF10.indexOf(btn)].second.isVisible = true
+            }
+            btn.setOnDragExited {
+                selectionsF10[selectionsF10.indexOf(btn)].second.isVisible = false
+            }
+
+
         }
     }
+    fun MutableList<Pair<ToggleButton, Pane>>.indexOf(btn: ToggleButton) = this.indexOf(find { it.first == btn })
+
+
+
+
 
     private fun bindModel(){
         logger.debug("build model")
