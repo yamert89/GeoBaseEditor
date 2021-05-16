@@ -31,7 +31,7 @@ fun main(args: Array<String>) {
     launch<GeoBaseEditorApp>(args)
 }
 
-class GeoBaseEditorApp: App(MainView::class)
+class GeoBaseEditorApp: App(MainView::class) //todo area listener
 
 class MainView : GeoBaseEditorView("Редактор базы") {
     private val logger = logger()
@@ -708,8 +708,7 @@ class MainView : GeoBaseEditorView("Редактор базы") {
                         pair.second.isVisible = true
                         btn.styleClass.add(CLASS_SELECT_BTN_ACTIVE)
                         selectionsF10.forEach { if(it.first != btn) {
-                            it.first.isSelected = false
-                            it.first.styleClass.remove(CLASS_SELECT_BTN_ACTIVE)
+                            it.first.deselect()
                             if (it.second != pair.second) it.second.isVisible = false
                         }}
                     } else{
@@ -722,7 +721,7 @@ class MainView : GeoBaseEditorView("Редактор базы") {
             btn.enableWhen { enableFieldsTrigger }
 
             btn.setOnDragDetected {
-                logger.debug("dragDetected")
+                selectionsF10.forEach { it.first.deselect() }
                 btn.startDragAndDrop(TransferMode.MOVE).apply {
                     dragView = pair.second.snapshot(null, null)
                     setContent(ClipboardContent().apply { putString(selectionsF10.indexOf(btn).toString()) })
@@ -730,7 +729,6 @@ class MainView : GeoBaseEditorView("Редактор базы") {
 
             }
             btn.setOnDragDropped {
-                logger.debug("dragDropped")
                 val dragboard = it.dragboard
                 if (!dragboard.hasString()) return@setOnDragDropped
                 val oldIdx = dragboard.string.toInt()
@@ -744,7 +742,6 @@ class MainView : GeoBaseEditorView("Редактор базы") {
                 model.bindF10()
             }
             btn.setOnDragOver {
-                logger.debug("dragOver")
                 if (selectionsF10.indexOf(btn) != it.dragboard.string.toInt()){
                     it.acceptTransferModes(TransferMode.MOVE)
                     it.consume()
@@ -761,11 +758,12 @@ class MainView : GeoBaseEditorView("Редактор базы") {
 
         }
     }
+
+    fun ToggleButton.deselect(){
+        isSelected = false
+        styleClass.remove(CLASS_SELECT_BTN_ACTIVE)
+    }
     fun MutableList<Pair<ToggleButton, Pane>>.indexOf(btn: ToggleButton) = this.indexOf(find { it.first == btn })
-
-
-
-
 
     private fun bindModel(){
         logger.debug("build model")
@@ -902,6 +900,8 @@ class MainView : GeoBaseEditorView("Редактор базы") {
             bindDopLine(fDop6_n, fDop6_1, fDop6_2, fDop6_3, fDop6_4, fDop6_5, fDop6_6,
                 fDop6_7, fDop6_8, dopFieldViewModels[5])
         }
+
+        //todo replacing / deleting line features
     }
 
     private fun bindDopLine(
