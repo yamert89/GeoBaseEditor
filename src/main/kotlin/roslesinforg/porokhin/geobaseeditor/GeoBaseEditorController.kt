@@ -123,6 +123,7 @@ class GeoBaseEditorController: Controller() {
         return FileComparator(inputFile, current, Charset.forName("Cp866")).compare().toObservable()
     }
 
+
     private fun prepareForSaving(){
         areas.forEach { area ->
             with(area.field10.forestElements){
