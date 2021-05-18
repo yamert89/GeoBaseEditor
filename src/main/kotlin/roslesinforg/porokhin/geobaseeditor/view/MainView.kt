@@ -8,10 +8,10 @@ import javafx.scene.control.*
 import javafx.scene.effect.DropShadow
 import javafx.scene.input.*
 import javafx.scene.layout.*
+import javafx.scene.text.FontWeight
 import javafx.scene.text.TextAlignment
 import javafx.stage.FileChooser
 import roslesinforg.porokhin.areatypes.Area
-import roslesinforg.porokhin.areatypes.fields.*
 import tornadofx.*
 import roslesinforg.porokhin.geobaseeditor.GeoBaseEditorController
 import roslesinforg.porokhin.geobaseeditor.model.*
@@ -262,9 +262,9 @@ class MainView : GeoBaseEditorView("Редактор базы") {
     private val enableFieldsTrigger = SimpleBooleanProperty()
     private var isDragged = false
     lateinit var kv_list: TableView<Area>
-    var model: AreaModel
     object AppScope: Scope()
     val controller : GeoBaseEditorController by inject(AppScope)
+    var model: AreaModel = controller.areaModel
 
     init {
         selectionsF10.addAll(listOf(
@@ -281,7 +281,6 @@ class MainView : GeoBaseEditorView("Редактор базы") {
         ))
 
 
-        model = AreaModel(Area(field10 = Field10(ArrayList<ElementOfForest>().apply { fill(ElementOfForest()) })))
 
         //controller.read(input.toFile())
         bindModel()
@@ -352,6 +351,7 @@ class MainView : GeoBaseEditorView("Редактор базы") {
                 kv_list.selectionModel.select(0)
             }
         }
+
 
 
     }
@@ -444,7 +444,7 @@ class MainView : GeoBaseEditorView("Редактор базы") {
                         } else controller.paint()
 
 
-                        val message = validationHelper.generalChecking( listOf(
+                        val message = validationHelper.hRangsAndProportionsChecking( listOf(
                             fHrang1 to fProportion1,
                             fHrang2 to fProportion2,
                             fHrang3 to fProportion3,
@@ -459,6 +459,7 @@ class MainView : GeoBaseEditorView("Редактор базы") {
                         var notice = ""
                         if (!validationContext.validate()) notice += "Имеются некорректно заполненные поля"
                         if (message.isNotEmpty()) notice += "\n$message"
+                        if (controller.squareIsNotEqual()) notice += "\nПлощади развязаны"
                         if (notice.isNotEmpty()) {
                             error("Внимание", notice, ButtonType.OK, title = "Ошибка")
                             validationHelper.failedAreas.add(item.id)
@@ -496,6 +497,7 @@ class MainView : GeoBaseEditorView("Редактор базы") {
                     readonlyColumn("Кв", Area::kv){
                         style{
                             textAlignment = TextAlignment.CENTER
+                            fontWeight = FontWeight.BOLD
                         }
                     }
                     column<Area, Int>("Выд"){
@@ -580,7 +582,7 @@ class MainView : GeoBaseEditorView("Редактор базы") {
 
     private fun applyButtons(){
         buttonBar.apply {
-            addNewButton("info.png", "О программе"){
+            addNewButton("info.png", "О программе"){ //todo Replace with resources
                 information("Редкатор Базы v. 1.0.0", """
                     Добавить выдел - NUM+
                     Скопировать выдел - CTRL + NUM+
@@ -662,6 +664,7 @@ class MainView : GeoBaseEditorView("Редактор базы") {
                     val path = files[0].absolutePath.let { if (it.length > 50) "...${it.substring(it.lastIndex - 10, it.length)}" else it}
                     flog("Открыт файл ${path}.  Лесничество: ${forestry?.name ?: loc.forestry} , Участок: ${forestry?.sub?.get(loc.subForestry.toInt()) ?: loc.subForestry}")
                     kv_list.selectionModel.select(0)
+                    if (GeoBaseEditorPreferences.squareControl.value) openStrictAreaView()
                 }
 
 
@@ -1051,6 +1054,8 @@ class MainView : GeoBaseEditorView("Редактор базы") {
     private infix fun TextFieldImpl.bystr(other: Property<String>) = this.bind(property = other)
     private infix fun TextFieldImpl.byint(other: Property<Int>) = this.bind(property = other, readonly = false, converter = FieldIntConverter())
     private infix fun TextFieldImpl.byfloat(other: Property<Float>) = this.bind(property = other, converter = FieldFloatConverter())
+
+    fun openStrictAreaView() = find<StrictAreaView>().openWindow(owner = this.currentWindow)
 
     fun flog(message: String) {
         fLog.text = "> $message"

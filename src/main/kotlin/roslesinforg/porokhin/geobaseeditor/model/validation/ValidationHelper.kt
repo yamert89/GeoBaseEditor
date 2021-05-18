@@ -19,7 +19,7 @@ class ValidationHelper(private val validationContext: ValidationContext, private
         fields.forEach { validationContext.addValidator(validationFactory.dValidator(it)) }
     }
 
-    fun generalChecking(hRangsAndProportions: List<Pair<TextField, TextField>>): String{ //todo other hRangs
+    fun hRangsAndProportionsChecking(hRangsAndProportions: List<Pair<TextField, TextField>>): String{ //todo other hRangs
         val messages =  StringBuilder()
         val elements = hRangsAndProportions.filter { it.second.text.isNotEmpty() }
         val hR1 = elements.filter { it.first.text == "1" }
@@ -29,6 +29,8 @@ class ValidationHelper(private val validationContext: ValidationContext, private
         if (hRangsAndProportions.any { it.first.text.isEmpty() && it.second.text.isNotEmpty() }) messages.append("\nЯрус должен быть заполнен")
         return messages.toString()
     }
+
+
 
 
 }

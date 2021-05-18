@@ -29,6 +29,9 @@ class PreferenceView() : View("Настройки") {
                     marginTop = 10.0
                 }
             }
+            checkbox("Контроль площадей", GeoBaseEditorPreferences.squareControl) {
+                action { if(isSelected) mainView.openStrictAreaView()}
+            }
         }
     }
 }

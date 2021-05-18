@@ -2,6 +2,7 @@ package roslesinforg.porokhin.geobaseeditor.model
 
 import AUTOSELECT
 import FILTERING
+import SQUARE_CONTROL
 import javafx.beans.property.SimpleBooleanProperty
 import roslesinforg.porokhin.geobaseeditor.view.MainView
 import java.io.File
@@ -14,6 +15,7 @@ object GeoBaseEditorPreferences {
     private val props = Properties()
     val filtering = SimpleBooleanProperty(true)
     val autoSelect = SimpleBooleanProperty(true)
+    val squareControl = SimpleBooleanProperty(false)
 
 
     init {
@@ -22,6 +24,7 @@ object GeoBaseEditorPreferences {
                 load(FileReader(file))
                 filtering.value = getProperty(FILTERING, "true").toBoolean()
                 autoSelect.value = getProperty(AUTOSELECT, "true").toBoolean()
+                squareControl.value = getProperty(SQUARE_CONTROL, "false").toBoolean()
             }
         } else file.createNewFile()
     }
@@ -29,6 +32,7 @@ object GeoBaseEditorPreferences {
     fun savePrefs(){
         props[FILTERING] = filtering.value.toString()
         props[AUTOSELECT] = autoSelect.value.toString()
+        props[SQUARE_CONTROL] = squareControl.value.toString()
         props.store(FileOutputStream(file), "GeoBaseEditor user preferences")
     }
 }

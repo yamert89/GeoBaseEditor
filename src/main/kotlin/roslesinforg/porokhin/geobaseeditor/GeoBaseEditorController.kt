@@ -24,22 +24,38 @@ import java.nio.charset.Charset
 import java.nio.file.Files
 import java.nio.file.Paths
 import org.apache.logging.log4j.kotlin.logger
+import roslesinforg.porokhin.areatypes.fields.ElementOfForest
+import roslesinforg.porokhin.areatypes.fields.Field10
+import roslesinforg.porokhin.geobaseeditor.view.StrictAreaView
+import roslesinforg.porokhin.geobaseeditor.view.viewmodels.AreaModel
 import tornadofx.*
 
 class GeoBaseEditorController: Controller() {
     private val logger = logger()
     var areas: ObservableList<Area> = SimpleListProperty()
+    val startSq = mutableListOf<Kv>().toObservable()
     var location: Location? = null
     var updateCounter = SimpleIntegerProperty(0)
     val progressStatusProperty = SimpleDoubleProperty()
     private val dataReader: DataReader = RawDataReader(progressStatusProperty)
     var inputFilePath = ""
     var view: MainView? = null
+    var strictAreaView: StrictAreaView? = null
     var ddeSession: DDEClient = DDEClient(this)
+    val areaModel = AreaModel(Area(field10 = Field10(ArrayList<ElementOfForest>().apply { fill(ElementOfForest()) })))
+
+
+    init {
+        areaModel.sqIsChanged.onChange { updateStrictAreaView() }
+    }
 
 
     fun setMainView(mainView: MainView) {
         view = mainView
+    }
+
+    fun setStrictView(strictAreaView: StrictAreaView){
+        this.strictAreaView = strictAreaView
     }
 
     fun selectArea(id: Int) {
@@ -82,7 +98,9 @@ class GeoBaseEditorController: Controller() {
             text += " Сообщите разработчику"
             error(text)
         }
-
+        areas.groupBy{ it.kv }.map { it.key to it.value }.forEach {
+            startSq.add(Kv(it.first, it.second))
+        }
     }
 
     /*fun read(){
@@ -133,6 +151,23 @@ class GeoBaseEditorController: Controller() {
             }
         }
     }
+
+    private fun updateStrictAreaView() = strictAreaView?.update()
+
+    fun squareIsNotEqual() = startSq.any { it.kvDiff != 0f }
+
+
+
+
+}
+
+class Kv(val number: Int, val areas: List<Area>){
+    val oldAr = calculateArea()
+    val ar: Float get() = calculateArea()
+    val kvDiff: Float get() = oldAr - ar
+    val internalArs = areas.associate { it.field1.number to it.field1.area }
+
+    private fun calculateArea() = areas.sumOf { it.field1.area.toDouble() }.toFloat()
 
 
 }
