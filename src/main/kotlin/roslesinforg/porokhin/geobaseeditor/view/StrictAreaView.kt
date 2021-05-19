@@ -53,6 +53,7 @@ class StrictAreaView: GeoBaseEditorView("Площади") {
                     column<Area, Float>("После"){it.value.field1.area.toProperty() as Property<Float>}
                     column<Area, Float>("Разница"){
                         val change = (it.value.field1.area - kv.internalArs[it.value.field1.number]!!)
+                        if (it.value.field1.category in 9..37 && change != 0f) controller.error("Изменена площадь лк") //todo replace
                         change.toProperty() as Property<Float>
                     }.cellFormat {
                         text = it.format()

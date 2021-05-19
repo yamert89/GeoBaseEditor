@@ -46,7 +46,10 @@ class GeoBaseEditorController: Controller() {
 
 
     init {
-        areaModel.sqIsChanged.onChange { updateStrictAreaView() }
+        areaModel.sqIsChanged.onChange {
+            updateStrictAreaView()
+            //if (areaModel.field1Model.categoryProperty.value in 9..37) error("Площадь лк изменена")
+        }
     }
 
 
