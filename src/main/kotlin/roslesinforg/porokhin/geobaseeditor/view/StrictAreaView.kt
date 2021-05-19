@@ -49,11 +49,16 @@ class StrictAreaView: GeoBaseEditorView("Площади") {
             rowExpander(true) { kv ->
                 internalTable = tableview(kv.areas.toObservable()){
                     column<Area, Int>("Выд") { it.value.field1.number.toProperty() as Property<Int> }
-                    column<Area, Float>("До"){
-                       kv.internalArs[it.value.field1.number].toProperty()
-                         as Property<Float>
-                    }
+                    column<Area, Float>("До"){ kv.internalArs[it.value.field1.number].toProperty() as Property<Float> }
                     column<Area, Float>("После"){it.value.field1.area.toProperty() as Property<Float>}
+                    column<Area, Float>("Разница"){
+                        val change = (it.value.field1.area - kv.internalArs[it.value.field1.number]!!)
+                        change.toProperty() as Property<Float>
+                    }.cellFormat {
+                        text = it.format()
+                        if (text != "0") style{textFill = Color.RED}
+                        else style{textFill = Color.BLACK}
+                    }
                 }
             }
 

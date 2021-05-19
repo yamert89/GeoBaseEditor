@@ -431,7 +431,7 @@ class MainView : GeoBaseEditorView("Редактор базы") {
 
     private fun buildKvList(){
 
-        borderPane.apply { //todo table view with row expander
+        borderPane.apply {
             left {
 
                 kv_list = tableview(controller.areas){
@@ -459,7 +459,6 @@ class MainView : GeoBaseEditorView("Редактор базы") {
                         var notice = ""
                         if (!validationContext.validate()) notice += "Имеются некорректно заполненные поля"
                         if (message.isNotEmpty()) notice += "\n$message"
-                        if (controller.squareIsNotEqual()) notice += "\nПлощади развязаны"
                         if (notice.isNotEmpty()) {
                             error("Внимание", notice, ButtonType.OK, title = "Ошибка")
                             validationHelper.failedAreas.add(item.id)
@@ -617,20 +616,31 @@ class MainView : GeoBaseEditorView("Редактор базы") {
             }.apply { enableWhen { enableFieldsTrigger } }
             addNewButton("save.png", "Сохранить"){
                 with(validationHelper.failedAreas){
-                    if (isNotEmpty()) error("Внимание", "Найдены ошибки в выделах ${this.joinToString()}")
-                    else {
-                        kv_list.editModel.commit()
-                        val file = chooseFile(
-                            "Сохранить",
-                            emptyArray(),
-                            mode = FileChooserMode.Save,
-                            owner = primaryStage
-                        )
-                        if (file.isEmpty()) return@addNewButton
-                        model.replaceEmptyFields(model.item)
-                        controller.writeToRawFile(file[0])
-                        flog("Файл сохранен: ${file[0].absolutePath}")
+                    var allow = true
+                    if (isNotEmpty()) {
+                        allow = false
+                        error("Внимание", "Найдены ошибки в выделах ${this.joinToString()}")
                     }
+                    else if (controller.squareIsNotEqual()) {
+                        allow = false
+                        confirm("Внимание", "Площади развязаны. Сохранить?"){
+                            allow = true
+                        }
+                    }
+                    if (!allow) return@addNewButton
+
+                    kv_list.editModel.commit()
+                    val file = chooseFile(
+                        "Сохранить",
+                        emptyArray(),
+                        mode = FileChooserMode.Save,
+                        owner = primaryStage
+                    )
+                    if (file.isEmpty()) return@addNewButton
+                    model.replaceEmptyFields(model.item)
+                    controller.writeToRawFile(file[0])
+                    flog("Файл сохранен: ${file[0].absolutePath}")
+
                 }
             }.apply { enableWhen { enableFieldsTrigger } }
             addNewButton("add.png", "Открыть"){
