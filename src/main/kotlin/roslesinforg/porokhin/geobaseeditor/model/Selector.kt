@@ -42,7 +42,7 @@ class Selector(private val data: List<Area>) {
                     is Field23Parameter -> if (it.field23.info.isEmpty()){
                         f23False = true
                         Any() as T
-                    } else value
+                    } else it.field23.info.contains(value) as T
                     is Field27Parameter -> areaProperty.get(it.field27 as R)
                     is Field29Parameter -> areaProperty.get(it.field29 as R)
                     else -> throw IllegalArgumentException("Unsupported FieldParameter")
@@ -61,6 +61,7 @@ class Selector(private val data: List<Area>) {
                             ComparingCondition.LESS -> v < value as Float
                             ComparingCondition.MORE -> v > value as Float
                         }
+                        v is Boolean -> v
                         else -> throw IllegalArgumentException("Value of type ${v!!::class} not supported")
                     }
 

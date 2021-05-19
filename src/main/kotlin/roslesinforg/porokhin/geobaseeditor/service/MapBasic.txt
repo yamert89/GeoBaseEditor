@@ -177,7 +177,6 @@ sub selectionlistener
 	if IsFieldExist("Selection", "Id") = false then exit sub
 	end if
 	ar = selection.id
-	print commandinfo(1)
 	if commandinfo(1) = 1 then
 		dim sq as Float
 		sq = CartesianArea(selection.obj, "hectare")
