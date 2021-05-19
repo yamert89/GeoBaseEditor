@@ -10,6 +10,7 @@ declare sub errorhandler
 Declare sub RemoteMsgHandler
 declare sub paint
 declare sub paintrequest(req as String)
+declare sub conditionOnClick
 declare function parseCondition(value as String) as String
 
 Dim ar As Integer
@@ -21,9 +22,11 @@ dim selectedStyle as Brush
 sub Main
 	activated = 0
 	create menu "Редактор базы" as
-	"&Подключиться" calling connect,
-	"&Оформить" calling paint
+	"Подключиться" calling connect,
+	"(Оформить" id 101 calling paint
 	alter menu bar add "Редактор базы"
+	alter menu item id 101 disable
+
 end sub
 
 sub selchangedhandler
@@ -37,6 +40,7 @@ sub connect
 	num = ddeinitiate("geobaseeditor", "areaselection")
 	print "Редактор базы подключен"
 	activated = 1
+	alter menu item id 101 enable
 	exit sub
 exc:
 	note "Не удалось подключится к редактору"
@@ -48,85 +52,126 @@ sub disconnect
 	activated = 0
 end sub
 
+dim selectedType1, selectedType2, selectedType3, logic2, logic3 as SmallInt
+dim value1, value2, value3, condition1, condition2, condition3 as String
+
 sub paint
-
 	table = GetTableName("Выберите слой", 0, 0)
-	dim selectedType1, selectedType2, selectedType3, logic2, logic3 as SmallInt
-    	dim types(10) as String
-    	dim value1, value2, value3, condition1, condition2, condition3 as String
-    	types(1) = "ОЗУ"
-    	types(2) = "ЦНЛ"
-     	types(3) = "порода"
-    	types(4) = "бонитет"
-    	types(5) = "полнота"
-    	types(6) = "запас"
-    	types(7) = "23 макет"
-    	types(8) = "категория земель"
+	dim types(10) as String
+    types(1) = "ОЗУ"
+    types(2) = "ЦНЛ"
+    types(3) = "порода"
+    types(4) = "бонитет"
+    types(5) = "полнота"
+    types(6) = "запас"
+    types(7) = "23 макет"
+    types(8) = "категория земель"
 
-    	dialog title "Оформление"
-    	    control statictext
-    	        title "Параметр 1"
-    		position 6, 7
-    		control popupmenu
-    			title from variable types into selectedType1
-    			position 49, 5
-    		control popupmenu
-    		    title "=;<;>"
-    			position 136, 5
-    		    into condition1
-    		control edittext
-    			position 164, 5
-    		    into value1
-    		control popupmenu
-    		    title "И;ИЛИ"
-    		    position 6, 25
-    		    into logic2
-            control statictext
-                title "Параметр 2"
-    		    position 6, 47
-            control popupmenu
-                title from variable types into selectedType2
-    		    position 49, 45
-            control popupmenu
-                title "=;<;>"
-    		    position 136, 45
-                into condition2
-            control edittext
-    		    position 164, 45
-                into value2
-            control popupmenu
-                title "И;ИЛИ"
-                position 6, 60
-                into logic3
-            control statictext
-            	title "Параметр 3"
-    		position 6, 87
-            control popupmenu
-                title from variable types into selectedType3
-    		position 49, 85
-            control popupmenu
-                title "=;<;>"
-    		position 136, 85
-                into condition3
-            control edittext
-    		position 164, 85
-            	into value3
-    	control statictext
-    		title "Выберите стиль"
-    		position 6, 95
-    	control BrushPicker
-    		into selectedStyle
-    		control OKButton
-    		Control CancelButton
+    'dim conditionValues(3) as String
+    'conditionValues(1) = "="
+    'conditionValues(2) = "<"
 
+    dialog title "Оформление"
+        control statictext
+            title "Параметр 1"
+            position 6, 7
+        control popupmenu
+            id 1
+            title from variable types into selectedType1
+            position 49, 5
+            calling conditionOnClick
+        control popupmenu
+            id 2
+            title "=;<;>"
+            position 136, 5
+            into condition1
+        control edittext
+            id 3
+            position 164, 5
+            into value1
+        control popupmenu
+            id 4
+            title "И;ИЛИ"
+            position 6, 25
+            into logic2
+        control statictext
+            title "Параметр 2"
+            position 6, 47
+        control popupmenu
+            id 5
+            title from variable types into selectedType2
+            position 49, 45
+            calling conditionOnClick
+        control popupmenu
+            id 6
+            title "=;<;>"
+            position 136, 45
+            into condition2
+        control edittext
+            id 7
+            position 164, 45
+            into value2
+        control popupmenu
+            id 8
+            title "И;ИЛИ"
+            position 6, 60
+            into logic3
+        control statictext
+            title "Параметр 3"
+            position 6, 87
+        control popupmenu
+            id 9
+            title from variable types into selectedType3
+            position 49, 85
+            calling conditionOnClick
+        control popupmenu
+            id 10
+            title "=;<;>"
+            position 136, 85
+            into condition3
+        control edittext
+            id 11
+            position 164, 85
+            into value3
+        control statictext
+            title "Выберите стиль"
+            position 6, 115
+        control BrushPicker
+            into selectedStyle
+		position 68, 105
+        control OKButton
+        Control CancelButton
 
-
+	if value1 = "" and value2 = "" and value3 = "" then exit sub
+	end if
 
 	dim request as String
 	request = "1"+ "?" + selectedType1 + "?" + parseCondition(condition1) + "?" + value1 + "|" + logic2 + "?" + selectedType2 + "?" + parseCondition(condition2) + "?" +
 	    value2 + "|" + logic3 + "?" + selectedType3 + "?" + parseCondition(condition3) + "?" + value3
 	call paintrequest(request)
 
+end sub
+
+sub conditionOnClick
+    dim selectedType, conditionId as SmallInt
+    print "selected id " + triggerControl()
+    selectedType = readControlValue(triggerControl())
+    do case triggerControl()
+        case 1
+            conditionId = 2
+        case 5
+            conditionId = 6
+        case 9
+            conditionId = 10
+    end case
+    print "condition id " + conditionId
+    print "selected type " + selectedType
+    if selectedType = 3 or selectedType = 7 then
+        alter control conditionId
+            title "="
+    else alter control conditionId
+            title "=;<;>"
+    end if
 end sub
 
 function parseCondition(value as String) as String
