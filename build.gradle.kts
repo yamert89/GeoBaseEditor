@@ -81,7 +81,7 @@ tasks {
 
     register<Copy>("copyLists"){
         dependsOn(getByName("cleanStartDir"))
-        from(fileTree("${project.parent!!.projectDir}/areatypes2/src/main/resources"))
+        from(fileTree("${project.parent!!.projectDir}/areatypes2/src/main/resources").filter { it.name.endsWith("yml") })
         into(file("$startPath/lists"))
     }
 
