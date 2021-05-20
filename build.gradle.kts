@@ -70,18 +70,28 @@ tasks {
         //from(file("${System.getProperty("pathRepo")}/JavaDDEx64.dll"))
     }
 
-    val startFolder = file("${System.getProperty("pathJars")}GeoBaseEditor\\")
+    val startPath = "${System.getProperty("pathJars")}GeoBaseEditor\\"
+
+    val startFolder = file(startPath)
 
     register("cleanStartDir"){
         dependsOn(fatJar)
         startFolder.listFiles()?.filter { it.name.endsWith(".jar") }?.forEach { delete(it.absolutePath) }
     }
 
-    register<Copy>("copy"){
+    register<Copy>("copyLists"){
         dependsOn(getByName("cleanStartDir"))
+        from(fileTree("${project.parent!!.projectDir}/areatypes2/src/main/resources"))
+        into(file("$startPath/lists"))
+    }
+
+    register<Copy>("copy"){
+        dependsOn(getByName("copyLists"))
         val buildD = "$projectDir/build/libs/"
         from(file("$buildD/$archieveN"))
+       //println(project.parent!!.projectDir)
         into(startFolder)
+        //from("${project.parent!!.path}/areatypes2/src/main/resources/")
         println("GeoBaseEditor built with version $version to $startFolder")
     }
 }
