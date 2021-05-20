@@ -12,23 +12,26 @@ import roslesinforg.porokhin.areatypes.Location
 import roslesinforg.porokhin.areatypes.fields.Field1
 import roslesinforg.porokhin.areawriter.RawSoliAreaWriter
 import roslesinforg.porokhin.filecomparator.FileComparator
-import roslesinforg.porokhin.filecomparator.service.ComparedLine
 import roslesinforg.porokhin.filecomparator.service.ComparedPair
-import roslesinforg.porokhin.filecomparator.service.LineType
 import roslesinforg.porokhin.geobaseeditor.service.DDEClient
 import roslesinforg.porokhin.geobaseeditor.view.MainView
 import java.io.File
-import java.io.FileOutputStream
-import java.io.OutputStreamWriter
 import java.nio.charset.Charset
 import java.nio.file.Files
-import java.nio.file.Paths
 import org.apache.logging.log4j.kotlin.logger
 import roslesinforg.porokhin.areatypes.fields.ElementOfForest
 import roslesinforg.porokhin.areatypes.fields.Field10
+import roslesinforg.porokhin.geobaseeditor.model.Kv
 import roslesinforg.porokhin.geobaseeditor.view.StrictAreaView
 import roslesinforg.porokhin.geobaseeditor.view.viewmodels.AreaModel
 import tornadofx.*
+import java.nio.file.CopyOption
+import java.text.DateFormat
+import java.time.Instant
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
+import java.util.*
+import kotlin.collections.ArrayList
 
 class GeoBaseEditorController: Controller() {
     private val logger = logger()
@@ -104,6 +107,20 @@ class GeoBaseEditorController: Controller() {
         areas.groupBy{ it.kv }.map { it.key to it.value }.forEach {
             startSq.add(Kv(it.first, it.second))
         }
+        var out: File = File("fakepath")
+        try {
+            val backupsFolder = File(this::class.java.protectionDomain.codeSource.location.toURI()).parentFile.resolve("backups")
+            if (!backupsFolder.exists()) Files.createDirectory(backupsFolder.toPath())
+            out = backupsFolder.resolve("${file.name}_${DateTimeFormatter.ofPattern("dd.MM.yy_HH.mm.ss")
+                .withLocale(Locale.getDefault()).withZone(ZoneId.systemDefault()).format(Instant.now())}")
+
+            Files.copy(file.toPath(), out.toPath())
+        }catch (e: Exception){
+            logger.error("Error of creating backup on path: ${out.absolutePath}")
+            e.printStackTrace()
+        }
+
+
     }
 
     /*fun read(){
@@ -164,13 +181,3 @@ class GeoBaseEditorController: Controller() {
 
 }
 
-class Kv(val number: Int, val areas: List<Area>){
-    val oldAr = calculateArea()
-    val ar: Float get() = calculateArea()
-    val kvDiff: Float get() = ar - oldAr
-    val internalArs = areas.associate { it.field1.number to it.field1.area }
-
-    private fun calculateArea() = areas.sumOf { it.field1.area.toDouble() }.toFloat()
-
-
-}
