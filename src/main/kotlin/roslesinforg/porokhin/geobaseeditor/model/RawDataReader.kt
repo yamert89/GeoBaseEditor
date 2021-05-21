@@ -1,19 +1,17 @@
 package roslesinforg.porokhin.geobaseeditor.model
 
 import javafx.beans.property.SimpleDoubleProperty
-import roslesinforg.porokhin.areatypes.Area
-import roslesinforg.porokhin.areatypes.Location
-import roslesinforg.porokhin.nabparser.Parser
-import roslesinforg.porokhin.nabparser.ParsingResult
+import roslesinforg.porokhin.nabparser.RawParser
+import roslesinforg.porokhin.nabparser.RawParsingResult
 import tornadofx.runAsync
 import tornadofx.ui
 import java.io.File
 
 class RawDataReader(override val progressStatusProperty: SimpleDoubleProperty) : DataReader {
-    override fun read(file: File): ParsingResult {
-        val parser = Parser(file)
+    override fun read(file: File): RawParsingResult {
+        val parser = RawParser(file)
         var running = true
-        var result = ParsingResult(emptyList(), null, emptySet(), ParsingResult.Result.UNKNOWN)
+        var result = RawParsingResult(emptyList(), null, emptySet(), RawParsingResult.Result.UNKNOWN)
        runAsync {
             result = parser.parse()
         } ui {

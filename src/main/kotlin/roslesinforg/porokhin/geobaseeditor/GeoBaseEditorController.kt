@@ -25,9 +25,8 @@ import roslesinforg.porokhin.geobaseeditor.model.Kv
 import roslesinforg.porokhin.geobaseeditor.view.StrictAreaView
 import roslesinforg.porokhin.geobaseeditor.view.viewmodels.AreaModel
 import roslesinforg.porokhin.nabparser.ParsingResult
+import roslesinforg.porokhin.nabparser.RawParsingResult
 import tornadofx.*
-import java.nio.file.CopyOption
-import java.text.DateFormat
 import java.time.Instant
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter

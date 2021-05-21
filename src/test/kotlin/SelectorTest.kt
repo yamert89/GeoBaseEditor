@@ -4,7 +4,7 @@ import roslesinforg.porokhin.areatypes.Area
 import roslesinforg.porokhin.areatypes.fields.ElementOfForest
 import roslesinforg.porokhin.areatypes.fields.Field1
 import roslesinforg.porokhin.geobaseeditor.model.*
-import roslesinforg.porokhin.nabparser.Parser
+import roslesinforg.porokhin.nabparser.RawParser
 import java.io.File
 
 class SelectorTest {
@@ -13,7 +13,7 @@ class SelectorTest {
     fun selector(){
         //launch<SelectorApp>()
         val file = File(this::class.java.classLoader.getResource("0309").toURI())
-        val parser = Parser(file)
+        val parser = RawParser(file)
         parser.parse()
         val selector = Selector(parser.areas)
         val res = selector.selectForId(AreaParameter(LogicCondition.AND, Area::kv, "=", 1))
