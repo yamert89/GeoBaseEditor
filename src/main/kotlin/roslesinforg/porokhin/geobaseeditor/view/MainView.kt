@@ -256,8 +256,8 @@ class MainView : GeoBaseEditorView("Редактор базы") {
     private val topPane: HBox by fxid()
     private val fProgress: ProgressBar by fxid()
     private val validationContext = ValidationContext()
-    private val factory = ValidatorFactory(validationContext)
-    private val validationHelper = ValidationHelper(validationContext, factory)
+    private val validatorFactory = ValidatorFactory(validationContext)
+    private val validationHelper = ValidationHelper(validationContext, validatorFactory)
     private val filteringHelper = FilteringHelper()
     private val enableFieldsTrigger = SimpleBooleanProperty()
     private var isDragged = false
@@ -300,6 +300,10 @@ class MainView : GeoBaseEditorView("Редактор базы") {
         validationHelper.stringValidatorFor(fSpecies, fType, fSubType, fTypeDeforest,
           fSpecies1, fSpecies2, fSpecies3, fSpecies4, fSpecies5, fSpecies6, fSpecies7, fSpecies8, fSpecies9,
           f31_element1, f31_element2)
+        validatorFactory.typeValidator(fType)
+
+
+
 
 
         validationHelper.numberValidatorFor(fAreaNumber, fCategoryArea, fOzu, fDP, fYearOfDeforest, fCountOfStump,
@@ -401,7 +405,7 @@ class MainView : GeoBaseEditorView("Редактор базы") {
                 }
             }
             filter(fBon){ it.controlNewText.matches("[1-5АБаб]{1,2}".toRegex()) }
-            filter(fType){ it.controlNewText.matches("[А-Яа-я\\s]{1,5}".toRegex()) }
+            filter(fType){ input ->  GeneralTypes.typesOfForest.any{it.name.startsWith(input.controlNewText.toUpperCase())} }
             filter(fSubType){ it.controlNewText.matches("[А-Яа-я]{1,2}".toRegex()) }
         }
     }

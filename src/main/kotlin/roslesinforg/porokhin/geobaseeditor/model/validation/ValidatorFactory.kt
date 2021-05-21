@@ -1,6 +1,7 @@
 package roslesinforg.porokhin.geobaseeditor.model.validation
 
 import javafx.scene.control.TextField
+import roslesinforg.porokhin.areatypes.GeneralTypes
 import tornadofx.ValidationContext
 import tornadofx.ValidationTrigger
 
@@ -23,6 +24,12 @@ class ValidatorFactory(private val context: ValidationContext) {
     fun dValidator(textField: TextField): ValidationContext.Validator<String>{
         return textFieldValidatorError(textField, "Неправильный диаметр"){
             it!!.isNotEmpty() && !it.matches("[1-9]?[24680]".toRegex())
+        }
+    }
+
+    fun typeValidator(textField: TextField): ValidationContext.Validator<String>{
+        return textFieldValidatorError(textField, "Неправильный тип леса"){
+            it!!.isNotEmpty() && !GeneralTypes.typesOfForest.any{ v -> v.name == it}
         }
     }
 
