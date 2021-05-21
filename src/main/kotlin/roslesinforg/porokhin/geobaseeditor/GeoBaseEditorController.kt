@@ -24,6 +24,7 @@ import roslesinforg.porokhin.areatypes.fields.Field10
 import roslesinforg.porokhin.geobaseeditor.model.Kv
 import roslesinforg.porokhin.geobaseeditor.view.StrictAreaView
 import roslesinforg.porokhin.geobaseeditor.view.viewmodels.AreaModel
+import roslesinforg.porokhin.nabparser.ParsingResult
 import tornadofx.*
 import java.nio.file.CopyOption
 import java.text.DateFormat
@@ -90,20 +91,24 @@ class GeoBaseEditorController: Controller() {
     fun read(file: File){
 
         val readEntity = dataReader.read(file)
+
+        var errorMessage = when(readEntity.result){
+            ParsingResult.Result.UNKNOWN -> "Обнаружена неизвестная ошибка при чтении файла."
+            ParsingResult.Result.INCORRECT_FILE -> "Файл некорректен."
+            ParsingResult.Result.NOT_OPERATED_FIELDS -> "Неизвестные макеты [${readEntity.notOperatedFields.joinToString()}] были пропущены."
+            ParsingResult.Result.SUCCESS -> ""
+        }
+        if (errorMessage.isNotEmpty()) {
+          errorMessage += " Сообщите разработчику"
+            error(errorMessage)
+            return
+        }
         location = readEntity.location
         //areas.addAll(data.second)
         areas = readEntity.areas.asObservable()
         updateCounter.set(updateCounter.value++)
         inputFilePath = file.path
-        var text = if (readEntity.notOperatedFields.contains(Int.MAX_VALUE)) {
-            readEntity.notOperatedFields.remove(Int.MAX_VALUE)
-            "Обнаружена неизвестная ошибка при чтении файла.\n"
-        } else ""
-        if (readEntity.notOperatedFields.isNotEmpty()) text += "Неизвестные макеты [${readEntity.notOperatedFields.joinToString()}] были пропущены."
-        if (text.isNotEmpty()) {
-            text += " Сообщите разработчику"
-            error(text)
-        }
+
         areas.groupBy{ it.kv }.map { it.key to it.value }.forEach {
             startSq.add(Kv(it.first, it.second))
         }
@@ -112,7 +117,7 @@ class GeoBaseEditorController: Controller() {
             val backupsFolder = File(this::class.java.protectionDomain.codeSource.location.toURI()).parentFile.resolve("backups")
             if (!backupsFolder.exists()) Files.createDirectory(backupsFolder.toPath())
             out = backupsFolder.resolve("${file.name}_${DateTimeFormatter.ofPattern("dd.MM.yy_HH.mm.ss")
-                .withLocale(Locale.getDefault()).withZone(ZoneId.systemDefault()).format(Instant.now())}")
+                .withLocale(Locale.getDefault()).withZone(ZoneId.systemDefault()).format(Instant.now())}.bak")
 
             Files.copy(file.toPath(), out.toPath())
         }catch (e: Exception){

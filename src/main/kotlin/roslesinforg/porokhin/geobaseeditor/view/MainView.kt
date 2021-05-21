@@ -656,31 +656,28 @@ class MainView : GeoBaseEditorView("Редактор базы") {
                     controller.read(files[0])
                     fProgress.isVisible = false
                 } ui{
-                    val loc = controller.location!!
-                    val forestry = GeneralTypes.forestries[loc.forestry.toInt()]
-                    with(loc){
-                        fGir.apply {
-                            text = forestry?.sub?.get(subForestry.toInt()) ?: ""
-                            isEditable = false
-                            style{
-                                backgroundColor += c(0, 0, 0, 0.0)
+                    val loc = controller.location
+                    if (loc != null) {
+                        val forestry = GeneralTypes.forestries[loc.forestry.toInt()]
+                        with(loc){
+                            fGir.apply {
+                                text = forestry?.sub?.get(subForestry.toInt()) ?: ""
+                                isEditable = false
+                                style{
+                                    backgroundColor += c(0, 0, 0, 0.0)
+                                }
                             }
                         }
+
+                        kv_list.items = controller.areas
+                        kv_list.smartResize()
+
+                        val path = files[0].absolutePath.let { if (it.length > 50) "...${it.substring(it.lastIndex - 10, it.length)}" else it}
+                        flog("Открыт файл ${path}.  Лесничество: ${forestry?.name ?: loc.forestry} , Участок: ${forestry?.sub?.get(loc.subForestry.toInt()) ?: loc.subForestry}")
+                        kv_list.selectionModel.select(0)
+                        if (GeoBaseEditorPreferences.squareControl.value) openStrictAreaView()
                     }
-
-                    kv_list.items = controller.areas
-                    kv_list.smartResize()
-
-                    val path = files[0].absolutePath.let { if (it.length > 50) "...${it.substring(it.lastIndex - 10, it.length)}" else it}
-                    flog("Открыт файл ${path}.  Лесничество: ${forestry?.name ?: loc.forestry} , Участок: ${forestry?.sub?.get(loc.subForestry.toInt()) ?: loc.subForestry}")
-                    kv_list.selectionModel.select(0)
-                    if (GeoBaseEditorPreferences.squareControl.value) openStrictAreaView()
                 }
-
-
-
-
-
             }
         }
         topPane.apply {
