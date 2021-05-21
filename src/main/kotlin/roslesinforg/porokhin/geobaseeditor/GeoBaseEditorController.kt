@@ -5,8 +5,8 @@ import javafx.beans.property.SimpleDoubleProperty
 import javafx.beans.property.SimpleIntegerProperty
 import javafx.beans.property.SimpleListProperty
 import javafx.collections.ObservableList
-import roslesinforg.porokhin.geobaseeditor.model.DataReader
-import roslesinforg.porokhin.geobaseeditor.model.RawDataReader
+import roslesinforg.porokhin.nabparser.reading.DataReader
+import roslesinforg.porokhin.nabparser.reading.RawDataReader
 import roslesinforg.porokhin.areatypes.Area
 import roslesinforg.porokhin.areatypes.Location
 import roslesinforg.porokhin.areatypes.fields.Field1
@@ -24,8 +24,7 @@ import roslesinforg.porokhin.areatypes.fields.Field10
 import roslesinforg.porokhin.geobaseeditor.model.Kv
 import roslesinforg.porokhin.geobaseeditor.view.StrictAreaView
 import roslesinforg.porokhin.geobaseeditor.view.viewmodels.AreaModel
-import roslesinforg.porokhin.nabparser.ParsingResult
-import roslesinforg.porokhin.nabparser.RawParsingResult
+import roslesinforg.porokhin.nabparser.parsing.ParsingResult
 import tornadofx.*
 import java.time.Instant
 import java.time.ZoneId
@@ -40,7 +39,7 @@ class GeoBaseEditorController: Controller() {
     var location: Location? = null
     var updateCounter = SimpleIntegerProperty(0)
     val progressStatusProperty = SimpleDoubleProperty()
-    private val dataReader: DataReader = RawDataReader(progressStatusProperty)
+    private val dataReader = RawDataReader(progressStatusProperty)
     var inputFilePath = ""
     var view: MainView? = null
     var strictAreaView: StrictAreaView? = null
@@ -92,7 +91,7 @@ class GeoBaseEditorController: Controller() {
         val readEntity = dataReader.read(file)
 
         var errorMessage = when(readEntity.result){
-            ParsingResult.Result.UNKNOWN -> "Обнаружена неизвестная ошибка при чтении файла."
+            ParsingResult.Result.UNKNOWN_ERROR -> "Обнаружена неизвестная ошибка при чтении файла."
             ParsingResult.Result.INCORRECT_FILE -> "Файл некорректен."
             ParsingResult.Result.NOT_OPERATED_FIELDS -> "Неизвестные макеты [${readEntity.notOperatedFields.joinToString()}] были пропущены."
             ParsingResult.Result.SUCCESS -> ""

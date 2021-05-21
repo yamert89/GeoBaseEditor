@@ -4,7 +4,7 @@ import roslesinforg.porokhin.areatypes.Area
 import roslesinforg.porokhin.areatypes.fields.ElementOfForest
 import roslesinforg.porokhin.areatypes.fields.Field1
 import roslesinforg.porokhin.geobaseeditor.model.*
-import roslesinforg.porokhin.nabparser.RawParser
+import roslesinforg.porokhin.nabparser.parsing.RawParser
 import java.io.File
 
 class SelectorTest {
