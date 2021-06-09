@@ -877,7 +877,13 @@ class MainView : GeoBaseEditorView("Редактор базы") {
         }
         fCategoryArea.setContextHelp(GeneralTypes::categoryArea)
         fOzu.setContextHelp(GeneralTypes::typesOfProtection)
-        //fDop1_n.setContextHelp()
+        fDop1_n.setContextHelp(GeneralTypes::fieldNames)
+        fDop2_n.setContextHelp(GeneralTypes::fieldNames)
+        fDop3_n.setContextHelp(GeneralTypes::fieldNames)
+        fDop4_n.setContextHelp(GeneralTypes::fieldNames)
+        fDop5_n.setContextHelp(GeneralTypes::fieldNames)
+        fDop6_n.setContextHelp(GeneralTypes::fieldNames)
+        //todo dop field context help
 
     }
 
