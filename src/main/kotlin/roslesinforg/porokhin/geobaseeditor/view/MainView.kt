@@ -25,6 +25,8 @@ import javax.imageio.ImageIO
 import org.apache.logging.log4j.kotlin.logger
 import tornadofx.controlsfx.bindAutoCompletion
 import java.io.File
+import kotlin.reflect.KProperty0
+import kotlin.reflect.KProperty1
 
 
 fun main(args: Array<String>) {
@@ -872,6 +874,18 @@ class MainView : GeoBaseEditorView("Редактор базы") {
     private fun tuneFields(){
         fType.apply {
             bindAutoCompletion(GeneralTypes.typesOfForest.map { it.name })
+        }
+        fCategoryArea.setContextHelp(GeneralTypes::categoryArea)
+        fOzu.setContextHelp(GeneralTypes::typesOfProtection)
+        //fDop1_n.setContextHelp()
+
+    }
+
+    private fun TextFieldImpl.setContextHelp(map: KProperty0<Map<Int, String>>){
+        tooltip{
+            setOnShowing {
+                if (this@setContextHelp.text.isNotEmpty()) this.text = map.get()[this@setContextHelp.text.toInt()]
+            }
         }
     }
 
