@@ -108,7 +108,7 @@ class GeoBaseEditorController: Controller() {
         inputFilePath = file.path
 
         areas.groupBy{ it.kv }.map { it.key to it.value }.forEach {
-            startSq.add(Kv(it.first, it.second))
+            startSq.add(Kv(it.first, it.second.toMutableList()))
         }
         var out: File = File("fakepath")
         try {
@@ -144,16 +144,27 @@ class GeoBaseEditorController: Controller() {
 
     fun newEmptyArea(selected: Area){
         val proto = areas[0]
-        areas.add(areas.indexOf(selected) + 1, Area(proto.region, proto.kv))
+        val new = Area(proto.region, proto.kv)
+        val idx = areas.indexOf(selected) + 1
+        areas.add(idx, new)
+        findKv(selected.kv).areas.add(idx, new)
     }
 
     fun copyArea(selected: Area){
-        val idx = areas.indexOf(selected)
+        val idx = areas.indexOf(selected) + 1
         with(selected.field1){
-            areas.add(idx + 1, selected.copy(field1 = Field1(number, area, category, dp, typeOfProtection)))
+            val new = selected.copy(field1 = Field1(number, area, category, dp, typeOfProtection))
+            areas.add(idx, new)
+            findKv(selected.kv).areas.add(idx, new)
         }
-
     }
+
+    fun removeArea(selected: Area){
+        areas.remove(selected)
+        findKv(selected.kv).areas.remove(selected)
+    }
+
+    private fun findKv(number: Int) = startSq.find { it.number == number}!!
 
     fun diff(): ObservableList<ComparedPair>{
         val inputFile = File(inputFilePath)

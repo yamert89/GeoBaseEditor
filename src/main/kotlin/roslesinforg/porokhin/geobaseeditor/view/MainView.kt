@@ -23,8 +23,10 @@ import roslesinforg.porokhin.areatypes.GeneralTypes
 import roslesinforg.porokhin.rawxlsconverter.RawToXLSConverterView
 import javax.imageio.ImageIO
 import org.apache.logging.log4j.kotlin.logger
+import roslesinforg.porokhin.geobaseeditor.service.UpdateManager
 import tornadofx.controlsfx.bindAutoCompletion
 import java.io.File
+import java.nio.file.Paths
 import kotlin.reflect.KProperty0
 import kotlin.reflect.KProperty1
 
@@ -357,7 +359,16 @@ class MainView : GeoBaseEditorView("Редактор базы") {
                 kv_list.selectionModel.select(0)
             }
         }
-
+        val updateManager =  UpdateManager(Paths.get("\\\\Fileserver\\Обменник\\Порохин\\update\\"))
+        runAsync {
+           updateManager.checkVersion()
+        } ui{
+            if (it.api != 0) warning("Доступна новая версия ${it.version}", "Что нового: \n${it.history.entries.first().value}", ButtonType.NO, ButtonType.APPLY){ bt ->
+                if (bt.buttonData.isCancelButton) return@warning
+                logger.trace("updating")
+                updateManager.update()
+            }
+        }
 
 
     }
@@ -483,14 +494,18 @@ class MainView : GeoBaseEditorView("Редактор базы") {
 
                     shortcut(KeyCodeCombination(KeyCode.SUBTRACT)){
                         val selected = kv_list.selectionModel.selectedItem
-                        kv_list.items.remove(selected)
+                        controller.removeArea(selected)
+                        //kv_list.items.remove(selected) //todo remove from startSq
                     }
                     shortcut(KeyCodeCombination(KeyCode.ADD)){
+                        logger.trace("selected item: ${kv_list.selectedItem}")
                         if (kv_list.selectedItem == null) return@shortcut
+                        logger.trace("area copy")
                         controller.copyArea(kv_list.selectedItem!!)
                         kv_list.selectionModel.select(kv_list.selectionModel.selectedIndex + 1)
                     }
-                    shortcut(KeyCodeCombination(KeyCode.ADD, KeyCombination.SHIFT_ANY)){
+                    shortcut(KeyCodeCombination(KeyCode.ADD, KeyCombination.SHIFT_DOWN)){
+                        logger.trace("add empty item: ${kv_list.selectedItem}")
                         if (kv_list.selectedItem == null) return@shortcut
                         controller.newEmptyArea(kv_list.selectedItem!!)
                         kv_list.selectionModel.select(kv_list.selectionModel.selectedIndex + 1)

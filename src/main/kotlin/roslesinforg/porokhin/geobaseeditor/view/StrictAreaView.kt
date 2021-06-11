@@ -2,6 +2,9 @@ package roslesinforg.porokhin.geobaseeditor.view
 
 import format
 import javafx.beans.property.Property
+import javafx.beans.property.SimpleFloatProperty
+import javafx.beans.property.SimpleIntegerProperty
+import javafx.scene.control.TableCell
 import javafx.scene.control.TableView
 import javafx.scene.paint.Color
 import javafx.scene.text.FontWeight
@@ -44,10 +47,16 @@ class StrictAreaView: GeoBaseEditorView("Площади") {
             rowExpander(true) { kv ->
                 internalTable = tableview(kv.areas.toObservable()){
                     column<Area, Int>("Выд") { it.value.field1.number.toProperty() as Property<Int> }
-                    column<Area, Float>("До"){ kv.internalArs[it.value.field1.number].toProperty() as Property<Float> }
-                    column<Area, Float>("После"){it.value.field1.area.toProperty() as Property<Float>}
+                    column<Area, Float>("До"){
+                        val n = it.value.field1.number
+                        if (kv.oldArs.containsKey(n)) kv.oldArs[it.value.field1.number].toProperty() as Property<Float>
+                        else SimpleFloatProperty(0f) as Property<Float>
+                    }
+                    column<Area, Float>("После"){
+                        it.value.field1.area.toProperty() as Property<Float>
+                    }
                     column<Area, Float>("Разница"){
-                        val change = (it.value.field1.area - kv.internalArs[it.value.field1.number]!!)
+                        val change = (it.value.field1.area - (kv.oldArs[it.value.field1.number] ?: 0f))
                         if (it.value.field1.category in 9..37 && change != 0f) controller.error("Изменена площадь лк") //todo replace
                         change.toProperty() as Property<Float>
                     }.cellFormat {

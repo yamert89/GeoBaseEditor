@@ -27,6 +27,7 @@ dependencies {
     implementation(kotlin("stdlib-jdk8"))
     implementation("no.tornado:tornadofx:1.7.20")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.1")
+    implementation("com.charleskorn.kaml:kaml:0.29.0")
     implementation("org.apache.poi:poi-ooxml:4.1.2")
     implementation("org.apache.logging.log4j:log4j-api:2.14.0")
     implementation("org.apache.logging.log4j:log4j-core:2.14.0")
@@ -52,7 +53,7 @@ tasks {
     compileTestKotlin {
         kotlinOptions.jvmTarget = "1.8"
     }
-    val archieveN = "GeoBaseEditor-${project.version}.jar"
+    val archieveN = "GeoBaseEditor.jar"
 
     val fatJar = register("fatJar", Jar::class){
         dependsOn(compileKotlin)
@@ -71,6 +72,7 @@ tasks {
     }
 
     val startPath = "${System.getProperty("pathJars")}GeoBaseEditor\\"
+    val deployPath = System.getProperty("pathDeploy")
 
     val startFolder = file(startPath)
 
@@ -85,12 +87,20 @@ tasks {
         into(file("$startPath/lists"))
     }
 
-    register<Copy>("copy"){
+    val buildD = "$projectDir/build/libs/"
+    val j = file("$buildD/$archieveN")
+    register<Copy>("deploy"){
         dependsOn(getByName("copyLists"))
-        val buildD = "$projectDir/build/libs/"
-        from(file("$buildD/$archieveN"))
+        from(j)
+        into(deployPath)
+    }
+
+    register<Copy>("copy"){
+        dependsOn(getByName("deploy"))
+        from(j)
        //println(project.parent!!.projectDir)
         into(startFolder)
+
         //from("${project.parent!!.path}/areatypes2/src/main/resources/")
         println("GeoBaseEditor built with version $version to $startFolder")
     }
