@@ -269,6 +269,7 @@ class MainView : GeoBaseEditorView("Редактор базы") {
     object AppScope: Scope()
     val controller : GeoBaseEditorController by inject(AppScope)
     var model: AreaModel = controller.areaModel
+    val updateManager =  UpdateManager(Paths.get("\\\\POROHIN\\share\\update\\"))
 
     init {
         selectionsF10.addAll(listOf(
@@ -359,7 +360,7 @@ class MainView : GeoBaseEditorView("Редактор базы") {
                 kv_list.selectionModel.select(0)
             }
         }
-        val updateManager =  UpdateManager(Paths.get("\\\\Fileserver\\Обменник\\Порохин\\update\\"))
+
         runAsync {
            updateManager.checkVersion()
         } ui{
@@ -603,7 +604,7 @@ class MainView : GeoBaseEditorView("Редактор базы") {
     private fun applyButtons(){
         buttonBar.apply {
             addNewButton("info.png", "О программе"){ //todo Replace with resources
-                information("Редкатор Базы v. 1.0.0", """
+                information("Редкатор Базы v. ${updateManager.currentVersion.version}", """
                     Добавить выдел - NUM+
                     Скопировать выдел - CTRL + NUM+
                     Удалить выдел - NUM-

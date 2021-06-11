@@ -13,15 +13,18 @@ import kotlin.Exception
 
 class UpdateManager(private val path: Path) {
     private val logger = logger()
+    var currentVersion = Version()
 
     fun checkVersion(): Version{
         try {
             val parser = Yaml.default
+            currentVersion = parser.decodeFromString<Version>(javaClass.classLoader.getResource("currentversion.yml")!!.readText())
             val lastVersion = parser.decodeFromString<Version>(path.resolve("version.yml").toFile().readText())
-            val currentVersion = parser.decodeFromString<Version>(javaClass.classLoader.getResource("currentversion.yml")!!.readText())
+            logger.debug("Checking version. Current: ${currentVersion.api}, Last: ${lastVersion.api}")
             if (currentVersion.api < lastVersion.api) return lastVersion
         }catch (e: Exception){
             logger.warn("Version checking failed")
+            logger.warn(e)
         }
         return Version()
     }
@@ -30,8 +33,9 @@ class UpdateManager(private val path: Path) {
         //Files.copy(path.resolve("GeoBaseEditor.jar"), )
         //ProcessBuilder("cmd.exe", "update.bat").start()
         try {
-            Runtime.getRuntime().exec("cmd /c update.bat", null, null)
+            val process = Runtime.getRuntime().exec("cmd /c update.bat", null, null)
             logger.trace("updated")
+            process.waitFor()
             Platform.exit()
         }catch (e: Exception){e.printStackTrace()}
 
