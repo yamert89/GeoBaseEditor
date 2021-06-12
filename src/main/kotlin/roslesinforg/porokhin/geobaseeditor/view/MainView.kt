@@ -35,7 +35,7 @@ fun main(args: Array<String>) {
     launch<GeoBaseEditorApp>(args)
 }
 
-class GeoBaseEditorApp: App(MainView::class) //todo area listener
+class GeoBaseEditorApp: App(MainView::class)
 
 class MainView : GeoBaseEditorView("Редактор базы") {
     private val logger = logger()

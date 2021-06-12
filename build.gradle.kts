@@ -1,3 +1,4 @@
+import org.jetbrains.kotlin.cli.common.toBooleanLenient
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
@@ -42,10 +43,22 @@ dependencies {
     implementation("com.pretty_tools:pretty-tools-JDDE-2.1.0")
     testImplementation("junit:junit:4.13.2")
 }
-sourceSets{
 
+val archieveN = "GeoBaseEditor.jar"
+fun String.prop() = System.getProperty(this)
+val workPlaceConfiguration = "workplaceConfiguration".prop().toBooleanLenient()!!
+var startPath = ""
+var deployPath = ""
+if (workPlaceConfiguration) {
+    startPath = "pathJarsWorkplace".prop()
+    deployPath = "pathDeployWorkplace".prop()
+} else {
+    startPath = "pathJarsHome".prop()
+    deployPath = "pathDeployHome".prop()
 }
-project.configurations.implementation.isCanBeResolved = true
+
+startPath = "${startPath}GeoBaseEditor\\"
+project.configurations.implementation.get().isCanBeResolved = true
 tasks {
     compileKotlin {
         kotlinOptions.jvmTarget = "1.8"
@@ -53,55 +66,55 @@ tasks {
     compileTestKotlin {
         kotlinOptions.jvmTarget = "1.8"
     }
-    val archieveN = "GeoBaseEditor.jar"
 
     val fatJar = register("fatJar", Jar::class){
         dependsOn(compileKotlin)
         manifest{
             attributes["Main-Class"] = "roslesinforg.porokhin.geobaseeditor.view.MainViewKt"
         }
-
         exclude("META-INF/*.RSA", "META-INF/*.SF","META-INF/*.DSA")
         archiveFileName.set(archieveN)
-        //from(configurations.runtimeClasspath.get()/*.filter { it.name.startsWith("poi") }*/.map { if(it.isDirectory) it else zipTree(it) })
-        //with(jar.get() as CopySpec)
-
         from(configurations.implementation.get().files.map{ if(it.isDirectory) it else zipTree(it)})
         with(jar.get() as CopySpec)
-        //from(file("${System.getProperty("pathRepo")}/JavaDDEx64.dll"))
     }
-
-    val startPath = "${System.getProperty("pathJars")}GeoBaseEditor\\"
-    val deployPath = System.getProperty("pathDeploy")
 
     val startFolder = file(startPath)
 
-    register("cleanStartDir"){
+
+    val cleanStartDir = register("cleanStartDir"){
         dependsOn(fatJar)
         startFolder.listFiles()?.filter { it.name.endsWith(".jar") }?.forEach { delete(it.absolutePath) }
     }
 
-    register<Copy>("copyLists"){
-        dependsOn(getByName("cleanStartDir"))
+
+
+    val copyLists = register<Copy>("copyLists"){
+        dependsOn(cleanStartDir)
         from(fileTree("${project.parent!!.projectDir}/areatypes2/src/main/resources").filter { it.name.endsWith("yml") })
         into(file("$startPath/lists"))
     }
 
     val buildD = "$projectDir/build/libs/"
     val j = file("$buildD/$archieveN")
-    register<Copy>("deploy"){
-        dependsOn(getByName("copyLists"))
+
+    val deploy = register<Copy>("deploy"){
+        dependsOn(cleanStartDir)
+        println("Deploy path: $deployPath")
         from(j)
         into(deployPath)
     }
 
-    register<Copy>("copy"){
-        dependsOn(getByName("deploy"))
-        from(j)
-       //println(project.parent!!.projectDir)
-        into(startFolder)
+    val deployVersion = register<Copy>("deployVersion"){
+        dependsOn(cleanStartDir)
+        from(file("$projectDir/src/main/resources/currentversion.yml"))
+        into(deployPath)
+        rename { _ -> "version.yml" }
+    }
 
-        //from("${project.parent!!.path}/areatypes2/src/main/resources/")
+    val copy = register<Copy>("copy"){
+        dependsOn(copyLists, deploy, deployVersion)
+        from(j)
+        into(startFolder)
         println("GeoBaseEditor built with version $version to $startFolder")
     }
 }
