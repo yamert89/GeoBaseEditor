@@ -1,5 +1,6 @@
 package roslesinforg.porokhin.geobaseeditor
 
+import com.jacob.activeX.ActiveXComponent
 import javafx.application.Platform
 import javafx.beans.property.SimpleDoubleProperty
 import javafx.beans.property.SimpleIntegerProperty

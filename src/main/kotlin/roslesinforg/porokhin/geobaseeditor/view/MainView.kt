@@ -23,6 +23,7 @@ import roslesinforg.porokhin.areatypes.GeneralTypes
 import roslesinforg.porokhin.rawxlsconverter.RawToXLSConverterView
 import javax.imageio.ImageIO
 import org.apache.logging.log4j.kotlin.logger
+import roslesinforg.porokhin.geobaseeditor.service.ActiveXServer
 import roslesinforg.porokhin.geobaseeditor.service.UpdateManager
 import tornadofx.controlsfx.bindAutoCompletion
 import java.io.File
@@ -272,6 +273,7 @@ class MainView : GeoBaseEditorView("Редактор базы") {
     val updateManager =  UpdateManager(Paths.get("\\\\POROHIN\\share\\update\\"))
 
     init {
+        ActiveXServer().connect()
         selectionsF10.addAll(listOf(
             selectBtn1 to selection1,
             selectBtn2 to selection2,
