@@ -28,7 +28,7 @@ class DDEClient(private val controller: GeoBaseEditorController) {
                             "selection_with_area" -> {
                                 val arr = data!!.split("|")
                                 val id = arr[0].toInt()
-                                if (!controller.areas.any { it.id == id }) return false
+                                if (!controller.areas.any { it.id == id }) return true
                                 controller.selectArea(arr[0].toInt())
                                 controller.log("Выд. ${arr[0]}, картографическая площадь: ${arr[1].toFloat()}")
                             }

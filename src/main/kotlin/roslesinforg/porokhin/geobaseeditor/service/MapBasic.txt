@@ -30,9 +30,24 @@ sub Main
 end sub
 
 sub selchangedhandler
+	onerror goto ex
 	if activated = 1 then
-		call selectionlistener
+		if IsFieldExist("Selection", "Id") = false or ObjectInfo(Selection.obj, OBJ_INFO_TYPE) <> OBJ_TYPE_REGION then exit sub
+		end if
+		ar = selection.id
+		if commandinfo(1) = 1 then
+			dim sq as Float
+			sq = CartesianArea(selection.obj, "hectare")
+			if sq = 0 then
+				ddepoke num, "selection", "60001"
+			else
+				ddepoke num, "selection_with_area", STR$(ar) + "|" + STR$(sq)
+			end if
+		end if
 	end if
+	exit sub
+ex:
+	call errorhandler
 end sub
 
 sub connect
@@ -218,22 +233,7 @@ sub paintrequest(req as String)
 end sub
 
 sub selectionlistener
-	onerror goto ex
-	if IsFieldExist("Selection", "Id") = false then exit sub
-	end if
-	ar = selection.id
-	if commandinfo(1) = 1 then
-		dim sq as Float
-		sq = CartesianArea(selection.obj, "hectare")
-		if sq = 0 then
-			ddepoke num, "selection", STR$(ar)
-		else
-			ddepoke num, "selection_with_area", STR$(ar) + "|" + STR$(sq)
-		end if
-	end if
-	exit sub
-ex:
-	call errorhandler
+
 end sub
 
 sub errorhandler
@@ -242,6 +242,9 @@ sub errorhandler
 	print "error " + code
 	activated = 0
 	if code = 696 then call disconnect
+	else
+		call disconnect
+		call connect
 	end if
 end sub
 

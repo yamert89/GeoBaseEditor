@@ -7,11 +7,13 @@ import com.jacob.com.Variant
 class ActiveXServer {
     fun connect(){
         try {
-            val xl = ActiveXComponent("MapInfoPro.Application")
+            val xl = ActiveXComponent("MapInfo.Application")
             val xlo: Dispatch = xl.getObject()
             try {
                 System.out.println("version=" + xl.getProperty("Version"))
                 println("version=" + Dispatch.get(xlo, "Version"))
+                Dispatch.call(xlo, "Open Table \"d:\\my\\!!test\\VID03_POL\"")
+                xl.invoke("Open Table \"d:\\my\\!!test\\VID03_POL\"")
                 /*xl.setProperty("Visible", Variant(true))
                 val workbooks: Dispatch= xl.getProperty("Workbooks").toDispatch()
                 val workbook: Dispatch = Dispatch.get(workbooks, "Add").toDispatch()
@@ -29,7 +31,7 @@ class ActiveXServer {
             } catch (e: Exception) {
                 e.printStackTrace()
             } finally {
-                xl.invoke("Quit", Variant())
+                //xl.invoke("Quit", Variant())
             }
 
             println(xl.programId)
