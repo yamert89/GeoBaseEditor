@@ -400,7 +400,7 @@ class MainView : GeoBaseEditorView("Редактор базы") {
             }
             filter(fSumOfTimber1, fSumOfTimber2, fSumOfTimber3, fSumOfTimber4, fSumOfTimber5, fSumOfTimber6, fSumOfTimber7, fSumOfTimber8,
                 fSumOfTimber9, fSumOfTimber10){ f ->
-                f.controlNewText.let { it.isEmpty() || it.isInt() && it.toInt() in 5..900 }
+                f.controlNewText.let { it.isEmpty() || it.isInt() && it.toInt() in 1..900 }
             }
             filter(fAreaNumber, fCategoryArea, fDP, fOzu, fAction1, fAction2, fAction3, fDop1_n, fDop2_n, fDop3_n, fDop4_n,
                 fDop5_n, fDop6_n){ f ->
@@ -497,7 +497,6 @@ class MainView : GeoBaseEditorView("Редактор базы") {
                     shortcut(KeyCodeCombination(KeyCode.SUBTRACT)){
                         val selected = kv_list.selectionModel.selectedItem
                         controller.removeArea(selected)
-                        //kv_list.items.remove(selected) //todo remove from startSq
                     }
                     shortcut(KeyCodeCombination(KeyCode.ADD)){
                         logger.trace("selected item: ${kv_list.selectedItem}")
