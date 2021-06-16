@@ -23,13 +23,13 @@ import roslesinforg.porokhin.areatypes.GeneralTypes
 import roslesinforg.porokhin.rawxlsconverter.RawToXLSConverterView
 import javax.imageio.ImageIO
 import org.apache.logging.log4j.kotlin.logger
-import roslesinforg.porokhin.geobaseeditor.service.ActiveXServer
 import roslesinforg.porokhin.geobaseeditor.service.UpdateManager
+import roslesinforg.porokhin.geobaseeditor.view.constructors.KvListConstructor
+import roslesinforg.porokhin.geobaseeditor.view.constructors.ViewConstructor
 import tornadofx.controlsfx.bindAutoCompletion
 import java.io.File
 import java.nio.file.Paths
 import kotlin.reflect.KProperty0
-import kotlin.reflect.KProperty1
 
 
 fun main(args: Array<String>) {
@@ -39,219 +39,219 @@ fun main(args: Array<String>) {
 class GeoBaseEditorApp: App(MainView::class)
 
 class MainView : GeoBaseEditorView("Редактор базы") {
-    private val logger = logger()
+    internal val logger = logger()
     override val root: TabPane by fxml("/gui/MainView.fxml")
-    private val borderPane: BorderPane by fxid()
-    private val cardLayout: AnchorPane by fxid()
-    private val fGir: TextFieldImpl by fxid()
-    private val fKvNumber: TextFieldImpl by fxid()
-    private val fAreaNumber: TextFieldImpl by fxid()
-    private val fArea: TextFieldImpl by fxid()
-    private val fCategoryArea: TextFieldImpl by fxid()
-    private val fOzu: TextFieldImpl by fxid()
-    private val fDP: TextFieldImpl by fxid()
-    private val fSpecies: TextFieldImpl by fxid()
-    private val fBon: TextFieldImpl by fxid()
-    private val fType: TextFieldImpl by fxid()
-    private val fSubType: TextFieldImpl by fxid()
-    private val fYearOfDeforest: TextFieldImpl by fxid()
-    private val fCountOfStump: TextFieldImpl by fxid()
-    private val fCountOfPinusStump: TextFieldImpl by fxid()
-    private val fStumpDiameter: TextFieldImpl by fxid()
-    private val fTypeDeforest: TextFieldImpl by fxid()
-    private val fDisorder: TextFieldImpl by fxid()
-    private val fValidDisorder: TextFieldImpl by fxid()
-    private val fDryTimber: TextFieldImpl by fxid()
-    private val fAction1: TextFieldImpl by fxid()
-    private val fAction2: TextFieldImpl by fxid()
-    private val fAction3: TextFieldImpl by fxid()
-    private val container23: FlowPane by fxid()
-    private val container23_2: FlowPane by fxid()
-    private val container_10: FlowPane by fxid()
-    private val fHrang1: TextFieldImpl by fxid()
-    private val fHrang2: TextFieldImpl by fxid()
-    private val fHrang3: TextFieldImpl by fxid()
-    private val fHrang4: TextFieldImpl by fxid()
-    private val fHrang5: TextFieldImpl by fxid()
-    private val fHrang6: TextFieldImpl by fxid()
-    private val fHrang7: TextFieldImpl by fxid()
-    private val fHrang8: TextFieldImpl by fxid()
-    private val fHrang9: TextFieldImpl by fxid()
-    private val fHrang10: TextFieldImpl by fxid()
-    private val fProportion1: TextFieldImpl by fxid()
-    private val fProportion2: TextFieldImpl by fxid()
-    private val fProportion3: TextFieldImpl by fxid()
-    private val fProportion4: TextFieldImpl by fxid()
-    private val fProportion5: TextFieldImpl by fxid()
-    private val fProportion6: TextFieldImpl by fxid()
-    private val fProportion7: TextFieldImpl by fxid()
-    private val fProportion8: TextFieldImpl by fxid()
-    private val fProportion9: TextFieldImpl by fxid()
-    private val fProportion10: TextFieldImpl by fxid()
-    private val fSpecies1: TextFieldImpl by fxid()
-    private val fSpecies2: TextFieldImpl by fxid()
-    private val fSpecies3: TextFieldImpl by fxid()
-    private val fSpecies4: TextFieldImpl by fxid()
-    private val fSpecies5: TextFieldImpl by fxid()
-    private val fSpecies6: TextFieldImpl by fxid()
-    private val fSpecies7: TextFieldImpl by fxid()
-    private val fSpecies8: TextFieldImpl by fxid()
-    private val fSpecies9: TextFieldImpl by fxid()
-    private val fSpecies10: TextFieldImpl by fxid()
-    private val fAge1: TextFieldImpl by fxid()
-    private val fAge2: TextFieldImpl by fxid()
-    private val fAge3: TextFieldImpl by fxid()
-    private val fAge4: TextFieldImpl by fxid()
-    private val fAge5: TextFieldImpl by fxid()
-    private val fAge6: TextFieldImpl by fxid()
-    private val fAge7: TextFieldImpl by fxid()
-    private val fAge8: TextFieldImpl by fxid()
-    private val fAge9: TextFieldImpl by fxid()
-    private val fAge10: TextFieldImpl by fxid()
-    private val fH1: TextFieldImpl by fxid()
-    private val fH2: TextFieldImpl by fxid()
-    private val fH3: TextFieldImpl by fxid()
-    private val fH4: TextFieldImpl by fxid()
-    private val fH5: TextFieldImpl by fxid()
-    private val fH6: TextFieldImpl by fxid()
-    private val fH7: TextFieldImpl by fxid()
-    private val fH8: TextFieldImpl by fxid()
-    private val fH9: TextFieldImpl by fxid()
-    private val fH10: TextFieldImpl by fxid()
-    private val fD1: TextFieldImpl by fxid()
-    private val fD2: TextFieldImpl by fxid()
-    private val fD3: TextFieldImpl by fxid()
-    private val fD4: TextFieldImpl by fxid()
-    private val fD5: TextFieldImpl by fxid()
-    private val fD6: TextFieldImpl by fxid()
-    private val fD7: TextFieldImpl by fxid()
-    private val fD8: TextFieldImpl by fxid()
-    private val fD9: TextFieldImpl by fxid()
-    private val fD10: TextFieldImpl by fxid()
-    private val fTradeClass1: TextFieldImpl by fxid()
-    private val fTradeClass2: TextFieldImpl by fxid()
-    private val fTradeClass3: TextFieldImpl by fxid()
-    private val fTradeClass4: TextFieldImpl by fxid()
-    private val fTradeClass5: TextFieldImpl by fxid()
-    private val fTradeClass6: TextFieldImpl by fxid()
-    private val fTradeClass7: TextFieldImpl by fxid()
-    private val fTradeClass8: TextFieldImpl by fxid()
-    private val fTradeClass9: TextFieldImpl by fxid()
-    private val fTradeClass10: TextFieldImpl by fxid()
-    private val fOrigin1: TextFieldImpl by fxid()
-    private val fOrigin2: TextFieldImpl by fxid()
-    private val fOrigin3: TextFieldImpl by fxid()
-    private val fOrigin4: TextFieldImpl by fxid()
-    private val fOrigin5: TextFieldImpl by fxid()
-    private val fOrigin6: TextFieldImpl by fxid()
-    private val fOrigin7: TextFieldImpl by fxid()
-    private val fOrigin8: TextFieldImpl by fxid()
-    private val fOrigin9: TextFieldImpl by fxid()
-    private val fOrigin10: TextFieldImpl by fxid()
-    private val fWeight1: TextFieldImpl by fxid()
-    private val fWeight2: TextFieldImpl by fxid()
-    private val fWeight3: TextFieldImpl by fxid()
-    private val fWeight4: TextFieldImpl by fxid()
-    private val fWeight5: TextFieldImpl by fxid()
-    private val fWeight6: TextFieldImpl by fxid()
-    private val fWeight7: TextFieldImpl by fxid()
-    private val fWeight8: TextFieldImpl by fxid()
-    private val fWeight9: TextFieldImpl by fxid()
-    private val fWeight10: TextFieldImpl by fxid()
-    private val fSumOfTimber1: TextFieldImpl by fxid()
-    private val fSumOfTimber2: TextFieldImpl by fxid()
-    private val fSumOfTimber3: TextFieldImpl by fxid()
-    private val fSumOfTimber4: TextFieldImpl by fxid()
-    private val fSumOfTimber5: TextFieldImpl by fxid()
-    private val fSumOfTimber6: TextFieldImpl by fxid()
-    private val fSumOfTimber7: TextFieldImpl by fxid()
-    private val fSumOfTimber8: TextFieldImpl by fxid()
-    private val fSumOfTimber9: TextFieldImpl by fxid()
-    private val fSumOfTimber10: TextFieldImpl by fxid()
-    private val f31_count: TextFieldImpl by fxid()
-    private val f31_h: TextFieldImpl by fxid()
-    private val f31_age: TextFieldImpl by fxid()
-    private val f31_proportion1: TextFieldImpl by fxid()
-    private val f31_element1: TextFieldImpl by fxid()
-    private val f31_proportion2: TextFieldImpl by fxid()
-    private val f31_element2: TextFieldImpl by fxid()
-    private val f31_proportion3: TextFieldImpl by fxid()
-    private val f31_element3: TextFieldImpl by fxid()
-    private val fDop1_n: TextFieldImpl by fxid()
-    private val fDop2_n: TextFieldImpl by fxid()
-    private val fDop3_n: TextFieldImpl by fxid()
-    private val fDop4_n: TextFieldImpl by fxid()
-    private val fDop5_n: TextFieldImpl by fxid()
-    private val fDop6_n: TextFieldImpl by fxid()
-    private val fDop1_1: TextFieldImpl by fxid()
-    private val fDop2_1: TextFieldImpl by fxid()
-    private val fDop3_1: TextFieldImpl by fxid()
-    private val fDop4_1: TextFieldImpl by fxid()
-    private val fDop5_1: TextFieldImpl by fxid()
-    private val fDop6_1: TextFieldImpl by fxid()
-    private val fDop1_2: TextFieldImpl by fxid()
-    private val fDop2_2: TextFieldImpl by fxid()
-    private val fDop3_2: TextFieldImpl by fxid()
-    private val fDop4_2: TextFieldImpl by fxid()
-    private val fDop5_2: TextFieldImpl by fxid()
-    private val fDop6_2: TextFieldImpl by fxid()
-    private val fDop1_3: TextFieldImpl by fxid()
-    private val fDop2_3: TextFieldImpl by fxid()
-    private val fDop3_3: TextFieldImpl by fxid()
-    private val fDop4_3: TextFieldImpl by fxid()
-    private val fDop5_3: TextFieldImpl by fxid()
-    private val fDop6_3: TextFieldImpl by fxid()
-    private val fDop1_4: TextFieldImpl by fxid()
-    private val fDop2_4: TextFieldImpl by fxid()
-    private val fDop3_4: TextFieldImpl by fxid()
-    private val fDop4_4: TextFieldImpl by fxid()
-    private val fDop5_4: TextFieldImpl by fxid()
-    private val fDop6_4: TextFieldImpl by fxid()
-    private val fDop1_5: TextFieldImpl by fxid()
-    private val fDop2_5: TextFieldImpl by fxid()
-    private val fDop3_5: TextFieldImpl by fxid()
-    private val fDop4_5: TextFieldImpl by fxid()
-    private val fDop5_5: TextFieldImpl by fxid()
-    private val fDop6_5: TextFieldImpl by fxid()
-    private val fDop1_6: TextFieldImpl by fxid()
-    private val fDop2_6: TextFieldImpl by fxid()
-    private val fDop3_6: TextFieldImpl by fxid()
-    private val fDop4_6: TextFieldImpl by fxid()
-    private val fDop5_6: TextFieldImpl by fxid()
-    private val fDop6_6: TextFieldImpl by fxid()
-    private val fDop1_7: TextFieldImpl by fxid()
-    private val fDop2_7: TextFieldImpl by fxid()
-    private val fDop3_7: TextFieldImpl by fxid()
-    private val fDop4_7: TextFieldImpl by fxid()
-    private val fDop5_7: TextFieldImpl by fxid()
-    private val fDop6_7: TextFieldImpl by fxid()
-    private val fDop1_8: TextFieldImpl by fxid()
-    private val fDop2_8: TextFieldImpl by fxid()
-    private val fDop3_8: TextFieldImpl by fxid()
-    private val fDop4_8: TextFieldImpl by fxid()
-    private val fDop5_8: TextFieldImpl by fxid()
-    private val fDop6_8: TextFieldImpl by fxid()
-    private val selection1: Pane by fxid()
-    private val selection2: Pane by fxid()
-    private val selection3: Pane by fxid()
-    private val selection4: Pane by fxid()
-    private val selection5: Pane by fxid()
-    private val selection6: Pane by fxid()
-    private val selection7: Pane by fxid()
-    private val selection8: Pane by fxid()
-    private val selection9: Pane by fxid()
-    private val selection10: Pane by fxid()
-    private val selectionsF10 = mutableListOf<Pair<ToggleButton, Pane>>()
-    private val selectBtn1: ToggleButton by fxid()
-    private val selectBtn2: ToggleButton by fxid()
-    private val selectBtn3: ToggleButton by fxid()
-    private val selectBtn4: ToggleButton by fxid()
-    private val selectBtn5: ToggleButton by fxid()
-    private val selectBtn6: ToggleButton by fxid()
-    private val selectBtn7: ToggleButton by fxid()
-    private val selectBtn8: ToggleButton by fxid()
-    private val selectBtn9: ToggleButton by fxid()
-    private val selectBtn10: ToggleButton by fxid()
+    internal val borderPane: BorderPane by fxid()
+    internal val cardLayout: AnchorPane by fxid()
+    internal val fGir: TextFieldImpl by fxid()
+    internal val fKvNumber: TextFieldImpl by fxid()
+    internal val fAreaNumber: TextFieldImpl by fxid()
+    internal val fArea: TextFieldImpl by fxid()
+    internal val fCategoryArea: TextFieldImpl by fxid()
+    internal val fOzu: TextFieldImpl by fxid()
+    internal val fDP: TextFieldImpl by fxid()
+    internal val fSpecies: TextFieldImpl by fxid()
+    internal val fBon: TextFieldImpl by fxid()
+    internal val fType: TextFieldImpl by fxid()
+    internal val fSubType: TextFieldImpl by fxid()
+    internal val fYearOfDeforest: TextFieldImpl by fxid()
+    internal val fCountOfStump: TextFieldImpl by fxid()
+    internal val fCountOfPinusStump: TextFieldImpl by fxid()
+    internal val fStumpDiameter: TextFieldImpl by fxid()
+    internal val fTypeDeforest: TextFieldImpl by fxid()
+    internal val fDisorder: TextFieldImpl by fxid()
+    internal val fValidDisorder: TextFieldImpl by fxid()
+    internal val fDryTimber: TextFieldImpl by fxid()
+    internal val fAction1: TextFieldImpl by fxid()
+    internal val fAction2: TextFieldImpl by fxid()
+    internal val fAction3: TextFieldImpl by fxid()
+    internal val container23: FlowPane by fxid()
+    internal val container23_2: FlowPane by fxid()
+    internal val container_10: FlowPane by fxid()
+    internal val fHrang1: TextFieldImpl by fxid()
+    internal val fHrang2: TextFieldImpl by fxid()
+    internal val fHrang3: TextFieldImpl by fxid()
+    internal val fHrang4: TextFieldImpl by fxid()
+    internal val fHrang5: TextFieldImpl by fxid()
+    internal val fHrang6: TextFieldImpl by fxid()
+    internal val fHrang7: TextFieldImpl by fxid()
+    internal val fHrang8: TextFieldImpl by fxid()
+    internal val fHrang9: TextFieldImpl by fxid()
+    internal val fHrang10: TextFieldImpl by fxid()
+    internal val fProportion1: TextFieldImpl by fxid()
+    internal val fProportion2: TextFieldImpl by fxid()
+    internal val fProportion3: TextFieldImpl by fxid()
+    internal val fProportion4: TextFieldImpl by fxid()
+    internal val fProportion5: TextFieldImpl by fxid()
+    internal val fProportion6: TextFieldImpl by fxid()
+    internal val fProportion7: TextFieldImpl by fxid()
+    internal val fProportion8: TextFieldImpl by fxid()
+    internal val fProportion9: TextFieldImpl by fxid()
+    internal val fProportion10: TextFieldImpl by fxid()
+    internal val fSpecies1: TextFieldImpl by fxid()
+    internal val fSpecies2: TextFieldImpl by fxid()
+    internal val fSpecies3: TextFieldImpl by fxid()
+    internal val fSpecies4: TextFieldImpl by fxid()
+    internal val fSpecies5: TextFieldImpl by fxid()
+    internal val fSpecies6: TextFieldImpl by fxid()
+    internal val fSpecies7: TextFieldImpl by fxid()
+    internal val fSpecies8: TextFieldImpl by fxid()
+    internal val fSpecies9: TextFieldImpl by fxid()
+    internal val fSpecies10: TextFieldImpl by fxid()
+    internal val fAge1: TextFieldImpl by fxid()
+    internal val fAge2: TextFieldImpl by fxid()
+    internal val fAge3: TextFieldImpl by fxid()
+    internal val fAge4: TextFieldImpl by fxid()
+    internal val fAge5: TextFieldImpl by fxid()
+    internal val fAge6: TextFieldImpl by fxid()
+    internal val fAge7: TextFieldImpl by fxid()
+    internal val fAge8: TextFieldImpl by fxid()
+    internal val fAge9: TextFieldImpl by fxid()
+    internal val fAge10: TextFieldImpl by fxid()
+    internal val fH1: TextFieldImpl by fxid()
+    internal val fH2: TextFieldImpl by fxid()
+    internal val fH3: TextFieldImpl by fxid()
+    internal val fH4: TextFieldImpl by fxid()
+    internal val fH5: TextFieldImpl by fxid()
+    internal val fH6: TextFieldImpl by fxid()
+    internal val fH7: TextFieldImpl by fxid()
+    internal val fH8: TextFieldImpl by fxid()
+    internal val fH9: TextFieldImpl by fxid()
+    internal val fH10: TextFieldImpl by fxid()
+    internal val fD1: TextFieldImpl by fxid()
+    internal val fD2: TextFieldImpl by fxid()
+    internal val fD3: TextFieldImpl by fxid()
+    internal val fD4: TextFieldImpl by fxid()
+    internal val fD5: TextFieldImpl by fxid()
+    internal val fD6: TextFieldImpl by fxid()
+    internal val fD7: TextFieldImpl by fxid()
+    internal val fD8: TextFieldImpl by fxid()
+    internal val fD9: TextFieldImpl by fxid()
+    internal val fD10: TextFieldImpl by fxid()
+    internal val fTradeClass1: TextFieldImpl by fxid()
+    internal val fTradeClass2: TextFieldImpl by fxid()
+    internal val fTradeClass3: TextFieldImpl by fxid()
+    internal val fTradeClass4: TextFieldImpl by fxid()
+    internal val fTradeClass5: TextFieldImpl by fxid()
+    internal val fTradeClass6: TextFieldImpl by fxid()
+    internal val fTradeClass7: TextFieldImpl by fxid()
+    internal val fTradeClass8: TextFieldImpl by fxid()
+    internal val fTradeClass9: TextFieldImpl by fxid()
+    internal val fTradeClass10: TextFieldImpl by fxid()
+    internal val fOrigin1: TextFieldImpl by fxid()
+    internal val fOrigin2: TextFieldImpl by fxid()
+    internal val fOrigin3: TextFieldImpl by fxid()
+    internal val fOrigin4: TextFieldImpl by fxid()
+    internal val fOrigin5: TextFieldImpl by fxid()
+    internal val fOrigin6: TextFieldImpl by fxid()
+    internal val fOrigin7: TextFieldImpl by fxid()
+    internal val fOrigin8: TextFieldImpl by fxid()
+    internal val fOrigin9: TextFieldImpl by fxid()
+    internal val fOrigin10: TextFieldImpl by fxid()
+    internal val fWeight1: TextFieldImpl by fxid()
+    internal val fWeight2: TextFieldImpl by fxid()
+    internal val fWeight3: TextFieldImpl by fxid()
+    internal val fWeight4: TextFieldImpl by fxid()
+    internal val fWeight5: TextFieldImpl by fxid()
+    internal val fWeight6: TextFieldImpl by fxid()
+    internal val fWeight7: TextFieldImpl by fxid()
+    internal val fWeight8: TextFieldImpl by fxid()
+    internal val fWeight9: TextFieldImpl by fxid()
+    internal val fWeight10: TextFieldImpl by fxid()
+    internal val fSumOfTimber1: TextFieldImpl by fxid()
+    internal val fSumOfTimber2: TextFieldImpl by fxid()
+    internal val fSumOfTimber3: TextFieldImpl by fxid()
+    internal val fSumOfTimber4: TextFieldImpl by fxid()
+    internal val fSumOfTimber5: TextFieldImpl by fxid()
+    internal val fSumOfTimber6: TextFieldImpl by fxid()
+    internal val fSumOfTimber7: TextFieldImpl by fxid()
+    internal val fSumOfTimber8: TextFieldImpl by fxid()
+    internal val fSumOfTimber9: TextFieldImpl by fxid()
+    internal val fSumOfTimber10: TextFieldImpl by fxid()
+    internal val f31_count: TextFieldImpl by fxid()
+    internal val f31_h: TextFieldImpl by fxid()
+    internal val f31_age: TextFieldImpl by fxid()
+    internal val f31_proportion1: TextFieldImpl by fxid()
+    internal val f31_element1: TextFieldImpl by fxid()
+    internal val f31_proportion2: TextFieldImpl by fxid()
+    internal val f31_element2: TextFieldImpl by fxid()
+    internal val f31_proportion3: TextFieldImpl by fxid()
+    internal val f31_element3: TextFieldImpl by fxid()
+    internal val fDop1_n: TextFieldImpl by fxid()
+    internal val fDop2_n: TextFieldImpl by fxid()
+    internal val fDop3_n: TextFieldImpl by fxid()
+    internal val fDop4_n: TextFieldImpl by fxid()
+    internal val fDop5_n: TextFieldImpl by fxid()
+    internal val fDop6_n: TextFieldImpl by fxid()
+    internal val fDop1_1: TextFieldImpl by fxid()
+    internal val fDop2_1: TextFieldImpl by fxid()
+    internal val fDop3_1: TextFieldImpl by fxid()
+    internal val fDop4_1: TextFieldImpl by fxid()
+    internal val fDop5_1: TextFieldImpl by fxid()
+    internal val fDop6_1: TextFieldImpl by fxid()
+    internal val fDop1_2: TextFieldImpl by fxid()
+    internal val fDop2_2: TextFieldImpl by fxid()
+    internal val fDop3_2: TextFieldImpl by fxid()
+    internal val fDop4_2: TextFieldImpl by fxid()
+    internal val fDop5_2: TextFieldImpl by fxid()
+    internal val fDop6_2: TextFieldImpl by fxid()
+    internal val fDop1_3: TextFieldImpl by fxid()
+    internal val fDop2_3: TextFieldImpl by fxid()
+    internal val fDop3_3: TextFieldImpl by fxid()
+    internal val fDop4_3: TextFieldImpl by fxid()
+    internal val fDop5_3: TextFieldImpl by fxid()
+    internal val fDop6_3: TextFieldImpl by fxid()
+    internal val fDop1_4: TextFieldImpl by fxid()
+    internal val fDop2_4: TextFieldImpl by fxid()
+    internal val fDop3_4: TextFieldImpl by fxid()
+    internal val fDop4_4: TextFieldImpl by fxid()
+    internal val fDop5_4: TextFieldImpl by fxid()
+    internal val fDop6_4: TextFieldImpl by fxid()
+    internal val fDop1_5: TextFieldImpl by fxid()
+    internal val fDop2_5: TextFieldImpl by fxid()
+    internal val fDop3_5: TextFieldImpl by fxid()
+    internal val fDop4_5: TextFieldImpl by fxid()
+    internal val fDop5_5: TextFieldImpl by fxid()
+    internal val fDop6_5: TextFieldImpl by fxid()
+    internal val fDop1_6: TextFieldImpl by fxid()
+    internal val fDop2_6: TextFieldImpl by fxid()
+    internal val fDop3_6: TextFieldImpl by fxid()
+    internal val fDop4_6: TextFieldImpl by fxid()
+    internal val fDop5_6: TextFieldImpl by fxid()
+    internal val fDop6_6: TextFieldImpl by fxid()
+    internal val fDop1_7: TextFieldImpl by fxid()
+    internal val fDop2_7: TextFieldImpl by fxid()
+    internal val fDop3_7: TextFieldImpl by fxid()
+    internal val fDop4_7: TextFieldImpl by fxid()
+    internal val fDop5_7: TextFieldImpl by fxid()
+    internal val fDop6_7: TextFieldImpl by fxid()
+    internal val fDop1_8: TextFieldImpl by fxid()
+    internal val fDop2_8: TextFieldImpl by fxid()
+    internal val fDop3_8: TextFieldImpl by fxid()
+    internal val fDop4_8: TextFieldImpl by fxid()
+    internal val fDop5_8: TextFieldImpl by fxid()
+    internal val fDop6_8: TextFieldImpl by fxid()
+    internal val selection1: Pane by fxid()
+    internal val selection2: Pane by fxid()
+    internal val selection3: Pane by fxid()
+    internal val selection4: Pane by fxid()
+    internal val selection5: Pane by fxid()
+    internal val selection6: Pane by fxid()
+    internal val selection7: Pane by fxid()
+    internal val selection8: Pane by fxid()
+    internal val selection9: Pane by fxid()
+    internal val selection10: Pane by fxid()
+    internal val selectionsF10 = mutableListOf<Pair<ToggleButton, Pane>>()
+    internal val selectBtn1: ToggleButton by fxid()
+    internal val selectBtn2: ToggleButton by fxid()
+    internal val selectBtn3: ToggleButton by fxid()
+    internal val selectBtn4: ToggleButton by fxid()
+    internal val selectBtn5: ToggleButton by fxid()
+    internal val selectBtn6: ToggleButton by fxid()
+    internal val selectBtn7: ToggleButton by fxid()
+    internal val selectBtn8: ToggleButton by fxid()
+    internal val selectBtn9: ToggleButton by fxid()
+    internal val selectBtn10: ToggleButton by fxid()
     private val fLog: Label by fxid()
     private lateinit var btnOpen: Button
     private lateinit var btnSave: Button
@@ -262,10 +262,9 @@ class MainView : GeoBaseEditorView("Редактор базы") {
     private val fProgress: ProgressBar by fxid()
     private val validationContext = ValidationContext()
     private val validatorFactory = ValidatorFactory(validationContext)
-    private val validationHelper = ValidationHelper(validationContext, validatorFactory)
+    internal val validationHelper = ValidationHelper(validationContext, validatorFactory)
     private val filteringHelper = FilteringHelper()
-    private val enableFieldsTrigger = SimpleBooleanProperty()
-    private var isDragged = false
+    internal val enableFieldsTrigger = SimpleBooleanProperty()
     lateinit var kv_list: TableView<Area>
     object AppScope: Scope()
     val controller : GeoBaseEditorController by inject(AppScope)
@@ -287,10 +286,8 @@ class MainView : GeoBaseEditorView("Редактор базы") {
         ))
 
 
-
-        //controller.read(input.toFile())
         bindModel()
-        buildKvList()
+        construct(KvListConstructor())
         applyButtons()
 
 
@@ -445,161 +442,15 @@ class MainView : GeoBaseEditorView("Редактор базы") {
         kv_list.selectionModel.select(idx)
         Platform.runLater { kv_list.scrollTo(idx - 10) }
     }
-
-
-
-    private fun buildKvList(){
-
-        borderPane.apply {
-            left {
-
-                kv_list = tableview(controller.areas){
-
-                    model.rebindOnChange(this){ area ->
-                        if (area == null) return@rebindOnChange
-
-                        if (!enableFieldsTrigger.value) {
-                            enableFieldsTrigger.value = true
-                        } else controller.paint()
-
-
-                        val message = validationHelper.hRangsAndProportionsChecking( listOf(
-                            fHrang1 to fProportion1,
-                            fHrang2 to fProportion2,
-                            fHrang3 to fProportion3,
-                            fHrang4 to fProportion4,
-                            fHrang5 to fProportion5,
-                            fHrang6 to fProportion6,
-                            fHrang7 to fProportion7,
-                            fHrang8 to fProportion8,
-                            fHrang9 to fProportion9,
-                            fHrang10 to fProportion10)
-                        )
-                        var notice = ""
-                        if (!validationContext.validate()) notice += "Имеются некорректно заполненные поля"
-                        if (message.isNotEmpty()) notice += "\n$message"
-                        if (notice.isNotEmpty()) {
-                            error("Внимание", notice, ButtonType.OK, title = "Ошибка")
-                            validationHelper.failedAreas.add(item.id)
-                        } else validationHelper.failedAreas.remove(item.id)
-
-                        selectionsF10.forEach {
-                            it.second.isVisible = false
-                            it.first.styleClass.remove(CLASS_SELECT_BTN_ACTIVE)
-                        }
-
-                        commit()
-                        item = area
-                        println("Selection kv: ${item.kv} vid: ${item.field1.number}")
-
-                    }
-
-                    shortcut(KeyCodeCombination(KeyCode.SUBTRACT)){
-                        val selected = kv_list.selectionModel.selectedItem
-                        controller.removeArea(selected)
-                    }
-                    shortcut(KeyCodeCombination(KeyCode.ADD)){
-                        logger.trace("selected item: ${kv_list.selectedItem}")
-                        if (kv_list.selectedItem == null) return@shortcut
-                        logger.trace("area copy")
-                        controller.copyArea(kv_list.selectedItem!!)
-                        kv_list.selectionModel.select(kv_list.selectionModel.selectedIndex + 1)
-                    }
-                    shortcut(KeyCodeCombination(KeyCode.ADD, KeyCombination.SHIFT_DOWN)){
-                        logger.trace("add empty item: ${kv_list.selectedItem}")
-                        if (kv_list.selectedItem == null) return@shortcut
-                        controller.newEmptyArea(kv_list.selectedItem!!)
-                        kv_list.selectionModel.select(kv_list.selectionModel.selectedIndex + 1)
-                    }
-
-                    isEditable = true
-                    prefWidth = 130.0
-
-                    readonlyColumn("Кв", Area::kv){
-                        style{
-                            textAlignment = TextAlignment.CENTER
-                            fontWeight = FontWeight.BOLD
-                        }
-                    }
-                    column<Area, Int>("Выд"){
-                        it.value.field1.number.toProperty() as Property<Int>
-                    }.makeEditable().apply {
-                        this.setOnEditCommit {
-                            model.field1Model.numberProperty.value = it.newValue
-                        }
-                    }
-                    column("ЦНЛ", Area::categoryProtection){
-                        style{ textAlignment = TextAlignment.CENTER}
-                        setOnEditCommit {
-                            if (GeneralTypes.categoryProtection[it.newValue] == it.newValue.toString()) {
-                                error(header = "Ошибка", content = "Некорректное значение")
-                                editModel.rollbackSelected()
-                            }
-                        }
-                    }.makeEditable()
-
-                    setRowFactory {
-                        val row = TableRow<Area>()
-                        val selectableEffect = DropShadow(3.0,  0.0, 0.4, c("#000", 0.9))
-                        val fakeEffect = DropShadow(0.0, c("#000", 0.0))
-                        val format = DataFormat.lookupMimeType("application/x-java-serialized-object") ?: DataFormat("application/x-java-serialized-object")
-                        var draggedRow: TableRow<Area> = TableRow()
-                        row.setOnDragDetected {
-                            draggedRow = row
-                            isDragged = true
-                            val index = row.index
-                            if(row.isEmpty) return@setOnDragDetected
-                            val dragboard = row.startDragAndDrop(TransferMode.MOVE)
-                            dragboard.dragView = row.snapshot(null, null)
-                            val cc = ClipboardContent()
-                            cc[format] = index
-                            dragboard.setContent(cc)
-                            it.consume()
-                            println("drag detected")
-                        }
-
-                        row.setOnDragOver {
-                            val db = it.dragboard
-                            if (!db.hasContent(format)) return@setOnDragOver
-                            if (row.index != db.getContent(format) as Int){
-                                it.acceptTransferModes(TransferMode.COPY, TransferMode.MOVE)
-                                it.consume()
-                            }
-                        }
-                        row.setOnDragDropped {
-                            isDragged = false
-                            val db = it.dragboard
-                            if(!db.hasContent(format)) return@setOnDragDropped
-                            val dragIndex: Int = db.getContent(format) as Int
-                            val area = controller.areas.removeAt(dragIndex)
-                            val dropIndex = if (row.isEmpty) kv_list.items.size else
-                                if (row.index < dragIndex) row.index else row.index - 1
-                            controller.areas.add(dropIndex, area)
-                            it.isDropCompleted = true
-
-                            selectionModel.select(dropIndex)
-                            it.consume()
-
-                        }
-                        row.setOnDragEntered {
-                            row.style {
-                                effect = selectableEffect
-                            }
-                        }
-                        row.setOnDragExited {
-                            row.style {
-                                effect = fakeEffect
-                            }
-                        }
-                        row
-                    }
-                    smartResize()
-                }
-
-            }
-        }
-
+    @Suppress("unchecked_cast")
+    fun <V: GeoBaseEditorView>construct(constructor: ViewConstructor<V>){
+        constructor.construct(this as V)
     }
+
+
+
+
+
 
     private fun applyButtons(){
         buttonBar.apply {
