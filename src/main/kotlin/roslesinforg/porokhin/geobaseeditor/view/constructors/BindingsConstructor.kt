@@ -17,6 +17,7 @@ class BindingsConstructor: ViewConstructor<MainView> {
     override fun construct(view: MainView) {
         with(view){
             with(model){
+                fProgress.bind(controller.progressStatusProperty)
                 fKvNumber byint kvProperty
                 field1Model.apply {
                     fAreaNumber byint numberProperty

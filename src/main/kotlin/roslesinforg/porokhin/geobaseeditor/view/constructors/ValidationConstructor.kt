@@ -8,10 +8,6 @@ import tornadofx.ValidationContext
 class ValidationConstructor: ViewConstructor<MainView> {
     override fun construct(view: MainView) {
         with(view){
-            val validationContext = ValidationContext()
-            val validatorFactory = ValidatorFactory(validationContext)
-            val validationHelper = ValidationHelper(validationContext, validatorFactory)
-
             validationHelper.stringValidatorFor(fSpecies, fType, fSubType, fTypeDeforest,
                 fSpecies1, fSpecies2, fSpecies3, fSpecies4, fSpecies5, fSpecies6, fSpecies7, fSpecies8, fSpecies9,
                 f31_element1, f31_element2)

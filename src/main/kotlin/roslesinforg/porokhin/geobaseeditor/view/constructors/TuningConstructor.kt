@@ -3,13 +3,24 @@ package roslesinforg.porokhin.geobaseeditor.view.constructors
 import roslesinforg.porokhin.areatypes.GeneralTypes
 import roslesinforg.porokhin.geobaseeditor.model.TextFieldImpl
 import roslesinforg.porokhin.geobaseeditor.view.MainView
+import tornadofx.c
 import tornadofx.controlsfx.bindAutoCompletion
+import tornadofx.enableWhen
+import tornadofx.style
 import tornadofx.tooltip
 import kotlin.reflect.KProperty0
 
 class TuningConstructor: ViewConstructor<MainView> {
     override fun construct(view: MainView) {
         with(view){
+            fGir.enableWhen { enableFieldsTrigger }
+
+            fKvNumber.apply {
+                isEditable = false
+                style{
+                    backgroundColor += c(0, 0, 0, 0.0)
+                }
+            }
             fType.apply {
                 bindAutoCompletion(GeneralTypes.typesOfForest.map { it.name })
             }

@@ -11,6 +11,19 @@ import tornadofx.enableWhen
 class SelectionsF10Constructor: ViewConstructor<MainView> {
     override fun construct(view: MainView) {
         with(view){
+            selectionsF10.addAll(listOf(
+                selectBtn1 to selection1,
+                selectBtn2 to selection2,
+                selectBtn3 to selection3,
+                selectBtn4 to selection4,
+                selectBtn5 to selection5,
+                selectBtn6 to selection6,
+                selectBtn7 to selection7,
+                selectBtn8 to selection8,
+                selectBtn9 to selection9,
+                selectBtn10 to selection10,
+            ))
+
             selectionsF10.forEach { pair ->
                 val btn = pair.first
                 btn.apply {

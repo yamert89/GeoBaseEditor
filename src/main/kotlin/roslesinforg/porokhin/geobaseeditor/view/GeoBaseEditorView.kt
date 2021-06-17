@@ -10,6 +10,8 @@ import javafx.scene.image.ImageView
 import javafx.scene.layout.Background
 import javafx.scene.layout.BackgroundFill
 import javafx.scene.layout.CornerRadii
+import roslesinforg.porokhin.geobaseeditor.view.constructors.ViewConstructor
+import roslesinforg.porokhin.geobaseeditor.view.constructors.ViewDeconstructor
 import tornadofx.*
 
 abstract class GeoBaseEditorView(title: String): View(title) {
@@ -46,5 +48,15 @@ abstract class GeoBaseEditorView(title: String): View(title) {
             fitHeight = height
             fitWidth = width
         }
+    }
+
+    @Suppress("unchecked_cast")
+    fun <V: GeoBaseEditorView>construct(constructor: ViewConstructor<V>){
+        constructor.construct(this as V)
+    }
+
+    @Suppress("unchecked_cast")
+    fun <V: GeoBaseEditorView>deconstruct(constructor: ViewDeconstructor<V>){
+        constructor.deconstruct(this as V)
     }
 }
