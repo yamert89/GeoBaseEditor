@@ -54,7 +54,7 @@ class KvListConstructor: ViewConstructor<MainView> {
 
                             commit()
                             item = area
-                            println("Selection kv: ${item.kv} vid: ${item.field1.number}")
+                            logger.debug("Selection kv: ${item.kv} vid: ${item.field1.number}")
 
                         }
 

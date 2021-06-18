@@ -1,8 +1,8 @@
 package roslesinforg.porokhin.geobaseeditor.model
 
+import toCondition
 import roslesinforg.porokhin.areatypes.Area
 import roslesinforg.porokhin.areatypes.fields.*
-import kotlin.math.log
 import kotlin.reflect.KMutableProperty1
 
 class Selector(private val data: List<Area>) {
@@ -93,7 +93,7 @@ open class Parameter<R, T>{
         this.comparingCondition = comparingCondition
     }
     constructor(logicCondition: LogicCondition, areaProperty: KMutableProperty1<R, T>, comparingCondition: String, value: T)
-            : this(logicCondition, areaProperty, comparingCondition.parseCondition(), value)
+            : this(logicCondition, areaProperty, comparingCondition.toCondition(), value)
 }
 
 class AreaParameter<T> : Parameter<Area, T>{
@@ -197,23 +197,29 @@ class Element10Parameter<T>: Parameter<ElementOfForest, T>{
             : super(logicCondition, areaProperty, comparingCondition, value)
 }
 
-fun String.parseCondition(): ComparingCondition{
-    return when(this) {
-        "=" -> ComparingCondition.EQUAL
-        "<" -> ComparingCondition.LESS
-        ">" -> ComparingCondition.MORE
-        else -> throw IllegalArgumentException("unsupported comparingCondition: $this")
-    }
-}
-
 enum class ComparingCondition{
     MORE,
     LESS,
-    EQUAL
+    EQUAL;
+
+    override fun toString(): String {
+        return when(this){
+            MORE -> ">"
+            LESS -> "<"
+            EQUAL -> "="
+        }
+    }
 }
 
 enum class LogicCondition{
     AND,
-    OR
+    OR;
+
+    override fun toString(): String {
+        return when(this){
+            AND -> "и"
+            OR -> "или"
+        }
+    }
 }
 

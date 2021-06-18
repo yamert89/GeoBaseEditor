@@ -34,6 +34,7 @@ class MainView : GeoBaseEditorView("Редактор базы") {
     internal val logger = logger()
     override val root: TabPane by fxml("/gui/MainView.fxml")
     internal val borderPane: BorderPane by fxid()
+    internal val selectionPane: AnchorPane by fxid()
     internal val cardLayout: AnchorPane by fxid()
     internal val fGir: TextFieldImpl by fxid()
     internal val fKvNumber: TextFieldImpl by fxid()
@@ -252,21 +253,18 @@ class MainView : GeoBaseEditorView("Редактор базы") {
     internal val buttonBar: ButtonBar by fxid()
     internal val topPane: HBox by fxid()
     internal val fProgress: ProgressBar by fxid()
-    internal val validationContext = ValidationContext()
+    private val validationContext = ValidationContext()
     internal val validatorFactory = ValidatorFactory(validationContext)
     internal val validationHelper = ValidationHelper(validationContext, validatorFactory)
-
-
-
     internal val enableFieldsTrigger = SimpleBooleanProperty()
     lateinit var kv_list: TableView<Area>
+    lateinit var selectionTable: TableView<Area>
     object AppScope: Scope()
     val controller : GeoBaseEditorController by inject(AppScope)
     var model: AreaModel = controller.areaModel
     val updateManager =  UpdateManager(Paths.get("\\\\POROHIN\\share\\update\\"))
 
     init {
-
         construct(SelectionsF10Constructor())
         construct(BindingsConstructor())
         construct(DirtyStateConstructor())
@@ -274,6 +272,7 @@ class MainView : GeoBaseEditorView("Редактор базы") {
         construct(KvListConstructor())
         construct(TopPaneConstructor())
         construct(ValidationConstructor())
+        construct(SelectionPaneConstructor())
 
         if (GeoBaseEditorPreferences.filtering.value) applyFilters()
 
@@ -289,6 +288,7 @@ class MainView : GeoBaseEditorView("Редактор базы") {
 
         if ( app.parameters.raw.isNotEmpty() && app.parameters.raw[0] == "-d"){
             construct(DebugModeConstructor())
+            logger.debug("Debug Mode activated")
         }
 
         runAsync {
@@ -300,7 +300,6 @@ class MainView : GeoBaseEditorView("Редактор базы") {
                 updateManager.update()
             }
         }
-
     }
 
     fun applyFilters(){

@@ -108,6 +108,7 @@ class TopPaneConstructor: ViewConstructor<MainView> {
 
                             kv_list.items = controller.areas
                             kv_list.smartResize()
+                            selectionTable.items = controller.areas
 
                             val path = files[0].absolutePath.let { if (it.length > 50) "...${it.substring(it.lastIndex - 10, it.length)}" else it}
                             flog("Открыт файл ${path}.  Лесничество: ${forestry?.name ?: loc.forestry} , Участок: ${forestry?.sub?.get(loc.subForestry.toInt()) ?: loc.subForestry}")

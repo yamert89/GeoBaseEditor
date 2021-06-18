@@ -14,7 +14,6 @@ object ParameterFactory {
             Attribute.SUM_OF_TIMBER -> Element10Parameter(logicCondition, ElementOfForest::sumOfTimber, comparingCondition, value as Int)
             Attribute.CATEGORY -> Field1Parameter(logicCondition, Field1::category, comparingCondition, value as Int)
             Attribute.INFO -> Field23Parameter(logicCondition, Field1::category, value as Int)
-            else -> throw IllegalArgumentException("Unsupported attribute")
         } as Parameter<R, T>
     }
 
@@ -27,5 +26,18 @@ enum class Attribute{
     WEIGHT,
     SUM_OF_TIMBER,
     CATEGORY,
-    INFO
+    INFO;
+
+    override fun toString(): String {
+        return when(this){
+            OZU -> "ОЗУ"
+            CATEGORY_PROTECTION -> "ЦНЛ"
+            SPECIES -> "Порода"
+            BON -> "Бонитет"
+            WEIGHT -> "Полнота"
+            SUM_OF_TIMBER -> "Запас"
+            CATEGORY -> "Категория земель"
+            INFO -> "Особенности насаждений(23)"
+        }
+    }
 }
