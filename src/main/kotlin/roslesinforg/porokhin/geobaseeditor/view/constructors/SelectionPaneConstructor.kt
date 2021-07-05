@@ -34,7 +34,14 @@ class SelectionPaneConstructor: ViewConstructor<MainView> {
     lateinit var v3: ComboBox<String>
     lateinit var lc1: ComboBox<String>
     lateinit var lc2: ComboBox<String>
+    lateinit var pEd: ComboBox<String>
+    lateinit var cEd: Label
+    lateinit var vEd: ComboBox<String>
     private val conds = ComparingCondition.values().map { it.toString() }
+    private val readyForApplying = SimpleBooleanProperty()
+    private val readyForAction = SimpleBooleanProperty()
+    private val readySelection2 = SimpleBooleanProperty()
+    private val readySelection3 = SimpleBooleanProperty()
 
     private val manualSelection = SimpleBooleanProperty()
     override fun construct(view: MainView) {
@@ -77,22 +84,65 @@ class SelectionPaneConstructor: ViewConstructor<MainView> {
                                     vboxConstraints { margin = Insets(5.0) }
                                     p1 = combobox(SimpleStringProperty(), attrs)
                                     c1 = combobox(SimpleStringProperty(), conds){hboxConstraints { marginLeftRight(5.0) }}
-                                    v1 = combobox(SimpleStringProperty(), emptyList()) {  }
+                                    v1 = combobox(SimpleStringProperty(), emptyList()) {
+                                        valueProperty().onChange { readySelection2.value = true }
+                                    }
                                 }
-                                val lc1 = combobox(SimpleStringProperty(), logicConds){vboxConstraints { margin = Insets(5.0) }}
+                                val lc1 = combobox(SimpleStringProperty(), logicConds){
+                                    vboxConstraints { margin = Insets(5.0) }
+                                    selectionModel.select(0)
+                                }
                                 hbox {
+                                    enableWhen { readySelection2 }
                                     vboxConstraints { margin = Insets(5.0) }
                                     p2 = combobox(SimpleStringProperty(), attrs)
                                     c2 = combobox(SimpleStringProperty(), conds){hboxConstraints { marginLeftRight(5.0) }}
-                                    v2 = combobox(SimpleStringProperty(), emptyList()) {  }
+                                    v2 = combobox(SimpleStringProperty(), emptyList()) {
+                                        valueProperty().onChange { readySelection3.value = true }
+                                    }
                                 }
-                                val lc2 = combobox(SimpleStringProperty(), logicConds){vboxConstraints { margin = Insets(5.0) }}
+                                val lc2 = combobox(SimpleStringProperty(), logicConds){
+                                    vboxConstraints { margin = Insets(5.0) }
+                                    selectionModel.select(0)
+                                }
                                 hbox {
+                                    enableWhen { readySelection3 }
                                     vboxConstraints { margin = Insets(5.0) }
                                     p3 = combobox(SimpleStringProperty(), attrs)
                                     c3 = combobox(SimpleStringProperty(), conds){hboxConstraints { marginLeftRight(5.0) }}
                                     v3 = combobox(SimpleStringProperty(), emptyList()) {  }
                                 }
+                                separator{}
+                                vbox {
+                                    enableWhen { readyForAction }
+                                    vboxConstraints { margin = Insets(10.0) }
+                                    label("Применить к выборке:")
+                                    hbox {
+                                        vboxConstraints { margin = Insets(10.0, 0.0, 10.0, 0.0) }
+                                        pEd = combobox(SimpleStringProperty(), attrs)
+                                        cEd = label("="){hboxConstraints { marginLeftRight(5.0) }}
+                                        vEd = combobox(SimpleStringProperty(), emptyList()) {
+                                            valueProperty().onChange { readyForApplying.value = true }
+                                        }
+                                        button("Применить"){
+                                            hboxConstraints { marginLeftRight(5.0) }
+                                            enableWhen { readyForApplying }
+                                            action {
+                                                //todo
+                                            }
+                                        }
+                                    }
+                                    separator {}
+                                    hbox {
+                                        vboxConstraints { margin = Insets(10.0, 0.0, 10.0, 0.0) }
+                                        button("Открыть в новом окне"){
+                                            action {
+                                                //todo
+                                            }
+                                        }
+                                    }
+                                }
+
                             }
 
 
@@ -111,6 +161,7 @@ class SelectionPaneConstructor: ViewConstructor<MainView> {
             p1.addChangeListener()
             p2.addChangeListener()
             p3.addChangeListener()
+            pEd.addChangeListener(false)
 
 
 
@@ -121,7 +172,7 @@ class SelectionPaneConstructor: ViewConstructor<MainView> {
         }
     }
     @Suppress("unchecked_cast")
-    private fun ComboBox<String>.addChangeListener(){
+    private fun ComboBox<String>.addChangeListener(withConditions: Boolean = true){
         valueProperty().onChange {
             if (it == null) return@onChange
             var sum = 0
@@ -140,6 +191,7 @@ class SelectionPaneConstructor: ViewConstructor<MainView> {
             }
             val neighbors = this.parent.getChildList()!!
             (neighbors[2] as ComboBox<String>).items = list.asObservable()
+            if (!withConditions) return@onChange
             if (it.toAttribute() in listOf(Attribute.OZU, Attribute.INFO, Attribute.CATEGORY_PROTECTION, Attribute.SPECIES, Attribute.BON)){
                 with(neighbors[1] as ComboBox<String>){
                     items = listOf("=").asObservable()
