@@ -649,7 +649,7 @@
             </BorderPane>
          </content>
       </Tab>
-      <Tab closable="false" disable="false" text="Выборка">
+      <Tab closable="false" disable="true" text="Выборка">
         <content>
           <AnchorPane fx:id="selectionPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
         </content>

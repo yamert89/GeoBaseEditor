@@ -156,7 +156,8 @@ class GeoBaseEditorController: Controller() {
         with(selected.field1){
             val new = selected.copy(field1 = Field1(number, area, category, dp, typeOfProtection))
             areas.add(idx, new)
-            findKv(selected.kv).areas.add(idx, new)
+            val kv = findKv(selected.kv)
+            if (idx == kv.areas.size) kv.areas.add(new) else kv.areas.add(idx, new)
         }
     }
 
