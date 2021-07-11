@@ -3,15 +3,13 @@ package roslesinforg.porokhin.geobaseeditor.view
 import format
 import javafx.beans.property.Property
 import javafx.beans.property.SimpleFloatProperty
-import javafx.beans.property.SimpleIntegerProperty
-import javafx.scene.control.TableCell
 import javafx.scene.control.TableView
 import javafx.scene.paint.Color
 import javafx.scene.text.FontWeight
 import org.apache.logging.log4j.kotlin.logger
 import roslesinforg.porokhin.areatypes.Area
 import roslesinforg.porokhin.geobaseeditor.GeoBaseEditorController
-import roslesinforg.porokhin.geobaseeditor.model.Kv
+import roslesinforg.porokhin.areatypes.Kv
 import tornadofx.*
 
 class StrictAreaView: GeoBaseEditorView("Площади") {

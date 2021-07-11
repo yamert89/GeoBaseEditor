@@ -1,12 +1,10 @@
 package roslesinforg.porokhin.geobaseeditor
 
-import com.jacob.activeX.ActiveXComponent
 import javafx.application.Platform
 import javafx.beans.property.SimpleDoubleProperty
 import javafx.beans.property.SimpleIntegerProperty
 import javafx.beans.property.SimpleListProperty
 import javafx.collections.ObservableList
-import roslesinforg.porokhin.nabparser.reading.DataReader
 import roslesinforg.porokhin.nabparser.reading.RawDataReader
 import roslesinforg.porokhin.areatypes.Area
 import roslesinforg.porokhin.areatypes.Location
@@ -22,7 +20,7 @@ import java.nio.file.Files
 import org.apache.logging.log4j.kotlin.logger
 import roslesinforg.porokhin.areatypes.fields.ElementOfForest
 import roslesinforg.porokhin.areatypes.fields.Field10
-import roslesinforg.porokhin.geobaseeditor.model.Kv
+import roslesinforg.porokhin.areatypes.Kv
 import roslesinforg.porokhin.geobaseeditor.view.StrictAreaView
 import roslesinforg.porokhin.geobaseeditor.view.viewmodels.AreaModel
 import roslesinforg.porokhin.nabparser.parsing.ParsingResult
