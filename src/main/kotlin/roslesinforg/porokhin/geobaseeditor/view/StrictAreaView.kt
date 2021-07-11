@@ -12,7 +12,7 @@ import roslesinforg.porokhin.geobaseeditor.GeoBaseEditorController
 import roslesinforg.porokhin.areatypes.Kv
 import tornadofx.*
 
-class StrictAreaView: GeoBaseEditorView("Площади") {
+class StrictAreaView: View("Площади") {
     private val logger = logger()
     val controller = find(GeoBaseEditorController::class, MainView.AppScope)
     val before = controller.startSq
